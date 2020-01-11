@@ -19,6 +19,7 @@ with open('insert_individual.sql', 'w') as file:
 
 
 #Tabela pra merge nome instituto = id instituto
+# Anotação Dia 10/01: Não lembro o porque comecei fazer esse merge 
 with open('individual_merge.csv', 'w') as file2:
 	for i in range(len(read)):
 		linha = str(read[i])

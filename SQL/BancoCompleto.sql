@@ -123,19 +123,20 @@ CONSTRAINT `FK_82` FOREIGN KEY `fkIdx_82` (`id_individual`) REFERENCES `individu
 );
 
 
--- ************************************** `captive_location`
-CREATE TABLE `captive_location`
+
+-- ************************************** `specific_id_individual`
+
+CREATE TABLE `specific_id_individual`
 (
- `id`            integer NOT NULL ,
+ `id`            varchar(45) NOT NULL ,
  `id_individual` integer NOT NULL ,
  `id_institute`  integer NOT NULL ,
- `especific_id`  varbinary(45) NULL ,
  `excluded`      char NULL ,
  `excluded_date` date NULL ,
 
 PRIMARY KEY (`id`),
-KEY `fkIdx_82` (`id_individual`),
-CONSTRAINT `FK_82` FOREIGN KEY `fkIdx_82` (`id_individual`) REFERENCES `individual` (`id`),
+KEY `fkIdx_84` (`id_individual`),
+CONSTRAINT `FK_84` FOREIGN KEY `fkIdx_82` (`id_individual`) REFERENCES `individual` (`id`),
 KEY `fkIdx_97` (`id_institute`),
 CONSTRAINT `FK_97` FOREIGN KEY `fkIdx_97` (`id_institute`) REFERENCES `institute` (`id`)
 );
