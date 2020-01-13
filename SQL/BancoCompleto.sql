@@ -60,9 +60,10 @@ PRIMARY KEY (`id`),
 CONSTRAINT key_events UNIQUE (events)
 ) AUTO_INCREMENT=1;
 
-INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Born', NULL, NULL);
+INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Birth', NULL, NULL);
 INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Capture', NULL, NULL);
 INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Transfer', NULL, NULL);
+INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Release', NULL, NULL);
 INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Death', NULL, NULL);
 
 
@@ -134,8 +135,7 @@ CREATE TABLE `specific_id_individual`
  `excluded`      char NULL ,
  `excluded_date` date NULL ,
 
-PRIMARY KEY (`id`),
-KEY `fkIdx_84` (`id_individual`),
+
 CONSTRAINT `FK_84` FOREIGN KEY `fkIdx_82` (`id_individual`) REFERENCES `individual` (`id`),
 KEY `fkIdx_97` (`id_institute`),
 CONSTRAINT `FK_97` FOREIGN KEY `fkIdx_97` (`id_institute`) REFERENCES `institute` (`id`)

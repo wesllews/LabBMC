@@ -22,3 +22,40 @@
  
 - Começar a inserir o histórico dos individuos. Tabela 'history'.
 
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+# Para Fazer Hoje(13/01):
+
+"Ainda é necessário ver qual a melhor forma de lidar com locais que não possuem um id_specific para os idnividuos. Faz-se necessário a troca da primary Key da tabela, justamente por que atualmente a PK é o id especifico.""
+	- Pensando nessa necessidade eu vou adaptar o banco e as inserções para que os id específicos sejam adicionados nas obersações dos históricos, uma vez que não é um item indispensável para os relacionamentos, mas que precisa ser mantido.
+
+"Fiz a troca no arquivo BLT.csv do 'location' SCARLOS para SAO CARLOS. Precisa ser verificado se de fato correspondem ao mesmo local. (stud  nº 91 e outros 5)"
+ 	- Alguns dados não estão corretamente colocados no BLT.csv, então vou utilizar os erros de inserção do 'insert_specific_id.sql' para ver quais linhas os dados não foram corretamente arrumados.
+
+
+# Feito:
+
+- Adicionado na tabela de institutos a opção "wild" para os casos de reintrodução.  (stud  nº 141, 260, 293)
+
+- Os dados com conflitos de nomes foram arrumados no arquivo BLT.csv. Exemplo "SCARLOS" ou Erros na numeração dos indivíduos.
+
+
+- Foram arrumados erros nas numerações do studbook original, entre no individuo 360 e 433, neles a numeração foi pulada 2 unidades em cada, ocasionando desníveis de numeração (Num Indivíduos X Numero de Registros).
+
+- Fiz o BLT_Histórico com os id's dos eventos por linha para facilitar a inserção dos históricos.
+
+
+# Próximas Etapas
+
+- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
+
+- Juntar os scripts de 'insert_specific_id' e 'insert_historico', pois as manipulações para edição do studbook (BLT.csv) ficaram fragmentadas em dois scripts distintos.
+
+- Inserir os id's específicos nas observações de cada evento do histórico.
+
+- Arrumar erros na inserção inicial dos historicos (script insert SQL feito hoje). Exemplo: ind. 395.
+
+- Inserir o histórico dos individuos. Tabela 'history'.

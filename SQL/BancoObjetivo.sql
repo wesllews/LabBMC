@@ -44,11 +44,11 @@ PRIMARY KEY (`id`),
 CONSTRAINT key_events UNIQUE (events)
 ) AUTO_INCREMENT=1;
 
-INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Born', NULL, NULL);
+INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Birth', NULL, NULL);
 INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Capture', NULL, NULL);
 INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Transfer', NULL, NULL);
+INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Release', NULL, NULL);
 INSERT INTO `events` (`id`, `events`, `excluded`, `excluded_date`) VALUES (NULL, 'Death', NULL, NULL);
-
 
 -- ************************************** `institute`
 CREATE TABLE `institute`
@@ -66,23 +66,25 @@ PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
 
-
--- ************************************** `specific_id_individual`
-
-CREATE TABLE `specific_id_individual`
+-- ************************************** `history`
+CREATE TABLE `history`
 (
- `id`            varchar(45) NOT NULL ,
+ `id`            integer NOT NULL AUTO_INCREMENT ,
  `id_individual` integer NOT NULL ,
+ `id_events`      integer NOT NULL ,
  `id_institute`  integer NOT NULL ,
+ `observation`   varchar(500) NULL ,
  `excluded`      char NULL ,
  `excluded_date` date NULL ,
 
-CONSTRAINT `FK_84` FOREIGN KEY `fkIdx_82` (`id_individual`) REFERENCES `individual` (`id`),
-KEY `fkIdx_97` (`id_institute`),
-CONSTRAINT `FK_97` FOREIGN KEY `fkIdx_97` (`id_institute`) REFERENCES `institute` (`id`)
-);
-
-
+PRIMARY KEY (`id`),
+KEY `fkIdx_186` (`id_events`),
+CONSTRAINT `FK_185` FOREIGN KEY `fkIdx_186` (`id_events`) REFERENCES `events` (`id`),
+KEY `fkIdx_193` (`id_institute`),
+CONSTRAINT `FK_193` FOREIGN KEY `fkIdx_193` (`id_institute`) REFERENCES `institute` (`id`),
+KEY `fkIdx_91` (`id_individual`),
+CONSTRAINT `FK_91` FOREIGN KEY `fkIdx_91` (`id_individual`) REFERENCES `individual` (`id`)
+) AUTO_INCREMENT=1;
 
 
 INSERT INTO `individual` (`id`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, '1', 'M', NULL, 'n', NULL);
@@ -595,6 +597,8 @@ INSERT INTO `individual` (`id`, `id_category`, `sex`, `name`, `excluded`, `exclu
 
 
 
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'NAME','ABREVIATION','COUNTRY','STATE','CITY
+', 'n', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Adelaide Zoological Gardens','ADELAIDE','Australia','South Australia','Adelaide
 ', 'n', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Zoologico de Bauru','BAURU ZOO','Brazil','São Paulo','Bauru
@@ -645,6 +649,8 @@ INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city
 ', 'n', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Unknown Location','UNKNOWN','Brazil','Not specified','NA
 ', 'n', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'WILD','WILD','Unknown','Not specified',NULL, 'n', NULL);
+
 
 
 

@@ -68,7 +68,7 @@ with open("../../Dados/BLT_history.csv", 'w') as file:
 # Arquivo SQL com os inserts
 with open("insert_specific_id.sql", 'w') as file:
 
-	for i in range(len(linha_BLT)):
+	for i in range(1,len(linha_BLT)):
 		file.write("INSERT INTO `specific_id_individual` (`id`, `id_individual`, `id_institute`, `excluded`, `excluded_date`) VALUES ('"+linha_BLT[i][8]+"', '"+linha_BLT[i][0]+"', '"+linha_BLT[i][5]+"', NULL, NULL);\n")
 
 

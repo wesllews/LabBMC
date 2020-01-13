@@ -50,3 +50,4 @@ INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city
 ', 'n', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Unknown Location','UNKNOWN','Brazil','Not specified','NA
 ', 'n', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'WILD','WILD','Unknown','Not specified',NULL, 'n', NULL);

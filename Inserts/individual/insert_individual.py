@@ -1,5 +1,5 @@
 #Abrindo studybook
-with open('../Dados/BLT.csv', 'r') as dados:
+with open('../../Dados/BLT.csv', 'r') as dados:
     read = dados.readlines()
 
 # Criando um arquivo com todos os inserts
@@ -9,7 +9,7 @@ with open('insert_individual.sql', 'w') as file:
 		linha2= linha.split(",")
 
 
-		if(linha2[0] != "NA"): #"NA" são as células vazias na tabela se studybook
+		if(linha2[0] != "NA"): #"NA" sao as celulas vazias na tabela se studybook
 
 			if(linha2[9]=="\n"):
 				sql= "INSERT INTO `individual` (`id`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, '1', '"+linha2[1]+"', NULL, 'n', NULL);"
@@ -19,7 +19,7 @@ with open('insert_individual.sql', 'w') as file:
 
 
 #Tabela pra merge nome instituto = id instituto
-# Anotação Dia 10/01: Não lembro o porque comecei fazer esse merge 
+# Anotacao Dia 10/01: Nao lembro o porque comecei fazer esse merge 
 with open('individual_merge.csv', 'w') as file2:
 	for i in range(len(read)):
 		linha = str(read[i])

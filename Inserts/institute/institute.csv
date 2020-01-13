@@ -4,7 +4,7 @@ ID,NAME,ABREVIATION,COUNTRY,STATE,CITY
 3,City of Belfast Zoo,BELFAST,North Ireland,Belfast,NA
 4,Jardim Zoologico De Brasilia,BRASILIA,Brazil,Distrito Federal,Brasilia
 5,Bristol Zoo,BRISTOL,England,Clifton,Bristol
-6,Buri,Buri,Brazil,São Paulo,Buri
+6,Buri,BURI,Brazil,São Paulo,Buri
 7,Central Park Wildlife Center,CENTRALPK,United States of America, New York, New York
 8,North of England Zoo Society,CHESTER,England,NA,NA
 9,Fort Worth Zoological Park,FORTWORTH,United States of America,Texas,NA
@@ -24,3 +24,4 @@ ID,NAME,ABREVIATION,COUNTRY,STATE,CITY
 23,Parque Zoológico Municipal Quinzinho de Barros,SOROCABA, Brazil, Sao Paulo, Sorocaba
 24,Parque Ecologico de Sao Carlos,SAO CARLOS,Brazil, Sao Paulo,São Carlos
 25,Unknown Location,UNKNOWN,Brazil,NA,NA
+26,WILD,WILD,Unknown,NA,NA
