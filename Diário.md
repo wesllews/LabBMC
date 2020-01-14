@@ -24,8 +24,7 @@
 
 
 
----------------------------------------------------------------------------------------------------------------------------------
-
+---------------------------------------------------------------------------------------------------------------------------
 
 # Para Fazer Hoje(13/01):
 
@@ -46,16 +45,44 @@
 - Foram arrumados erros nas numerações do studbook original, entre no individuo 360 e 433, neles a numeração foi pulada 2 unidades em cada, ocasionando desníveis de numeração (Num Indivíduos X Numero de Registros).
 
 - Fiz o BLT_Histórico com os id's dos eventos por linha para facilitar a inserção dos históricos.
+ 
+
+---------------------------------------------------------------------------------------------------------------------------
 
 
-# Próximas Etapas
+# Para Fazer Hoje(14/01)
 
-- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
-
-- Juntar os scripts de 'insert_specific_id' e 'insert_historico', pois as manipulações para edição do studbook (BLT.csv) ficaram fragmentadas em dois scripts distintos.
-
-- Inserir os id's específicos nas observações de cada evento do histórico.
+- Juntar os scripts de 'insert_specific_id' e 'insert_historico'.
 
 - Arrumar erros na inserção inicial dos historicos (script insert SQL feito hoje). Exemplo: ind. 395.
 
 - Inserir o histórico dos individuos. Tabela 'history'.
+
+
+# Feito:
+
+- Juntado os scripts de 'insert_specific_id' e 'insert_historico', pois as manipulações para edição do studbook (BLT.csv) ficaram fragmentadas em dois scripts distintos. Isso foi utilizado para criar o BLT_history.csv
+
+- Arrumado o erro na inserção do indíduo 395, que era causado por não haver um evento inserido de 'Loan to'.
+
+
+# Próximas Etapas
+
+- Inserir os id's específicos nas observações de cada evento do histórico.
+
+- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
