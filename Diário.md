@@ -72,6 +72,44 @@
 
 - Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
 
+---------------------------------------------------------------------------------------------------------------------------
+
+
+# Para Fazer Hoje(04/03)
+
+- Padronizar as datas do studybook para formato de data.
+- Acrescentar as datas dos eventos e id_específico dos individuos no SQL de historico.
+- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
+
+
+# Feito:
+
+- Arrumado arquvivo '/Dados/BLT_history.csv' pois todos os dados estavam duplicados.
+- Acrescentar as datas dos eventos e id_específico dos individuos no SQL de historico.
+
+
+# Próximas Etapas
+
+- Padronizar as datas do studybook para formato de data aaaa-mm-dd
+
+- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
+
+- Tentar por meio do arquivo antigo do BLT.csv fazer recuperação das datas com o ano por completo
+
+
+## OBSERVAÇÃO:
+``` bash
+#Comandos de manejo de data
+cat BLT.csv | cut -d, -f7 > Datas_BLT.txt
+#Usei editor de texto pra mudar os espaços para "/"
+
+#Inverter dd/mm/aaaa para aaaa-mm-dd
+cat Datas_BLT.txt | cut -d/ -f3,2,1 > InvDatas.txt
+
+#algumas datas não estão em um formato ideal e vão precisar ser tratadas
+#Acrescentar caracter no fim do texto
+while read -r line; do echo "$line-"; done < InvDatas.txt
+```
 
 
 
