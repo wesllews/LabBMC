@@ -1,3 +1,224 @@
+# Para Fazer Hoje(12/03) - Part 1
+- O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
+
+- Fazer insert do histórico dos indivíduos
+
+- Remover linhas vazias do BLT_historic.csv, pois nelas tinham as observações de morte e não mais validas.
+
+- Continuar o script inserte_historic.py a partir da linha 102 e trabalhar com as conversão das variáveis pra texto, criando a variavel dos inserts sql.
+
+# Feito:
+- Confirmar se as alterações feitas no SQL do banco de dados estão iguais as feitas no design do banco, en geral foram nas seguintes propriedades:
+	- utilizar individual.Studbook como pk ou não e as possíveis recursões necessárias na pagina web.
+	- Historic.id_individual(cadastro de histórico dependente do cadastro de indivíduo)
+	- Relação das PK entre  tabelas individual e geotypes
+
+- O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
+
+- Fazer insert do histórico dos indivíduos
+
+- Remover linhas vazias do BLT_historic.csv, pois nelas tinham as observações de morte e não mais validas.
+
+- Continuar o script inserte_historic.py a partir da linha 102 e trabalhar com as conversão das variáveis pra texto, criando a variavel dos inserts sql.
+
+# Próximas Etapas
+
+- Inserir Paternidade dos individuos, tabela kinship.
+
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para Fazer Hoje(11/03)
+
+- Refazer os inserts das tabelas devido a modificação dos bancos
+	- Os SQL's do Banco -- OK
+	- Institutes -- OK
+	- Individual -- OK
+
+- O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
+
+- Entender porquê e como funciona o código:  `linha_BLT[i][9].rfind("[")!=-1`
+
+# Feito:
+-  Separar as observações de morte dos invidivíduos da coluna 'Event_id'.
+
+- O Código em insert_historic.py utilizará a biblioteca CSV para tornar mais fácil o uso de arquivo CSV.
+
+- ID integer da tabela individual foi substituído pelo id_studbook
+
+# Próximas Etapas
+- O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
+
+- Fazer insert do histórico dos indivíduos
+
+- Remover linhas vazias do BLT_historic.csv, pois nelas tinham as observações de morte e não mais validas.
+
+- Continuar o script inserte_historic.py a partir da linha 102 e trabalhar com as conversão das variáveis pra texto, criando a variavel dos inserts sql.
+
+- Confirmar se as alterações feitas no SQL do banco de dados estão iguais as feitas no design do banco, en geral foram nas seguintes propriedades:
+	- Individual.Studbook como pk ou não e as possíveis recursões necessárias caso isso não seja utilizado.
+	- Historic.id_individual(cadastro de histórico dependente do cadastro de indivíduo)
+	- Relação das PK entre  tabelas individual e geotypes
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para Fazer Hoje(10/03)
+
+- Adicionar parametros que estão no studbook_2017 ao banco de dados que anteriormente não haviam (Falar com Paola e Patty sobre isso).
+
+- Adicionar individuos do studbook_2017 só havia utilizado a edição 2014.
+
+
+
+# Feito:
+- Não foram adicionados parametros do studbook_2017 ao banco de dados pois a estrutura do arquivo passada pelo dominic era input de um programa e não um novo dataset (Falei com Paola sobre isso).
+
+- Modificado o banco de dados para que o sexo do indivíduo seja texto, em caso de unknown 'varchar(15)'
+
+- Adicionado individuos do studbook_2017 ao arquivo BLT.csv (studbook edição 2014)
+
+- Modificar o banco de dados para que a tabela de individuos possua Id do banco de dados numérico e id studbook 'VarChar', pois alguns id's do studbook sõa agora codigos.
+
+# Próximas Etapas
+
+PENDÊNCIA DO HISTÓRICO
+-  Separar as observações de morte dos invidivíduos da coluna 'Event ID'.
+
+- O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
+
+- Entender porque e como funciona o código:  `linha_BLT[i][9].rfind("[")!=-1`
+
+
+## OBSERVAÇÃO:
+``` bash
+#Comando para selecionar colunas
+grep "MOVE" Studbook_2017.CSV | cut -d';' -f1,5-7 | tail -n20 >dados.csv
+```
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para Fazer Hoje(09/03)
+
+- Desfazer algumas alterações feitas no studbook original.
+
+# Feito:
+- Os numeros de studbook de cada individuo não podem ser alterados independente se não seguirem a ordem numérica, desta forma as alterações dos id's feitas entre no individuo 360 e 433 no dia 13/01 foram desfeitas.
+
+- Utilizado o comando `grep -v "MOVE" Studbook\ 2017.CSV > Teste.csv` para selecionar só as linhas de históricos do studbook.
+
+# Próximas Etapas
+
+MODIFICAR O BANCO DE DADOS PELAS SEGUINTES NECESSIDADES:
+- Adicionar individuos do studbook_2017 só havia utilizado a edição 2014.
+- Modificar o banco de dados para que a tabela de individuos possua Id do banco de dados numérico e id studbook 'VarChar', pois alguns id's do studbook sõa agora codigos.
+
+- Adicionar parametros que estão no studbook_2017 ao banco de dados que anteriormente não haviam (Falar com Paola e Patty sobre isso).
+
+PENDÊNCIA DO HISTÓRICO
+-  Separar as observações de morte dos invidivíduos da coluna 'Event ID'.
+
+- O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
+
+- Entender porque e como funciona o código:  `linha_BLT[i][9].rfind("[")!=-1`
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para Fazer Hoje(05/03)
+
+- Padronizar as datas do studbook para formato de data aaaa-mm-dd
+- Tentar por meio do arquivo antigo do BLT.csv fazer recuperação das datas por completo, devido corrompimento dos dados
+
+- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
+
+
+# Feito:
+- Padronizar as datas do studbook para formato de data aaaa-mm-dd
+- Tentar por meio do arquivo antigo do BLT.csv fazer recuperação das datas por completo, devido corrompimento dos dados
+- Na coluna 'localID' do studbook foram substituídos 'NONE' e '????' por 'NA'. Uma insconsistência foi encontrada no ind.421 pois foi anotado '000', pouco indicativo de ser um id valido.
+
+- inserindo coluna de observações dos eventos "Death by unkown"
+
+# Próximas Etapas
+
+- Separar as observações de morte dos invidivíduos da coluna 'Event ID'.
+
+- O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
+
+- Entender porque e como funciona o código:  `linha_BLT[i][9].rfind("[")!=-1`
+
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para Fazer Hoje(04/03)
+
+- Padronizar as datas do studbook para formato de data.
+- Acrescentar as datas dos eventos e id_específico dos individuos no SQL de historico.
+- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
+
+
+# Feito:
+
+- Arrumado arquvivo '/Dados/BLT_history.csv' pois todos os dados estavam duplicados.
+- Acrescentar as datas dos eventos e id_específico dos individuos no SQL de historico.
+
+
+# Próximas Etapas
+
+- Padronizar as datas do studbook para formato de data aaaa-mm-dd
+
+- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
+
+- Tentar por meio do arquivo antigo do BLT.csv fazer recuperação das datas com o ano por completo
+
+
+## OBSERVAÇÃO:
+``` bash
+#Comandos de manejo de data
+cat BLT.csv | cut -d, -f7 > Datas_BLT.txt
+
+```
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para Fazer Hoje(14/01)
+
+- Juntar os scripts de 'insert_specific_id' e 'insert_historico'.
+
+- Arrumar erros na inserção inicial dos historicos (script insert SQL feito hoje). Exemplo: ind. 395.
+
+- Inserir o histórico dos individuos. Tabela 'history'.
+
+
+# Feito:
+
+- Juntado os scripts de 'insert_specific_id' e 'insert_historico', pois as manipulações para edição do studbook (BLT.csv) ficaram fragmentadas em dois scripts distintos. Isso foi utilizado para criar o BLT_history.csv
+
+- Arrumado o erro na inserção do indíduo 395, que era causado por não haver um evento inserido de 'Loan to'.
+
+
+# Próximas Etapas
+
+- Inserir os id's específicos nas observações de cada evento do histórico.
+
+- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
+
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para Fazer Hoje(13/01):
+
+"Ainda é necessário ver qual a melhor forma de lidar com locais que não possuem um id_specific para os idnividuos. Faz-se necessário a troca da primary Key da tabela, justamente por que atualmente a PK é o id especifico.""
+	- Pensando nessa necessidade eu vou adaptar o banco e as inserções para que os id específicos sejam adicionados nas obersações dos históricos, uma vez que não é um item indispensável para os relacionamentos, mas que precisa ser mantido.
+
+"Fiz a troca no arquivo BLT.csv do 'location' SCARLOS para SAO CARLOS. Precisa ser verificado se de fato correspondem ao mesmo local. (stud  nº 91 e outros 5)"
+ 	- Alguns dados não estão corretamente colocados no BLT.csv, então vou utilizar os erros de inserção do 'insert_specific_id.sql' para ver quais linhas os dados não foram corretamente arrumados.
+
+
+# Feito:
+
+- Adicionado na tabela de institutos a opção "wild" para os casos de reintrodução.  (stud  nº 141, 260, 293)
+
+- Os dados com conflitos de nomes foram arrumados no arquivo BLT.csv. Exemplo "SCARLOS" ou Erros na numeração dos indivíduos.
+
+
+- Foram arrumados erros nas numerações do studbook original, entre no individuo 360 e 433, neles a numeração foi pulada 2 unidades em cada, ocasionando desníveis de numeração (Num Indivíduos X Numero de Registros).
+
+- Fiz o BLT_Histórico com os id's dos eventos por linha para facilitar a inserção dos históricos.
+ 
+---------------------------------------------------------------------------------------------------------------------------
 # Para Fazer Hoje(10/01):
 - Escrever script SQL de insert dos specific_id de cada indivíduo.
 	
@@ -21,106 +242,4 @@
 - Adicionar a tabela de institutos a opção "wild" para os casos de reintrodução.  (stud  nº 141, 260, 293)
  
 - Começar a inserir o histórico dos individuos. Tabela 'history'.
-
-
-
----------------------------------------------------------------------------------------------------------------------------
-
-# Para Fazer Hoje(13/01):
-
-"Ainda é necessário ver qual a melhor forma de lidar com locais que não possuem um id_specific para os idnividuos. Faz-se necessário a troca da primary Key da tabela, justamente por que atualmente a PK é o id especifico.""
-	- Pensando nessa necessidade eu vou adaptar o banco e as inserções para que os id específicos sejam adicionados nas obersações dos históricos, uma vez que não é um item indispensável para os relacionamentos, mas que precisa ser mantido.
-
-"Fiz a troca no arquivo BLT.csv do 'location' SCARLOS para SAO CARLOS. Precisa ser verificado se de fato correspondem ao mesmo local. (stud  nº 91 e outros 5)"
- 	- Alguns dados não estão corretamente colocados no BLT.csv, então vou utilizar os erros de inserção do 'insert_specific_id.sql' para ver quais linhas os dados não foram corretamente arrumados.
-
-
-# Feito:
-
-- Adicionado na tabela de institutos a opção "wild" para os casos de reintrodução.  (stud  nº 141, 260, 293)
-
-- Os dados com conflitos de nomes foram arrumados no arquivo BLT.csv. Exemplo "SCARLOS" ou Erros na numeração dos indivíduos.
-
-
-- Foram arrumados erros nas numerações do studbook original, entre no individuo 360 e 433, neles a numeração foi pulada 2 unidades em cada, ocasionando desníveis de numeração (Num Indivíduos X Numero de Registros).
-
-- Fiz o BLT_Histórico com os id's dos eventos por linha para facilitar a inserção dos históricos.
- 
-
----------------------------------------------------------------------------------------------------------------------------
-
-
-# Para Fazer Hoje(14/01)
-
-- Juntar os scripts de 'insert_specific_id' e 'insert_historico'.
-
-- Arrumar erros na inserção inicial dos historicos (script insert SQL feito hoje). Exemplo: ind. 395.
-
-- Inserir o histórico dos individuos. Tabela 'history'.
-
-
-# Feito:
-
-- Juntado os scripts de 'insert_specific_id' e 'insert_historico', pois as manipulações para edição do studbook (BLT.csv) ficaram fragmentadas em dois scripts distintos. Isso foi utilizado para criar o BLT_history.csv
-
-- Arrumado o erro na inserção do indíduo 395, que era causado por não haver um evento inserido de 'Loan to'.
-
-
-# Próximas Etapas
-
-- Inserir os id's específicos nas observações de cada evento do histórico.
-
-- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
-
----------------------------------------------------------------------------------------------------------------------------
-
-
-# Para Fazer Hoje(04/03)
-
-- Padronizar as datas do studybook para formato de data.
-- Acrescentar as datas dos eventos e id_específico dos individuos no SQL de historico.
-- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
-
-
-# Feito:
-
-- Arrumado arquvivo '/Dados/BLT_history.csv' pois todos os dados estavam duplicados.
-- Acrescentar as datas dos eventos e id_específico dos individuos no SQL de historico.
-
-
-# Próximas Etapas
-
-- Padronizar as datas do studybook para formato de data aaaa-mm-dd
-
-- Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
-
-- Tentar por meio do arquivo antigo do BLT.csv fazer recuperação das datas com o ano por completo
-
-
-## OBSERVAÇÃO:
-``` bash
-#Comandos de manejo de data
-cat BLT.csv | cut -d, -f7 > Datas_BLT.txt
-#Usei editor de texto pra mudar os espaços para "/"
-
-#Inverter dd/mm/aaaa para aaaa-mm-dd
-cat Datas_BLT.txt | cut -d/ -f3,2,1 > InvDatas.txt
-
-#algumas datas não estão em um formato ideal e vão precisar ser tratadas
-#Acrescentar caracter no fim do texto
-while read -r line; do echo "$line-"; done < InvDatas.txt
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
 
