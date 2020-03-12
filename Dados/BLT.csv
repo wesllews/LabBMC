@@ -1,4 +1,4 @@
-Stud ,Sex,Birth Date,Sire,Dam,Location,Date,LocalID,Event,Name
+Stud,Sex,BirthDate,Sire,Dam,Location,Date,Local_id,Event,Name
 1,Male,1973,WILD,WILD,M DIABO,NA,1,Capture,
 NA,NA,NA,NA,NA,RIO PRIM,1973-11-01,29,Transfer,
 NA,NA,NA,NA,NA,NA,1987-01-01,NA,Death,
