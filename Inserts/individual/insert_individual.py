@@ -1,4 +1,4 @@
-#Abrindo studybook
+#Abrindo studbook
 with open('../../Dados/BLT.csv', 'r') as dados:
     read = dados.readlines()
 
@@ -9,12 +9,12 @@ with open('insert_individual.sql', 'w') as file:
 		linha2= linha.split(",")
 
 
-		if(linha2[0] != "NA"): #"NA" sao as celulas vazias na tabela se studybook
+		if(linha2[0] != "NA"): #"NA" sao as celulas vazias da coluna de id na tabela do studybook
 
 			if(linha2[9]=="\n"):
-				sql= "INSERT INTO `individual` (`id`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, '1', '"+linha2[1]+"', NULL, 'n', NULL);"
+				sql= "INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, '"+linha2[0]+"', '1', '"+linha2[1]+"', NULL, 'n', NULL);"
 			else:
-				sql= "INSERT INTO `individual` (`id`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, '1', '"+linha2[1]+"', '"+linha2[9][:-1]+"', 'n', NULL);"
+				sql= "INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL,'"+linha2[0]+"' , '1', '"+linha2[1]+"', '"+linha2[9][:-1]+"', 'n', NULL);"
 			file.write(sql+"\n")	
 
 

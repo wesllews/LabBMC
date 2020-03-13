@@ -36,8 +36,9 @@ INSERT INTO `category` (`id`, `category`, `excluded`, `excluded_date`) VALUES (N
 CREATE TABLE `individual`
 (
  `id`            integer NOT NULL AUTO_INCREMENT ,
+ `studbook`      varchar(15) NULL UNIQUE ,
  `id_category`   integer NOT NULL ,
- `sex`           char NOT NULL ,
+ `sex`           varchar(15) NOT NULL ,
  `name`          varchar(45) NULL ,
  `excluded`      char NULL ,
  `excluded_date` date NULL ,
@@ -85,25 +86,34 @@ PRIMARY KEY (`id`)
 
 
 
--- ************************************** `history`
-CREATE TABLE `history`
+
+
+-- ************************************** `historic`
+CREATE TABLE `historic`
 (
  `id`            integer NOT NULL AUTO_INCREMENT ,
  `id_individual` integer NOT NULL ,
- `id_events`      integer NOT NULL ,
+ `id_event`      integer NOT NULL ,
  `id_institute`  integer NOT NULL ,
+ `local_id`   varchar(15) NULL ,
+ `date`          date NULL ,
  `observation`   varchar(500) NULL ,
  `excluded`      char NULL ,
  `excluded_date` date NULL ,
 
 PRIMARY KEY (`id`),
-KEY `fkIdx_186` (`id_events`),
-CONSTRAINT `FK_185` FOREIGN KEY `fkIdx_186` (`id_events`) REFERENCES `events` (`id`),
+KEY `fkIdx_186` (`id_event`),
+CONSTRAINT `FK_185` FOREIGN KEY `fkIdx_186` (`id_event`) REFERENCES `events` (`id`),
 KEY `fkIdx_193` (`id_institute`),
 CONSTRAINT `FK_193` FOREIGN KEY `fkIdx_193` (`id_institute`) REFERENCES `institute` (`id`),
 KEY `fkIdx_91` (`id_individual`),
 CONSTRAINT `FK_91` FOREIGN KEY `fkIdx_91` (`id_individual`) REFERENCES `individual` (`id`)
 ) AUTO_INCREMENT=1;
+
+
+
+
+
 
 
 
@@ -122,24 +132,6 @@ KEY `fkIdx_199` (`dam`),
 CONSTRAINT `FK_199` FOREIGN KEY `fkIdx_199` (`dam`) REFERENCES `individual` (`id`),
 KEY `fkIdx_82` (`id_individual`),
 CONSTRAINT `FK_82` FOREIGN KEY `fkIdx_82` (`id_individual`) REFERENCES `individual` (`id`)
-);
-
-
-
--- ************************************** `specific_id_individual`
-
-CREATE TABLE `specific_id_individual`
-(
- `id`            varchar(45) NOT NULL ,
- `id_individual` integer NOT NULL ,
- `id_institute`  integer NOT NULL ,
- `excluded`      char NULL ,
- `excluded_date` date NULL ,
-
-
-CONSTRAINT `FK_84` FOREIGN KEY `fkIdx_82` (`id_individual`) REFERENCES `individual` (`id`),
-KEY `fkIdx_97` (`id_institute`),
-CONSTRAINT `FK_97` FOREIGN KEY `fkIdx_97` (`id_institute`) REFERENCES `institute` (`id`)
 );
 
 

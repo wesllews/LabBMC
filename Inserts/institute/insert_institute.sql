@@ -1,5 +1,3 @@
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'NAME','ABREVIATION','COUNTRY','STATE','CITY
-', 'n', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Adelaide Zoological Gardens','ADELAIDE','Australia','South Australia','Adelaide
 ', 'n', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Zoologico de Bauru','BAURU ZOO','Brazil','São Paulo','Bauru
@@ -10,7 +8,7 @@ INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city
 ', 'n', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Bristol Zoo','BRISTOL','England','Clifton','Bristol
 ', 'n', NULL);
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Buri','Buri','Brazil','São Paulo','Buri
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Buri','BURI','Brazil','São Paulo','Buri
 ', 'n', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Central Park Wildlife Center','CENTRALPK','United States of America',' New York',' New York
 ', 'n', NULL);
@@ -50,4 +48,7 @@ INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city
 ', 'n', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Unknown Location','UNKNOWN','Brazil','Not specified','NA
 ', 'n', NULL);
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'WILD','WILD','Unknown','Not specified',NULL, 'n', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'Brazil','BRAZIL','Brazil','Not specified','NA
+', 'n', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`, `excluded_date`) VALUES (NULL,'WILD','WILD','Unknown','Not specified','NA
+', 'n', NULL);
