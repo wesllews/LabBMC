@@ -118,3 +118,8 @@ with open('BLT_historic.csv', newline='\n') as csvfile:
 			#Consistência de dados - removendo a linha sem histórico
 			if id_event !="NA":
 				file.write(sql)
+
+"""
+BIBLIOGRAFIA CSV
+- http://zetcode.com/python/csv/
+"""

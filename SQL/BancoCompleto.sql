@@ -36,7 +36,7 @@ INSERT INTO `category` (`id`, `category`, `excluded`, `excluded_date`) VALUES (N
 CREATE TABLE `individual`
 (
  `id`            integer NOT NULL AUTO_INCREMENT ,
- `studbook`      varchar(15) NULL UNIQUE ,
+ `identification`      varchar(20) NULL UNIQUE ,
  `id_category`   integer NOT NULL ,
  `sex`           varchar(15) NOT NULL ,
  `name`          varchar(45) NULL ,
@@ -48,7 +48,7 @@ KEY `fkIdx_73` (`id_category`),
 CONSTRAINT `FK_73` FOREIGN KEY `fkIdx_73` (`id_category`) REFERENCES `category` (`id`)
 ) AUTO_INCREMENT=1;
 
-INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'Wild', '2', 'Unknown', 'Wild', NULL, NULL);
+INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'Wild', '2', 'Unknown', 'Wild', NULL, NULL);
 
 -- ************************************** `events`
 CREATE TABLE `events`
@@ -86,9 +86,6 @@ PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
 
-
-
-
 -- ************************************** `historic`
 CREATE TABLE `historic`
 (
@@ -110,12 +107,6 @@ CONSTRAINT `FK_193` FOREIGN KEY `fkIdx_193` (`id_institute`) REFERENCES `institu
 KEY `fkIdx_91` (`id_individual`),
 CONSTRAINT `FK_91` FOREIGN KEY `fkIdx_91` (`id_individual`) REFERENCES `individual` (`id`)
 ) AUTO_INCREMENT=1;
-
-
-
-
-
-
 
 
 -- ************************************** `kinship`
@@ -140,12 +131,22 @@ CONSTRAINT `FK_82` FOREIGN KEY `fkIdx_82` (`id_individual`) REFERENCES `individu
 CREATE TABLE `locus`
 (
  `id`            integer NOT NULL AUTO_INCREMENT ,
- `locus`         varchar(30) NOT NULL ,
+ `locus`         varchar(30) NOT NULL UNIQUE ,
  `excluded`      char NULL ,
  `excluded_date` date NULL ,
 
 PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
+
+
+
+
+
+
+
+
+
+
 
 
 -- ************************************** `genotype`

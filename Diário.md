@@ -1,6 +1,29 @@
+# Para Fazer Hoje(13/03) - Part2
+- Inserir lista de locus.
+
+- Definir quanto aos números de identificação utilizados nos individuos de vide livre e cativeiro, uma vez que cada um possui um código de identificação e resgitro diferente. (número do studbook X [Nº no banco de amostra, numero dado por quem envio a amostra, número do animal])
+
+- Colocar as tabelas de genótipos wild e captivejuntas e os dados de forma consistentes para futura inserção.
+
+- Conversar co m Patty e Paola de que número utilizar para wild individuos.
+
+
+# Feito
+- O recém campo 'studbook' inserido no banco de dados foi modificado para 'identification'
+
+- Criado um arquivo de Locus(locus X id) com base na tabela de excel de "Genótipos-Mico-Leão-Preto" enviado pela Nathalia no meu email, dia 9/março.
+
+- Feito um arquivo contendo o id_individuo(BD) e o numStudbook(BLT_csv) juntos.
+
+# Próximas Etapas
+- Inserir Genótipos dos individuos de cativeiro e individuos de vida livre.
+- Colocar as tabelas de genótipos wild e captivejuntas e os dados de forma consistentes para futura inserção.
+- Conversar co m Patty e Paola de que número utilizar para wild individuos.
+- Definir quanto aos números de identificação utilizados nos individuos de vide livre e cativeiro, uma vez que cada um possui um código de identificação e resgitro diferente. (número do studbook X [Nº no banco de amostra, numero dado por quem envio a amostra, número do animal])
+- Ver como inserir alelos distintos do mesmo loci. Exemplo: duas colunas Lchu1.
+----
 # Para Fazer Hoje(13/03) - Part1
 - Inserir Paternidade dos individuos na tabela kinship.
-
 - Adicionar individuos Wild e Unknown por conta do parentesco.
 
 # Feito
@@ -10,7 +33,6 @@
 - Parentescos (kinship) inseridos.
 
 # Próximas Etapas
-
 - Inserir Genótipos
 ---------------------------------------------------------------------------------------------------------------------------
 # Para Fazer Hoje(12/03) - Part 1

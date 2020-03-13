@@ -1,0 +1,14 @@
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Lchu1', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Lchu6', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Lchu7', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Lchu8', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'P2BH6', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'P5BE6', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon2', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon3', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon11', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon15', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon21', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon30', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon31', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon35', NULL, NULL);

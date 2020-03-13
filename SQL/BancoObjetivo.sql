@@ -20,7 +20,7 @@ INSERT INTO `category` (`id`, `category`, `excluded`, `excluded_date`) VALUES (N
 CREATE TABLE `individual`
 (
  `id`            integer NOT NULL AUTO_INCREMENT ,
- `studbook`      varchar(15) NULL UNIQUE ,
+ `identification`      varchar(20) NULL UNIQUE ,
  `id_category`   integer NOT NULL ,
  `sex`           varchar(15) NOT NULL ,
  `name`          varchar(45) NULL ,
@@ -33,8 +33,8 @@ CONSTRAINT `FK_73` FOREIGN KEY `fkIdx_73` (`id_category`) REFERENCES `category` 
 ) AUTO_INCREMENT=1;
 
 -- ** Wild e Unkown individual**
-INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'Wild', '2', 'Unknown', 'Wild', NULL, NULL);
-INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'Unknown', '2', 'Unknown', 'Wild', NULL, NULL);
+INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'Wild', '2', 'Unknown', 'Wild', NULL, NULL);
+INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'Unknown', '2', 'Unknown', 'Wild', NULL, NULL);
 
 
 
@@ -113,6 +113,32 @@ KEY `fkIdx_82` (`id_individual`),
 CONSTRAINT `FK_82` FOREIGN KEY `fkIdx_82` (`id_individual`) REFERENCES `individual` (`id`)
 );
 
+
+-- ************************************** `locus`
+CREATE TABLE `locus`
+(
+ `id`            integer NOT NULL AUTO_INCREMENT ,
+ `locus`         varchar(30) NOT NULL UNIQUE ,
+ `excluded`      char NULL ,
+ `excluded_date` date NULL ,
+
+PRIMARY KEY (`id`)
+) AUTO_INCREMENT=1;
+
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Lchu1', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Lchu6', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Lchu7', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Lchu8', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'P2BH6', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'P5BE6', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon2', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon3', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon11', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon15', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon21', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon30', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon31', NULL, NULL);
+INSERT INTO `locus` (`id`, `locus`, `excluded`, `excluded_date`) VALUES (NULL, 'Leon35', NULL, NULL);
 
 
 
