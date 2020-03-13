@@ -91,7 +91,8 @@ with open("BLT_historic.csv", 'w') as file:
 with open('BLT_historic.csv', newline='\n') as csvfile:
 	read_BLT_historic = csv.DictReader(csvfile, delimiter=',')
 	stud= "1"
-	id_individual = 1
+
+	id_individual = 3 # o individuo 1 é o wild e 2 o unkown
 
 	with open("insert_historic.sql", 'w') as file:
 		for row in read_BLT_historic:

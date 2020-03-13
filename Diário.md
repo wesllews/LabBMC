@@ -1,3 +1,18 @@
+# Para Fazer Hoje(13/03) - Part1
+- Inserir Paternidade dos individuos na tabela kinship.
+
+- Adicionar individuos Wild e Unknown por conta do parentesco.
+
+# Feito
+
+- Adicionado individuo Wild(1) e Unknown(2) e registrados no bancoObjetivo e o BancoCompleto
+- Adicionado Kinship ao BancoObjetivo.sql
+- Parentescos (kinship) inseridos.
+
+# Próximas Etapas
+
+- Inserir Genótipos
+---------------------------------------------------------------------------------------------------------------------------
 # Para Fazer Hoje(12/03) - Part 1
 - O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
 

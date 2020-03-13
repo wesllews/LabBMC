@@ -48,6 +48,7 @@ KEY `fkIdx_73` (`id_category`),
 CONSTRAINT `FK_73` FOREIGN KEY `fkIdx_73` (`id_category`) REFERENCES `category` (`id`)
 ) AUTO_INCREMENT=1;
 
+INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'Wild', '2', 'Unknown', 'Wild', NULL, NULL);
 
 -- ************************************** `events`
 CREATE TABLE `events`

@@ -515,3 +515,5 @@ INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `exclu
 INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'TE74', '1', 'Unknown', NULL, 'n', NULL);
 INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'TE75', '1', 'Unknown', NULL, 'n', NULL);
 INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'TE76', '1', 'Unknown', NULL, 'n', NULL);
+
+INSERT INTO `individual` (`id`, `studbook`, `id_category`, `sex`, `name`, `excluded`, `excluded_date`) VALUES (NULL, 'Wild', '2', 'Unknown', 'Wild', NULL, NULL);
