@@ -1,3 +1,24 @@
+# Para Fazer (17-19/03)
+- Reunir as informações doa individuos de vida livre:
+		- Localização
+		- Identification
+		- Name
+		- Fragmento, Grupo e População.
+
+# Feito
+
+(17/03)
+- Fora decidido por mim e comunicado a elas que os individuos de vida livre serão inseridos utilizando o codido do banco de amostras do laboratório (MAM_XXX) no campo individual.identification e os códigos utilizados pelos zoologicos ou biologos que concederam a amostra serão anotados no campo individual.name
+
+
+# Próximas Etapas
+- Colocar as tabelas de genótipos wild e captive juntas e os dados de forma consistentes para tentar inserir todos individuos juntos.
+
+- Inserir Genótipos dos individuos de vida livre.
+
+- Fazer as devidas alterações no banco de dados para que todas essas informações sejam devidamente inseridas e da forma menos trabalhosa.
+
+---------------------------------------------------------------------------------------------------------------------------
 # Para Fazer Hoje(16/03)
 - Ver como inserir alelos distintos do mesmo loci. Exemplo: duas colunas Lchu1.
 
