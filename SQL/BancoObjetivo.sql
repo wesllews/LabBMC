@@ -138,3 +138,26 @@ CONSTRAINT `FK_127` FOREIGN KEY `fkIdx_127` (`id_individual`) REFERENCES `indivi
 KEY `fkIdx_130` (`id_locus`),
 CONSTRAINT `FK_130` FOREIGN KEY `fkIdx_130` (`id_locus`) REFERENCES `locus` (`locus`)
 ) AUTO_INCREMENT=1;
+
+
+-- ************************************** `wild_location`
+CREATE TABLE `wild_location`
+(
+ `id_individual` varchar(20) NOT NULL ,
+ `fragment`      varchar(45) NOT NULL ,
+ `pop`           varchar(25) NULL ,
+ `group`         varchar(25) NULL ,
+ `longitude`     varchar(15) NULL ,
+ `latitude`      varchar(15) NULL ,
+ `excluded`      char NULL ,
+ `excluded_date` date NULL ,
+
+PRIMARY KEY (`id_individual`),
+KEY `fkIdx_153` (`id_individual`),
+CONSTRAINT `FK_153` FOREIGN KEY `fkIdx_153` (`id_individual`) REFERENCES `individual` (`identification`)
+);
+
+
+
+
+

@@ -1,3 +1,19 @@
+# Para Fazer (20/03)
+- Alteração do banco de dados para inserir localização dos individuos de vida livre.
+- Inserir genotipos dos individuos vida livre.
+- Inserir indivíduos de vida livre.
+
+# Feito
+- Inserir indivíduos de vida livre.
+- Alteração do banco de dados para inserir localização dos individuos de vida livre.
+- Inserir genotipos dos individuos vida livre.
+
+# Próximas Etapas
+- Estudar programação WEB e começar fazer pagina de vizualização de studbook.
+
+- Talvez para a inserção das sequências Dloop eu vou precisar alterar a tabela genotype, para o alelo ser um campo TEXT ou criar uma nova tabela só pra sequencias longas que possam querer ser inseridas.
+
+---------------------------------------------------------------------------------------------------------------------------
 # Para Fazer (17-19/03)
 - Reunir as informações doa individuos de vida livre:
 		- Localização
@@ -10,6 +26,8 @@
 (17/03)
 - Fora decidido por mim e comunicado a elas que os individuos de vida livre serão inseridos utilizando o codido do banco de amostras do laboratório (MAM_XXX) no campo individual.identification e os códigos utilizados pelos zoologicos ou biologos que concederam a amostra serão anotados no campo individual.name
 
+(19/03)
+- Reunir as informações doa individuos de vida livre. Foi colocado em uma tabela no meu drive chamada Genótipos - BD que possui tres folhas: Wild informações de individuo, Wild Genotipos e Cativeiro Genotipos.
 
 # Próximas Etapas
 - Colocar as tabelas de genótipos wild e captive juntas e os dados de forma consistentes para tentar inserir todos individuos juntos.

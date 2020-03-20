@@ -76,7 +76,7 @@ for i in range(len(linha_BLT)):
 linha_BLT[0].insert(11,"Observation") #linha de titulo na coluna 11, mas o insert é colocado pra 10
 
 # Write Arquivo para trabalhar com o historico
-with open("BLT_historic.csv", 'w') as file:
+with open("historic/BLT_historic.csv", 'w') as file:
 
 	for i in range(len(linha_BLT)):
 
@@ -88,7 +88,7 @@ with open("BLT_historic.csv", 'w') as file:
 
 
 # Lendo Arquivo para criar o SQL
-with open('BLT_historic.csv', newline='\n') as csvfile:
+with open('historic/BLT_historic.csv', newline='\n') as csvfile:
 	read_BLT_historic = csv.DictReader(csvfile, delimiter=',')
 	"""
 	stud= "1"
