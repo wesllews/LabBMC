@@ -7,7 +7,7 @@ lista_event =["id Zero criado apenas para nivelamento","Birth", "Capture", "Tran
 
 
 #Adicionando os id_institute em uma matriz a partir do arquivo institute.csv
-with open('../institute/institute.csv', 'r') as institute:
+with open('institute/institute.csv', 'r') as institute:
     read_institute = institute.readlines()
 
 for i in range(len(read_institute)):
@@ -16,7 +16,7 @@ for i in range(len(read_institute)):
 	linha_institute.append(linha) 
 
 # Substituindo os NA da coluna 0, pelos respectivos ids do individuo
-with open('../../Dados/BLT.csv', 'r') as dados:
+with open('../Dados/BLT.csv', 'r') as dados:
     read_BLT = dados.readlines()
 
 for i in range(len(read_BLT)):
@@ -76,7 +76,7 @@ for i in range(len(linha_BLT)):
 linha_BLT[0].insert(11,"Observation") #linha de titulo na coluna 11, mas o insert é colocado pra 10
 
 # Write Arquivo para trabalhar com o historico
-with open("BLT_historic.csv", 'w') as file:
+with open("historic/BLT_historic.csv", 'w') as file:
 
 	for i in range(len(linha_BLT)):
 
@@ -88,24 +88,23 @@ with open("BLT_historic.csv", 'w') as file:
 
 
 # Lendo Arquivo para criar o SQL
-with open('BLT_historic.csv', newline='\n') as csvfile:
+with open('historic/BLT_historic.csv', newline='\n') as csvfile:
 	read_BLT_historic = csv.DictReader(csvfile, delimiter=',')
+	"""
 	stud= "1"
-
 	id_individual = 3 # o individuo 1 é o wild e 2 o unkown
+	"""
 
-	with open("insert_historic.sql", 'w') as file:
+	with open("todos_inserts.sql", 'a') as file:
 		for row in read_BLT_historic:
 
-
+			id = None
+			"""
 			if stud != row['Stud']:
 				stud = row['Stud']
 				id_individual+=1
-
-
-
-
-			id = None
+			"""
+			id_individual = row['Stud']
 			id_event = row['Event_id']
 			id_institute = row['id_institute']
 			Local_id = row['Local_id'] if row['Local_id']!="NA" else None
@@ -118,6 +117,8 @@ with open('BLT_historic.csv', newline='\n') as csvfile:
 			#Consistência de dados - removendo a linha sem histórico
 			if id_event !="NA":
 				file.write(sql)
+		UPDATE = f"\nUPDATE historic SET local_id = NULL WHERE local_id ='None';\n UPDATE historic SET observation = NULL WHERE observation ='None';\n"
+		file.write(UPDATE)
 
 """
 BIBLIOGRAFIA CSV

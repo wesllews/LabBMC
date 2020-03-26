@@ -139,24 +139,13 @@ PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
 
-
-
-
-
-
-
-
-
-
-
 -- ************************************** `genotype`
 CREATE TABLE `genotype`
 (
- `id`            integer NOT NULL AUTO_INCREMENT ,
- `id_individual` integer NOT NULL ,
- `id_locus`      integer NOT NULL ,
- `excluded`      char NULL ,
+ `id_individual` varchar(20) NOT NULL ,
+ `id_locus`      varchar(30) NOT NULL ,
  `alelo`         integer NOT NULL ,
+ `excluded`      char NULL ,
  `excluded_date` date NULL ,
 
 PRIMARY KEY (`id`),
@@ -165,6 +154,16 @@ CONSTRAINT `FK_127` FOREIGN KEY `fkIdx_127` (`id_individual`) REFERENCES `indivi
 KEY `fkIdx_130` (`id_locus`),
 CONSTRAINT `FK_130` FOREIGN KEY `fkIdx_130` (`id_locus`) REFERENCES `locus` (`id`)
 ) AUTO_INCREMENT=1;
+
+
+
+
+
+
+
+
+
+
 
 
 -- ************************************** `fragment`

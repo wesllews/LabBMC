@@ -1,8 +1,8 @@
-with open('institute.csv', 'r') as file:
+with open('institute/institute.csv', 'r') as file:
     read = file.readlines()
 
 
-with open('insert_institute.sql', 'w') as file:
+with open('todos_inserts.sql', 'a') as file:
 
 	for i in range(len(read)):
 

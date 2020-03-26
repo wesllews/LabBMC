@@ -1,3 +1,74 @@
+# Para Fazer (20/03)
+- Alteração do banco de dados para inserir localização dos individuos de vida livre.
+- Inserir genotipos dos individuos vida livre.
+- Inserir indivíduos de vida livre.
+
+# Feito
+- Inserir indivíduos de vida livre.
+- Alteração do banco de dados para inserir localização dos individuos de vida livre.
+- Inserir genotipos dos individuos vida livre.
+
+# Próximas Etapas
+- Estudar programação WEB e começar fazer pagina de vizualização de studbook.
+
+- Talvez para a inserção das sequências Dloop eu vou precisar alterar a tabela genotype, para o alelo ser um campo TEXT ou criar uma nova tabela só pra sequencias longas que possam querer ser inseridas.
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para Fazer (17-19/03)
+- Reunir as informações doa individuos de vida livre:
+		- Localização
+		- Identification
+		- Name
+		- Fragmento, Grupo e População.
+
+# Feito
+
+(17/03)
+- Fora decidido por mim e comunicado a elas que os individuos de vida livre serão inseridos utilizando o codido do banco de amostras do laboratório (MAM_XXX) no campo individual.identification e os códigos utilizados pelos zoologicos ou biologos que concederam a amostra serão anotados no campo individual.name
+
+(19/03)
+- Reunir as informações doa individuos de vida livre. Foi colocado em uma tabela no meu drive chamada Genótipos - BD que possui tres folhas: Wild informações de individuo, Wild Genotipos e Cativeiro Genotipos.
+
+# Próximas Etapas
+- Colocar as tabelas de genótipos wild e captive juntas e os dados de forma consistentes para tentar inserir todos individuos juntos.
+
+- Inserir Genótipos dos individuos de vida livre.
+
+- Fazer as devidas alterações no banco de dados para que todas essas informações sejam devidamente inseridas e da forma menos trabalhosa.
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para Fazer Hoje(16/03)
+- Ver como inserir alelos distintos do mesmo loci. Exemplo: duas colunas Lchu1.
+
+- Inserir Genótipos dos individuos de cativeiro.
+
+- Testar um novo modelo de banco com os ids das tabelas sendo nominal e não id numérico + nominal, reduzindo o número de recursões da página web e criação de arquivos.
+	 - alterar os inserts com base no novo modelo de teste
+
+# Feito
+- Testar um novo modelo de banco com id's nominais. Relação de tabelas alteradas:
+	- historic.id_individual(varchar)
+	- individual.id (excluído)
+	- individual.indentification (varchar e pk nominal)
+	- kinship id_individual, sire e dam (varchar)
+	- genotype.id (excluído)
+	- locus.id (exluído), locus(pk nominal)
+
+- Ver como inserir alelos distintos do mesmo loci. Exemplo: duas colunas Lchu1.
+
+- Inserir Genótipos dos individuos de cativeiro.
+		- Alterar os inserts com base no novo modelo de teste
+
+# Próximas Etapas
+- Colocar as tabelas de genótipos wild e captive juntas e os dados de forma consistentes para futura inserção.
+
+- Definir quanto aos números de identificação utilizados nos individuos de vide livre e cativeiro, uma vez que cada um possui um código de identificação e resgitro diferente. (número do studbook X [Nº no banco de amostra, numero dado por quem envio a amostra, número do animal])
+
+- Conversar com Patty e Paola sobre que número utilizar para wild individuos.
+
+- Inserir Genótipos dos individuos de vida livre.
+---------------------------------------------------------------------------------------------------------------------------
+
 # Para Fazer Hoje(13/03) - Part2
 - Inserir lista de locus.
 
@@ -22,6 +93,7 @@
 - Definir quanto aos números de identificação utilizados nos individuos de vide livre e cativeiro, uma vez que cada um possui um código de identificação e resgitro diferente. (número do studbook X [Nº no banco de amostra, numero dado por quem envio a amostra, número do animal])
 - Ver como inserir alelos distintos do mesmo loci. Exemplo: duas colunas Lchu1.
 ----
+
 # Para Fazer Hoje(13/03) - Part1
 - Inserir Paternidade dos individuos na tabela kinship.
 - Adicionar individuos Wild e Unknown por conta do parentesco.
@@ -34,6 +106,7 @@
 
 # Próximas Etapas
 - Inserir Genótipos
+
 ---------------------------------------------------------------------------------------------------------------------------
 # Para Fazer Hoje(12/03) - Part 1
 - O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
