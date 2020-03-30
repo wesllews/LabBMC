@@ -1,0 +1,20 @@
+/* Color Theme Swatches in Hex */
+$LabBMC-1-hex: #09C908;
+$LabBMC-2-hex: #50D408;
+$LabBMC-3-hex: #85BD02;
+$LabBMC-4-hex: #D4D108;
+$LabBMC-5-hex: #C9B308;
+
+/* Color Theme Swatches in RGBA */
+$LabBMC-1-rgba: rgba(9,201,8, 1);
+$LabBMC-2-rgba: rgba(80,212,8, 1);
+$LabBMC-3-rgba: rgba(133,189,2, 1);
+$LabBMC-4-rgba: rgba(212,209,8, 1);
+$LabBMC-5-rgba: rgba(201,179,8, 1);
+
+/* Color Theme Swatches in HSLA */
+$LabBMC-1-hsla: hsla(119, 92, 40, 1);
+$LabBMC-2-hsla: hsla(98, 92, 43, 1);
+$LabBMC-3-hsla: hsla(77, 97, 37, 1);
+$LabBMC-4-hsla: hsla(59, 92, 43, 1);
+$LabBMC-5-hsla: hsla(53, 92, 40, 1);

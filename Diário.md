@@ -1,3 +1,43 @@
+# Feito (27/03)
+- Header - Concluído
+- Design da Home - Concluído
+- Footer - Concluído
+
+# Próximas Etapas
+- Fazer uma página simples pra Stud Book, contendo resultados em forma de lista.
+- Fazer página About.
+---------------------------------------------------------------------------------------------------------------------------
+
+# Para Fazer (24/03)
+- Estudar componentes Bootstrap
+- Lendo um artigo na página BootstrapBay: [Learn Bootstrap 4 in 14 Days](https://bootstrapbay.com/blog/day-1-bootstrap-4-cdn-and-starter-template/)
+
+# Feito
+- Li sobre os seguintes temas: Typography, Images, Buttons, Navbar.
+- Construindo o arquivo Header.php do site, contendo a Navbar do site.
+- Foi incorporado ao scripts repositórios de Fonts (google fonts) e escolhida de início uma font-family
+- Incoporado repositório de Icons(Fonts Awesome) via link-CSS.
+---------------------------------------------------------------------------------------------------------------------------
+
+# Para Fazer (23/03)
+- Estudar programação WEB
+- Curso no udemy: "Introdução JavaScript e Jquery - Diego Mariano"
+- Lendo um artigo na página BootstrapBay: [Learn Bootstrap 4 in 14 Days](https://bootstrapbay.com/blog/day-1-bootstrap-4-cdn-and-starter-template/)
+
+# Feito
+- Curso no udemy: "Introdução à criação de sites dinâmicos com php - Diego Mariano"
+- Utilizei um modelo pronto da web pra projetar como gostaria que a home do Banco de dados ficasse pasta: 'Exemplo-lawncare'
+- Li sobre os seguintes temas: Starrter Template, Grid System, Flex.
+---------------------------------------------------------------------------------------------------------------------------
+
+# Para Fazer (22/03)
+- Estudar programação WEB e começar fazer pagina de vizualização de studbook.
+- Curso no udemy: "Introdução à criação de sites dinâmicos com php - Diego Mariano"
+
+# Feito
+- Curso no udemy: "Introdução à criação de sites dinâmicos com php - Diego Mariano"
+---------------------------------------------------------------------------------------------
+
 # Para Fazer (20/03)
 - Alteração do banco de dados para inserir localização dos individuos de vida livre.
 - Inserir genotipos dos individuos vida livre.
@@ -9,17 +49,16 @@
 - Inserir genotipos dos individuos vida livre.
 
 # Próximas Etapas
-- Estudar programação WEB e começar fazer pagina de vizualização de studbook.
-
-- Talvez para a inserção das sequências Dloop eu vou precisar alterar a tabela genotype, para o alelo ser um campo TEXT ou criar uma nova tabela só pra sequencias longas que possam querer ser inseridas.
+**- Estudar programação WEB e começar fazer pagina de vizualização de studbook.**
+**- Talvez para a inserção das sequências Dloop eu vou precisar alterar a tabela genotype, para o alelo ser um campo TEXT ou criar uma nova tabela só pra sequencias longas que possam querer ser inseridas.**
 
 ---------------------------------------------------------------------------------------------------------------------------
 # Para Fazer (17-19/03)
 - Reunir as informações doa individuos de vida livre:
-		- Localização
-		- Identification
-		- Name
-		- Fragmento, Grupo e População.
+        - Localização
+        - Identification
+        - Name
+        - Fragmento, Grupo e População.
 
 # Feito
 
@@ -43,21 +82,21 @@
 - Inserir Genótipos dos individuos de cativeiro.
 
 - Testar um novo modelo de banco com os ids das tabelas sendo nominal e não id numérico + nominal, reduzindo o número de recursões da página web e criação de arquivos.
-	 - alterar os inserts com base no novo modelo de teste
+     - alterar os inserts com base no novo modelo de teste
 
 # Feito
 - Testar um novo modelo de banco com id's nominais. Relação de tabelas alteradas:
-	- historic.id_individual(varchar)
-	- individual.id (excluído)
-	- individual.indentification (varchar e pk nominal)
-	- kinship id_individual, sire e dam (varchar)
-	- genotype.id (excluído)
-	- locus.id (exluído), locus(pk nominal)
+    - historic.id_individual(varchar)
+    - individual.id (excluído)
+    - individual.indentification (varchar e pk nominal)
+    - kinship id_individual, sire e dam (varchar)
+    - genotype.id (excluído)
+    - locus.id (exluído), locus(pk nominal)
 
 - Ver como inserir alelos distintos do mesmo loci. Exemplo: duas colunas Lchu1.
 
 - Inserir Genótipos dos individuos de cativeiro.
-		- Alterar os inserts com base no novo modelo de teste
+        - Alterar os inserts com base no novo modelo de teste
 
 # Próximas Etapas
 - Colocar as tabelas de genótipos wild e captive juntas e os dados de forma consistentes para futura inserção.
@@ -119,9 +158,9 @@
 
 # Feito:
 - Confirmar se as alterações feitas no SQL do banco de dados estão iguais as feitas no design do banco, en geral foram nas seguintes propriedades:
-	- utilizar individual.Studbook como pk ou não e as possíveis recursões necessárias na pagina web.
-	- Historic.id_individual(cadastro de histórico dependente do cadastro de indivíduo)
-	- Relação das PK entre  tabelas individual e geotypes
+    - utilizar individual.Studbook como pk ou não e as possíveis recursões necessárias na pagina web.
+    - Historic.id_individual(cadastro de histórico dependente do cadastro de indivíduo)
+    - Relação das PK entre  tabelas individual e geotypes
 
 - O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
 
@@ -140,9 +179,9 @@
 # Para Fazer Hoje(11/03)
 
 - Refazer os inserts das tabelas devido a modificação dos bancos
-	- Os SQL's do Banco -- OK
-	- Institutes -- OK
-	- Individual -- OK
+    - Os SQL's do Banco -- OK
+    - Institutes -- OK
+    - Individual -- OK
 
 - O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
 
@@ -165,9 +204,9 @@
 - Continuar o script inserte_historic.py a partir da linha 102 e trabalhar com as conversão das variáveis pra texto, criando a variavel dos inserts sql.
 
 - Confirmar se as alterações feitas no SQL do banco de dados estão iguais as feitas no design do banco, en geral foram nas seguintes propriedades:
-	- Individual.Studbook como pk ou não e as possíveis recursões necessárias caso isso não seja utilizado.
-	- Historic.id_individual(cadastro de histórico dependente do cadastro de indivíduo)
-	- Relação das PK entre  tabelas individual e geotypes
+    - Individual.Studbook como pk ou não e as possíveis recursões necessárias caso isso não seja utilizado.
+    - Historic.id_individual(cadastro de histórico dependente do cadastro de indivíduo)
+    - Relação das PK entre  tabelas individual e geotypes
 
 ---------------------------------------------------------------------------------------------------------------------------
 # Para Fazer Hoje(10/03)
@@ -311,10 +350,10 @@ cat BLT.csv | cut -d, -f7 > Datas_BLT.txt
 # Para Fazer Hoje(13/01):
 
 "Ainda é necessário ver qual a melhor forma de lidar com locais que não possuem um id_specific para os idnividuos. Faz-se necessário a troca da primary Key da tabela, justamente por que atualmente a PK é o id especifico.""
-	- Pensando nessa necessidade eu vou adaptar o banco e as inserções para que os id específicos sejam adicionados nas obersações dos históricos, uma vez que não é um item indispensável para os relacionamentos, mas que precisa ser mantido.
+    - Pensando nessa necessidade eu vou adaptar o banco e as inserções para que os id específicos sejam adicionados nas obersações dos históricos, uma vez que não é um item indispensável para os relacionamentos, mas que precisa ser mantido.
 
 "Fiz a troca no arquivo BLT.csv do 'location' SCARLOS para SAO CARLOS. Precisa ser verificado se de fato correspondem ao mesmo local. (stud  nº 91 e outros 5)"
- 	- Alguns dados não estão corretamente colocados no BLT.csv, então vou utilizar os erros de inserção do 'insert_specific_id.sql' para ver quais linhas os dados não foram corretamente arrumados.
+    - Alguns dados não estão corretamente colocados no BLT.csv, então vou utilizar os erros de inserção do 'insert_specific_id.sql' para ver quais linhas os dados não foram corretamente arrumados.
 
 
 # Feito:
@@ -331,8 +370,8 @@ cat BLT.csv | cut -d, -f7 > Datas_BLT.txt
 ---------------------------------------------------------------------------------------------------------------------------
 # Para Fazer Hoje(10/01):
 - Escrever script SQL de insert dos specific_id de cada indivíduo.
-	
-	- No script de inserir_specific_id.py ajustar os dados contidos em BLT.csv para cada linha da coluna "stud",coluna 0, possuir o id referente ao individuo a que se refere. Atualmente a primeira linha possui o id e as linhas subsequentes ficam em branco até uma nova "seção" de dados de outro individuo. 
+    
+    - No script de inserir_specific_id.py ajustar os dados contidos em BLT.csv para cada linha da coluna "stud",coluna 0, possuir o id referente ao individuo a que se refere. Atualmente a primeira linha possui o id e as linhas subsequentes ficam em branco até uma nova "seção" de dados de outro individuo. 
 
 
 # Feito
