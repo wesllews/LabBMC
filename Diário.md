@@ -1,3 +1,14 @@
+# Para fazer (06/04)
+Página de study book:
+- Filtro de datas(between)
+- Filtro de linhas por página(limit)
+- Filter by institute, Sex, etc usando o array de header pra tudo.
+
+
+
+# Próximas Etapas
+- Fazer página About.
+---------------------------------------------------------------------------------------------------------------------------
 # Feito (27/03)
 - Header - Concluído
 - Design da Home - Concluído

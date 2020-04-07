@@ -1,3 +1,4 @@
+<?php include "connection.php"; ?>
 <!doctype html>
 <html lang="pt">
 
@@ -24,7 +25,7 @@
 		<link rel="stylesheet" type="text/css" href="css/labbmc.css">
 
 		<!-- Title and Icon page -->
-		<title>Database</title>
+		<title>BLT Database</title>
 		<link rel="icon" href="img/dna-solid.svg">
   </head>
 
@@ -33,10 +34,10 @@
   <header>
 
 	    <!-- NavBar-Class -->
-	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow ">
+	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
 
 	    	<!-- Brand -->
-	    	<a class="navbar-brand font-weight-bold" href="index.php"><i class="fas fa-database text-warning shadow-lg"></i> Database</a>
+	    	<a class="navbar-brand font-weight-bold" href="http://localhost/phpmyadmin/index.php"><i class="fas fa-database text-warning shadow-lg"></i>BLT Database</a>
 
 		    <!-- Toggler -->
 		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -47,13 +48,16 @@
 				<!-- Pages links -->
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-book-open"></i> Stud Book</a>
+						<a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-dna"></i> Genotypes</a>
+						<a class="nav-link <?php if($_SESSION['pagina']=='studbook'){echo "active";} ?>" href="studbook.php"><i class="fas fa-book-open"></i> Stud Book</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="?pagina=about"><i class="fas fa-users"></i> About Us</a>
+						<a class="nav-link" href="page.php"><i class="fas fa-dna"></i> Genotypes</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="about.php"><i class="fas fa-users"></i> About Us</a>
 					</li>
 				</ul>
 				
