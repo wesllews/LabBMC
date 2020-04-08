@@ -1,12 +1,13 @@
 # Para fazer (08/04)
 - Filtro de datas(between) utilizando bootstrap datapicker.
 
-# Feito
+## Feito
 - Filtro de datas(between) utilizando bootstrap datapicker.
 
-# Próximas Etapas
+## Próximas Etapas
 - Recriar em 'db.class.php' uma função que imprime só o cabeçalho das tabelas e outra para imprimir só o corpo, para poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
 - Fazer os links de limit, page voltarem para as páginas principas e não nas funções para tentar mante-los nos links dos parametros.
+- Fazer validação dos inputs recebidos nos filtros, exemplo: data, items per page, etc.
 - Filter by institute, Sex, etc usando o array de header pra tudo.
 - Fazer página About.
 ---------------------------------------------------------------------------------------------------------------------------
@@ -14,11 +15,11 @@
 # Para fazer (07/04)
 - Correção das versões dos códigos entre o gitHub e os códigos e dados do meu computador.
 
-# Feito 
+## Feito 
 - Parte 1 do curso de GitHub e versionamento pelo udemy(Comandos: commit, add, push, diff, chave SSH).
 - Correção das versões.
 
-# Próximas Etapas
+## Próximas Etapas
 - Filtro de datas(between)
 - Filter by institute, Sex, etc usando o array de header pra tudo.
 - Fazer página About.
@@ -29,20 +30,21 @@ Página de study book:
 - Filtro de linhas por página(limit)
 - Filter by institute, Sex, etc usando o array de header pra tudo.
 
-# Feito 
+## Feito 
 - Filtro de linhas por página(limit)
 
-# Próximas Etapas
+## Próximas Etapas
 - Filtro de datas(between)
 - Filter by institute, Sex, etc usando o array de header pra tudo.
 - Fazer página About.
 ---------------------------------------------------------------------------------------------------------------------------
-# Feito (27/03)
+
+## Feito (27/03)
 - Header - Concluído
 - Design da Home - Concluído
 - Footer - Concluído
 
-# Próximas Etapas
+## Próximas Etapas
 - Fazer uma página simples pra Stud Book, contendo resultados em forma de lista.
 - Fazer página About.
 ---------------------------------------------------------------------------------------------------------------------------
@@ -51,7 +53,7 @@ Página de study book:
 - Estudar componentes Bootstrap
 - Lendo um artigo na página BootstrapBay: [Learn Bootstrap 4 in 14 Days](https://bootstrapbay.com/blog/day-1-bootstrap-4-cdn-and-starter-template/)
 
-# Feito
+## Feito
 - Li sobre os seguintes temas: Typography, Images, Buttons, Navbar.
 - Construindo o arquivo Header.php do site, contendo a Navbar do site.
 - Foi incorporado ao scripts repositórios de Fonts (google fonts) e escolhida de início uma font-family
@@ -63,7 +65,7 @@ Página de study book:
 - Curso no udemy: "Introdução JavaScript e Jquery - Diego Mariano"
 - Lendo um artigo na página BootstrapBay: [Learn Bootstrap 4 in 14 Days](https://bootstrapbay.com/blog/day-1-bootstrap-4-cdn-and-starter-template/)
 
-# Feito
+## Feito
 - Curso no udemy: "Introdução à criação de sites dinâmicos com php - Diego Mariano"
 - Utilizei um modelo pronto da web pra projetar como gostaria que a home do Banco de dados ficasse pasta: 'Exemplo-lawncare'
 - Li sobre os seguintes temas: Starrter Template, Grid System, Flex.
@@ -73,7 +75,7 @@ Página de study book:
 - Estudar programação WEB e começar fazer pagina de vizualização de studbook.
 - Curso no udemy: "Introdução à criação de sites dinâmicos com php - Diego Mariano"
 
-# Feito
+## Feito
 - Curso no udemy: "Introdução à criação de sites dinâmicos com php - Diego Mariano"
 ---------------------------------------------------------------------------------------------
 
@@ -82,12 +84,12 @@ Página de study book:
 - Inserir genotipos dos individuos vida livre.
 - Inserir indivíduos de vida livre.
 
-# Feito
+## Feito
 - Inserir indivíduos de vida livre.
 - Alteração do banco de dados para inserir localização dos individuos de vida livre.
 - Inserir genotipos dos individuos vida livre.
 
-# Próximas Etapas
+## Próximas Etapas
 **- Estudar programação WEB e começar fazer pagina de vizualização de studbook.**
 **- Talvez para a inserção das sequências Dloop eu vou precisar alterar a tabela genotype, para o alelo ser um campo TEXT ou criar uma nova tabela só pra sequencias longas que possam querer ser inseridas.**
 
@@ -99,7 +101,7 @@ Página de study book:
         - Name
         - Fragmento, Grupo e População.
 
-# Feito
+## Feito
 
 (17/03)
 - Fora decidido por mim e comunicado a elas que os individuos de vida livre serão inseridos utilizando o codido do banco de amostras do laboratório (MAM_XXX) no campo individual.identification e os códigos utilizados pelos zoologicos ou biologos que concederam a amostra serão anotados no campo individual.name
@@ -107,7 +109,7 @@ Página de study book:
 (19/03)
 - Reunir as informações doa individuos de vida livre. Foi colocado em uma tabela no meu drive chamada Genótipos - BD que possui tres folhas: Wild informações de individuo, Wild Genotipos e Cativeiro Genotipos.
 
-# Próximas Etapas
+## Próximas Etapas
 - Colocar as tabelas de genótipos wild e captive juntas e os dados de forma consistentes para tentar inserir todos individuos juntos.
 
 - Inserir Genótipos dos individuos de vida livre.
@@ -123,7 +125,7 @@ Página de study book:
 - Testar um novo modelo de banco com os ids das tabelas sendo nominal e não id numérico + nominal, reduzindo o número de recursões da página web e criação de arquivos.
      - alterar os inserts com base no novo modelo de teste
 
-# Feito
+## Feito
 - Testar um novo modelo de banco com id's nominais. Relação de tabelas alteradas:
     - historic.id_individual(varchar)
     - individual.id (excluído)
@@ -137,7 +139,7 @@ Página de study book:
 - Inserir Genótipos dos individuos de cativeiro.
         - Alterar os inserts com base no novo modelo de teste
 
-# Próximas Etapas
+## Próximas Etapas
 - Colocar as tabelas de genótipos wild e captive juntas e os dados de forma consistentes para futura inserção.
 
 - Definir quanto aos números de identificação utilizados nos individuos de vide livre e cativeiro, uma vez que cada um possui um código de identificação e resgitro diferente. (número do studbook X [Nº no banco de amostra, numero dado por quem envio a amostra, número do animal])
@@ -157,14 +159,14 @@ Página de study book:
 - Conversar co m Patty e Paola de que número utilizar para wild individuos.
 
 
-# Feito
+## Feito
 - O recém campo 'studbook' inserido no banco de dados foi modificado para 'identification'
 
 - Criado um arquivo de Locus(locus X id) com base na tabela de excel de "Genótipos-Mico-Leão-Preto" enviado pela Nathalia no meu email, dia 9/março.
 
 - Feito um arquivo contendo o id_individuo(BD) e o numStudbook(BLT_csv) juntos.
 
-# Próximas Etapas
+## Próximas Etapas
 - Inserir Genótipos dos individuos de cativeiro e individuos de vida livre.
 - Colocar as tabelas de genótipos wild e captivejuntas e os dados de forma consistentes para futura inserção.
 - Conversar co m Patty e Paola de que número utilizar para wild individuos.
@@ -176,13 +178,13 @@ Página de study book:
 - Inserir Paternidade dos individuos na tabela kinship.
 - Adicionar individuos Wild e Unknown por conta do parentesco.
 
-# Feito
+## Feito
 
 - Adicionado individuo Wild(1) e Unknown(2) e registrados no bancoObjetivo e o BancoCompleto
 - Adicionado Kinship ao BancoObjetivo.sql
 - Parentescos (kinship) inseridos.
 
-# Próximas Etapas
+## Próximas Etapas
 - Inserir Genótipos
 
 ---------------------------------------------------------------------------------------------------------------------------
@@ -195,7 +197,7 @@ Página de study book:
 
 - Continuar o script inserte_historic.py a partir da linha 102 e trabalhar com as conversão das variáveis pra texto, criando a variavel dos inserts sql.
 
-# Feito:
+## Feito:
 - Confirmar se as alterações feitas no SQL do banco de dados estão iguais as feitas no design do banco, en geral foram nas seguintes propriedades:
     - utilizar individual.Studbook como pk ou não e as possíveis recursões necessárias na pagina web.
     - Historic.id_individual(cadastro de histórico dependente do cadastro de indivíduo)
@@ -209,7 +211,7 @@ Página de study book:
 
 - Continuar o script inserte_historic.py a partir da linha 102 e trabalhar com as conversão das variáveis pra texto, criando a variavel dos inserts sql.
 
-# Próximas Etapas
+## Próximas Etapas
 
 - Inserir Paternidade dos individuos, tabela kinship.
 
@@ -226,14 +228,14 @@ Página de study book:
 
 - Entender porquê e como funciona o código:  `linha_BLT[i][9].rfind("[")!=-1`
 
-# Feito:
+## Feito:
 -  Separar as observações de morte dos invidivíduos da coluna 'Event_id'.
 
 - O Código em insert_historic.py utilizará a biblioteca CSV para tornar mais fácil o uso de arquivo CSV.
 
 - ID integer da tabela individual foi substituído pelo id_studbook
 
-# Próximas Etapas
+## Próximas Etapas
 - O insert de datas e id_especificos precisam ser validados pq nem sempre eles vão existir. Para isso utilizar 'if inline' para trocar 'NA' por valor NULL.
 
 - Fazer insert do histórico dos indivíduos
@@ -256,7 +258,7 @@ Página de study book:
 
 
 
-# Feito:
+## Feito:
 - Não foram adicionados parametros do studbook_2017 ao banco de dados pois a estrutura do arquivo passada pelo dominic era input de um programa e não um novo dataset (Falei com Paola sobre isso).
 
 - Modificado o banco de dados para que o sexo do indivíduo seja texto, em caso de unknown 'varchar(15)'
@@ -265,7 +267,7 @@ Página de study book:
 
 - Modificar o banco de dados para que a tabela de individuos possua Id do banco de dados numérico e id studbook 'VarChar', pois alguns id's do studbook sõa agora codigos.
 
-# Próximas Etapas
+## Próximas Etapas
 
 PENDÊNCIA DO HISTÓRICO
 -  Separar as observações de morte dos invidivíduos da coluna 'Event ID'.
@@ -286,12 +288,12 @@ grep "MOVE" Studbook_2017.CSV | cut -d';' -f1,5-7 | tail -n20 >dados.csv
 
 - Desfazer algumas alterações feitas no studbook original.
 
-# Feito:
+## Feito:
 - Os numeros de studbook de cada individuo não podem ser alterados independente se não seguirem a ordem numérica, desta forma as alterações dos id's feitas entre no individuo 360 e 433 no dia 13/01 foram desfeitas.
 
 - Utilizado o comando `grep -v "MOVE" Studbook\ 2017.CSV > Teste.csv` para selecionar só as linhas de históricos do studbook.
 
-# Próximas Etapas
+## Próximas Etapas
 
 MODIFICAR O BANCO DE DADOS PELAS SEGUINTES NECESSIDADES:
 - Adicionar individuos do studbook_2017 só havia utilizado a edição 2014.
@@ -315,14 +317,14 @@ PENDÊNCIA DO HISTÓRICO
 - Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
 
 
-# Feito:
+## Feito:
 - Padronizar as datas do studbook para formato de data aaaa-mm-dd
 - Tentar por meio do arquivo antigo do BLT.csv fazer recuperação das datas por completo, devido corrompimento dos dados
 - Na coluna 'localID' do studbook foram substituídos 'NONE' e '????' por 'NA'. Uma insconsistência foi encontrada no ind.421 pois foi anotado '000', pouco indicativo de ser um id valido.
 
 - inserindo coluna de observações dos eventos "Death by unkown"
 
-# Próximas Etapas
+## Próximas Etapas
 
 - Separar as observações de morte dos invidivíduos da coluna 'Event ID'.
 
@@ -339,13 +341,13 @@ PENDÊNCIA DO HISTÓRICO
 - Vai ser necessário fazer inserção de individuos "wild" e "unknow" para as relações de parentescos posteriores parentescos.
 
 
-# Feito:
+## Feito:
 
 - Arrumado arquvivo '/Dados/BLT_history.csv' pois todos os dados estavam duplicados.
 - Acrescentar as datas dos eventos e id_específico dos individuos no SQL de historico.
 
 
-# Próximas Etapas
+## Próximas Etapas
 
 - Padronizar as datas do studbook para formato de data aaaa-mm-dd
 
@@ -371,14 +373,14 @@ cat BLT.csv | cut -d, -f7 > Datas_BLT.txt
 - Inserir o histórico dos individuos. Tabela 'history'.
 
 
-# Feito:
+## Feito:
 
 - Juntado os scripts de 'insert_specific_id' e 'insert_historico', pois as manipulações para edição do studbook (BLT.csv) ficaram fragmentadas em dois scripts distintos. Isso foi utilizado para criar o BLT_history.csv
 
 - Arrumado o erro na inserção do indíduo 395, que era causado por não haver um evento inserido de 'Loan to'.
 
 
-# Próximas Etapas
+## Próximas Etapas
 
 - Inserir os id's específicos nas observações de cada evento do histórico.
 
@@ -395,7 +397,7 @@ cat BLT.csv | cut -d, -f7 > Datas_BLT.txt
     - Alguns dados não estão corretamente colocados no BLT.csv, então vou utilizar os erros de inserção do 'insert_specific_id.sql' para ver quais linhas os dados não foram corretamente arrumados.
 
 
-# Feito:
+## Feito:
 
 - Adicionado na tabela de institutos a opção "wild" para os casos de reintrodução.  (stud  nº 141, 260, 293)
 
@@ -413,7 +415,7 @@ cat BLT.csv | cut -d, -f7 > Datas_BLT.txt
     - No script de inserir_specific_id.py ajustar os dados contidos em BLT.csv para cada linha da coluna "stud",coluna 0, possuir o id referente ao individuo a que se refere. Atualmente a primeira linha possui o id e as linhas subsequentes ficam em branco até uma nova "seção" de dados de outro individuo. 
 
 
-# Feito
+## Feito
 - Retornei a tabela de specific_id_individual pro 'BancoCompleto.sql' e apaguei a de "captive_location"
 
 - Criado um script "BancoObjetivo.sql" para fragmentar o banco de dados a partir dos dados que eu estou trabalhando no momento de forma objetiva, para facilitar o desenvolvimento.
