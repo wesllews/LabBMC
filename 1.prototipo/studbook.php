@@ -9,12 +9,19 @@ $sql= "SELECT identification, individual.name as name, sex, events, date, instit
                   INNER JOIN historic ON individual.identification=historic.id_individual 
                   INNER JOIN events ON historic.id_event=events.id
                   INNER JOIN institute ON historic.id_institute=institute.id
-                  WHERE id_category!=2 and (events.events='Birth' OR events.events='Capture')
-                  ";
-#ORDER BY CAST(identification AS int) ASC
+                  WHERE id_category!=2 and (events.events='Birth' OR events.events='Capture') 
+                  "; #ORDER BY CAST(identification AS int) ASC
+
+
+$starDate = isset($_GET['startDate']) ? $_GET['startDate'] : '1970-01-01';
+$endDate = isset($_GET['endDate']) ? $_GET['endDate'] : date('Y-m-d') ;
+
+$sql .= "AND date >= CAST('$starDate' AS DATE) AND date <= CAST('$endDate' AS DATE)";
+
 
 $header = ['identification','name','sex','events','date','institute','local_id'];
 
+# https://formden.com/blog/date-picker
 ?>
 
 
@@ -22,6 +29,7 @@ $header = ['identification','name','sex','events','date','institute','local_id']
 
 <form action="studbook.php" method="get" target="_self" class="form-inline bg-secondary p-3">
 
+  <!-- Items per page -->
   <div class="input-group">
     <div class="input-group-prepend">
       <div class="input-group-text">Items per page</div>
@@ -34,7 +42,27 @@ $header = ['identification','name','sex','events','date','institute','local_id']
       </select>
   </div>
 
-  <button type="submit" class="btn btn-warning ml-auto mr-2">Filter</button>
+  <!-- Date Start -->
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">Start</div>
+    </div>
+    <input class="datapicker form-control" type="date" name="startDate" value="<?php echo $starDate; ?>">
+  </div>
+
+  <!-- Date End -->
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">End</div>
+    </div>
+    <input class="form-control" type="date" name="endDate" value="<?php echo $endDate; ?>" >
+  </div>
+
+  <!-- Submit -->
+  <div class="form-group ml-auto"> <!-- Submit button -->
+    <button type="submit" class="btn btn-warning mr-2">Submit</button>
+  </div>
+  
 </form>
 
 
@@ -51,7 +79,7 @@ $header = ['identification','name','sex','events','date','institute','local_id']
     <!--Table-->
     <table class="table table-hover ">
      
-      <?php table_head($sql,$header); ?>    
+      <?php table($sql,$header); ?>    
         
     </table>
     <!--Table-->

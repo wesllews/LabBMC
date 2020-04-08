@@ -1,7 +1,7 @@
 <?php
 
 
-function table_head($sql,$header,$limit=20){
+function table($sql,$header,$limit=20){
 
 	include "connection.php";
 
@@ -22,7 +22,6 @@ function table_head($sql,$header,$limit=20){
     $offset = ($pag-1) * $limit;
 
     $sql.= " LIMIT $offset,$limit";
-
 
     $link = "limit=$limit&pag=$pag";
 

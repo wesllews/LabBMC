@@ -1,12 +1,40 @@
+# Para fazer (08/04)
+- Filtro de datas(between) utilizando bootstrap datapicker.
+
+# Feito
+- Filtro de datas(between) utilizando bootstrap datapicker.
+
+# Próximas Etapas
+- Recriar em 'db.class.php' uma função que imprime só o cabeçalho das tabelas e outra para imprimir só o corpo, para poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
+- Fazer os links de limit, page voltarem para as páginas principas e não nas funções para tentar mante-los nos links dos parametros.
+- Filter by institute, Sex, etc usando o array de header pra tudo.
+- Fazer página About.
+---------------------------------------------------------------------------------------------------------------------------
+
+# Para fazer (07/04)
+- Correção das versões dos códigos entre o gitHub e os códigos e dados do meu computador.
+
+# Feito 
+- Parte 1 do curso de GitHub e versionamento pelo udemy(Comandos: commit, add, push, diff, chave SSH).
+- Correção das versões.
+
+# Próximas Etapas
+- Filtro de datas(between)
+- Filter by institute, Sex, etc usando o array de header pra tudo.
+- Fazer página About.
+---------------------------------------------------------------------------------------------------------------------------
 # Para fazer (06/04)
 Página de study book:
 - Filtro de datas(between)
 - Filtro de linhas por página(limit)
 - Filter by institute, Sex, etc usando o array de header pra tudo.
 
-
+# Feito 
+- Filtro de linhas por página(limit)
 
 # Próximas Etapas
+- Filtro de datas(between)
+- Filter by institute, Sex, etc usando o array de header pra tudo.
 - Fazer página About.
 ---------------------------------------------------------------------------------------------------------------------------
 # Feito (27/03)

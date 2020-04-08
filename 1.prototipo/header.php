@@ -54,10 +54,10 @@
 						<a class="nav-link <?php if($_SESSION['pagina']=='studbook'){echo "active";} ?>" href="studbook.php"><i class="fas fa-book-open"></i> Stud Book</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="page.php"><i class="fas fa-dna"></i> Genotypes</a>
+						<a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="genotypes.php"><i class="fas fa-dna"></i> Genotypes</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="about.php"><i class="fas fa-users"></i> About Us</a>
+						<a class="nav-link" href="#"><i class="fas fa-users"></i> About Us</a>
 					</li>
 				</ul>
 				
