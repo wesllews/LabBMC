@@ -1,49 +1,62 @@
 <?php
 
+function get_all($header,$limit=20){
+
+// Function table
+	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
+	$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
+	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
+	$limit = isset($_GET['limit'])? $_GET['limit']:$limit;
+	$offset = ($pag-1) * $limit;
+
+	$startDate = isset($_GET['startDate']) ? $_GET['startDate'] : '1970-01-01';
+	$endDate = isset($_GET['endDate']) ? $_GET['endDate'] : date('Y-m-d') ;
+
+return array(
+    "column" => $column,
+    "sort_order" => $sort_order,
+    "pag" => $pag,
+    "limit" => $limit,
+    "offset" => $offset,
+    "startDate" => $startDate,
+    "endDate" => $endDate
+);
+
+}
+
+
 
 function table($sql,$header,$limit=20){
 
 	include "connection.php";
+ 	
+ 	$array = get_all($header);
 
-	// For extra protection these are the columns of which the user can sort by (in your database table).
-	$columns = $header; //['identification','name','sex','events','date','institute','local id'];
+	$order = " ORDER BY $array[column] $array[sort_order]";
+    $limit = " LIMIT $array[offset],$array[limit]";
 
-	// Only get the column if it exists in the above columns array, if it doesn't exist the database table will be sorted by the first item in the columns array.
-	$column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
+    $sql = $sql.$order.$limit;
 
+    $link = "limit=$array[limit]&pag=$array[pag]";
 
-	// Get the sort order for the column, ascending or descending, default is ascending.
-	$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
-
-	$sql .= "ORDER BY $column $sort_order";
-
-	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
-    $limit = isset($_GET['limit'])? $_GET['limit']:$limit;
-    $offset = ($pag-1) * $limit;
-
-    $sql.= " LIMIT $offset,$limit";
-
-    $link = "limit=$limit&pag=$pag";
 
 	// Get the result...
 	if ($result = $mysqli->query($sql)){
 
 		// Some variables we need for the table.
-		$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
-		$asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
-		$add_class = ' class="highlight"';
-
+		$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
+		$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
 		?>
 
 		<!--Head Table-->
 	    <thead>
 	        <tr class="text-center">
-				<?php foreach ($columns as $value): ?>
+				<?php foreach ($header as $value): ?>
 				 <th scope="col">
 				 	<?php $link2 = "&order=".$asc_or_desc."&column=".$value; ?>
 					<a  class="text-decoration-none text-warning" href="?<?php echo $link.$link2; ?>" >
 						<?php echo ucfirst(str_replace('_',' ',$value)); ?>
-						<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
+						<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
 					</a>
 				</th>
 				<?php endforeach ?>
@@ -75,9 +88,9 @@ function table_body($sql,$header,$limit=10){
 
 	include "connection.php";
 
-    $pag = isset($_GET['pag']) ? $_GET['pag']:1;
-    $limit = isset($_GET['limit'])? $_GET['limit']:$limit;
-    $offset = ($pag-1) * $limit;
+    $array['pag'] = isset($_GET['pag']) ? $_GET['pag']:1;
+    $array['limit'] = isset($_GET['limit'])? $_GET['limit']:$limit;
+    $offset = ($array['pag']-1) * $limit;
 
     $sql.= " LIMIT $offset, $limit";
 
@@ -99,39 +112,31 @@ function table_body($sql,$header,$limit=10){
 
 
 
-function pagination($total_pages_sql,$header,$limit=10){
+function pagination($total_pages_sql,$header){
 
 	include "connection.php";
 
-	// Filtros e Ordens
-	$columns = $header;
-	$column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
-	$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
+	$array = get_all($header);
 
-	// Paginas e limites
-    $pag = isset($_GET['pag']) ? $_GET['pag']:1;
-    $limit = isset($_GET['limit'])? $_GET['limit']:$limit;
-    $offset = ($pag-1) * $limit;
-	
     // Href
-    $link = "limit=$limit&column=$column&order=$sort_order";
+    $link = "limit=$array[limit]&column=$array[column]&order=$array[sort_order]";
 
     $result = mysqli_query($mysqli,$total_pages_sql);
 
     $total_rows = mysqli_num_rows($result);
-    $total_pages = ceil($total_rows / $limit);
+    $total_pages = ceil($total_rows / $array['limit']);
 
 	$links= 5;
 
-	$start      = (($pag-$links) > 0) ? ($pag - $links) : 1;
-	$end        = (($pag+$links) < $total_pages) ? ($pag + $links) : $total_pages;
+	$start      = (($array['pag']-$links) > 0) ? ($array['pag'] - $links) : 1;
+	$end        = (($array['pag']+$links) < $total_pages) ? ($array['pag'] + $links) : $total_pages;
 ?>
 
 	<div class="container mt-4">
 		 <ul class="pagination pagination-sm justify-content-center">
 
 	    	<!--First page-->
-	    	<li class="page-item <?php if($pag <= 1){ echo 'disabled'; } ?>">
+	    	<li class="page-item <?php if($array['pag'] <= 1){ echo 'disabled'; } ?>">
 			    <a class="page-link"  href="?<?php echo $link."&pag=1";?>">
 			        First
 			    </a>
@@ -139,8 +144,8 @@ function pagination($total_pages_sql,$header,$limit=10){
 
 
 	    	<!--Previous-->
-	        <li class="page-item <?php if($pag <= 1){ echo 'disabled'; } ?>">
-	            <a class="page-link"  href="?<?php if($pag > 1){echo $link."&pag=".($pag-1); }?>" >
+	        <li class="page-item <?php if($array['pag'] <= 1){ echo 'disabled'; } ?>">
+	            <a class="page-link"  href="?<?php if($array['pag'] > 1){echo $link."&pag=".($array['pag']-1); }?>" >
 	            	Prev
 	        	</a>
 	        </li>
@@ -148,7 +153,7 @@ function pagination($total_pages_sql,$header,$limit=10){
 
 	        <!-- Numbers -->
 			<?php for ( $i = $start ; $i <= $end; $i++ ): ?>
-				<li class="page-item <?php if ($pag == $i){echo "active";} ?>">
+				<li class="page-item <?php if ($array['pag'] == $i){echo "active";} ?>">
 					<a class="page-link"  href="?<?php echo $link."&pag=".$i;?>">
 						<?php echo $i;?> 
 					</a>
@@ -159,15 +164,15 @@ function pagination($total_pages_sql,$header,$limit=10){
 
 
 	        <!--Next-->
-	        <li class="page-item <?php if($pag >= $total_pages){ echo 'disabled'; } ?>">
-	            <a class="page-link" href="?<?php if($pag < $total_pages){echo $link."&pag=".($pag+1); }?>">
+	        <li class="page-item <?php if($array['pag'] >= $total_pages){ echo 'disabled'; } ?>">
+	            <a class="page-link" href="?<?php if($array['pag'] < $total_pages){echo $link."&pag=".($array['pag']+1); }?>">
 	            	Next
 	        	</a>
 	        </li>
 
 
 	        <!--Last-->
-	    	<li class="page-item <?php if($pag >= $total_pages){ echo 'disabled'; } ?>">
+	    	<li class="page-item <?php if($array['pag'] >= $total_pages){ echo 'disabled'; } ?>">
 			    <a class="page-link"  href="?<?php echo $link."&pag=".$total_pages;?>">
 			        Last
 			    </a>

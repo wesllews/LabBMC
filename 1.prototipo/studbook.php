@@ -5,6 +5,9 @@ include 'header.php';
 
 require_once 'db.class.php';
 
+
+
+
 $sql= "SELECT identification, individual.name as name, sex, events, date, institute.name as institute, local_id FROM `individual`
                   INNER JOIN historic ON individual.identification=historic.id_individual 
                   INNER JOIN events ON historic.id_event=events.id
@@ -13,14 +16,15 @@ $sql= "SELECT identification, individual.name as name, sex, events, date, instit
                   "; #ORDER BY CAST(identification AS int) ASC
 
 
-$starDate = isset($_GET['startDate']) ? $_GET['startDate'] : '1970-01-01';
+$startDate = isset($_GET['startDate']) ? $_GET['startDate'] : '1970-01-01';
 $endDate = isset($_GET['endDate']) ? $_GET['endDate'] : date('Y-m-d') ;
 
-$sql .= "AND date >= CAST('$starDate' AS DATE) AND date <= CAST('$endDate' AS DATE)";
+$sql .= "AND date >= CAST('$startDate' AS DATE) AND date <= CAST('$endDate' AS DATE)";
 
 
 $header = ['identification','name','sex','events','date','institute','local_id'];
-
+$teste = get_all($header);
+echo $teste['limit'];
 # https://formden.com/blog/date-picker
 ?>
 
@@ -47,7 +51,7 @@ $header = ['identification','name','sex','events','date','institute','local_id']
     <div class="input-group-prepend">
       <div class="input-group-text">Start</div>
     </div>
-    <input class="datapicker form-control" type="date" name="startDate" value="<?php echo $starDate; ?>">
+    <input class="datapicker form-control" type="date" name="startDate" value="<?php echo $startDate; ?>">
   </div>
 
   <!-- Date End -->

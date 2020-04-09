@@ -1,4 +1,18 @@
 # Para fazer (08/04)
+- Recriar em 'db.class.php' uma função que imprime só o cabeçalho das tabelas e outra para imprimir só o corpo, para poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
+- Fazer página About.
+
+## Feito
+- Criada uma função get_all() que faz todos os gets da página studbook.php e retorna um array.
+
+## Próximas Etapas
+- Fazer os links de limit, page voltarem para as páginas principas e não nas funções para tentar mante-los nos links dos parametros.
+- Fazer validação dos inputs recebidos nos filtros, exemplo: data, items per page, etc.
+- Filter by institute, Sex, etc usando o array de header pra tudo.
+
+---------------------------------------------------------------------------------------------------------------------------
+
+# Para fazer (08/04)
 - Filtro de datas(between) utilizando bootstrap datapicker.
 
 ## Feito
