@@ -1,4 +1,16 @@
-# Para fazer (08/04)
+# Para fazer (10/04)
+- Recriar em 'db.class.php' uma função que imprime só o cabeçalho das tabelas e outra para imprimir só o corpo, para poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
+
+
+## Próximas Etapas
+- Rentar manter os links dos parametros nas páginas.
+- Incorporar os demais filtros do sql nas páginas e não dentro das funções de tabela.
+- Fazer validação dos inputs recebidos nos filtros, exemplo: data, items per page, etc.
+- Filter by institute, Sex, etc usando o array de header pra tudo.
+- Fazer página About.
+
+---------------------------------------------------------------------------------------------------------------------------
+# Para fazer (09/04)
 - Recriar em 'db.class.php' uma função que imprime só o cabeçalho das tabelas e outra para imprimir só o corpo, para poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
 - Fazer página About.
 

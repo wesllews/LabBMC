@@ -7,8 +7,7 @@ require_once 'db.class.php';
 
 $sql= "SELECT identification,category,id_locus,alelo FROM individual
 INNER JOIN genotype ON individual.identification=genotype.id_individual
-INNER JOIN category ON individual.id_category=category.id
-";
+INNER JOIN category ON individual.id_category=category.id";
 #ORDER BY CAST(identification AS int) ASC
 
 $header = ['identification','category','id_locus','alelo'];
@@ -28,7 +27,8 @@ $header = ['identification','category','id_locus','alelo'];
     <!--Table-->
     <table class="table table-hover ">
      
-      <?php table($sql,$header); ?>    
+      <?php table_head($header); ?>
+      <?php table_body($sql,$header); ?>    
         
     </table>
     <!--Table-->

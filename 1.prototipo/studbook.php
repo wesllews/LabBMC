@@ -12,7 +12,7 @@ $sql= "SELECT identification, individual.name as name, sex, events, date, instit
                   INNER JOIN historic ON individual.identification=historic.id_individual 
                   INNER JOIN events ON historic.id_event=events.id
                   INNER JOIN institute ON historic.id_institute=institute.id
-                  WHERE id_category!=2 and (events.events='Birth' OR events.events='Capture') 
+                  WHERE id_category!=2 and (events.events='Birth' OR events.events='Capture') AND id_individual = 'wes'
                   "; #ORDER BY CAST(identification AS int) ASC
 
 
@@ -24,7 +24,7 @@ $sql .= "AND date >= CAST('$startDate' AS DATE) AND date <= CAST('$endDate' AS D
 
 $header = ['identification','name','sex','events','date','institute','local_id'];
 $teste = get_all($header);
-echo $teste['limit'];
+
 # https://formden.com/blog/date-picker
 ?>
 

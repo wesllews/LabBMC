@@ -2,114 +2,28 @@
 
 function get_all($header,$limit=20){
 
-// Function table
+	// Head
 	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
 	$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
+	// Pagination
 	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
 	$limit = isset($_GET['limit'])? $_GET['limit']:$limit;
 	$offset = ($pag-1) * $limit;
 
+	// Studbook filters
 	$startDate = isset($_GET['startDate']) ? $_GET['startDate'] : '1970-01-01';
 	$endDate = isset($_GET['endDate']) ? $_GET['endDate'] : date('Y-m-d') ;
 
-return array(
-    "column" => $column,
-    "sort_order" => $sort_order,
-    "pag" => $pag,
-    "limit" => $limit,
-    "offset" => $offset,
-    "startDate" => $startDate,
-    "endDate" => $endDate
-);
-
+	return array(
+	    "column" => $column,
+	    "sort_order" => $sort_order,
+	    "pag" => $pag,
+	    "limit" => $limit,
+	    "offset" => $offset,
+	    "startDate" => $startDate,
+	    "endDate" => $endDate
+	);
 }
-
-
-
-function table($sql,$header,$limit=20){
-
-	include "connection.php";
- 	
- 	$array = get_all($header);
-
-	$order = " ORDER BY $array[column] $array[sort_order]";
-    $limit = " LIMIT $array[offset],$array[limit]";
-
-    $sql = $sql.$order.$limit;
-
-    $link = "limit=$array[limit]&pag=$array[pag]";
-
-
-	// Get the result...
-	if ($result = $mysqli->query($sql)){
-
-		// Some variables we need for the table.
-		$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
-		$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
-		?>
-
-		<!--Head Table-->
-	    <thead>
-	        <tr class="text-center">
-				<?php foreach ($header as $value): ?>
-				 <th scope="col">
-				 	<?php $link2 = "&order=".$asc_or_desc."&column=".$value; ?>
-					<a  class="text-decoration-none text-warning" href="?<?php echo $link.$link2; ?>" >
-						<?php echo ucfirst(str_replace('_',' ',$value)); ?>
-						<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
-					</a>
-				</th>
-				<?php endforeach ?>
-			</tr>
-		</thead>
-
-	    <!--Body Table-->
-		<tbody>
-	    <?php while($row = $result->fetch_assoc()): ?>
-	    	<tr class="text-center">
-
-	    		<?php foreach ($header as $value): ?>
-	    		<td scope="row"> <?php echo $row[$value];?> </td>
-	    		<?php endforeach; ?>
-
-	    	</tr>
-	    <?php endwhile; ?>
-		</tbody>
-	
-<?php
-	}
-}
-
-
-
-
-
-function table_body($sql,$header,$limit=10){
-
-	include "connection.php";
-
-    $array['pag'] = isset($_GET['pag']) ? $_GET['pag']:1;
-    $array['limit'] = isset($_GET['limit'])? $_GET['limit']:$limit;
-    $offset = ($array['pag']-1) * $limit;
-
-    $sql.= " LIMIT $offset, $limit";
-
-    $result = mysqli_query($mysqli,$sql);
-
-    #Rows Table
-    while($row = mysqli_fetch_array($result)): ?>
-
-    	<tr class="text-center">
-    		<?php foreach ($header as $value): ?>
-    		<td scope="row"> <?php echo $row[$value];?> </td>
-    		 <?php endforeach; ?>
-    	</tr>
-    <?php endwhile;
-}
-
-
-
-
 
 
 function pagination($total_pages_sql,$header){
@@ -129,8 +43,7 @@ function pagination($total_pages_sql,$header){
 	$links= 5;
 
 	$start      = (($array['pag']-$links) > 0) ? ($array['pag'] - $links) : 1;
-	$end        = (($array['pag']+$links) < $total_pages) ? ($array['pag'] + $links) : $total_pages;
-?>
+	$end        = (($array['pag']+$links) < $total_pages) ? ($array['pag'] + $links) : $total_pages; ?>
 
 	<div class="container mt-4">
 		 <ul class="pagination pagination-sm justify-content-center">
@@ -181,5 +94,147 @@ function pagination($total_pages_sql,$header){
 	    </ul>
 	</div>
 
-<?php
+	<?php
 }
+
+
+function table($sql,$header){
+
+	include "connection.php";
+ 	
+ 	$array = get_all($header);
+
+	$order = " ORDER BY $array[column] $array[sort_order]";
+    $limit = " LIMIT $array[offset],$array[limit]";
+
+    $sql = $sql.$order.$limit;
+
+    $link = "limit=$array[limit]&pag=$array[pag]";
+
+		// Some variables we need for the table.
+		$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
+		$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
+		?>
+
+		<!--Head Table-->
+	    <thead>
+	        <tr class="text-center">
+				<?php foreach ($header as $value): ?>
+				 <th scope="col">
+				 	<?php $link2 = "&order=".$asc_or_desc."&column=".$value; ?>
+					<a  class="text-decoration-none text-warning" href="?<?php echo $link.$link2; ?>" >
+						<?php echo ucfirst(str_replace('_',' ',$value)); ?>
+						<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
+					</a>
+				</th>
+				<?php endforeach ?>
+			</tr>
+		</thead>
+
+	<?php 
+	$result = $mysqli->query($sql);
+	if ($result->num_rows > 0): ?>
+
+		<!--Body Table-->
+		<tbody>
+	    <?php while($row = $result->fetch_assoc()): ?>
+	    	<tr class="text-center">
+	    		<?php foreach ($header as $value): ?>
+	    		<td scope="row"> <?php echo $row[$value];?> </td>
+	    		<?php endforeach; ?>
+	    	</tr>
+	    <?php endwhile; ?>
+		</tbody>
+
+	<?php else: ?>
+
+		<tbody>
+	    	<tr class="text-center">
+	    		<td scope="row">
+	    			<h2><i class="far fa-window-close text-warning"></i> Couldn't Find Results</h2>	
+	    		</td>
+	    	</tr>
+		</tbody>
+
+	<?php endif;
+}
+
+
+function table_head($header){
+
+	include "connection.php";
+ 	
+ 	$array = get_all($header);
+
+    $link = "limit=$array[limit]&pag=$array[pag]";
+
+    // Some variables we need for the table.
+	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
+	$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
+	?>
+
+
+	<!--Head Table-->
+    <thead>
+        <tr class="text-center">
+			<?php foreach ($header as $value): ?>
+			 <th scope="col">
+			 	<?php $link2 = "&order=".$asc_or_desc."&column=".$value; ?>
+				<a  class="text-decoration-none text-warning" href="?<?php echo $link.$link2; ?>" >
+					<?php echo ucfirst(str_replace('_',' ',$value)); ?>
+					<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
+				</a>
+			</th>
+			<?php endforeach ?>
+		</tr>
+	</thead>
+	<?php 
+}
+
+
+function table_body($sql,$header){
+
+	include "connection.php";
+ 	
+ 	$array = get_all($header);
+
+	$order = " ORDER BY $array[column] $array[sort_order]";
+    $limit = " LIMIT $array[offset],$array[limit]";
+
+    $sql = $sql.$order.$limit;
+
+    $link = "limit=$array[limit]&pag=$array[pag]";
+
+
+	$result = $mysqli->query($sql);
+	if ($result->num_rows > 0): ?>
+
+		<!--Body Table-->
+		<tbody>
+	    <?php while($row = $result->fetch_assoc()): ?>
+	    	<tr class="text-center">
+	    		<?php foreach ($header as $value): ?>
+	    		<td scope="row"> <?php echo $row[$value];?> </td>
+	    		<?php endforeach; ?>
+	    	</tr>
+	    <?php endwhile; ?>
+		</tbody>
+
+	<?php else: ?>
+
+		<tbody>
+	    	<tr class="text-center">
+	    		<td scope="row">
+	    			<h2><i class="far fa-window-close text-warning"></i> Couldn't Find Results</h2>	
+	    		</td>
+	    	</tr>
+		</tbody>
+
+	<?php endif;
+}
+
+
+
+
+
+
