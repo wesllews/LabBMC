@@ -11,7 +11,7 @@ INNER JOIN category ON individual.id_category=category.id";
 #ORDER BY CAST(identification AS int) ASC
 
 $header = ['identification','category','id_locus','alelo'];
-
+forms($header);
 ?>
 
 <!-- Pagination-->
@@ -24,14 +24,8 @@ $header = ['identification','category','id_locus','alelo'];
   <!--Table Responsive-->
   <div class="table-responsive-lg">
 
-    <!--Table-->
-    <table class="table table-hover ">
-     
-      <?php table_head($header); ?>
-      <?php table_body($sql,$header); ?>    
-        
-    </table>
-    <!--Table-->
+    <?php table_head($header); ?>
+    <?php table_body($sql,$header); ?>    
   </div>
   <!--Table Responsive-->
 </div>

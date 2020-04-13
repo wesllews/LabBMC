@@ -5,27 +5,22 @@ include 'header.php';
 
 require_once 'db.class.php';
 
-
-
+$header = ['identification','name','sex','events','date','institute','local_id'];
+$array = get_all($header);
+forms($header);
 
 $sql= "SELECT identification, individual.name as name, sex, events, date, institute.name as institute, local_id FROM `individual`
                   INNER JOIN historic ON individual.identification=historic.id_individual 
                   INNER JOIN events ON historic.id_event=events.id
                   INNER JOIN institute ON historic.id_institute=institute.id
-                  WHERE id_category!=2 and (events.events='Birth' OR events.events='Capture') AND id_individual = 'wes'
+                  WHERE id_category!=2 and (events.events='Birth' OR events.events='Capture')
                   "; #ORDER BY CAST(identification AS int) ASC
 
 
-$startDate = isset($_GET['startDate']) ? $_GET['startDate'] : '1970-01-01';
-$endDate = isset($_GET['endDate']) ? $_GET['endDate'] : date('Y-m-d') ;
+$startDate = $array['startDate']!="" ? " AND date >= CAST('$array[startDate]' AS DATE)":"";
+$endDate = $array['endDate']!="" ? " AND date <= CAST('$array[endDate]' AS DATE)":"";
 
-$sql .= "AND date >= CAST('$startDate' AS DATE) AND date <= CAST('$endDate' AS DATE)";
-
-
-$header = ['identification','name','sex','events','date','institute','local_id'];
-$teste = get_all($header);
-
-# https://formden.com/blog/date-picker
+$sql .= $startDate.$endDate;
 ?>
 
 
@@ -51,7 +46,7 @@ $teste = get_all($header);
     <div class="input-group-prepend">
       <div class="input-group-text">Start</div>
     </div>
-    <input class="datapicker form-control" type="date" name="startDate" value="<?php echo $startDate; ?>">
+    <input class="datapicker form-control" type="date" name="startDate" value="<?php echo $array['startDate']; ?>">
   </div>
 
   <!-- Date End -->
@@ -59,7 +54,7 @@ $teste = get_all($header);
     <div class="input-group-prepend">
       <div class="input-group-text">End</div>
     </div>
-    <input class="form-control" type="date" name="endDate" value="<?php echo $endDate; ?>" >
+    <input class="form-control" type="date" name="endDate" value="<?php echo $array['endDate']; ?>" >
   </div>
 
   <!-- Submit -->
@@ -79,16 +74,9 @@ $teste = get_all($header);
   
   <!--Table Responsive-->
   <div class="table-responsive-lg">
-
-    <!--Table-->
-    <table class="table table-hover ">
-     
-      <?php table($sql,$header); ?>    
-        
-    </table>
-    <!--Table-->
+    <?php table($sql,$header); ?>       
   </div>
-  <!--Table Responsive-->
+
 </div>
 <!--Container-->
 

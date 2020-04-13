@@ -1,3 +1,20 @@
+# Para fazer (12/04)
+- Tentar manter os links dos parametros nas páginas, para isso vou transformar tudo em forms com vários submits 
+
+## Feito
+- Por enquanto foi criada mais uma função, chamada "forms", que cria input-hidden que armazena o valor dos filtros utilizados e todos os valores recebidos na função "get_all". Ela utiliza o nome das keys do array dessa função pra criar os inputs conforme seu valor. Os links utilizados na paginação e funções de tabelas foram substituidos por button-type-submit que tem evento 'onclick' que muda o valor dos input-hidden e envia o formulário.
+
+- A partir de agora, todos os filtros que são adicionais ao SQL principal da página serão concatenados a SQL principal, ainda nas suas páginas, por exemplo filtro de data na página de studbook. Enquanto os filtros finais como ORDER BY e LIMIT serão adicionados nas funções das classes, por exemplo na função table e table_body.
+
+
+## Próximas Etapas
+- Poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
+- Fazer validação dos inputs recebidos nos filtros, exemplo: data, items per page, etc.
+- Filter by institute, Sex, etc usando o array de header pra tudo.
+- Fazer página About.
+- Aprender Class.
+
+---------------------------------------------------------------------------------------------------------------------------
 # Para fazer (10/04)
 - Recriar em 'db.class.php' uma função que imprime só o cabeçalho das tabelas e outra para imprimir só o corpo, para poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
 

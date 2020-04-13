@@ -4,15 +4,15 @@ function get_all($header,$limit=20){
 
 	// Head
 	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
-	$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
+	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
 	// Pagination
 	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
 	$limit = isset($_GET['limit'])? $_GET['limit']:$limit;
 	$offset = ($pag-1) * $limit;
 
 	// Studbook filters
-	$startDate = isset($_GET['startDate']) ? $_GET['startDate'] : '1970-01-01';
-	$endDate = isset($_GET['endDate']) ? $_GET['endDate'] : date('Y-m-d') ;
+	$startDate = isset($_GET['startDate']) ? $_GET['startDate'] :"";
+	$endDate = isset($_GET['endDate']) ? $_GET['endDate'] : "";
 
 	return array(
 	    "column" => $column,
@@ -26,50 +26,56 @@ function get_all($header,$limit=20){
 }
 
 
-function pagination($total_pages_sql,$header){
+function forms($header){ ?>
+
+	<form method="get" action="" id="formFiltros">
+		<?php foreach (get_all($header) as $key => $value): ?>
+			<?php if($value != ""):?>
+			<input type="hidden" name="<?php echo $key;?>" value="<?php echo $value;?>">
+			<?php endif;?>
+		<?php endforeach;?>
+	</form>
+	<?php 
+}
+
+
+function pagination($sql,$header){
 
 	include "connection.php";
 
 	$array = get_all($header);
 
-    // Href
-    $link = "limit=$array[limit]&column=$array[column]&order=$array[sort_order]";
-
-    $result = mysqli_query($mysqli,$total_pages_sql);
+    $result = mysqli_query($mysqli,$sql);
 
     $total_rows = mysqli_num_rows($result);
     $total_pages = ceil($total_rows / $array['limit']);
 
-	$links= 5;
+	$NumLinks= 5;
 
-	$start      = (($array['pag']-$links) > 0) ? ($array['pag'] - $links) : 1;
-	$end        = (($array['pag']+$links) < $total_pages) ? ($array['pag'] + $links) : $total_pages; ?>
+	$start      = (($array['pag']-$NumLinks) > 0) ? ($array['pag'] - $NumLinks) : 1;
+	$end        = (($array['pag']+$NumLinks) < $total_pages) ? ($array['pag'] + $NumLinks) : $total_pages; ?>
 
 	<div class="container mt-4">
 		 <ul class="pagination pagination-sm justify-content-center">
 
 	    	<!--First page-->
 	    	<li class="page-item <?php if($array['pag'] <= 1){ echo 'disabled'; } ?>">
-			    <a class="page-link"  href="?<?php echo $link."&pag=1";?>">
-			        First
-			    </a>
+	       		<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '1';" form="formFiltros" >First</button>
 	    	</li>
 
 
 	    	<!--Previous-->
 	        <li class="page-item <?php if($array['pag'] <= 1){ echo 'disabled'; } ?>">
-	            <a class="page-link"  href="?<?php if($array['pag'] > 1){echo $link."&pag=".($array['pag']-1); }?>" >
-	            	Prev
-	        	</a>
+	        	
+	       		<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo ($array['pag']-1);?>';" form="formFiltros" >Prev</button>
+	            
 	        </li>
 
 
 	        <!-- Numbers -->
 			<?php for ( $i = $start ; $i <= $end; $i++ ): ?>
 				<li class="page-item <?php if ($array['pag'] == $i){echo "active";} ?>">
-					<a class="page-link"  href="?<?php echo $link."&pag=".$i;?>">
-						<?php echo $i;?> 
-					</a>
+					<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo $i;?>';" form="formFiltros" > <?php echo $i;?> </button>
 				</li>  		
 	  		<?php endfor; ?>
 
@@ -78,17 +84,13 @@ function pagination($total_pages_sql,$header){
 
 	        <!--Next-->
 	        <li class="page-item <?php if($array['pag'] >= $total_pages){ echo 'disabled'; } ?>">
-	            <a class="page-link" href="?<?php if($array['pag'] < $total_pages){echo $link."&pag=".($array['pag']+1); }?>">
-	            	Next
-	        	</a>
+	        	<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo ($array['pag']+1);?>';" form="formFiltros" >Next</button>
 	        </li>
 
 
 	        <!--Last-->
 	    	<li class="page-item <?php if($array['pag'] >= $total_pages){ echo 'disabled'; } ?>">
-			    <a class="page-link"  href="?<?php echo $link."&pag=".$total_pages;?>">
-			        Last
-			    </a>
+	    		<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo $total_pages;?>';" form="formFiltros" >Last</button>
 	    	</li>
 
 	    </ul>
@@ -98,7 +100,7 @@ function pagination($total_pages_sql,$header){
 }
 
 
-function table($sql,$header){
+function table($sql,$header,$class="table-hover"){
 
 	include "connection.php";
  	
@@ -109,58 +111,56 @@ function table($sql,$header){
 
     $sql = $sql.$order.$limit;
 
-    $link = "limit=$array[limit]&pag=$array[pag]";
-
-		// Some variables we need for the table.
-		$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
-		$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
-		?>
-
+  	// Some variables we need for the table.
+	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
+	$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
+	?>
+	<!--Table-->
+    <table class="table <?php echo $class;?> ">
 		<!--Head Table-->
 	    <thead>
 	        <tr class="text-center">
 				<?php foreach ($header as $value): ?>
 				 <th scope="col">
-				 	<?php $link2 = "&order=".$asc_or_desc."&column=".$value; ?>
-					<a  class="text-decoration-none text-warning" href="?<?php echo $link.$link2; ?>" >
-						<?php echo ucfirst(str_replace('_',' ',$value)); ?>
-						<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
-					</a>
+				 	<button class="btn btn-link text-warning font-weight-bold" type="submit" form="formFiltros"onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value = '<?php echo $value;?>';">
+
+				 		<?php echo ucfirst(str_replace('_',' ',$value)); ?>
+				 		<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
+
+				 	</button>
 				</th>
 				<?php endforeach ?>
 			</tr>
 		</thead>
 
-	<?php 
-	$result = $mysqli->query($sql);
-	if ($result->num_rows > 0): ?>
+		<?php 
+		$result = $mysqli->query($sql);
+		if ($result->num_rows > 0): ?>
 
-		<!--Body Table-->
-		<tbody>
-	    <?php while($row = $result->fetch_assoc()): ?>
-	    	<tr class="text-center">
-	    		<?php foreach ($header as $value): ?>
-	    		<td scope="row"> <?php echo $row[$value];?> </td>
-	    		<?php endforeach; ?>
-	    	</tr>
-	    <?php endwhile; ?>
-		</tbody>
+			<!--Body Table-->
+			<tbody>
+		    <?php while($row = $result->fetch_assoc()): ?>
+		    	<tr class="text-center">
+		    		<?php foreach ($header as $value): ?>
+		    		<td scope="row"> <?php echo $row[$value];?> </td>
+		    		<?php endforeach; ?>
+		    	</tr>
+		    <?php endwhile; ?>
+			</tbody>
+	</table>
 
-	<?php else: ?>
+		<?php else: ?>
+	</table>
 
-		<tbody>
-	    	<tr class="text-center">
-	    		<td scope="row">
-	    			<h2><i class="far fa-window-close text-warning"></i> Couldn't Find Results</h2>	
-	    		</td>
-	    	</tr>
-		</tbody>
+		<div class="alert text-center bg-light p-5">
+			<h1><i class="far fa-window-close text-warning"></i> Couldn't Find Results</h1>	
+		</div>
 
-	<?php endif;
+		<?php endif;
 }
 
 
-function table_head($header){
+function table_head($header,$class="table-hover"){
 
 	include "connection.php";
  	
@@ -173,21 +173,22 @@ function table_head($header){
 	$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
 	?>
 
-
-	<!--Head Table-->
-    <thead>
-        <tr class="text-center">
-			<?php foreach ($header as $value): ?>
-			 <th scope="col">
-			 	<?php $link2 = "&order=".$asc_or_desc."&column=".$value; ?>
-				<a  class="text-decoration-none text-warning" href="?<?php echo $link.$link2; ?>" >
-					<?php echo ucfirst(str_replace('_',' ',$value)); ?>
-					<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
-				</a>
-			</th>
-			<?php endforeach ?>
-		</tr>
-	</thead>
+	<!--Table-->
+    <table class="table <?php echo $class;?> ">
+		<!--Head Table-->
+	    <thead>
+	        <tr class="text-center">
+				<?php foreach ($header as $value): ?>
+				 <th scope="col">
+				 	<?php $link2 = "&sort_order=".$asc_or_desc."&column=".$value; ?>
+					<a  class="text-decoration-none text-warning" href="?<?php echo $link.$link2; ?>" >
+						<?php echo ucfirst(str_replace('_',' ',$value)); ?>
+						<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
+					</a>
+				</th>
+				<?php endforeach ?>
+			</tr>
+		</thead>
 	<?php 
 }
 
@@ -219,16 +220,14 @@ function table_body($sql,$header){
 	    	</tr>
 	    <?php endwhile; ?>
 		</tbody>
+	</table>
 
-	<?php else: ?>
+		<?php else: ?>
+	</table>
 
-		<tbody>
-	    	<tr class="text-center">
-	    		<td scope="row">
-	    			<h2><i class="far fa-window-close text-warning"></i> Couldn't Find Results</h2>	
-	    		</td>
-	    	</tr>
-		</tbody>
+		<div class="alert text-center bg-light p-5">
+			<h1><i class="far fa-window-close text-warning"></i> Couldn't Find Results</h1>	
+		</div>
 
 	<?php endif;
 }

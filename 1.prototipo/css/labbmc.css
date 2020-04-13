@@ -17,14 +17,14 @@
 .hover-effect:hover h3, .hover-effect:hover i{ color: #ffc107;}
 
 /*	PAGINATION	*/
-.pagination > li > a
+.pagination > li > button
 {
     background-color: white;
     color: var(--yellow);
 }
 
-.pagination > li > a:focus,
-.pagination > li > a:hover,
+.pagination > li > button:focus,
+.pagination > li > button:hover,
 .pagination > li > span:focus,
 .pagination > li > span:hover
 {
@@ -33,14 +33,14 @@
     border-color: #ddd;
 }
 
-.pagination > .active > a.page-link
+.pagination > .active > button.page-link
 {
     color: white;
     background-color: var(--yellow);
     border: solid 1px var(--yellow);
 }
 
-.pagination > .active > a:hover
+.pagination > .active > button:hover
 {
     background-color: var(--yellow);
     border: solid 1px var(--yellow);
