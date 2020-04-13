@@ -6,14 +6,14 @@
 
 - A partir de agora, todos os filtros que são adicionais ao SQL principal da página serão concatenados a SQL principal, ainda nas suas páginas, por exemplo filtro de data na página de studbook. Enquanto os filtros finais como ORDER BY e LIMIT serão adicionados nas funções das classes, por exemplo na função table e table_body.
 
+- Poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
+
 
 ## Próximas Etapas
-- Poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
 - Fazer validação dos inputs recebidos nos filtros, exemplo: data, items per page, etc.
 - Filter by institute, Sex, etc usando o array de header pra tudo.
 - Fazer página About.
 - Aprender Class.
-
 ---------------------------------------------------------------------------------------------------------------------------
 # Para fazer (10/04)
 - Recriar em 'db.class.php' uma função que imprime só o cabeçalho das tabelas e outra para imprimir só o corpo, para poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.

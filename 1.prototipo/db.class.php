@@ -122,7 +122,7 @@ function table($sql,$header,$class="table-hover"){
 	        <tr class="text-center">
 				<?php foreach ($header as $value): ?>
 				 <th scope="col">
-				 	<button class="btn btn-link text-warning font-weight-bold" type="submit" form="formFiltros"onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value = '<?php echo $value;?>';">
+				 	<button class="btn btn-link text-warning" type="submit" form="formFiltros"onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value = '<?php echo $value;?>';">
 
 				 		<?php echo ucfirst(str_replace('_',' ',$value)); ?>
 				 		<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
@@ -153,7 +153,8 @@ function table($sql,$header,$class="table-hover"){
 	</table>
 
 		<div class="alert text-center bg-light p-5">
-			<h1><i class="far fa-window-close text-warning"></i> Couldn't Find Results</h1>	
+			<h1><i class="far fa-window-close text-warning"></i> Couldn't Find Results</h1>
+			<a class="btn btn-warning" href="?" role="button">Reset Search</a>	
 		</div>
 
 		<?php endif;
@@ -166,8 +167,6 @@ function table_head($header,$class="table-hover"){
  	
  	$array = get_all($header);
 
-    $link = "limit=$array[limit]&pag=$array[pag]";
-
     // Some variables we need for the table.
 	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
 	$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
@@ -179,8 +178,7 @@ function table_head($header,$class="table-hover"){
 	    <thead>
 	        <tr class="text-center">
 				<?php foreach ($header as $value): ?>
-				 <th scope="col">
-				 	<?php $link2 = "&sort_order=".$asc_or_desc."&column=".$value; ?>
+				 <th >
 					<a  class="text-decoration-none text-warning" href="?<?php echo $link.$link2; ?>" >
 						<?php echo ucfirst(str_replace('_',' ',$value)); ?>
 						<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
@@ -230,6 +228,49 @@ function table_body($sql,$header){
 		</div>
 
 	<?php endif;
+}
+
+
+function table_body_genotypes($sql,$header){
+
+	include "connection.php";
+ 	
+ 	$array = get_all($header);
+
+	$order = " ORDER BY `individual`.`identification` ASC"; #" ORDER BY $array[column] $array[sort_order]";
+    $limit = " LIMIT $array[offset],$array[limit]";
+
+    $sql = $sql.$order.$limit;
+    $individual = $mysqli->query($sql);
+    ?>
+
+    <!--Body Table-->
+	<tbody>
+	    <?php while ($row_individual = $individual->fetch_array()):?>
+			<tr class="text-center">
+				<td scope="row"><?php echo $row_individual["identification"];?></td>
+				<td scope="row"><?php echo $row_individual["category"];?></td>
+				<td scope="row"><?php echo $row_individual["sex"];?></td>
+				
+				<?php 
+				foreach (array_slice($header,3) as $locus):
+
+				 	$sql_locus = "SELECT alelo FROM individual INNER JOIN genotype ON individual.identification=genotype.id_individual INNER JOIN category ON individual.id_category=category.id WHERE identification='$row_individual[identification]' AND id_locus ='$locus' ";
+				 	$result = $mysqli->query($sql_locus);
+					if ($result->num_rows >=2):?>
+						<td scope="row">  
+							<?php while($row = $result->fetch_array()){	echo $row[0],",";	}?>
+						</td>
+
+					<?php else: ?>
+						<td scope="row">-</td>
+					<?php endif;?>
+				<?php endforeach; ?>
+			</tr>
+		<?php endwhile;?>
+	</tbody>
+	</table>
+	<?php 
 }
 
 
