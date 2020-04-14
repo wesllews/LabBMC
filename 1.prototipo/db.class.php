@@ -2,9 +2,10 @@
 
 function get_all($header,$limit=20){
 
-	// Head
+	// Table_Head
 	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
 	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
+
 	// Pagination
 	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
 	$limit = isset($_GET['limit'])? $_GET['limit']:$limit;
@@ -13,6 +14,8 @@ function get_all($header,$limit=20){
 	// Studbook filters
 	$startDate = isset($_GET['startDate']) ? $_GET['startDate'] :"";
 	$endDate = isset($_GET['endDate']) ? $_GET['endDate'] : "";
+	$sex = isset($_GET['sex']) ? $_GET['sex'] : "";
+	$institute = isset($_GET['institute']) ? $_GET['institute'] : "";
 
 	return array(
 	    "column" => $column,
@@ -21,7 +24,9 @@ function get_all($header,$limit=20){
 	    "limit" => $limit,
 	    "offset" => $offset,
 	    "startDate" => $startDate,
-	    "endDate" => $endDate
+	    "endDate" => $endDate,
+	    "sex" => $sex,
+	    "institute" => $institute
 	);
 }
 

@@ -16,11 +16,14 @@ $sql= "SELECT identification, individual.name as name, sex, events, date, instit
                   WHERE id_category!=2 and (events.events='Birth' OR events.events='Capture')
                   "; #ORDER BY CAST(identification AS int) ASC
 
-
+// Filtros
 $startDate = $array['startDate']!="" ? " AND date >= CAST('$array[startDate]' AS DATE)":"";
 $endDate = $array['endDate']!="" ? " AND date <= CAST('$array[endDate]' AS DATE)":"";
+$sex = $array['sex']!="" ? " AND sex='$array[sex]'":"";
+$institute = $array['institute']!="" ? " AND institute.id = '$array[institute]'":"";
 
-$sql .= $startDate.$endDate;
+
+$sql .= $startDate.$endDate.$sex.$institute;
 ?>
 
 
@@ -41,7 +44,7 @@ $sql .= $startDate.$endDate;
       </select>
   </div>
 
-  <!-- Date Start -->
+    <!-- Date Start -->
   <div class="input-group">
     <div class="input-group-prepend">
       <div class="input-group-text">Start</div>
@@ -57,9 +60,38 @@ $sql .= $startDate.$endDate;
     <input class="form-control" type="date" name="endDate" value="<?php echo $array['endDate']; ?>" >
   </div>
 
+  <!-- Items per page -->
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">Sex</div>
+    </div>
+    <select name="sex" class="custom-select">
+      <option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Female" ? "selected":""; ?> value="Female">Female</option>
+      <option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Male" ? "selected":""; ?> value="Male">Male</option>
+      <option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
+    </select>
+  </div>
+
+  <!-- Institutes -->
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">Institutes</div>
+    </div>
+    <select name="institute" class="custom-select">
+      <?php 
+      $sql_institute = "SELECT * FROM institute";
+      $query = $mysqli->query($sql_institute);
+
+      while ($row = $query->fetch_array()):?>
+        <option <?php echo isset($_GET['institute']) && $_GET['institute']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></option>
+      <?php endwhile; ?>
+      </select>
+  </div>
+
   <!-- Submit -->
   <div class="form-group ml-auto"> <!-- Submit button -->
     <button type="submit" class="btn btn-warning mr-2">Submit</button>
+    <button type="reset" class="btn btn-warning mr-2">Reset</button>
   </div>
   
 </form>
@@ -76,7 +108,6 @@ $sql .= $startDate.$endDate;
   <div class="table-responsive-lg">
     <?php table($sql,$header); ?>       
   </div>
-
 </div>
 <!--Container-->
 

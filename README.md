@@ -1,3 +1,19 @@
+# Para fazer (12/04) -part2
+- Filter by institute e Sex.
+
+
+## Feito
+- Filter by institute e Sex.
+
+
+## Próximas Etapas
+- Colocar os itens em uma div lateral e com efeito colapse.
+- Fazer o Reset dos filtros.
+- Fazer validação dos inputs recebidos nos filtros, exemplo: data, items per page, etc.
+- Fazer página About.
+- Aprender Class.
+---------------------------------------------------------------------------------------------------------------------------
+
 # Para fazer (12/04)
 - Tentar manter os links dos parametros nas páginas, para isso vou transformar tudo em forms com vários submits 
 
@@ -15,6 +31,7 @@
 - Fazer página About.
 - Aprender Class.
 ---------------------------------------------------------------------------------------------------------------------------
+
 # Para fazer (10/04)
 - Recriar em 'db.class.php' uma função que imprime só o cabeçalho das tabelas e outra para imprimir só o corpo, para poder criar a página de genotypes, em que os locus estejam em colunas e os alelos em linhas.
 

@@ -6,7 +6,7 @@
 
   <head>
 
-		<meta http-equiv="refresh" content="6000">
+		<meta http-equiv="refresh" content="1000">
 
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
