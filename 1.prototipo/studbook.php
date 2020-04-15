@@ -26,88 +26,89 @@ $institute = $array['institute']!="" ? " AND institute.id = '$array[institute]'"
 $sql .= $startDate.$endDate.$sex.$institute;
 ?>
 
-
-
-
-<form action="studbook.php" method="get" target="_self" class="form-inline bg-secondary p-3">
-
-  <!-- Items per page -->
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text">Items per page</div>
-    </div>
-    <select name="limit" class="custom-select">
-      <?php for ($i=20; $i <= 100; $i+=20):?>
-        <option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-      <?php endfor; ?>
-        <option <?php echo isset($_GET['limit']) && $_GET["limit"]=="all" ? "selected":""; ?> value="all">All</option>
-      </select>
-  </div>
-
-    <!-- Date Start -->
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text">Start</div>
-    </div>
-    <input class="datapicker form-control" type="date" name="startDate" value="<?php echo $array['startDate']; ?>">
-  </div>
-
-  <!-- Date End -->
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text">End</div>
-    </div>
-    <input class="form-control" type="date" name="endDate" value="<?php echo $array['endDate']; ?>" >
-  </div>
-
-  <!-- Items per page -->
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text">Sex</div>
-    </div>
-    <select name="sex" class="custom-select">
-      <option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Female" ? "selected":""; ?> value="Female">Female</option>
-      <option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Male" ? "selected":""; ?> value="Male">Male</option>
-      <option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
-    </select>
-  </div>
-
-  <!-- Institutes -->
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text">Institutes</div>
-    </div>
-    <select name="institute" class="custom-select">
-      <?php 
-      $sql_institute = "SELECT * FROM institute";
-      $query = $mysqli->query($sql_institute);
-
-      while ($row = $query->fetch_array()):?>
-        <option <?php echo isset($_GET['institute']) && $_GET['institute']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></option>
-      <?php endwhile; ?>
-      </select>
-  </div>
-
-  <!-- Submit -->
-  <div class="form-group ml-auto"> <!-- Submit button -->
-    <button type="submit" class="btn btn-warning mr-2">Submit</button>
-    <button type="reset" class="btn btn-warning mr-2">Reset</button>
-  </div>
-  
-</form>
-
-
 <!-- Pagination-->
 <?php pagination($sql,$header); ?>
 
 
 <!--Container-->
-<div class="container">
-  
-  <!--Table Responsive-->
-  <div class="table-responsive-lg">
-    <?php table($sql,$header); ?>       
+<div class="container-fluid">
+
+  <div class="row justify-content-center">
+
+    <div class="col-12">
+      <button class="btn btn-warning text-white px-4" data-toggle="collapse" data-target="#filtro">
+        <i class="fas fa-filter"></i>
+      </button>
+    </div>
+    
+    <!--Col Form-->
+    <div class="col-2 float-left show collapse bg-secondary text-white p-3" id="filtro">
+      <form action="studbook.php" method="get" target="_self" >
+
+      <div class="form-group">
+        <label>Items per page</label>
+
+        <select name="limit" class="form-control form-control-sm">
+            <?php for ($i=20; $i <= 200; $i+=20):?>
+              <option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+            <?php endfor; ?>
+          </select>
+      </div>
+
+      <div class="form-row">
+
+        <div class="col">
+          <label>Date Start</label>
+          <input class="datapicker form-control form-control-sm" type="date" name="startDate" value="<?php echo $array['startDate']; ?>">
+        </div>
+
+        <div class="col">
+          <label>Date End</label>
+          <input class="datapicker form-control form-control-sm" type="date" name="endDate" value="<?php echo $array['endDate']; ?>" >
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label>Sex</label>
+
+        <select name="sex" class="form-control form-control-sm">
+          <option <?php echo !isset($_GET['sex']) ? "selected":"";?> value="" >Select...</option>
+          <option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Female" ? "selected":""; ?> value="Female">Female</option>
+          <option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Male" ? "selected":""; ?> value="Male">Male</option>
+          <option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Institutes</label>
+
+        <select name="institute" class="form-control form-control-sm">
+          <option <?php echo !isset($_GET['institute']) ? "selected":""; ?> value="">Select...</option>
+          <?php 
+          $sql_institute = "SELECT * FROM institute";
+          $query = $mysqli->query($sql_institute);
+
+          while ($row = $query->fetch_array()):?>
+            <option <?php echo isset($_GET['institute']) && $_GET['institute']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></option>
+          <?php endwhile; ?>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-warning">Submit</button>
+      <a class="btn btn-warning" href="studbook.php" role="button">Clear All</a>
+      </form>
+    </div>
+
+    <!--Col Table-->
+    <div class="col float-left">
+      <!--Table Responsive-->
+      <div class="table-responsive">
+        <?php table($sql,$header); ?>       
+      </div>
+    </div>
   </div>
+
 </div>
 <!--Container-->
 

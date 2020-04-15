@@ -1,4 +1,19 @@
-# Para fazer (12/04) -part2
+# Para fazer (14/04) -part2
+- Colocar os itens em uma div lateral e com efeito colapse.
+- Fazer o Reset dos filtros.
+
+## Feito
+- Colocar os itens em uma div lateral e com efeito colapse.
+- Fazer o Reset dos filtros.
+- Os filtros foram arrumdos e questão de design e também as opções de filtros: por instituto, sexo, locus e etc. Para ambas as páginas: Genotypes/Studbook.
+
+## Próximas Etapas
+- Fazer validação dos inputs recebidos nos filtros, exemplo: data, items per page, etc.
+- Fazer página About.
+- Aprender Class.
+---------------------------------------------------------------------------------------------------------------------------
+
+# Para fazer (13/04)
 - Filter by institute e Sex.
 
 

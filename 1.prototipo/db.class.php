@@ -17,7 +17,10 @@ function get_all($header,$limit=20){
 	$sex = isset($_GET['sex']) ? $_GET['sex'] : "";
 	$institute = isset($_GET['institute']) ? $_GET['institute'] : "";
 
-	return array(
+	// Genotype filters
+	$category = isset($_GET['category']) ? $_GET['category'] : "";
+
+	$array =  array(
 	    "column" => $column,
 	    "sort_order" => $sort_order,
 	    "pag" => $pag,
@@ -26,8 +29,11 @@ function get_all($header,$limit=20){
 	    "startDate" => $startDate,
 	    "endDate" => $endDate,
 	    "sex" => $sex,
-	    "institute" => $institute
+	    "institute" => $institute,
+	    "category" => $category
 	);
+
+	return $array;
 }
 
 
@@ -129,8 +135,8 @@ function table($sql,$header,$class="table-hover"){
 				 <th scope="col">
 				 	<button class="btn btn-link text-warning" type="submit" form="formFiltros"onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value = '<?php echo $value;?>';">
 
-				 		<?php echo ucfirst(str_replace('_',' ',$value)); ?>
 				 		<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
+				 		<?php echo ucfirst(str_replace('_',' ',$value)); ?>
 
 				 	</button>
 				</th>
@@ -236,6 +242,37 @@ function table_body($sql,$header){
 }
 
 
+function table_head_genotypes($header,$class="table-hover"){
+
+	include "connection.php";
+ 	
+ 	$array = get_all($header);
+
+    // Some variables we need for the table.
+	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
+	$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
+	?>
+
+	<!--Table-->
+    <table class="table <?php echo $class;?> ">
+		<!--Head Table-->
+	    <thead>
+	        <tr class="text-center">
+				<?php foreach ($header as $value): ?>
+				 <th scope="col">
+				 	<button class="btn btn-link text-warning" type="submit" form="formFiltros"onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value = '<?php echo $value;?>';">
+
+				 		<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
+				 		<?php echo ucfirst(str_replace('_',' ',$value)); ?>
+
+				 	</button>
+				</th>
+				<?php endforeach ?>
+			</tr>
+		</thead>
+	<?php 
+}
+
 function table_body_genotypes($sql,$header){
 
 	include "connection.php";
@@ -277,8 +314,6 @@ function table_body_genotypes($sql,$header){
 	</table>
 	<?php 
 }
-
-
 
 
 
