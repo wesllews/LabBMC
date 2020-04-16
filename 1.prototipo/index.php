@@ -19,11 +19,10 @@ include 'header.php';
 	<!--Row of Title Tools-->
 	<div class="row justify-content-center">
 		<div class="text-center float-left px-5 pt-4">
-			<h3 class="text-dark letra3">Tools*</h3>
+			<h3 class="text-dark letra3">Tools</h3>
 			<p>Counting with a collection of data about the life and genetic of Blacks Lions Tamarins, <i>Leontopithecus chrysopygus</i>. Our database was developed to allow to researchers have acess to this data. The resource are been producing and compiled by the LabBMC in São Carlos.</p>
 		</div>
 	</div>
-
 
 
 	<!--Row of Tools-->

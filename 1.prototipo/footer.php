@@ -37,20 +37,19 @@
 
         <!-- line-1 -->
         <div class="d-flex flex-row justify-content-around">
-          <div class="p-2 align-self-center"><img src="img/cnpq.png" alt="CNPQ" style="width: 100px;"></div>
-          <div class="p-2 align-self-center"><img src="img/fapesp.png" alt="Fapesp" style="width: 100px;"></div>
-          <div class="p-2"><img src="img/capes.png" -25 alt="..." style="width: 80px;"></div>
+          <div class="p-2 align-self-center"><img src="img/ufscar.png" alt="UFScar" style="width: 90px;"></div>
+
+          <div class="p-2"><img src="img/rioprim.png" alt="Primatology Center of Rio de Janeiro Guapimirim, RJ, Brazil)" style="width: 70px;"></div>
+
+          <div class="p-2"><img src="img/zoosp.png" alt="São Paulo Zoo (São Paulo, SP, Brazil)" style="width: 70px;"></div>
         </div>
         <!-- line-2 -->
         <div class="d-flex flex-row justify-content-around">
-          <div class="p-2 align-self-center"><img src="img/ufscar.png" alt="UFScar" style="width: 90px;"></div>
-          <div class="p-2"><img src="img/rioprim.png" alt="CPRJ" style="width: 70px;"></div>
-          <div class="p-2"><img src="img/zoosp.png" alt="Zoo SP" style="width: 70px;"></div>
-        </div>
-        <!-- line-3 -->
-        <div class="d-flex flex-row justify-content-around">
-          <div class="p-2"><img src="img/icmbio.png" alt="ICMBio" style="width: 70px;"></div>
-          <div class="p-2 align-self-center"><img src="img/ipe2.png" alt="IPE" style="width: 100px;"></div>
+          <div class="p-2"><img src="img/durrell.png" alt="Durrell Wildlife Conservation Trust (Jersey, Channel Islands, Europe)" style="width: 70px;"></div>
+
+          <div class="p-2"><img src="img/usp.png" alt="University of São Paulo State (Rio Claro, SP, Brazil)" style="width: 70px;"></div>
+
+          <div class="p-2 align-self-center"><img src="img/ipe2.png" alt="Institute for Ecological Research (Nazaré Paulista, SP, Brazil)" style="width: 100px;"></div>
         </div>
                 
       </div>
