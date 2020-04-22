@@ -5,7 +5,7 @@ with open('wild/wild.csv', newline='\n') as csvfile:
 	read_wild = csv.DictReader(csvfile, delimiter=',')
 
 	#Escrevendo inserts
-	with open("todos_inserts.sql", 'w') as file:
+	with open("todos_inserts.sql", 'a') as file:
 	#with open("wild_location/insert_wild_location.sql", 'w') as file:
 
 		for row in read_wild:

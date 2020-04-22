@@ -1,0 +1,43 @@
+.quadradounidade1
+{	float: left;
+	text-align:center;
+	width:200px;
+	border-left: 5px solid #001a1a;
+	border-right: 5px solid #001a1a;
+	border-bottom: 5px solid #001a1a;
+}
+.quadradounidade
+{	float: right;
+	text-align:center;
+	width:200px;
+	border-left: 5px solid #001a1a;
+	border-right: 5px solid #001a1a;
+	border-bottom: 5px solid #001a1a;
+}
+.unidade
+{	float:left;
+	text-align:center;
+	color:white !important;
+	background-color:#001a1a;
+	width:100%;
+	height:100%;
+}
+.subunidade
+{	
+	float:left;
+	padding-left:5%;
+	color:#001a1a!important;
+	text-align:left;
+	width:100%;
+	height:100%;
+}
+.subuni:hover
+{
+	
+	color:black;
+	cursor:pointer;
+}
+
+
+
+

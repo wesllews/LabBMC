@@ -1,0 +1,113 @@
+.payment-methods {
+  list-style: none;
+  margin: 0;
+    color:#000;
+
+  padding: 0;
+}
+
+.payment-methods:after {
+  content: "";
+  clear: both;
+    color:#000;
+
+}
+
+.payment-method {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  float: left;
+  height: 50px;
+  position: relative;
+  	 margin-top:10px;
+
+  width: 50px;
+    color:#000;
+
+}
+
+.payment-method + .payment-method {
+  margin-left: 25px;
+}
+.payment-method label {
+  background: #fff no-repeat center center;
+  bottom: 1px;
+  cursor: pointer;
+  display: block;
+  font-size: 0;
+  left: 1px;
+  position: absolute;
+  right: 1px;
+  text-indent: 100%;
+  top: 1px;
+  color:#000;
+  
+  white-space: nowrap;
+}
+
+
+.respostaA label {
+  background-image: url(../img/a.png);
+    color:#000;
+
+}
+
+.respostaB label {
+  background-image: url(../img/b.png);
+    color:#000;
+
+}
+
+.respostaC label {
+	  background-image: url(../img/c.png);
+
+    color:#000;
+
+}
+
+.respostaD label {
+	  background-image: url(../img/d.png);
+
+    color:#000;
+
+}
+.respostaE label {
+	  background-image: url(../img/e.png);
+	  
+
+    color:#000;
+
+}yment-methods input:focus + label {
+  outline: 2px dotted #21b4d0;
+    color:#000;
+
+}
+.payment-methods input:checked + label {
+  outline: 4px solid #21b4d0;
+    color:#000;
+
+}
+.payment-methods input:checked + label:after {
+  background-image: url(../img/batata.png);
+
+  bottom: -10px;
+
+  content: "";
+  display: inline-block;
+  height: 20px;
+  position: absolute;
+    color:#000;
+
+  right: -10px;
+  width: 20px;
+}
+@-moz-document url-prefix() {
+  .payment-methods input:checked + label:after {
+    bottom: 0;
+	  color:#000;
+
+
+    right: 0;
+    background-color: #green;
+  }
+}

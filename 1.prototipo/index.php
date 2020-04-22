@@ -20,7 +20,7 @@ include 'header.php';
 	<div class="row justify-content-center">
 		<div class="text-center float-left px-5 pt-4">
 			<h3 class="text-dark letra3">Tools</h3>
-			<p>Counting with a collection of data about the life and genetic of Blacks Lions Tamarins, <i>Leontopithecus chrysopygus</i>. Our database was developed to allow to researchers have acess to this data. The resource are been producing and compiled by the LabBMC in São Carlos.</p>
+			<p>The BLT.Database was developed to connect researchers and integrate ecological, genetic and genomic studies, making available data for wild and captive populations of the endangered <i>Leontopithecus chrysopygus</i> species. Here you can find relevant information about  genetic diversity, management,  demography and other life history data for this small primate, which is endemic to the Atlantic Rainforest of São Paulo state.</p>
 		</div>
 	</div>
 
@@ -28,18 +28,19 @@ include 'header.php';
 	<!--Row of Tools-->
 	<div class="row justify-content-center" id="tools">
 
-		<!--Col of Genotypes-->
+		<!--Col of Genetics-->
 		<div class="col-lg-3 float-left text-center shadow m-3 p-0 hover-effect">
 			<a class="text-decoration-none text-dark" href="#genotype">
 				<!--Title-icon-->
 				<div class="d-flex flex-column py-5 h-25">
 					<i class="fas fa-dna"></i>
-					<h3>Genotypes</h3>
+					<h3>Genetics</h3>
 				</div>
 
 				<!--Text-->
 				<div class="d-flex flex-column p-4 h-50">
-				    <p>The genotype is the part of the genetic makeup of a cell, and therefore of any individual, which determines one of its characteristics (phenotype).</p>
+				    <p>Here you can have access to statistical parameters; genotypes and alleles for neutral loci; and also DNA sequences and haplotypes from mitochondrial regions obtained for wild and captive populations of BLT. Please, contact the database manager to require login and password for permissions.</p>
+
 				</div>
 
 				<!--Button-->
@@ -52,42 +53,40 @@ include 'header.php';
 			</a>
 		</div>
 
-		<!--Col of Wild-->
-		<div class="col-lg-3 float-left text-center shadow m-3 p-0 hover-effect">
-			<a class="text-decoration-none text-dark" href="#wild">
+		<!--Col of Studbook-->
+		<div class="col-lg-3 float-left text-center shadow m-3 p-0">
 				<!--Title-icon-->
 				<div class="d-flex flex-column py-5 h-25 icon">
 					<i class="fab fa-pagelines"></i>
-					<h3>Wild</h3>
+					<h3>Life History</h3>
 				</div>
 
 				<!--Text-->
 				<div class="d-flex flex-column p-4 h-50">
-				    <p>We are analyzing genetic diversity in captive individuals of the endangered black lion tamarin, Leontopithecus chrysopygus, and also comparing genetic diversity parameters between wild populations.</p>
+				    <p>Here you can find information about population occurrence, diet, reproduction, social behavior, genealogy, management, etc. for wild and captive populations of BLT.</p>
 				</div>
 
 				<!--Button-->
-				<div class="d-flex flex-column h-25 ">
-					<div class="mt-auto ">
-						<a href="#wild" type="button" class="btn btn-dark rounded-0 w-100">
-		    			<i class="fas fa-chevron-right"></i></a>
-					</div>
+				<div class="d-flex flex-column text-center h-25">
+					<a href="studbook.php" type="button" class="text-decoration-none text-dark hover-effect p-3 ">
+	    			<i class="fas fa-chevron-right"></i> Captivity </a>
+					<a href="#wild" type="button" class="text-decoration-none text-dark hover-effect p-3">
+	    			<i class="fas fa-chevron-right"></i> Wild</a>
 			    </div>
-			</a>
 		</div>
 
-		<!--Col of StudBook-->
+		<!--Col of Genomics-->
 		<div class="col-lg-3 float-left text-center shadow m-3 p-0 hover-effect">
-			<a class="text-decoration-none text-dark" href="?pagina=studbook">
+			<a class="text-decoration-none text-dark" >
 				<!--Title-icon-->
 				<div class="d-flex flex-column py-5 h-25">
 					<i class="fas fa-book-open"></i>
-					<h3>Stud Book</h3>
+					<h3>Genomics</h3>
 				</div>
 
 				<!--Text-->
 				<div class="d-flex flex-column p-4 h-50">
-				    <p>See the genealogy and historic of the captives individuals over time.</p>
+				    <p>Here you can have access to the whole genome of the species, their annotated genes, SNPs, karyotype, and other cytomolecular analyses. Please, contact the database manager to require login and password for specific permissions.</p>
 				</div>
 
 				<!--Button-->

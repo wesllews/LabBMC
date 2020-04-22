@@ -1,0 +1,224 @@
+/* Reset CSS
+ * --------------------------------------- */
+ @font-face {
+	  font-family: "brandonreg";
+      src: url('../fonts/brandonreg.otf') format("opentype");
+  }
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
+form,fieldset,input,textarea,p,blockquote,th,td {
+    padding: 0;
+    margin: 0;
+}
+a{
+	text-decoration:none;}
+table {
+    border-spacing: 0;
+}
+fieldset,img {
+    border: 0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+    font-weight: normal;
+    font-style: normal;
+}
+strong{
+	font-weight: bold;
+}
+ol,ul {
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+caption,th {
+    text-align: left;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;
+    font-size: 100%;
+    margin:0;
+    padding:0;
+    color:#444;
+}
+q:before,q:after {
+    content:'';
+}
+abbr,acronym { border: 0;
+}
+/* Custom CSS
+ * --------------------------------------- */
+body{
+	font-family: brandonreg;
+	color: #333;
+	color: rgba(0,0,0,0.5);
+}
+
+.bolinhaestudo{
+	max-width: 500px;
+    font-size: 0;
+	border-radius: 50%;
+    align-items: center;
+	display:inline-flex;
+    justify-content: center;
+    margin: 10px;
+    width: 90px;
+    height: 90px;
+    background-color: #53c653;
+     -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  position: relative;
+  overflow: hidden;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+
+}
+
+/*PAGINA DE ESTUDO*/
+
+	/* Centered texts in each section
+	* --------------------------------------- */
+	.section{
+		text-align:justify;
+	}
+	#section1{
+		text-align: justify;
+	}
+	
+	#section2{
+		text-align: justify;
+	}
+
+	#section3{
+		text-align: justify;
+	}
+
+	/* Bottom menu
+	* --------------------------------------- */
+	.iconesaibamais{
+		margin-top:50px;
+		float: right;
+		margin-right:100px;
+	}
+
+	.iconecuriosidade{
+		margin-top:50px;
+		float: right;
+		margin-right:40px;
+	}
+
+
+/*lados dos slides
+style1 > Texto em cima e imagem em baixo(pequena)
+style2 > Texto em esquerda e imagem direita
+style3 > Texto em direita e imagem em esquerda
+style4 > Texto em cima e imagem em baixo(paisagem)
+*/
+
+
+p:first-letter {
+ margin-left:60px;
+}
+.titulo{
+	font-family: brandonreg;
+	letter-spacing: 2px;
+	font-size:4em;
+	padding:1%;
+	text-align:center;
+	}
+.texto{
+	background-color: cyan;
+	padding-left:4%;
+	padding-right:4%;
+	}
+	
+img.imagem{
+	background-color: orange;
+	border-radius: 20px;
+	width: 90%;
+	margin-right: 5%;
+	margin-left: 5%;
+	}	
+
+	
+
+/* -----------------TEXTO 2---------------------- *	
+@media (min-width:440px) {
+.titulo{
+	font-family: brandonreg;
+	color: #fff;
+	letter-spacing: 2px;
+	padding:1%;
+	text-align:center;
+	background-color: #4ff256;
+	font-size:3.5em  !important;
+	color: red!important;
+	}
+.texto{
+	padding-left:4%;
+	padding-right:4%;
+	color: #000;
+	background-color: orange;
+	font-size:2.5em!important;
+	
+	}
+	
+img.imagem{
+	border-radius: 20px;
+	width: 90%;
+	margin-right: 5%;
+	margin-left: 5%;
+	}	
+
+
+	}
+.texto1{
+	padding-left:4%; padding-right:4%;
+	color: #000;
+	font-size:3em;
+	background-color: gray;
+	}
+img.imagem1{
+	padding:20px;
+	border-radius: 20px;
+	width: 100%;}
+/* -----------------TEXTO 2---------------------- *	
+.texto2{
+	padding-left:4%; padding-right:4%;
+	color: #000;
+	font-size:3em;
+	background-color: cyan;
+	}
+img.imagem2{
+	padding:20px;
+	border-radius: 20px;
+	width: 100%;}
+/* -----------------TEXTO 3---------------------- *
+.texto3{
+	padding-left:4%; padding-right:4%;
+	color: #000;
+	font-size:3em;
+	background-color: magenta;
+	}
+img.imagem3{
+	padding:20px;
+	border-radius: 20px;
+	width: 5em;}	
+/* -----------------TEXTO 4---------------------- *
+.texto4{
+	padding-left:4%; padding-right:4%;
+	color: #000;
+	font-size:3em;
+	background-color: orange; 
+	}
+img.imagem4{
+	padding:20px;
+	border-radius: 20px;
+	width: 70em;}	
+
+/* -----------------TEXTO DEFAULT---------------------- */
+@media screen and (min-width:480px) { }
+@media screen and (min-width:600px) { }
+@media screen and (min-width:768px) { }
+@media screen and (min-width:992px) { }

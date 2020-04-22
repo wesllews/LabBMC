@@ -10,30 +10,8 @@
     <!-- Row-content -->
     <div class="row mt-3">
 
-      <!-- LabBMC -->
-      <div class="col-lg-4 mx-auto">
-        <h6 class="text-uppercase font-weight-bold">Laboratório de Biodiversidade Molecular e Conservação</h6>
-        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-        <p>LabBMC, UFSCar. <br> Departamento de Genética e Evolução, Centro de Ciências Biológicas e da Saúde</p>
-        <p><i class="fas fa-map-marker-alt mr-3"></i>Via Washington Luis, Km 235. Caixa Postal 679. CEP: 13560-905. São Carlos, SP, Brazil</p>
-      </div>
-
-
-      <!-- Contact -->
-      <div class="col-lg-4 mx-auto">
-     
-        <h6 class="text-uppercase font-weight-bold">Contact</h6>
-        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-        <p><i class="fas fa-envelope mr-3"></i><a class="text-decoration-none text-dark" href="mailto:labbmc.ufscar@gmail.com">labbmc.ufscar@gmail.com</a></p>
-        <p><i class="fas fa-phone mr-3"></i> +55 16 33518309</p>
-        <p><i class="fas fa-print mr-3"></i> +55 16 33518377</p>
-      </div>
-
       <!-- Partners -->
-      <div class="col-lg-4 mx-auto p-0">
-
-        <h6 class="text-uppercase font-weight-bold">Partners</h6>
-        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+      <div class="col-lg-12 mx-auto p-0">
 
         <!-- line-1 -->
         <div class="d-flex flex-row justify-content-around">
@@ -42,9 +20,7 @@
           <div class="p-2"><img src="img/rioprim.png" alt="Primatology Center of Rio de Janeiro Guapimirim, RJ, Brazil)" style="width: 70px;"></div>
 
           <div class="p-2"><img src="img/zoosp.png" alt="São Paulo Zoo (São Paulo, SP, Brazil)" style="width: 70px;"></div>
-        </div>
-        <!-- line-2 -->
-        <div class="d-flex flex-row justify-content-around">
+        
           <div class="p-2"><img src="img/durrell.png" alt="Durrell Wildlife Conservation Trust (Jersey, Channel Islands, Europe)" style="width: 70px;"></div>
 
           <div class="p-2"><img src="img/usp.png" alt="University of São Paulo State (Rio Claro, SP, Brazil)" style="width: 70px;"></div>

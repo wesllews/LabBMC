@@ -1,0 +1,92 @@
+/*background-color: #353553;*/
+.perguntas{
+height: 100%;
+}
+.quadradofrente{
+	text-align:center;
+	cursor:pointer;
+	color:white !important;
+	border-radius: 10px 10px 50px 10px;
+	background-color: #53c653;
+	padding:3%;
+	width:70%;
+	margin-left:15%;
+	margin-bottom:3%;
+}
+.quadradounidade
+{	float:left;
+	text-align:center;
+	width:66%;
+	margin-left:15%;
+	margin-bottom:3%;
+	border-left: 5px solid #53c653;;
+	border-right: 5px solid #53c653;;
+	border-bottom: 5px solid #53c653;;
+}
+.unidade
+{	float:left;
+	text-align:center;
+	color:white !important;;
+	background-color:#53c653;
+	padding:3%;
+	vertical-align:middle;
+	width:100%;
+	height:100%;
+}
+.subunidade
+{	padding-left:5%;
+	float:left;
+	color:#53c653!important;
+	text-align:left;
+	margin-left:25%;
+	margin-right:25%;
+	margin-bottom:1%;
+	height:100%;
+}
+.subuni:hover
+{
+	color:green;
+	cursor:pointer;
+}
+
+@media screen and (max-width: 800px) {
+    .quadradofrente,.quadradounidade,.unidade, .subunidade{
+	width:100%;
+	margin-bottom:3%;
+	margin-left:0px;;
+	}
+	
+}
+
+
+a.linkswes:hover{
+  font-weight: bolder;
+}
+
+/*MUDANDO COR DEFINIDA NO BOOTSTRAP*/
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+}
+.pagination > li > a,
+.pagination > li > span {
+  color:#5cb85c;
+}
+
+select.wes {
+	padding: 10px;
+    overflow-y: auto;
+}
+
+.imagemquestao
+{	width: 60%;
+	float:center;
+	margin: 5px;
+	margin-right: 20%;
+	margin-left: 20%;
+}

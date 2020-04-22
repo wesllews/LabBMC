@@ -1,0 +1,549 @@
+
+
+
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  padding-bottom: 40px;
+  color: #5a5a5a;
+ 
+}
+html {
+  position: relative;
+  min-height: 100%;
+  
+  }
+
+
+
+
+.botao{
+	font-size:18px;
+	padding-top:10px;
+
+	
+}
+
+.navbar-form{
+	padding-top:10px;
+}
+
+.btn{
+	padding:10;
+}
+
+.botaozinho{
+	font-size:18px;
+	padding-top:10px;
+	padding-right:35px;
+
+	
+}
+
+.botaozinho a: hover{
+  font-size:18px;
+  padding-top:10px;
+  padding-right:35px;
+  background-color:magenta;
+  
+}
+
+#pesquisar{
+	width:500px;
+}
+
+
+
+.textodiv{
+font-size: 16px;
+padding-top:8px;
+}
+
+
+#fotinha1
+{
+	padding-left:30px;
+}
+
+.pull-right
+{
+	font-size:35px;
+
+}
+
+
+#texto-youtube
+{
+	float:left;
+}
+
+.span8{
+	width:100%;
+	height:50%;
+}
+
+#partedebaixo{
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 280px;
+  background-color: #C1CDCD;
+  padding:5px;
+  margin-top:0px;
+}
+
+#partedebaixoforte{
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 70px;
+  background-color:#90EE90;
+  padding:5px;
+  padding-top:25px;
+
+}
+
+#footer1{
+	margin-left:100px;
+	padding:0;
+}
+
+
+#footerprinc{
+	margin-left:300px;
+	padding:0;
+}
+
+
+#footer2{
+	margin-left:100px;
+	padding:0;
+}
+
+
+a:link 
+{ 
+ text-decoration:none; 
+ 
+}
+
+#unidade{
+  padding-top: 85px;
+  padding-bottom: 10px;
+  color:black;
+  letter-spacing: 0.25em;
+   word-spacing: 0.25em;
+   font-size:12px;
+   font-family: century gothic;
+
+
+}
+
+#unidade::after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  background-image: url("botanica.jpg");
+    width: 100%;
+    height: 180px;
+    opacity : 0.4;
+    z-index: -1;
+
+
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+
+}
+
+#simuladoborda{
+  margin-left:50px;
+  width:100%;
+  height:50px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+    letter-spacing: 0.25em;
+   word-spacing: 0.25em;
+      font-family: century gothic;
+      font-weight: bold;
+  background-size: 100%;
+  color:black;
+  border: 1px double green;
+  padding-top: 5px;
+  text-align: center;
+  text-shadow: 5px 5px 5px rbga(0,0,0,0.5);
+box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+opacity: 1;
+}
+
+/* You could use :after - it doesn't really matter */
+
+
+#simuladoborda::after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+          background-image: url("botanica1.jpg");
+    width: 100%;
+    height: 100%;
+    opacity : 0.7;
+    z-index: -1;
+
+
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+
+}
+
+
+#simuladoconteudo{
+  background-color: #90EE90;
+  width:100%;
+  margin-left:50px;
+
+  height:180px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+    letter-spacing: 0.1em;
+   word-spacing: 0.1em;
+  border-bottom: 1px double green;
+    border-left: 1px double green;
+  border-right: 1px double green;
+  font-size:15px;
+  padding-top: 5px;
+  text-shadow: 5px 5px 5px rbga(0,0,0,0.5);
+
+box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+
+}
+
+
+i.glyphicon {
+    font-size: 1.5em;
+    padding:5px;
+    color:#363636;
+
+}
+
+#maelogin{
+	background-color:#53c653;
+width: 100%; /* Valor da Largura */
+ height: 100%;
+  min-height: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  	padding:20px;
+	margin-top:60px;
+	padding-top:50px;
+
+}
+
+
+/*DEFINICOES FORM*/
+
+#form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 50px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+   font-size:16px;
+}
+
+#loginsenha{
+  outline: 0;
+  background: #f2f2f2;
+ width:250px;
+ 
+ 
+}
+
+#loginemail{
+  outline: 0;
+  background: #f2f2f2;
+  width:250px;
+
+ 
+}
+
+#entrar {
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  margin-left:-30px;
+  margin-bottom:15px;
+}
+
+#entrar:hover{
+  background: #43A047;
+}
+
+#entrar:active{
+  background: #43A047;
+}
+#entrar:focus{
+  background: #43A047;
+}
+
+
+
+@font-face {
+	  
+	   font-family: "brandonreg";
+      src: url("brandonreg.otf") format("opentype");
+      }
+	  
+	  
+/*Dia 26/05*/
+
+#esquecisenha {
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 50%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+ 
+  height: 100%;
+  min-height: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  
+  
+}
+
+#esquecisenha:hover{
+  background: #43A047;
+}
+
+#esquecisenha:active{
+  background: #43A047;
+}
+#esquecisenha:focus{
+  background: #43A047;
+}
+
+#modaltexto{
+	font-size:20px;
+	align-items: center;
+	margin-bottom:20px;
+	
+}
+
+#esquecisenhaemail{
+	width:100%;
+	
+}
+
+.popover-title { 
+color: black;
+background-color:#FF6666;
+ }  
+
+.popover-content {
+    color: black;
+}
+
+
+
+
+
+
+/*Página específica de conteúdos*/
+#banana
+{
+	
+	
+	background-color:#C6E2FF;
+}
+.imagem
+{
+	margin-top:0px;
+	padding-bottom:10px;
+	background-color:#C6E2FF;
+	
+
+}
+#imagem2
+{
+	margin-top:10px;
+	margin-left:20px;
+	padding-left:15px;
+	background-color:white;
+
+}
+.textodiv2
+{
+background-color:white;
+margin-top:10px;
+padding-bottom:8px;
+padding-top:10px;
+padding-left:5px;
+font-size:20px;
+
+}
+#meulink:hover{
+	
+	color:blue;
+}
+
+#meulink:link{
+	color:#27408B;
+}
+#meulink2:link{
+	color:black;
+}
+
+.textodiv3
+{
+font-family:arial;
+background-color:white;
+margin-top:15px;
+padding:5px;
+padding-bottom:3px;
+padding-left:100px;
+font-size:18px;
+
+}
+
+#textinho
+{
+	
+	padding-left:3px;
+	margin-bottom:50px;
+	background-color:white;/*margem entre o rodapé e o conteúdo (unidade e subunidade)*/
+}
+
+#myCarousel2
+{
+	margin-left:350px;
+	margin-bottom:40px;
+}
+
+
+#myCarousel2
+{
+	margin-left:350px;
+	margin-bottom:40px;
+}
+
+#slide-fofo
+{
+	background-color:pink;
+}
+#slide-texto{
+	margin:0px;
+}
+#imagens
+{
+	margin-top:125px;
+}
+
+.multi-item-carousel{
+  .carousel-inner{
+    > .item{
+      transition: 500ms ease-in-out left;
+    }
+    .active{
+      &.left{
+        left:-33%;
+      }
+      &.right{
+        left:33%;
+      }
+    }
+    .next{
+      left: 33%;
+    }
+    .prev{
+      left: -33%;
+    }
+    @media all and (transform-3d), (-webkit-transform-3d) {
+      > .item{
+        // use your favourite prefixer here
+        transition: 500ms ease-in-out left;
+        transition: 500ms ease-in-out all;
+        backface-visibility: visible;
+        transform: none!important;
+      }
+    }
+  }
+  .carouse-control{
+    &.left, &.right{
+      background-image: none;
+    }
+  }
+}
+
+// non-related styling:
+
+body{
+  background: #333;
+  color: #ddd;
+}
+#texto-imagem-slide
+{
+	padding-top:100px;
+	margin-top:100px;
+	
+}
+
+.col-xs-4
+{
+	padding-left:40px;
+	margin-left:0px;
+	padding-top:50px;
+}
+#slidessss
+{
+	
+	background-color:#EEDD82;
+}
+#txt
+{
+	
+	padding-top:50px;
+	font-size:24px;
+	text-align:center;
+	background-color:#EEDD82;
+}
+

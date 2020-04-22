@@ -1,0 +1,97 @@
+#conteudos{
+	margin-top: 40px;
+	margin-bottom: 55px;
+} 
+/*
+.materia{
+	/*background-color: #ffffff;*/
+	/*background-size:200px 200px;
+	width: 50px;
+	height: 50px;
+	float: left;
+	position: relative;
+	border-radius: 100px;
+	margin-top:10px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  border-radius: 100px;
+}
+
+.materia:hover .overlay{
+  opacity: 1;
+}
+
+
+.materia:hover .blur{
+  -webkit-filter: blur(5px);
+	 
+	 
+.text {
+  color: white;
+  text-align: center;
+  font-size: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  
+}
+}*/
+
+
+a:hover, a:active, a:visited, a:link{
+	text-decoration: none;
+	color: white;
+}
+
+h2{color: white;}
+
+.pull-right
+{
+	font-size:35px;
+
+}
+
+.quadradofrente{
+	text-align:center;
+	cursor:pointer;
+	color:white !important;
+	border-radius: 10px 10px 50px 10px;
+	background-color: #53c653;
+	padding:3%;
+	width:70%;
+	margin-left:15%;
+	margin-bottom:3%;
+}
+
+.quadradofrente:hover{
+	background-color: #2098D1;
+}
+
+.bolinha{
+	float:left;
+	margin-top: 10px;
+    background-color: transparent;
+}
+
+
+@media (max-width: 767px){
+	.quadradofrente:hover{
+	background-color: #53c653;
+	}
+	
+	h2{
+		font-size: 25px;
+	}
+}

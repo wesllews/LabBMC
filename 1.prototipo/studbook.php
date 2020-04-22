@@ -42,7 +42,7 @@ $sql .= $startDate.$endDate.$sex.$institute;
     </div>
     
     <!--Col Form-->
-    <div class="col-2 float-left show collapse bg-secondary text-white p-3" id="filtro">
+    <div class="col-md-2 float-left collapse bg-secondary text-white p-3" id="filtro">
       <form action="studbook.php" method="get" target="_self" >
 
       <div class="form-group">
@@ -101,7 +101,7 @@ $sql .= $startDate.$endDate.$sex.$institute;
     </div>
 
     <!--Col Table-->
-    <div class="col float-left">
+    <div class="col-md-10 float-left">
       <!--Table Responsive-->
       <div class="table-responsive">
         <?php table($sql,$header); ?>       

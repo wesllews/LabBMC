@@ -57,7 +57,7 @@
 						<a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="genotypes.php"><i class="fas fa-dna"></i> Genotypes</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-users"></i> About Us</a>
+						<a class="nav-link" href="individual.php"><i class="fas fa-users"></i> About Us</a>
 					</li>
 				</ul>
 				

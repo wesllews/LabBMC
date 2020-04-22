@@ -7,7 +7,7 @@ with open('genotype/genotipos.csv', newline='\n') as csvfile:
 	# Salvando o nome dos locus.
 	locus = next(read_genotipos,None)
 
-	with  open("todos_inserts.sql", 'a') as file:
+	with  open("../todos_inserts.sql", 'a') as file:
 		for row in read_genotipos:
 			id_individual = row[0]
 

@@ -70,7 +70,7 @@ $sql .= $category.$sex.$institute;
 	    </div>
 
 	    <!--Col Form-->
-	    <div class="col-2 float-left collapse show bg-secondary text-white p-3" id="filtro">
+	    <div class="col-md-2 float-left collapse bg-secondary text-white p-3" id="filtro">
 	      <form action="genotypes.php" method="get" target="_self" >
 
 
@@ -148,7 +148,7 @@ $sql .= $category.$sex.$institute;
 	    </div>
 
 	     <!--Col Table-->
-	    <div class="col-10 float-left">
+	    <div class="col-md-10 float-left">
 	      	<!--Table Responsive-->
 	  		<div class="table-responsive">
 			    <?php table_head($header); ?>

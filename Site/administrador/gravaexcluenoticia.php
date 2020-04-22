@@ -1,0 +1,43 @@
+<?php
+		include "conexao.php";
+	
+		$id_noticia=$_GET["id_noticia"];//ID DA noticia
+		$excluido='s';
+		$texto=$_POST['texto'];
+		$data=$_POST['data'];
+		$fonte=$_POST['fonte'];
+		$titulo=$_POST['titulo'];
+		$dataexclu = date('Y-m-d');
+
+		$sql2="select * from noticia where id_noticia='$id_noticia'";
+		$resultado2= pg_query($conecta, $sql2);
+		$qtde=pg_num_rows($resultado2);	
+		 if ($qtde>0)
+		 {
+		
+							
+			$sql="update noticia
+			 set
+			 excluido = '$excluido',
+			 dataexclusao = '$dataexclu',
+			 where id_noticia = '$id_noticia'";
+			
+			
+			$resultado=pg_query($conecta,$sql);
+			$linhas=pg_affected_rows($resultado);
+			if ($linhas > 0)
+			{
+				echo "<script type='text/javascript'>alert('Conteúdo alterado com sucesso !!!')</script>";
+				echo  "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=listanoticiaexclue.php'>";
+			}
+			else
+			{
+				echo "<script type='text/javascript'>alert('Não foi possível alterar esse Conteúdo')</script>";
+				echo  "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=listanoticiaexclue.php'>";
+
+			}
+			// Fecha a conexão com o PostgreSQL 
+		 }
+		
+			pg_close($conecta); 
+?>
