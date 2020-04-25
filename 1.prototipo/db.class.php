@@ -133,12 +133,17 @@ function table($sql,$header,$class="table-hover"){
 	        <tr class="text-center">
 				<?php foreach ($header as $value): ?>
 				 <th scope="col">
-				 	<button class="btn btn-link text-warning" type="submit" form="formFiltros"onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value = '<?php echo $value;?>';">
+				 	<div class="d-flex justify-content-center text-warning">
+				 		
+				 	<span class="text-warning mt-auto"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
+				 	<button class="btn btn-link text-warning" type="submit" form="formFiltros" onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value = '<?php echo $value;?>';">
 
 				 		<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
-				 		<?php echo ucfirst(str_replace('_',' ',$value)); ?>
-
 				 	</button>
+				 	</div>
+
+				 	
+				 	
 				</th>
 				<?php endforeach ?>
 			</tr>

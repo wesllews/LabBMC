@@ -13,6 +13,7 @@ $sql= "SELECT identification, individual.name as name, sex, events, date, instit
                   INNER JOIN historic ON individual.identification=historic.id_individual 
                   INNER JOIN events ON historic.id_event=events.id
                   INNER JOIN institute ON historic.id_institute=institute.id
+                  INNER JOIN kinship ON kinship.id_individual=individual.identification
                   WHERE id_category!=2 and (events.events='Birth' OR events.events='Capture')
                   "; #ORDER BY CAST(identification AS int) ASC
 

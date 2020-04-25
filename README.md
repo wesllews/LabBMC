@@ -1,3 +1,37 @@
+# Contexto (25/04)
+- Após reunião com a patrícia dia 21/04, foram decidos alguns pontos de mudanças do banco de dados. 1) a página de studbook passaria a ter todos os dados dos individuos de cativeiro e com links para as páginas 'genetics' onde seriam colocados os os dados de genotipos e os de sequencias mitocondriais.
+
+
+## Para fazer
+1. Refazer os scripts de apresentação de dados (table)
+2. Selecionar os dados que a pessoa quer ver do studbook (checkbox)
+3. Colocar o order apenas em alguns botões do header da tabela
+4. Fazer botões que encaminhem para as paginas de dados genéticos ou histórico do indivíduo.
+5. Fazer botão que mostre um modal com os historicos do individuo
+6. Fazer filtros de nascido e mortos combinados.
+7. Fazer script de iterações que consiga filtrar individuos por instituto, sendo o ultimo instituto que ele esteve. 
+
+
+## Feito
+1. Refazer os scripts de apresentação de dados (table). 
+    - Refiz alguns pedaços do cabeçalho para que os nomes das colunas possam ser independentes do botão que envia o "Sort" dos dados.
+    - Coloquei o botão de filtro, o quadrado do form e a tabela em containers diferentes pra facilitar "modularização"
+
+6. Fazer filtros de nascido e mortos combinados.
+    - Consegui fazer um jeito de filtrar periodos de BIRTH e DEATH ao mesmo tempo com SQL, mas ainda precisa elaborar os 'Gets'
+
+
+## Próximas Etapas
+
+1. Selecionar os dados que a pessoa quer ver do studbook (checkbox)
+2. Colocar o ORDER BY apenas em alguns botões do header da tabela
+3. Fazer botões que encaminhem para as paginas de dados genéticos ou histórico do indivíduo.
+4. Fazer botão que mostre um modal ou popup  com os historicos do individuo
+5. Fazer script de iterações que consiga filtrar individuos por instituto, sendo o ultimo instituto que ele esteve.
+6.  Fazer um filtro de "Transferido para:"
+
+---------------------------------------------------------------------------------------------------------------------------
+
 # Para fazer (14/04) -part2
 - Colocar os itens em uma div lateral e com efeito colapse.
 - Fazer o Reset dos filtros.
