@@ -117,7 +117,7 @@ function table($sql,$header,$class="table-hover"){
  	
  	$array = get_all($header);
 
-	$order = " ORDER BY $array[column] $array[sort_order]";
+	$order = " ORDER BY $array[column] $array[sort_order]"; #ORDER BY CAST(identification AS INT)
     $limit = " LIMIT $array[offset],$array[limit]";
 
     $sql = $sql.$order.$limit;

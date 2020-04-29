@@ -3,17 +3,39 @@ session_start();
 $_SESSION['pagina']='captivity';
 include 'header.php';
 
+/* Cabeçalho da tabela*/
+$header = ['identification'];
+$headersAdicionais =['genetics','historic','sex','sire','dam','name'];
 
-$header = ['identification','sex','sire','dam','events','date','local_id','institute','name'];
+	// Testa se algum 'Display informations' foi enviado
+	$flag = 0;
+	foreach ($headersAdicionais as $value) {
+		if(isset($_GET[$value])){
+		$flag=1;
+		}
+	}
+	// Se for, adiciona só os enviados
+	if ($flag ==1):
+		foreach ($headersAdicionais as $value) {
+			if(isset($_GET[$value])){
+				array_push($header, $value);
+			}
+		}
+		else:
+			foreach ($headersAdicionais as $value) {
+				array_push($header, $value);
+			}
+		endif;
 
-$sql = "SELECT identification, sex, sire, dam, events, historic.date as date, id_institute as local_id, institute.name as institute, individual.name as name FROM `individual` INNER JOIN historic ON individual.identification=historic.id_individual INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1 ORDER BY CAST(identification AS INT) ASC";
 
-$result = $mysqli->query($sql);
+$sql_filter = "SELECT DISTINCT(identification) FROM `individual` INNER JOIN historic ON individual.identification=historic.id_individual INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1 ORDER BY CAST(identification AS INT) ASC";
+$result_filter = $mysqli->query($sql_filter);
+
 ?>
 <!--Button-->
 <div class="container-fluid">
-  <div class="col-1 bg-warning text-white  text-center p-3" data-toggle="collapse" data-target="#filtro">
-    <i class="fas fa-filter"></i>
+  <div class="col-1 bg-warning text-white  text-center p-3 girar" data-toggle="collapse" data-target="#filtro">
+    <i class="fas fa-filter"></i><i class="fas fa-chevron-up " id="girar"></i>
   </div>
 </div>
 
@@ -82,7 +104,7 @@ $result = $mysqli->query($sql);
 		<div class="form-group">
 	        <label>Institutes</label>
 
-	        <select name="institute" class="form-control form-control-sm">
+	        <select name="idInstitute" class="form-control form-control-sm">
 	          <option <?php echo !isset($_GET['institute']) ? "selected":""; ?> value="">Select...</option>
 	          <?php 
 	          $sql_institute = "SELECT * FROM institute";
@@ -98,7 +120,7 @@ $result = $mysqli->query($sql);
 			<label>Display informations</label>
 
 	        <div class="overflow-auto" style="max-height: 300px;">
-	        	<?php foreach ($header as $value):?>
+	        	<?php foreach ($headersAdicionais as $value):?>
 	        		<div class="custom-control custom-checkbox">
 				 		<input type="checkbox" class="custom-control-input" id="<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) ? "checked":""; ?>>
 						<label class="custom-control-label" for="<?php echo $value;?>"><?php echo ucfirst(str_replace('_',' ',$value)); ?></label>
@@ -116,41 +138,109 @@ $result = $mysqli->query($sql);
 	</form>
 </div>
 
+
 <!--Table-->
 <div class="container-fluid">
-
 	<!--Table Responsive-->
 	<div class="table-responsive">
-
 		<!--Table-->
-    	<table class="table table-hover">
+    	<table class="table ">
 
     		<!--Head Table-->
 	    	<thead>
 	    		<tr class="text-center">
 	    			<?php foreach ($header as $value): ?>
-						<th scope="col">
+	    				<th scope="col">
 							<div class="d-flex justify-content-center text-warning">
 								<span class="text-warning mt-auto"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
-								<button class="btn btn-link text-warning">
-									<i class="fas fa-sort"></i>
-								</button>
+								<?php if($value!='historic' && $value!='genetics'): ?>
+									<button class="btn btn-link text-warning">
+										<i class="fas fa-sort"></i>
+									</button>
+	    						<?php endif; ?>
+								
 							</div>
 						</th>
 					<?php endforeach ?>
 	    		</tr>
 	    	</thead>
 
-	    	<!--Body Table-->
+	    	<!--Body Table -->
 			<tbody>
-				<?php while($row = $result->fetch_assoc()): ?>
-			    	<tr class="text-center">
-			    		<?php foreach ($header as $value): ?>
-			    			<td scope="row"> <?php echo $row[$value];?> </td>
-			    		<?php endforeach; ?>
-			    	</tr>
-		    	<?php endwhile; ?>
+			<?php while($row = $result_filter->fetch_array()):
+
+				// Seleciona todos os Headers dos indivíduos
+				$sql = "SELECT identification, sex, sire, dam, individual.name as name 
+				FROM `individual` INNER JOIN kinship ON kinship.id_individual=individual.identification 
+				WHERE identification='$row[identification]'";
+				$result = $mysqli->query($sql); ?>
+
+						<?php while($row = $result->fetch_array()): ?> 
+					    	<tr class="text-center">
+					    		<?php foreach ($header as $value): ?>
+					    			<?php switch($value):
+
+					    				case "historic":
+					    					$sql_historic = "SELECT *, institute.name as institute FROM historic INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id  WHERE id_individual = '$row[identification]'";
+					    					$result_historic = $mysqli->query($sql_historic);
+					    					$num = $result_historic->num_rows ?>
+
+					    					<td scope="row">
+						    					<?php if ($num>=1): ?>
+						    						<div class="card">
+														<div class="btn btn-light" onclick="girar('girar<?php echo $row['identification'];?>')" data-toggle="collapse" data-target="#collapse<?php echo $row['identification'];?>">
+															Historic
+															<div class="badge badge-dark"><?php echo $num;?></div>
+															<i class="fas fa-chevron-up ml-3" id="girar<?php echo $row['identification'];?>"></i>
+														</div>
+														
+							    						<ul class="list-group collapse" id="collapse<?php echo $row['identification'];?>">
+							    							<?php while ($row_historic = $result_historic->fetch_array()): ?>
+							    								<li class="list-group-item">
+							    									<?php echo $row_historic['events'],":" ?>
+							    									<div class="text-warning"><?php echo $row_historic['date'] ?></div>
+							    									<?php echo $row_historic['institute']?>
+							    									<div class="text-secondary"><?php echo $row_historic['observation']?></div>
+							    									
+							    								</li>
+							    							<?php endwhile; ?>
+							    						</ul>
+						    						</div>				    						
+						    					<?php else: ?>
+						    						-
+						    					<?php endif; ?>
+						    				</td>
+					    				<?php break;?>
+
+
+					    				<?php case 'genetics': 
+					    					$sql_genetics = "SELECT * FROM genotype WHERE id_individual = '$row[identification]'";
+					    					$result_genetics = $mysqli->query($sql_genetics);
+
+						    					if ($result_genetics->num_rows > 0): ?>
+						    						<td scope="row">Genotypes</td>
+						    					<?php else: ?>
+						    						<td scope="row">-</td>
+						    					<?php endif; ?>
+					    				<?php break;?>
+					    				
+
+					    				<?php default: ?>
+					    				<td scope="row"> <?php echo $row[$value];?> </td>
+					    				
+					    			<?php endswitch; ?>
+
+
+					    			
+					    		<?php endforeach; ?>
+					    	</tr>
+				    	<?php endwhile; ?>
+
+			<?php endwhile; ?>
+
+
 			</tbody>
+			
     	</table>
 	</div>
 </div>

@@ -1,3 +1,48 @@
+# Para fazer (28/04)
+1. Fazer botões que encaminhem para as paginas de dados genéticos ou histórico do indivíduo.
+2. Selecionar os dados que a pessoa quer ver do studbook (checkbox)
+
+
+## Feito
+1. Feito botão que mostra o histórico dos indivíduos
+    - Tendo todas as informações, numero de eventos no histórico, e botão collapse
+2. Selecionar os dados que a pessoa quer ver do studbook (checkbox)
+
+## Próximas Etapas
+- Fazer botões que encaminhem para as paginas de dados genéticos
+- Fazer script de iterações que consiga filtrar individuos por instituto, sendo o ultimo instituto que ele esteve.
+-  Fazer um filtro de "Transferido para:"
+- Fazer filtros de nascido e mortos combinados em PHP
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+# Para fazer (26/04)
+1. Colocar as setas de ORDER BY e SORT apenas em alguns botões do header da tabela
+2. Fazer botões que encaminhem para as paginas de dados genéticos ou histórico do indivíduo.
+
+## Feito
+1. Colocar as setas de ORDER BY e SORT apenas em alguns botões do header da tabela
+2. Modificando o arquivo 'httpd-xampp.conf' e usando um programa chamado **ngrok** consegui disponibilizar o acesso a base de dados para outros computadores que não os meu. 
+
+## Próximas Etapas
+- Selecionar os dados que a pessoa quer ver do studbook (checkbox)
+- Fazer botão que mostre um modal ou popup  com os historicos do individuo
+- Fazer script de iterações que consiga filtrar individuos por instituto, sendo o ultimo instituto que ele esteve.
+-  Fazer um filtro de "Transferido para:"
+- Fazer filtros de nascido e mortos combinados em PHP
+
+**Como ativar forma remota do BD:**
+``` bash
+# Iniciar o Xampp
+sudo /opt/lampp/lampp restart
+
+# Iniciar o ngrok
+./ngrok http 80
+```
+
+---------------------------------------------------------------------------------------------------------------------------
+
 # Contexto (25/04)
 - Após reunião com a patrícia dia 21/04, foram decidos alguns pontos de mudanças do banco de dados. 1) a página de studbook passaria a ter todos os dados dos individuos de cativeiro e com links para as páginas 'genetics' onde seriam colocados os os dados de genotipos e os de sequencias mitocondriais.
 
@@ -28,7 +73,7 @@
 3. Fazer botões que encaminhem para as paginas de dados genéticos ou histórico do indivíduo.
 4. Fazer botão que mostre um modal ou popup  com os historicos do individuo
 5. Fazer script de iterações que consiga filtrar individuos por instituto, sendo o ultimo instituto que ele esteve.
-6.  Fazer um filtro de "Transferido para:"
+6. Fazer um filtro de "Transferido para:"
 
 ---------------------------------------------------------------------------------------------------------------------------
 
