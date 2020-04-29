@@ -1,3 +1,20 @@
+# Para fazer (29/04)
+1. Fazer Filtro de items por página funcionar
+2. Fazer script de paginação
+3. Fazer script de Sort e ORDER BY funcionar junto com os botões
+
+## Feito
+1. Fazer Filtro de items por página funcionar
+3. Fazer script de Sort e ORDER BY funcionar junto com os botões
+
+## Próximas Etapas
+- Fazer botões que encaminhem para as paginas de dados genéticos
+- Fazer script de iterações que consiga filtrar individuos por instituto, sendo o ultimo instituto que ele esteve.
+- Fazer um filtro de "Transferido para:"
+- Fazer filtros de nascido e mortos combinados em PHP
+
+---------------------------------------------------------------------------------------------------------------------------
+
 # Para fazer (28/04)
 1. Fazer botões que encaminhem para as paginas de dados genéticos ou histórico do indivíduo.
 2. Selecionar os dados que a pessoa quer ver do studbook (checkbox)
@@ -13,7 +30,6 @@
 - Fazer script de iterações que consiga filtrar individuos por instituto, sendo o ultimo instituto que ele esteve.
 -  Fazer um filtro de "Transferido para:"
 - Fazer filtros de nascido e mortos combinados em PHP
-
 
 ---------------------------------------------------------------------------------------------------------------------------
 

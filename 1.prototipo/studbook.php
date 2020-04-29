@@ -23,7 +23,6 @@ $endDate = $array['endDate']!="" ? " AND date <= CAST('$array[endDate]' AS DATE)
 $sex = $array['sex']!="" ? " AND sex='$array[sex]'":"";
 $institute = $array['institute']!="" ? " AND institute.id = '$array[institute]'":"";
 
-
 $sql .= $startDate.$endDate.$sex.$institute;
 ?>
 

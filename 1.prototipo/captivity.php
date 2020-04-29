@@ -3,7 +3,7 @@ session_start();
 $_SESSION['pagina']='captivity';
 include 'header.php';
 
-/* Cabeçalho da tabela*/
+/* Cabeçalho da tabela */
 $header = ['identification'];
 $headersAdicionais =['genetics','historic','sex','sire','dam','name'];
 
@@ -28,9 +28,43 @@ $headersAdicionais =['genetics','historic','sex','sire','dam','name'];
 		endif;
 
 
-$sql_filter = "SELECT DISTINCT(identification) FROM `individual` INNER JOIN historic ON individual.identification=historic.id_individual INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1 ORDER BY CAST(identification AS INT) ASC";
-$result_filter = $mysqli->query($sql_filter);
+/* Filtros GET*/
+	
+	// Table_Head
+	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
+	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
 
+	// Pagination
+	$limit = 20; // Default limit
+	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
+	$limit = isset($_GET['limit'])? $_GET['limit']:$limit;
+	$offset = ($pag-1) * $limit;
+
+	// Some variables we need for the table.
+	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
+	$asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
+
+
+
+/* SQL Filtros */
+
+	// Table order
+	$limit_sql = " LIMIT $offset,$limit";
+	$order = " ORDER BY $column $sort_order"; #ORDER BY CAST(identification AS INT)
+
+/* Forms */
+	$array =  array(
+		    "column" => $column,
+		    "sort_order" => $sort_order,
+		    "pag" => $pag,
+		    "limit" => $limit,
+		    "offset" => $offset
+		);
+
+$sql_filter = "SELECT DISTINCT(identification),individual.name as name FROM `individual` INNER JOIN historic ON individual.identification=historic.id_individual INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
+$sql_filter = $sql_filter.$order.$limit_sql;
+
+$result_filter = $mysqli->query($sql_filter);
 ?>
 <!--Button-->
 <div class="container-fluid">
@@ -138,6 +172,15 @@ $result_filter = $mysqli->query($sql_filter);
 	</form>
 </div>
 
+<!-- Forms Hiddens-->
+<form method="get" action="" id="formFiltros">
+	<?php foreach($array as $key => $value): ?>
+		<?php if($value != ""):?>
+		<input type="hidden" name="<?php echo $key;?>" value="<?php echo $value;?>">
+		<?php endif;?>
+	<?php endforeach;?>
+</form>
+
 
 <!--Table-->
 <div class="container-fluid">
@@ -154,8 +197,9 @@ $result_filter = $mysqli->query($sql_filter);
 							<div class="d-flex justify-content-center text-warning">
 								<span class="text-warning mt-auto"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 								<?php if($value!='historic' && $value!='genetics'): ?>
-									<button class="btn btn-link text-warning">
-										<i class="fas fa-sort"></i>
+									<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
+									onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
+										<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
 									</button>
 	    						<?php endif; ?>
 								
@@ -173,6 +217,7 @@ $result_filter = $mysqli->query($sql_filter);
 				$sql = "SELECT identification, sex, sire, dam, individual.name as name 
 				FROM `individual` INNER JOIN kinship ON kinship.id_individual=individual.identification 
 				WHERE identification='$row[identification]'";
+				$sql = $sql.$order.$limit_sql;
 				$result = $mysqli->query($sql); ?>
 
 						<?php while($row = $result->fetch_array()): ?> 
