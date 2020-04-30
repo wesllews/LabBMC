@@ -38,19 +38,15 @@ $headersAdicionais =['genetics','historic','sex','sire','dam','name'];
 	$limit = 20; // Default limit
 	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
 	$limit = isset($_GET['limit'])? $_GET['limit']:$limit;
-	$offset = ($pag-1) * $limit;
+	$offset = $limit!="All" ? ($pag-1) * $limit : "";
 
 	// Some variables we need for the table.
 	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
 	$asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
 
+	// Studbook filters
+	$sexFilter = isset($_GET['sexFilter'])? $_GET['sexFilter'] : "";
 
-
-/* SQL Filtros */
-
-	// Table order
-	$limit_sql = " LIMIT $offset,$limit";
-	$order = " ORDER BY $column $sort_order"; #ORDER BY CAST(identification AS INT)
 
 /* Forms */
 	$array =  array(
@@ -58,12 +54,23 @@ $headersAdicionais =['genetics','historic','sex','sire','dam','name'];
 		    "sort_order" => $sort_order,
 		    "pag" => $pag,
 		    "limit" => $limit,
-		    "offset" => $offset
+		    "sexFilter" => $sexFilter
 		);
 
-$sql_filter = "SELECT DISTINCT(identification),individual.name as name FROM `individual` INNER JOIN historic ON individual.identification=historic.id_individual INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
-$sql_filter = $sql_filter.$order.$limit_sql;
 
+/* SQL Filtros */
+
+	// Table order
+	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
+	$order = " ORDER BY $column $sort_order"; #ORDER BY CAST(identification AS INT)
+	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
+
+
+
+$sql = "SELECT DISTINCT(identification),individual.name as name FROM `individual` INNER JOIN historic ON individual.identification=historic.id_individual INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
+$sql_pagination = $sql.$sexFilter;
+$sql_filter = $sql_pagination.$order.$limit_sql;
+echo $sql_filter;
 $result_filter = $mysqli->query($sql_filter);
 ?>
 <!--Button-->
@@ -74,7 +81,7 @@ $result_filter = $mysqli->query($sql_filter);
 </div>
 
 <!--Filtro Form-->
-<div class="container-fluid collapse mb-1" id="filtro">
+<div class="container-fluid collapse show mb-1" id="filtro">
 	
 	<form class="bg-light rounded-bottom p-3" action="captivity.php" method="get" target="_top">
 
@@ -83,87 +90,84 @@ $result_filter = $mysqli->query($sql_filter);
 			<label>Items per page</label>
 
 			<select name="limit" class=" form-control form-control-sm">
-				<?php for ($i=20; $i <= 200; $i+=20):?>
+				<?php for ($i=20; $i <= 100; $i+=20):?>
 					<option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
 				<?php endfor; ?>
 				<option <?php echo isset($_GET['limit']) && $_GET['limit']=="All" ? "selected":""; ?> value="All">All results</option>
 			</select>
 		</div>
 
-		<!--Birth in -->
-		<div class="form-group">
-			Birth in:
-			<div class="row">
-				<div class="col">
-					<small>Date Start</small>
-					<input class="datapicker form-control form-control-sm" type="date" name="startBirth" value="<?php echo $array['startDate']; ?>">
-				</div>
-
-				<div class="col">
-					<small>Date End</small>
-					<input class="datapicker form-control form-control-sm" type="date" name="endBirth" value="<?php echo $array['endDate']; ?>" >
-				</div>
-			</div>
-		</div>
-
-		<!--Death in -->
-		<div class="form-group">
-			Death in:
-			<div class="row">
-				<div class="col">
-					<small>Date Start</small>
-					<input class="datapicker form-control form-control-sm" type="date" name="startDeath" value="<?php echo $array['startDate']; ?>">
-				</div>
-
-				<div class="col">
-					<small>Date End</small>
-					<input class="datapicker form-control form-control-sm" type="date" name="endDeath" value="<?php echo $array['endDate']; ?>" >
-				</div>
-			</div>
-		</div>
-
 		<!--Sex-->
 		<div class="form-group">
 			<label>Sex</label>
 
-			<select name="sex" class="form-control form-control-sm">
-				<option <?php echo !isset($_GET['sex']) ? "selected":"";?> value="" >Select...</option>
-				<option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Female" ? "selected":""; ?> value="Female">Female</option>
-				<option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Male" ? "selected":""; ?> value="Male">Male</option>
-				<option <?php echo isset($_GET['sex']) && $_GET["sex"]=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
+			<select name="sexFilter" class="form-control form-control-sm">
+				<option <?php echo !isset($_GET['sexFilter']) ? "selected":"";?> value="" >Select...</option>
+				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Female" ? "selected":""; ?> value="Female">Female</option>
+				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Male" ? "selected":""; ?> value="Male">Male</option>
+				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
 			</select>
 		</div>
 
-		<!--Institute-->
+		<!--Events-->
 		<div class="form-group">
-	        <label>Institutes</label>
+	        Events
+	        <div class="row">
+	        	<div class="col-3">
+    				<small>Event</small>
+    		        <select name="events" class="form-control form-control-sm">
+    					<option <?php echo !isset($_GET['events']) ? "selected":""; ?> value="">Select...</option>
+    					<?php 
+    					$sql_events = "SELECT * FROM events";
+    					$query = $mysqli->query($sql_events);
 
-	        <select name="idInstitute" class="form-control form-control-sm">
-	          <option <?php echo !isset($_GET['institute']) ? "selected":""; ?> value="">Select...</option>
-	          <?php 
-	          $sql_institute = "SELECT * FROM institute";
-	          $query = $mysqli->query($sql_institute);
+    					while ($row = $query->fetch_array()):?>
+    						<option <?php echo isset($_GET['events']) && $_GET['events']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>">
+    							<?php echo $row["events"]; ?>
+    						</option>
+    					<?php endwhile; ?>
+    		        </select>
+	        	</div>
 
-	          while ($row = $query->fetch_array()):?>
-	            <option <?php echo isset($_GET['institute']) && $_GET['institute']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></option>
-	          <?php endwhile; ?>
-	        </select>
+	        	<div class="col-3">
+	        		<small>Location</small>
+	        		<select name="location" class="form-control form-control-sm">
+	        		  <option <?php echo !isset($_GET['location']) ? "selected":""; ?> value="">Select...</option>
+	        		  <?php 
+	        		  $sql_institute = "SELECT * FROM institute";
+	        		  $query = $mysqli->query($sql_institute);
+
+	        		  while ($row = $query->fetch_array()):?>
+	        		    <option <?php echo isset($_GET['location']) && $_GET['location']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></option>
+	        		  <?php endwhile; ?>
+	        		</select>
+	        	</div>
+
+	        	<div class="col-3">
+	        		<small>Date Start</small>
+	        		<input class="datapicker form-control form-control-sm" type="date" name="startBirth" value="<?php echo $array['startDate']; ?>">
+	        	</div>
+
+	        	<div class="col-3">
+					<small>Date End</small>
+					<input class="datapicker form-control form-control-sm" type="date" name="endBirth" value="<?php echo $array['endDate']; ?>" >
+				</div>
+	        </div>
 		</div>
 
+		<!--Display informations-->
 		<div class="form-group">
 			<label>Display informations</label>
 
 	        <div class="overflow-auto" style="max-height: 300px;">
 	        	<?php foreach ($headersAdicionais as $value):?>
 	        		<div class="custom-control custom-checkbox">
-				 		<input type="checkbox" class="custom-control-input" id="<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) ? "checked":""; ?>>
+				 		<input type="checkbox" class="custom-control-input" id="<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) || $flag==0 ? "checked":""; ?>>
 						<label class="custom-control-label" for="<?php echo $value;?>"><?php echo ucfirst(str_replace('_',' ',$value)); ?></label>
 					</div>
 		        <?php endforeach;?>
 	        </div>
 		</div>
-
-
 
 		<button type="submit" class="btn btn-warning">Submit</button>
 
@@ -181,6 +185,43 @@ $result_filter = $mysqli->query($sql_filter);
 	<?php endforeach;?>
 </form>
 
+<!-- Pagination -->
+	<?php
+	$result = $mysqli->query($sql_pagination);
+	$total_rows =$result->num_rows;
+	$total_pages = $limit!="All" ? ceil($total_rows / $limit) : 1;
+	$NumLinks= 5;
+
+	$start = (($pag-$NumLinks) > 0) ? ($pag - $NumLinks) : 1;
+	$end = (($pag+$NumLinks) < $total_pages) ? ($pag + $NumLinks) : $total_pages;
+	?>
+
+	<div class="container mt-4">
+		<ul class="pagination pagination-sm justify-content-center">
+	    	<!--First page-->
+	    	<li class="page-item <?php if($pag <= 1){ echo 'disabled'; } ?>">
+	       		<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '1';" form="formFiltros" >First</button>
+	    	</li>
+	    	<!--Previous-->
+	        <li class="page-item <?php if($pag <= 1){ echo 'disabled'; } ?>">
+	       		<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo ($pag-1);?>';" form="formFiltros" >Prev</button> 
+	        </li>
+	        <!-- Numbers -->
+			<?php for ( $i = $start ; $i <= $end; $i++ ): ?>
+				<li class="page-item <?php if ($pag == $i){echo "active";} ?>">
+					<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo $i;?>';" form="formFiltros" > <?php echo $i;?> </button>
+				</li>  		
+	  		<?php endfor; ?>
+	        <!--Next-->
+	        <li class="page-item <?php if($pag >= $total_pages){ echo 'disabled'; } ?>">
+	        	<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo ($pag+1);?>';" form="formFiltros" >Next</button>
+	        </li>
+	        <!--Last-->
+	    	<li class="page-item <?php if($pag >= $total_pages){ echo 'disabled'; } ?>">
+	    		<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo $total_pages;?>';" form="formFiltros" >Last</button>
+	    	</li>
+	    </ul>
+	</div>
 
 <!--Table-->
 <div class="container-fluid">
@@ -199,7 +240,7 @@ $result_filter = $mysqli->query($sql_filter);
 								<?php if($value!='historic' && $value!='genetics'): ?>
 									<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
 									onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
-										<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
+										<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 									</button>
 	    						<?php endif; ?>
 								
@@ -213,11 +254,10 @@ $result_filter = $mysqli->query($sql_filter);
 			<tbody>
 			<?php while($row = $result_filter->fetch_array()):
 
-				// Seleciona todos os Headers dos indivíduos
+				// Seleciona todos os dados dos indivíduos
 				$sql = "SELECT identification, sex, sire, dam, individual.name as name 
 				FROM `individual` INNER JOIN kinship ON kinship.id_individual=individual.identification 
 				WHERE identification='$row[identification]'";
-				$sql = $sql.$order.$limit_sql;
 				$result = $mysqli->query($sql); ?>
 
 						<?php while($row = $result->fetch_array()): ?> 

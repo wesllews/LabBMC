@@ -49,7 +49,7 @@ function get_all($header,$limit=20){
 	<?php 
 }
 */
-
+/*
 function pagination($sql,$header){
 
 	include "connection.php";
@@ -64,7 +64,8 @@ function pagination($sql,$header){
 	$NumLinks= 5;
 
 	$start      = (($array['pag']-$NumLinks) > 0) ? ($array['pag'] - $NumLinks) : 1;
-	$end        = (($array['pag']+$NumLinks) < $total_pages) ? ($array['pag'] + $NumLinks) : $total_pages; ?>
+	$end        = (($array['pag']+$NumLinks) < $total_pages) ? ($array['pag'] + $NumLinks) : $total_pages;
+	?>
 
 	<div class="container mt-4">
 		 <ul class="pagination pagination-sm justify-content-center">
@@ -109,7 +110,7 @@ function pagination($sql,$header){
 
 	<?php
 }
-
+*/
 
 function table($sql,$header,$class="table-hover"){
 
