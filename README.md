@@ -1,3 +1,21 @@
+# Para fazer (30/04)
+1. Fazer botão que abra todas as janelas de histórico
+2. Reunião com a Patrícia e Paola
+
+## Feito
+1. Fazer botão que abra todas as janelas de histórico
+2. Reunião com a Patrícia e Paola
+    -Novas Demandas: Filro de indivíduos Vivos e por institute, não precisa ter datas.
+    
+## Próximas Etapas
+- Fazer filtro de alive e death.
+- Fazer filtro de institute.
+- Fazer botões que encaminhem para as paginas de dados genéticos
+- Fazer script de iterações que consiga filtrar individuos por instituto, sendo o ultimo instituto que ele esteve.
+- Fazer filtros de nascido e mortos combinados em PHP
+
+---------------------------------------------------------------------------------------------------------------------------
+
 # Para fazer (29/04)
 1. Fazer Filtro de items por página funcionar
 2. Fazer script de paginação
@@ -5,6 +23,7 @@
 
 ## Feito
 1. Fazer Filtro de items por página funcionar
+2. Fazer script de paginação
 3. Fazer script de Sort e ORDER BY funcionar junto com os botões
 
 ## Próximas Etapas
@@ -14,7 +33,6 @@
 - Fazer filtros de nascido e mortos combinados em PHP
 
 ---------------------------------------------------------------------------------------------------------------------------
-
 # Para fazer (28/04)
 1. Fazer botões que encaminhem para as paginas de dados genéticos ou histórico do indivíduo.
 2. Selecionar os dados que a pessoa quer ver do studbook (checkbox)

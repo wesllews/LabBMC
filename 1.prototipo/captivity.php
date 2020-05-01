@@ -70,7 +70,6 @@ $headersAdicionais =['genetics','historic','sex','sire','dam','name'];
 $sql = "SELECT DISTINCT(identification),individual.name as name FROM `individual` INNER JOIN historic ON individual.identification=historic.id_individual INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
 $sql_pagination = $sql.$sexFilter;
 $sql_filter = $sql_pagination.$order.$limit_sql;
-echo $sql_filter;
 $result_filter = $mysqli->query($sql_filter);
 ?>
 <!--Button-->
@@ -81,7 +80,7 @@ $result_filter = $mysqli->query($sql_filter);
 </div>
 
 <!--Filtro Form-->
-<div class="container-fluid collapse show mb-1" id="filtro">
+<div class="container-fluid collapse mb-1" id="filtro">
 	
 	<form class="bg-light rounded-bottom p-3" action="captivity.php" method="get" target="_top">
 
@@ -242,8 +241,9 @@ $result_filter = $mysqli->query($sql_filter);
 									onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 										<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 									</button>
+								<?php elseif($value=='historic'): ?>
+									<i class="btn text-warning fas fa-chevron-up px-3" id="showAll" ></i>
 	    						<?php endif; ?>
-								
 							</div>
 						</th>
 					<?php endforeach ?>
@@ -279,7 +279,7 @@ $result_filter = $mysqli->query($sql_filter);
 															<i class="fas fa-chevron-up ml-3" id="girar<?php echo $row['identification'];?>"></i>
 														</div>
 														
-							    						<ul class="list-group collapse" id="collapse<?php echo $row['identification'];?>">
+							    						<ul class="list-group collapse showAll" id="collapse<?php echo $row['identification'];?>">
 							    							<?php while ($row_historic = $result_historic->fetch_array()): ?>
 							    								<li class="list-group-item">
 							    									<?php echo $row_historic['events'],":" ?>
@@ -314,18 +314,11 @@ $result_filter = $mysqli->query($sql_filter);
 					    				<td scope="row"> <?php echo $row[$value];?> </td>
 					    				
 					    			<?php endswitch; ?>
-
-
-					    			
 					    		<?php endforeach; ?>
 					    	</tr>
 				    	<?php endwhile; ?>
-
 			<?php endwhile; ?>
-
-
 			</tbody>
-			
     	</table>
 	</div>
 </div>

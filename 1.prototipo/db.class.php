@@ -3,13 +3,13 @@
 function get_all($header,$limit=20){
 
 	// Table_Head
-#	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
-#	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
+	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
+	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
 
 	// Pagination
-#	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
-#	$limit = isset($_GET['limit'])? $_GET['limit']:$limit;
-#	$offset = ($pag-1) * $limit;
+	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
+	$limit = isset($_GET['limit'])? $_GET['limit']:$limit;
+	$offset = ($pag-1) * $limit;
 
 	// Studbook filters
 	$startDate = isset($_GET['startDate']) ? $_GET['startDate'] :"";
@@ -21,11 +21,11 @@ function get_all($header,$limit=20){
 	$category = isset($_GET['category']) ? $_GET['category'] : "";
 
 	$array =  array(
-#	    "column" => $column,
-#	    "sort_order" => $sort_order,
-#	    "pag" => $pag,
-#	    "limit" => $limit,
-#	    "offset" => $offset,
+	    "column" => $column,
+	    "sort_order" => $sort_order,
+	    "pag" => $pag,
+	    "limit" => $limit,
+	    "offset" => $offset,
 	    "startDate" => $startDate,
 	    "endDate" => $endDate,
 	    "sex" => $sex,
@@ -37,7 +37,7 @@ function get_all($header,$limit=20){
 }
 
 
-/*function forms($header){ ?>
+function forms($header){ ?>
 
 	<form method="get" action="" id="formFiltros">
 		<?php foreach (get_all($header) as $key => $value): ?>
@@ -48,8 +48,8 @@ function get_all($header,$limit=20){
 	</form>
 	<?php 
 }
-*/
-/*
+
+
 function pagination($sql,$header){
 
 	include "connection.php";
@@ -110,7 +110,7 @@ function pagination($sql,$header){
 
 	<?php
 }
-*/
+
 
 function table($sql,$header,$class="table-hover"){
 
@@ -119,14 +119,14 @@ function table($sql,$header,$class="table-hover"){
  	$array = get_all($header);
 
  	// Table order
-#	$order = " ORDER BY $array[column] $array[sort_order]"; #ORDER BY CAST(identification AS INT)
- #   $limit = " LIMIT $array[offset],$array[limit]";
+	$order = " ORDER BY $array[column] $array[sort_order]"; #ORDER BY CAST(identification AS INT)
+ 	$limit = " LIMIT $array[offset],$array[limit]";
 
     $sql = $sql.$order.$limit;
 
   	// Some variables we need for the table.
-#	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
-#	$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
+	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $array['sort_order']); 
+	$asc_or_desc = $array['sort_order'] == 'ASC' ? 'desc' : 'asc';
 	?>
 	<!--Table-->
     <table class="table <?php echo $class;?> ">

@@ -29,17 +29,18 @@ include 'header.php';
 	<div class="row justify-content-center" id="tools">
 
 		<!--Col of Genetics-->
-		<div class="col-lg-3 float-left text-center shadow m-3 p-0 hover-effect">
+		<div class="col-lg-3 float-left text-justify shadow m-3 p-0 hover-effect">
 			<a class="text-decoration-none text-dark" href="#genotype">
 				<!--Title-icon-->
-				<div class="d-flex flex-column py-5 h-25">
+				<div class="d-flex text-center flex-column py-5 h-25">
 					<i class="fas fa-dna"></i>
 					<h3>Genetics</h3>
 				</div>
 
 				<!--Text-->
 				<div class="d-flex flex-column p-4 h-50">
-				    <p>Here you can have access to statistical parameters; genotypes and alleles for neutral loci; and also DNA sequences and haplotypes from mitochondrial regions obtained for wild and captive populations of BLT. Please, contact the database manager to require login and password for permissions.</p>
+				    <p>Here you can have access to statistical parameters; genotypes and alleles for neutral loci; and also DNA sequences and haplotypes from mitochondrial regions obtained for wild and captive populations of BLT.</p> 
+				    <small>Please, contact the database manager to require login and password for permissions.</small>
 
 				</div>
 
