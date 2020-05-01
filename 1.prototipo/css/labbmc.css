@@ -14,7 +14,7 @@
 }
 .text-shadow{text-shadow:3px 8px 12px black;}
 
-.hover-effect:hover h3, .hover-effect:hover i{ color: #ffc107;}
+.hover-effect:hover h3, .hover-effect:hover i.hover{ color: #ffc107;}
 
 
 /*	PAGINATION	*/

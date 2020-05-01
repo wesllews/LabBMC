@@ -30,74 +30,62 @@ include 'header.php';
 
 		<!--Col of Genetics-->
 		<div class="col-lg-3 float-left text-justify shadow m-3 p-0 hover-effect">
-			<a class="text-decoration-none text-dark" href="#genotype">
-				<!--Title-icon-->
-				<div class="d-flex text-center flex-column py-5 h-25">
-					<i class="fas fa-dna"></i>
-					<h3>Genetics</h3>
-				</div>
+			<!--Title-icon-->
+			<div class="d-flex text-center flex-column py-5 h-25">
+				<h5><i class="hover fas fa-dna"></i></h5>
+				<h3>Genetics</h3>
+			</div>
 
-				<!--Text-->
-				<div class="d-flex flex-column p-4 h-50">
-				    <p>Here you can have access to statistical parameters; genotypes and alleles for neutral loci; and also DNA sequences and haplotypes from mitochondrial regions obtained for wild and captive populations of BLT.</p> 
-				    <small>Please, contact the database manager to require login and password for permissions.</small>
+			<!--Text-->
+			<div class="d-flex flex-column p-4 h-50">
+			    <p>Here you can have access to statistical parameters; genotypes and alleles for neutral loci; and also DNA sequences and haplotypes from mitochondrial regions obtained for wild and captive populations of BLT. <i class="fas fa-lock rounded-circle bg-light p-1"  tabindex="0"  data-toggle="popover" data-trigger="focus" data-container="body" data-placement="right" data-content="Please, contact the database manager to require login and password for permissions."></i></p> 				    
 
-				</div>
+			</div>
 
-				<!--Button-->
-				<div class="d-flex flex-column h-25 ">
-					<div class="mt-auto ">
-						<a href="#genotype" type="button" class="btn btn-dark rounded-0 w-100">
-		    			<i class="fas fa-chevron-right"></i></a>
-					</div>
-			    </div>
-			</a>
+
+			<!--Button-->
+			<div class="d-flex flex-column text-center h-25">
+				<a href="#" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2 disabled">See More</a>
+			</div>
 		</div>
 
-		<!--Col of Studbook-->
-		<div class="col-lg-3 float-left text-center shadow m-3 p-0">
-				<!--Title-icon-->
-				<div class="d-flex flex-column py-5 h-25 icon">
-					<i class="fab fa-pagelines"></i>
-					<h3>Life History</h3>
-				</div>
+		<!--Col of Life History-->
+		<div class="col-lg-3 float-left text-justify shadow m-3 p-0 hover-effect">
+			<!--Title-icon-->
+			<div class="d-flex text-center flex-column py-5 h-25 icon">
+				<h4><i class="hover fab fa-pagelines"></i></h4>
+				<h3>Life History</h3>
+			</div>
 
-				<!--Text-->
-				<div class="d-flex flex-column p-4 h-50">
-				    <p>Here you can find information about population occurrence, diet, reproduction, social behavior, genealogy, management, etc. for wild and captive populations of BLT.</p>
-				</div>
+			<!--Text-->
+			<div class="d-flex flex-column p-4 h-50">
+			    <p>Here you can find information about population occurrence, diet, reproduction, social behavior, genealogy, management, etc. for wild and captive populations of BLT. <i class="fas fa-lock rounded-circle bg-light p-1"  tabindex="0"  data-toggle="popover" data-trigger="focus" data-container="body" data-placement="right" data-content="Please, contact the database manager to require login and password for permissions."></i></p>
+			</div>
 
-				<!--Button-->
-				<div class="d-flex flex-column text-center h-25">
-					<a href="studbook.php" type="button" class="text-decoration-none text-dark hover-effect p-3 ">
-	    			<i class="fas fa-chevron-right"></i> Captivity </a>
-					<a href="#wild" type="button" class="text-decoration-none text-dark hover-effect p-3">
-	    			<i class="fas fa-chevron-right"></i> Wild</a>
-			    </div>
+			<!--Button-->
+			<div class="d-flex flex-column text-center h-25">
+				<a href="captivity.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Captivity</a>
+				<a href="studbook.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Wild</a>
+		    </div>
 		</div>
 
 		<!--Col of Genomics-->
-		<div class="col-lg-3 float-left text-center shadow m-3 p-0 hover-effect">
-			<a class="text-decoration-none text-dark" >
-				<!--Title-icon-->
-				<div class="d-flex flex-column py-5 h-25">
-					<i class="fas fa-book-open"></i>
-					<h3>Genomics</h3>
-				</div>
+		<div class="col-lg-3 float-left text-justify shadow m-3 p-0 hover-effect">
+			<!--Title-icon-->
+			<div class="d-flex text-center flex-column py-5 h-25">
+				<h4><i class="hover fas fas fa-microscope"></i></h4>
+				<h3>Genomics</h3>
+			</div>
 
-				<!--Text-->
-				<div class="d-flex flex-column p-4 h-50">
-				    <p>Here you can have access to the whole genome of the species, their annotated genes, SNPs, karyotype, and other cytomolecular analyses. Please, contact the database manager to require login and password for specific permissions.</p>
-				</div>
+			<!--Text-->
+			<div class="d-flex flex-column p-4 h-50">
+			    <p>Here you can have access to the whole genome of the species, their annotated genes, SNPs, karyotype, and other cytomolecular analyses. Please, contact the database manager to require login and password for specific permissions. <i class="fas fa-lock rounded-circle bg-light p-1"  tabindex="0"  data-toggle="popover" data-trigger="focus" data-container="body" data-placement="right" data-content="Please, contact the database manager to require login and password for permissions."></i></p>
+			</div>
 
-				<!--Button-->
-				<div class="d-flex flex-column h-25 ">
-					<div class="mt-auto ">
-						<a href="?studbook" type="button" class="btn btn-dark rounded-0 w-100">
-		    			<i class="fas fa-chevron-right"></i></a>
-					</div>
-			    </div>
-			</a>
+		    <!--Button-->
+			<div class="d-flex flex-column text-center h-25">
+				<a href="#" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2 disabled">See More</a>
+			</div>
 		</div>
 
 	</div>

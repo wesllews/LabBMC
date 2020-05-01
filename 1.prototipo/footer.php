@@ -15,17 +15,17 @@
 
         <!-- line-1 -->
         <div class="d-flex flex-row justify-content-around">
-          <div class="p-2 align-self-center"><img src="img/ufscar.png" alt="UFScar" style="width: 90px;"></div>
+          <div class="p-2 align-self-center"><img src="img/ufscar.png" title="UFScar" alt="UFScar" style="width: 90px;"></div>
 
-          <div class="p-2"><img src="img/rioprim.png" alt="Primatology Center of Rio de Janeiro Guapimirim, RJ, Brazil)" style="width: 70px;"></div>
+          <div class="p-2"><img src="img/rioprim.png" title="Primatology Center of Rio de Janeiro Guapimirim, RJ, Brazil)" alt="Primatology Center of Rio de Janeiro Guapimirim, RJ, Brazil)" style="width: 70px;"></div>
 
-          <div class="p-2"><img src="img/zoosp.png" alt="São Paulo Zoo (São Paulo, SP, Brazil)" style="width: 70px;"></div>
+          <div class="p-2"><img src="img/zoosp.png"  title="São Paulo Zoo (São Paulo, SP, Brazil)" alt="São Paulo Zoo (São Paulo, SP, Brazil)" style="width: 70px;"></div>
         
-          <div class="p-2"><img src="img/durrell.png" alt="Durrell Wildlife Conservation Trust (Jersey, Channel Islands, Europe)" style="width: 70px;"></div>
+          <div class="p-2"><img src="img/durrell.png" title="Durrell Wildlife Conservation Trust (Jersey, Channel Islands, Europe)" alt="Durrell Wildlife Conservation Trust (Jersey, Channel Islands, Europe)" style="width: 70px;"></div>
 
-          <div class="p-2"><img src="img/usp.png" alt="University of São Paulo State (Rio Claro, SP, Brazil)" style="width: 70px;"></div>
+          <div class="p-2 align-self-center"><img src="img/unesp.png" title="University of São Paulo State (Rio Claro, SP, Brazil)" alt="University of São Paulo State (Rio Claro, SP, Brazil)" style="width: 110px;"></div>
 
-          <div class="p-2 align-self-center"><img src="img/ipe2.png" alt="Institute for Ecological Research (Nazaré Paulista, SP, Brazil)" style="width: 100px;"></div>
+          <div class="p-2 align-self-center"><img src="img/ipe2.png" title="Institute for Ecological Research (Nazaré Paulista, SP, Brazil)" alt="Institute for Ecological Research (Nazaré Paulista, SP, Brazil)" style="width: 100px;"></div>
         </div>
                 
       </div>
@@ -46,6 +46,8 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="js/popper.min.js"></script>
 
   <script type="text/javascript" src="js/bootstrap.js"></script>
 

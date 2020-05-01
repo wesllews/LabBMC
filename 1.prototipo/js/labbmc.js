@@ -1,3 +1,11 @@
+// Requisito para popovers duncionar
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+$('.popover-dismiss').popover({
+  trigger: 'focus'
+})
 // Rodar Botão: onclick div.girar -> roda o icon com id="girar"
 $(".girar").click(function(){
 	$("#girar").toggleClass("fa-flip-vertical")  ; 
