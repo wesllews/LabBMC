@@ -80,7 +80,7 @@ $result_filter = $mysqli->query($sql_filter);
 </div>
 
 <!--Filtro Form-->
-<div class="container-fluid collapse mb-1" id="filtro">
+<div class="container-fluid collapse show mb-1" id="filtro">
 	
 	<form class="bg-light rounded-bottom p-3" action="captivity.php" method="get" target="_top">
 
@@ -108,7 +108,23 @@ $result_filter = $mysqli->query($sql_filter);
 			</select>
 		</div>
 
-		<!--Events-->
+		<!--Life Status-->
+		<div class="form-group">
+			<label>Life Status</label>
+
+			<div class="form-check">
+			  <input class="form-check-input" type="radio" name="status" id="alive" value="alive"  <?php echo isset($_GET["status"]) && $_GET["status"]=="alive" ? "checked":""; ?>>
+			  <label class="form-check-label" for="alive"> Alive</label>
+			</div>
+
+			<div class="form-check form-check-inline">
+			  <input class="form-check-input" type="radio" name="status" id="death" value="death"  <?php echo isset($_GET["status"]) && $_GET["status"]=="death" ? "checked":""; ?>>
+			  <label class="form-check-label" for="death"> Death</label>
+			</div>
+
+		</div>
+
+		<!--Events
 		<div class="form-group">
 	        Events
 	        <div class="row">
@@ -152,7 +168,7 @@ $result_filter = $mysqli->query($sql_filter);
 					<input class="datapicker form-control form-control-sm" type="date" name="endBirth" value="<?php echo $array['endDate']; ?>" >
 				</div>
 	        </div>
-		</div>
+		</div> -->
 
 		<!--Display informations-->
 		<div class="form-group">
@@ -233,9 +249,9 @@ $result_filter = $mysqli->query($sql_filter);
 	    	<thead>
 	    		<tr class="text-center">
 	    			<?php foreach ($header as $value): ?>
-	    				<th scope="col">
-							<div class="d-flex justify-content-center text-warning">
-								<span class="text-warning mt-auto"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
+	    				<th scope="col" style="white-space: nowrap;">
+							<div class="d-flex justify-content-center align-items-end text-warning">
+								<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 								<?php if($value!='historic' && $value!='genetics'): ?>
 									<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
 									onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">

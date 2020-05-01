@@ -4,10 +4,8 @@ $_SESSION['pagina']='genotypes';
 include 'header.php';
 require_once 'db.class.php';
 
-$sql= "SELECT identification,category,sex FROM individual 
-INNER JOIN genotype ON individual.identification=genotype.id_individual
-INNER JOIN historic ON individual.identification=historic.id_individual 
-INNER JOIN institute ON historic.id_institute=institute.id 
+$sql= "SELECT DISTINCT(genotype.id_individual),identification,category,sex FROM genotype
+INNER JOIN individual ON individual.identification=genotype.id_individual
 INNER JOIN category ON individual.id_category=category.id WHERE 1";
 
 $header = ['identification','category','sex'];
@@ -47,10 +45,8 @@ forms($header);
 
 $sex = $array['sex']!="" ? " AND sex='$array[sex]'":"";
 $category = $array['category']!="" ? " AND category='$array[category]'":"";
-$institute = $array['institute']!="" ? " AND institute.id = '$array[institute]'":"";
 
-
-$sql .= $category.$sex.$institute;
+$sql .= $category.$sex;
 
 ?>
 
@@ -109,25 +105,6 @@ $sql .= $category.$sex.$institute;
 		           <option <?php echo isset($_GET['category']) && $_GET["category"]=="2" ? "selected":""; ?> value="2">Wild</option>
 		        </select>
 		    </div>
-
-
-
-	      <div class="form-group">
-	        <label>Institutes</label>
-
-	        <select name="institute" class="form-control form-control-sm">
-	        	<option <?php echo !isset($_GET['institute']) ? "selected":""; ?> value="">Select...</option>
-	          <?php 
-	          $sql_institute = "SELECT * FROM institute";
-	          $query = $mysqli->query($sql_institute);
-
-	          while ($row = $query->fetch_array()):?>
-	            <option <?php echo isset($_GET['institute']) && $_GET['institute']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></option>
-	          <?php endwhile; ?>
-	        </select>
-	      </div>
-
-
 
 	      <div class="form-group">
 		        <label>Locus</label>

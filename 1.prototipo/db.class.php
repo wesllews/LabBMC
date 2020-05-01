@@ -286,7 +286,7 @@ function table_body_genotypes($sql,$header){
  	
  	$array = get_all($header);
 
-	$order = " ORDER BY `individual`.`identification` ASC"; #" ORDER BY $array[column] $array[sort_order]";
+	$order = " ORDER BY id_individual ASC"; #" ORDER BY $array[column] $array[sort_order]";
     $limit = " LIMIT $array[offset],$array[limit]";
 
     $sql = $sql.$order.$limit;
@@ -304,11 +304,13 @@ function table_body_genotypes($sql,$header){
 				<?php 
 				foreach (array_slice($header,3) as $locus):
 
-				 	$sql_locus = "SELECT alelo FROM individual INNER JOIN genotype ON individual.identification=genotype.id_individual INNER JOIN category ON individual.id_category=category.id WHERE identification='$row_individual[identification]' AND id_locus ='$locus' ";
+				 	$sql_locus = "SELECT alelo FROM individual INNER JOIN genotype ON individual.identification=genotype.id_individual WHERE identification='$row_individual[identification]' AND id_locus ='$locus' ";
 				 	$result = $mysqli->query($sql_locus);
 					if ($result->num_rows >=2):?>
-						<td scope="row">  
-							<?php while($row = $result->fetch_array()){	echo $row[0],",";	}?>
+						<td scope="row" style="white-space: nowrap;"> 
+							<?php while($row = $result->fetch_array()){
+								echo $row[0]," ";	
+							}?>
 						</td>
 
 					<?php else: ?>
