@@ -1,30 +1,23 @@
 <?php
 session_start();
-$_SESSION['pagina']='studbook';
+$_SESSION['pagina']='wild';
 include 'header.php';
 
 require_once 'db.class.php';
 
-$header = ['identification','name','sex','events','date','institute','local_id'];
+$header = ['identification','name','sex','fragment','pop','group','longitude','latitude'];
 $array = get_all($header);
 forms($header);
 
-$sql= "SELECT identification, individual.name as name, sex, events, date, institute.name as institute, local_id FROM `individual`
-                  INNER JOIN historic ON individual.identification=historic.id_individual 
-                  INNER JOIN events ON historic.id_event=events.id
-                  INNER JOIN institute ON historic.id_institute=institute.id
-                  INNER JOIN kinship ON kinship.id_individual=individual.identification
-                  WHERE id_category!=2 and (events.events='Birth' OR events.events='Capture')
-                  "; #ORDER BY CAST(identification AS int) ASC
+$sql= "SELECT * FROM individual
+INNER JOIN wild_location ON individual.identification=wild_location.id_individual
+WHERE id_category=2";
 
-// Filtros
-$startDate = $array['startDate']!="" ? " AND date >= CAST('$array[startDate]' AS DATE)":"";
-$endDate = $array['endDate']!="" ? " AND date <= CAST('$array[endDate]' AS DATE)":"";
 $sex = $array['sex']!="" ? " AND sex='$array[sex]'":"";
-$institute = $array['institute']!="" ? " AND institute.id = '$array[institute]'":"";
 
-$sql .= $startDate.$endDate.$sex.$institute;
+$sql .= $sex;
 ?>
+<div class="text-warning m-5"><h1 class="ml-5">Wild</h1><hr></div>
 
 <!-- Pagination-->
 <?php pagination($sql,$header); ?>
@@ -32,7 +25,6 @@ $sql .= $startDate.$endDate.$sex.$institute;
 
 <!--Container-->
 <div class="container-fluid">
-
   <div class="row justify-content-center">
 
     <div class="col-12">
@@ -43,7 +35,7 @@ $sql .= $startDate.$endDate.$sex.$institute;
     
     <!--Col Form-->
     <div class="col-md-2 float-left collapse bg-secondary text-white p-3" id="filtro">
-      <form action="studbook.php" method="get" target="_self" >
+      <form action="wild.php" method="get" target="_self" >
 
       <div class="form-group">
         <label>Items per page</label>
@@ -53,20 +45,6 @@ $sql .= $startDate.$endDate.$sex.$institute;
               <option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
             <?php endfor; ?>
           </select>
-      </div>
-
-      <div class="form-row">
-
-        <div class="col">
-          <label>Date Start</label>
-          <input class="datapicker form-control form-control-sm" type="date" name="startDate" value="<?php echo $array['startDate']; ?>">
-        </div>
-
-        <div class="col">
-          <label>Date End</label>
-          <input class="datapicker form-control form-control-sm" type="date" name="endDate" value="<?php echo $array['endDate']; ?>" >
-        </div>
-
       </div>
 
       <div class="form-group">
@@ -80,7 +58,7 @@ $sql .= $startDate.$endDate.$sex.$institute;
         </select>
       </div>
 
-      <div class="form-group">
+      <!--<div class="form-group">
         <label>Institutes</label>
 
         <select name="institute" class="form-control form-control-sm">
@@ -93,10 +71,10 @@ $sql .= $startDate.$endDate.$sex.$institute;
             <option <?php echo isset($_GET['institute']) && $_GET['institute']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></option>
           <?php endwhile; ?>
         </select>
-      </div>
+      </div>-->
 
       <button type="submit" class="btn btn-warning">Submit</button>
-      <a class="btn btn-warning" href="studbook.php" role="button">Clear All</a>
+      <a class="btn btn-warning" href="wild.php" role="button">Clear All</a>
       </form>
     </div>
 

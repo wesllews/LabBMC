@@ -72,6 +72,9 @@ $sql_pagination = $sql.$sexFilter;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
 ?>
+<div class="text-warning m-5" style="white-space: nowrap;"><h1 class="ml-5">Captivity</h1><hr></div>
+
+
 <!--Button-->
 <div class="container-fluid">
   <div class="col-1 bg-warning text-white  text-center p-3 girar" data-toggle="collapse" data-target="#filtro">
@@ -80,7 +83,7 @@ $result_filter = $mysqli->query($sql_filter);
 </div>
 
 <!--Filtro Form-->
-<div class="container-fluid collapse show mb-1" id="filtro">
+<div class="container-fluid collapse mb-1" id="filtro">
 	
 	<form class="bg-light rounded-bottom p-3" action="captivity.php" method="get" target="_top">
 

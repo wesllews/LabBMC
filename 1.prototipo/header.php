@@ -51,16 +51,16 @@
 						<a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link <?php if($_SESSION['pagina']=='studbook'){echo "active";} ?>" href="studbook.php"><i class="fas fa-book-open"></i> Stud Book</a>
+						<a class="nav-link <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="wild.php"><i class="fab fa-pagelines"></i> Wild</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="captivity.php"><i class="fas fa-book"></i> Captivity</a>
+						<a class="nav-link <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="captivity.php"><i class="fas fa-book-open"></i> Captivity</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="genotypes.php"><i class="fas fa-dna"></i> Genotypes</a>
+						<a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="genotypes.php"><i class="fas fa-dna"></i> Genetics</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="individual.php"><i class="fas fa-users"></i> About Us</a>
+						<a class="nav-link disabled" href="individual.php"><i class="fas fa-users"></i> About Us</a>
 					</li>
 				</ul>
 				

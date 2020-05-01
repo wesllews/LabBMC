@@ -65,7 +65,7 @@ include 'header.php';
 			<!--Button-->
 			<div class="d-flex flex-column text-center h-25">
 				<a href="captivity.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Captivity</a>
-				<a href="studbook.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Wild</a>
+				<a href="wild.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Wild</a>
 		    </div>
 		</div>
 
