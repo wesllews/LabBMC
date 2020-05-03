@@ -197,9 +197,8 @@ function table_head($header,$class="table-hover"){
 	        <tr class="text-center">
 				<?php foreach ($header as $value): ?>
 				 <th >
-					<a  class="text-decoration-none text-warning" href="?<?php echo $link.$link2; ?>" >
+					<a  class="text-decoration-none text-warning" >
 						<?php echo ucfirst(str_replace('_',' ',$value)); ?>
-						<i class="fas fa-sort<?php echo $array['column'] == $value ? '-'.$up_or_down : ''; ?>"></i>
 					</a>
 				</th>
 				<?php endforeach ?>
@@ -304,7 +303,7 @@ function table_body_genotypes($sql,$header){
 				<?php 
 				foreach (array_slice($header,3) as $locus):
 
-				 	$sql_locus = "SELECT alelo FROM individual INNER JOIN genotype ON individual.identification=genotype.id_individual WHERE identification='$row_individual[identification]' AND id_locus ='$locus' ";
+				 	$sql_locus = "SELECT allele FROM individual INNER JOIN genotype ON individual.identification=genotype.id_individual WHERE identification='$row_individual[identification]' AND id_locus ='$locus' ";
 				 	$result = $mysqli->query($sql_locus);
 					if ($result->num_rows >=2):?>
 						<td scope="row" style="white-space: nowrap;"> 

@@ -7,7 +7,7 @@ with open('genotype/genotipos.csv', newline='\n') as csvfile:
 	# Salvando o nome dos locus.
 	locus = next(read_genotipos,None)
 
-	with  open("../todos_inserts.sql", 'a') as file:
+	with  open("../SQL/10.genotypes.sql", 'w') as file:
 		for row in read_genotipos:
 			id_individual = row[0]
 
@@ -18,7 +18,7 @@ with open('genotype/genotipos.csv', newline='\n') as csvfile:
 				alelo = row[i]
 
 				if alelo !="0":
-					sql = f"INSERT INTO `genotype` (`id_individual`, `id_locus`, `alelo`, `excluded`, `excluded_date`) VALUES ('{id_individual}', '{id_locus}', '{alelo}', NULL, NULL);\n"		
+					sql = f"INSERT INTO `genotype` (`id_individual`, `id_locus`, `allele`, `restrict`) VALUES ('{id_individual}', '{id_locus}', '{alelo}', 'n') ;\n"		
 					file.write(sql)
 
 		

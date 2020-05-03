@@ -9,6 +9,7 @@ from kinship import insert_kinship
 from locus import insert_locus
 from genotype import insert_genotypes
 from wild_location import insert_wild_location
+from status import insert_status
 
 
 """

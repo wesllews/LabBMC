@@ -5,8 +5,8 @@ with open('locus/locus.csv', newline='\n') as csvfile:
 	reader = csv.DictReader(csvfile, delimiter=',')
 	
 
-	with  open("todos_inserts.sql", 'a') as file:
+	with  open("../SQL/9.locus.sql", 'w') as file:
 
-		for row in reader:
-			sql = f"INSERT INTO `locus` (`locus`, `excluded`, `excluded_date`) VALUES ('{row['Locus']}', NULL, NULL);\n"
+		for row in reader: 
+			sql = f"INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('{row['Locus']}','Microsatellite', NULL, NULL, NULL);\n"
 			file.write(sql)

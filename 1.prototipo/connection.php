@@ -3,7 +3,7 @@
 $server = '127.0.0.1';
 $user = 'root';
 $pass = '';
-$db = 'labbmc';
+$db = 'LABBMC';
 
 
 $mysqli = new mysqli($server,$user,$pass,$db);

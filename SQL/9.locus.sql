@@ -1,0 +1,14 @@
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Lchu1','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Lchu6','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Lchu7','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Lchu8','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Lr.P2BH6','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Lr.P5BE6','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Leon2','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Leon3C20','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Leon11c72','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Leon15C85','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Leon21C75','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Leon30C73','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Leon31C97','Microsatellite', NULL, NULL, NULL);
+INSERT INTO `locus` (`locus`, `type`, `reference`, `forward`, `reverse`) VALUES ('Leon35c42','Microsatellite', NULL, NULL, NULL);

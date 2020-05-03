@@ -5,7 +5,7 @@ include 'header.php';
 
 /* Cabeçalho da tabela */
 $header = ['identification'];
-$headersAdicionais =['genetics','historic','sex','sire','dam','name'];
+$headersAdicionais =['genetics','historic','population','sex','sire','dam','name','alive'];
 
 	// Testa se algum 'Display informations' foi enviado
 	$flag = 0;
@@ -255,7 +255,8 @@ $result_filter = $mysqli->query($sql_filter);
 	    				<th scope="col" style="white-space: nowrap;">
 							<div class="d-flex justify-content-center align-items-end text-warning">
 								<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
-								<?php if($value!='historic' && $value!='genetics'): ?>
+								<!--Icon-->
+								<?php if($value!='historic' && $value!='genetics'  && $value!='population'  && $value!='alive'): ?>
 									<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
 									onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 										<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
@@ -263,6 +264,7 @@ $result_filter = $mysqli->query($sql_filter);
 								<?php elseif($value=='historic'): ?>
 									<i class="btn text-warning fas fa-chevron-up px-3" id="showAll" ></i>
 	    						<?php endif; ?>
+
 							</div>
 						</th>
 					<?php endforeach ?>
@@ -323,6 +325,37 @@ $result_filter = $mysqli->query($sql_filter);
 
 						    					if ($result_genetics->num_rows > 0): ?>
 						    						<td scope="row">Genotypes</td>
+						    					<?php else: ?>
+						    						<td scope="row">-</td>
+						    					<?php endif; ?>
+					    				<?php break;?>
+
+					    				<?php case 'population': 
+					    					$sql_population = "SELECT * FROM `status` 
+					    					INNER JOIN institute ON institute.id = status.id_institute
+					    					 WHERE identification = '$row[identification]'";
+					    					$result_population = $mysqli->query($sql_population);
+
+						    					if ($result_population->num_rows > 0): 
+						    						$row_population = $result_population->fetch_array();?>
+						    						<td scope="row">
+						    							<?php echo $row_population['abbreviation']; ?>
+						    						</td>
+						    					<?php else: ?>
+						    						<td scope="row">-</td>
+						    					<?php endif; ?>
+					    				<?php break;?>
+
+					    				<?php case 'alive': 
+					    					$sql_alive = "SELECT * FROM `status` 
+					    					WHERE identification = '$row[identification]'";
+					    					$result_alive = $mysqli->query($sql_alive);
+
+						    					if ($result_alive->num_rows > 0): 
+						    						$row_alive = $result_alive->fetch_array();?>
+						    						<td scope="row">
+						    							<?php echo $row_alive['alive']==1 ? '<div class="text-success">True</div>':'<div class="text-danger">False</div>' ;?>
+						    						</td>
 						    					<?php else: ?>
 						    						<td scope="row">-</td>
 						    					<?php endif; ?>

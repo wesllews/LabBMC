@@ -37,7 +37,7 @@
 	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
 
 	    	<!-- Brand -->
-	    	<a class="navbar-brand font-weight-bold" href="http://localhost/phpmyadmin/index.php"><i class="fas fa-database text-warning shadow-lg"></i>BLT Database</a>
+	    	<a class="navbar-brand font-weight-bold" href="#http://localhost/phpmyadmin/index.php"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
 
 		    <!-- Toggler -->
 		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>

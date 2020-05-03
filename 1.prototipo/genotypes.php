@@ -49,6 +49,7 @@ $category = $array['category']!="" ? " AND category='$array[category]'":"";
 $sql .= $category.$sex;
 
 ?>
+
 <div class="text-warning m-5" style="white-space: nowrap;"><h1 class="ml-5">Genetics: Genotypes and Alelles</h1><hr></div>
 
 <!-- Pagination-->

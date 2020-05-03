@@ -95,7 +95,7 @@ with open('historic/BLT_historic.csv', newline='\n') as csvfile:
 	id_individual = 3 # o individuo 1 é o wild e 2 o unkown
 	"""
 
-	with open("todos_inserts.sql", 'a') as file:
+	with open("../SQL/3.historic.sql", 'w') as file:
 		for row in read_BLT_historic:
 
 			id = None
@@ -107,19 +107,16 @@ with open('historic/BLT_historic.csv', newline='\n') as csvfile:
 			id_individual = row['Stud']
 			id_event = row['Event_id']
 			id_institute = row['id_institute']
-			Local_id = row['Local_id'] if row['Local_id']!="NA" else None
-			date = row['Date'] if row['Date']!="NA" else None
-			observation = row['Observation'] if row['Observation']!="NA" else None
+			Local_id = f"\'{row['Local_id']}\'" if row['Local_id']!="NA" else "NULL"
+			date = f"\'{row['Date']}\'" if row['Date']!="NA" else "NULL"
+			observation = f"\'{row['Observation']}\'" if row['Observation']!="NA" else "NULL"
 
 			# Usando 'f-string' para criar linha SQL
-			sql = f"INSERT INTO `historic` (`id`, `id_individual`, `id_event`, `id_institute`, `local_id`, `date`, `observation`, `excluded`, `excluded_date`) VALUES (NULL, '{id_individual}', '{id_event}', '{id_institute}', '{Local_id}', '{date}', '{observation}', NULL, NULL);\n"
+			sql = f"INSERT INTO `historic` (`id`, `id_individual`, `id_event`, `id_institute`, `local_id`, `date`, `observation`) VALUES (NULL, '{id_individual}', '{id_event}', '{id_institute}', {Local_id}, {date}, {observation});\n"
 			
 			#Consistência de dados - removendo a linha sem histórico
 			if id_event !="NA":
 				file.write(sql)
-		UPDATE = f"\nUPDATE historic SET local_id = NULL WHERE local_id ='None';\n UPDATE historic SET observation = NULL WHERE observation ='None';\n"
-		file.write(UPDATE)
-
 """
 BIBLIOGRAFIA CSV
 - http://zetcode.com/python/csv/
