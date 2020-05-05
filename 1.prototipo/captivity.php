@@ -27,13 +27,13 @@ $headersAdicionais =['genetics','historic','population','sex','sire','dam','name
 			}
 		endif;
 
-
-/* Filtros GET*/
-	
-	// Table_Head
+	// Sort and Order Table
 	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
 	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
 
+
+/* Filtros GET*/
+	
 	// Pagination
 	$limit = 20; // Default limit
 	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
@@ -44,8 +44,10 @@ $headersAdicionais =['genetics','historic','population','sex','sire','dam','name
 	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
 	$asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
 
-	// Studbook filters
+	// Captivity filters
 	$sexFilter = isset($_GET['sexFilter'])? $_GET['sexFilter'] : "";
+	$filterpopulation = isset($_GET['filterpopulation'])? $_GET['filterpopulation'] : "";
+	$status = isset($_GET['status'])? $_GET['status'] : "";
 
 
 /* Forms */
@@ -54,7 +56,9 @@ $headersAdicionais =['genetics','historic','population','sex','sire','dam','name
 		    "sort_order" => $sort_order,
 		    "pag" => $pag,
 		    "limit" => $limit,
-		    "sexFilter" => $sexFilter
+		    "sexFilter" => $sexFilter,
+		    "status" => $status,
+		    "filterpopulation" => $filterpopulation
 		);
 
 
@@ -63,12 +67,16 @@ $headersAdicionais =['genetics','historic','population','sex','sire','dam','name
 	// Table order
 	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
 	$order = " ORDER BY $column $sort_order"; #ORDER BY CAST(identification AS INT)
+
+	// Captivity filters
 	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
+	$status = $status!=""? " AND alive='$_GET[status]'" : "";
+	$filterpopulation = $filterpopulation!=""? " AND id_institute='$_GET[filterpopulation]'" : "";
 
 
 
-$sql = "SELECT DISTINCT(identification),individual.name as name FROM `individual` INNER JOIN historic ON individual.identification=historic.id_individual INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
-$sql_pagination = $sql.$sexFilter;
+$sql = "SELECT DISTINCT(identification),individual.name as name FROM `individual` INNER JOIN status ON individual.identification=status.id_individual INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
+$sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
 ?>
@@ -116,62 +124,31 @@ $result_filter = $mysqli->query($sql_filter);
 			<label>Life Status</label>
 
 			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="status" id="alive" value="alive"  <?php echo isset($_GET["status"]) && $_GET["status"]=="alive" ? "checked":""; ?>>
+			  <input class="form-check-input" type="radio" name="status" id="alive" value="1"  <?php echo isset($_GET["status"]) && $_GET["status"]=="1" ? "checked":""; ?>>
 			  <label class="form-check-label" for="alive"> Alive</label>
 			</div>
 
 			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="radio" name="status" id="death" value="death"  <?php echo isset($_GET["status"]) && $_GET["status"]=="death" ? "checked":""; ?>>
+			  <input class="form-check-input" type="radio" name="status" id="death" value="0"  <?php echo isset($_GET["status"]) && $_GET["status"]=="0" ? "checked":""; ?>>
 			  <label class="form-check-label" for="death"> Death</label>
 			</div>
 
 		</div>
 
-		<!--Events
+		<!--population-->
 		<div class="form-group">
-	        Events
-	        <div class="row">
-	        	<div class="col-3">
-    				<small>Event</small>
-    		        <select name="events" class="form-control form-control-sm">
-    					<option <?php echo !isset($_GET['events']) ? "selected":""; ?> value="">Select...</option>
-    					<?php 
-    					$sql_events = "SELECT * FROM events";
-    					$query = $mysqli->query($sql_events);
+			<label>Population</label>
+			<select name="filterpopulation" class="form-control form-control-sm">
+			  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">Select...</option>
+			  <?php 
+			  $sql_institute = "SELECT * FROM institute";
+			  $query = $mysqli->query($sql_institute);
 
-    					while ($row = $query->fetch_array()):?>
-    						<option <?php echo isset($_GET['events']) && $_GET['events']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>">
-    							<?php echo $row["events"]; ?>
-    						</option>
-    					<?php endwhile; ?>
-    		        </select>
-	        	</div>
-
-	        	<div class="col-3">
-	        		<small>Location</small>
-	        		<select name="location" class="form-control form-control-sm">
-	        		  <option <?php echo !isset($_GET['location']) ? "selected":""; ?> value="">Select...</option>
-	        		  <?php 
-	        		  $sql_institute = "SELECT * FROM institute";
-	        		  $query = $mysqli->query($sql_institute);
-
-	        		  while ($row = $query->fetch_array()):?>
-	        		    <option <?php echo isset($_GET['location']) && $_GET['location']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></option>
-	        		  <?php endwhile; ?>
-	        		</select>
-	        	</div>
-
-	        	<div class="col-3">
-	        		<small>Date Start</small>
-	        		<input class="datapicker form-control form-control-sm" type="date" name="startBirth" value="<?php echo $array['startDate']; ?>">
-	        	</div>
-
-	        	<div class="col-3">
-					<small>Date End</small>
-					<input class="datapicker form-control form-control-sm" type="date" name="endBirth" value="<?php echo $array['endDate']; ?>" >
-				</div>
-	        </div>
-		</div> -->
+			  while ($row = $query->fetch_array()):?>
+			    <option <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["abbreviation"]," - ",$row["name"]; ?></option>
+			  <?php endwhile; ?>
+			</select>
+		</div>
 
 		<!--Display informations-->
 		<div class="form-group">
@@ -324,7 +301,11 @@ $result_filter = $mysqli->query($sql_filter);
 					    					$result_genetics = $mysqli->query($sql_genetics);
 
 						    					if ($result_genetics->num_rows > 0): ?>
-						    						<td scope="row">Genotypes</td>
+						    						<td scope="row">
+						    						<button type="button" class="btn btn-success">Genetics</button>
+						    						<button type="button" class="btn btn-dark">Genomic</button>
+						    						<button type="button" class="btn btn-warning">Statistics</button>
+						    						</td>
 						    					<?php else: ?>
 						    						<td scope="row">-</td>
 						    					<?php endif; ?>
@@ -333,7 +314,7 @@ $result_filter = $mysqli->query($sql_filter);
 					    				<?php case 'population': 
 					    					$sql_population = "SELECT * FROM `status` 
 					    					INNER JOIN institute ON institute.id = status.id_institute
-					    					 WHERE identification = '$row[identification]'";
+					    					 WHERE id_individual = '$row[identification]'";
 					    					$result_population = $mysqli->query($sql_population);
 
 						    					if ($result_population->num_rows > 0): 
@@ -348,7 +329,7 @@ $result_filter = $mysqli->query($sql_filter);
 
 					    				<?php case 'alive': 
 					    					$sql_alive = "SELECT * FROM `status` 
-					    					WHERE identification = '$row[identification]'";
+					    					WHERE id_individual = '$row[identification]'";
 					    					$result_alive = $mysqli->query($sql_alive);
 
 						    					if ($result_alive->num_rows > 0): 
