@@ -78,3 +78,13 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+/* DROPDOWN*/
+.dropdown-menu>a.active, .dropdown-menu>a:hover, .dropdown-menu>a:focus{
+background-color: #ffc107;
+color: #000000;
+}
+.dropdown-menu>a:focus{
+background-color: #fff;
+color: #ffc107;
+}

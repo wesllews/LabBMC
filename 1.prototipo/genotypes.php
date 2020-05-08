@@ -6,9 +6,10 @@ require_once 'db.class.php';
 
 $sql= "SELECT DISTINCT(genotype.id_individual),identification,category,sex FROM genotype
 INNER JOIN individual ON individual.identification=genotype.id_individual
+INNER JOIN status ON status.id_individual=genotype.id_individual
 INNER JOIN category ON individual.id_category=category.id WHERE 1";
 
-$header = ['identification','category','sex'];
+$header = ['identification','category','sex','population','alive'];
 
 // Seleciona os Locus
 $sql_locus = "SELECT DISTINCT(locus) FROM locus";

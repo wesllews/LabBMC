@@ -6,12 +6,13 @@ $(function () {
 $('.popover-dismiss').popover({
   trigger: 'focus'
 })
-// Rodar Botão: onclick div.girar -> roda o icon com id="girar"
+
+// Icon Filtro (captivity)
 $(".girar").click(function(){
 	$("#girar").toggleClass("fa-flip-vertical")  ; 
 })
 
-// Usando onclick para enviar o id do item a ser girado
+// Janela de Historico de cada individuo (captivity)
 function girar(id="girar" ) {
 	 $(document).ready(function() {
 	 	if ($("#"+id).hasClass("fa-chevron-up")) {
@@ -27,7 +28,7 @@ function girar(id="girar" ) {
 }
 
 
-// Abrir o collapse de todos os historics e inverte os icons
+// Abrir o collapse de todos os historics e inverte os icons (captivity)
 $("#showAll").click(function(){
 	$("#showAll").toggleClass("fa-chevron-up").toggleClass("fa-chevron-down");
 
@@ -44,3 +45,11 @@ $("#showAll").click(function(){
 		$("div.card i.fas").addClass("fa-chevron-down");
 	}
 })
+
+$( ".hover-shadow" ).hover(
+  function() {
+    $( this ).addClass( "shadow-sm" );
+  }, function() {
+    $( this ).removeClass( "shadow-sm" );
+  }
+);

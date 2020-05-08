@@ -37,7 +37,7 @@
 	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
 
 	    	<!-- Brand -->
-	    	<a class="navbar-brand font-weight-bold" href="#http://localhost/phpmyadmin/index.php"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
+	    	<a class="navbar-brand font-weight-bold" href="http://localhost/phpmyadmin/index.php"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
 
 		    <!-- Toggler -->
 		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -50,17 +50,23 @@
 					<li class="nav-item">
 						<a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> home</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="wild.php"><i class="fab fa-pagelines"></i> Wild</a>
+
+					<li class="nav-item dropdown  <?php if($_SESSION['pagina']=='wild' || $_SESSION['pagina']=='captivity'){echo "active";} ?>">
+						<a class="nav-link dropdown-toggle" href="#" id="lifeHistory" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fab fa-pagelines"></i> Life History
+						</a>
+						<div class="dropdown-menu" aria-labelledby="lifeHistory">
+							<a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="wild.php"><i class="fab fa-pagelines"></i> Wild</a>
+
+							<a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="mainCaptivity.php"><i class="fas fa-book-open"></i> Captivity</a>
+						</div>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="captivity.php"><i class="fas fa-book-open"></i> Captivity</a>
-					</li>
+
 					<li class="nav-item">
 						<a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="genotypes.php"><i class="fas fa-dna"></i> Genetics</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link disabled" href="individual.php"><i class="fas fa-users"></i> About Us</a>
+						<a class="nav-link" href="individual.php"><i class="fas fa-user"></i> Individual</a>
 					</li>
 				</ul>
 				

@@ -5,7 +5,7 @@ include 'header.php';
 
 /* Cabeçalho da tabela */
 $header = ['identification'];
-$headersAdicionais =['genetics','historic','population','sex','sire','dam','name','alive'];
+$headersAdicionais =['historic','population','sex','sire','dam','name','alive','genetics'];
 
 	// Testa se algum 'Display informations' foi enviado
 	$flag = 0;
@@ -49,6 +49,9 @@ $headersAdicionais =['genetics','historic','population','sex','sire','dam','name
 	$filterpopulation = isset($_GET['filterpopulation'])? $_GET['filterpopulation'] : "";
 	$status = isset($_GET['status'])? $_GET['status'] : "";
 
+	// Preview page
+	$fulldata= isset($_GET['fulldata'])? $_GET['fulldata'] : "s";
+
 
 /* Forms */
 	$array =  array(
@@ -58,7 +61,8 @@ $headersAdicionais =['genetics','historic','population','sex','sire','dam','name
 		    "limit" => $limit,
 		    "sexFilter" => $sexFilter,
 		    "status" => $status,
-		    "filterpopulation" => $filterpopulation
+		    "filterpopulation" => $filterpopulation,
+		    "fulldata" => $fulldata
 		);
 
 
@@ -136,19 +140,21 @@ $result_filter = $mysqli->query($sql_filter);
 		</div>
 
 		<!--population-->
-		<div class="form-group">
-			<label>Population</label>
-			<select name="filterpopulation" class="form-control form-control-sm">
-			  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">Select...</option>
-			  <?php 
-			  $sql_institute = "SELECT * FROM institute";
-			  $query = $mysqli->query($sql_institute);
+		<?php if($fulldata=='s'): ?>
+			<div class="form-group">
+				<label>Population</label>
+				<select name="filterpopulation" class="form-control form-control-sm">
+				  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">Select...</option>
+				  <?php 
+				  $sql_institute = "SELECT * FROM institute";
+				  $query = $mysqli->query($sql_institute);
 
-			  while ($row = $query->fetch_array()):?>
-			    <option <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["abbreviation"]," - ",$row["name"]; ?></option>
-			  <?php endwhile; ?>
-			</select>
-		</div>
+				  while ($row = $query->fetch_array()):?>
+				    <option <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["abbreviation"]," - ",$row["name"]; ?></option>
+				  <?php endwhile; ?>
+				</select>
+			</div>
+		<?php endif; ?>
 
 		<!--Display informations-->
 		<div class="form-group">
