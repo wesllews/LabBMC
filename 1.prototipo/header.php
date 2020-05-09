@@ -62,9 +62,16 @@
 						</div>
 					</li>
 
-					<li class="nav-item">
-						<a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="genotypes.php"><i class="fas fa-dna"></i> Genetics</a>
+					<li class="nav-item dropdown <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
+						<a class="nav-link dropdown-toggle" href="#" id="genetics" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-dna"></i> Genetics</a>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="genetics">
+							<a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="genotypes.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
+							<a class="dropdown-item" href="#"><i class="fas fa-barcode"></i> Haploypes</a>
+						</div>
 					</li>
+
 					<li class="nav-item">
 						<a class="nav-link" href="individual.php"><i class="fas fa-user"></i> Individual</a>
 					</li>

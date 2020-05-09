@@ -86,10 +86,9 @@ $result_filter = $mysqli->query($sql_filter);
 ?>
 <div class="text-warning m-5" style="white-space: nowrap;"><h1 class="ml-5">Captivity</h1><hr></div>
 
-
 <!--Button-->
-<div class="container-fluid">
-  <div class="col-1 bg-warning text-white  text-center p-3 girar" data-toggle="collapse" data-target="#filtro">
+<div class="d-flex flex-row">
+  <div class="bg-warning text-white text-center p-4 girar" data-toggle="collapse" data-target="#filtro">
     <i class="fas fa-filter"></i><i class="fas fa-chevron-up " id="girar"></i>
   </div>
 </div>

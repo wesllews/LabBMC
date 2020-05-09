@@ -82,7 +82,7 @@
 /* DROPDOWN*/
 .dropdown-menu>a.active, .dropdown-menu>a:hover, .dropdown-menu>a:focus{
 background-color: #ffc107;
-color: #000000;
+color: #fff;
 }
 .dropdown-menu>a:focus{
 background-color: #fff;

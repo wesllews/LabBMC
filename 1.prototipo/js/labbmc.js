@@ -48,8 +48,8 @@ $("#showAll").click(function(){
 
 $( ".hover-shadow" ).hover(
   function() {
-    $( this ).addClass( "shadow-sm" );
+    $( this ).addClass( "shadow" );
   }, function() {
-    $( this ).removeClass( "shadow-sm" );
+    $( this ).removeClass( "shadow" );
   }
 );
