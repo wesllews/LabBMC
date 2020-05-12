@@ -1,0 +1,95 @@
+<?php include "connection.php"; ?>
+<!doctype html>
+<html lang="pt">
+
+
+
+  <head>
+
+		<meta http-equiv="refresh" content="100">
+
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!--Bootstrap CSS-->
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+
+		<!-- Font Awesome CSS -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+		<!-- Font Awesome CSS -->
+		<link href="https://fonts.googleapis.com/css?family=Baloo+2|Maven+Pro:900|Noto+Sans+SC:900&display=swap" rel="stylesheet">
+
+		<!--LABBMC CSS-->
+		<link rel="stylesheet" type="text/css" href="css/labbmc.css">
+
+		<!-- Title and Icon page -->
+		<title>BLT Database</title>
+		<link rel="icon" href="img/dna-solid.svg">
+  </head>
+
+
+
+  <header>
+
+	    <!-- NavBar-Class -->
+	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
+
+	    	<!-- Brand -->
+	    	<a class="navbar-brand font-weight-bold" href="http://localhost/phpmyadmin/index.php"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
+
+		    <!-- Toggler -->
+		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+		    <!-- Collapse links, flex-justify-->
+			<div class="collapse navbar-collapse justify-content-between rounded" id="navbar-list">
+				
+				<!-- Pages links -->
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> home</a>
+					</li>
+
+					<li class="nav-item dropdown  <?php if($_SESSION['pagina']=='wild' || $_SESSION['pagina']=='captivity'){echo "active";} ?>">
+						<a class="nav-link dropdown-toggle" href="#" id="lifeHistory" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fab fa-pagelines"></i> Life History
+						</a>
+						<div class="dropdown-menu" aria-labelledby="lifeHistory">
+							
+							<a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="wild.php"><i class="fab fa-pagelines"></i> Wild</a>
+
+							<a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="mainCaptivity.php"><i class="fas fa-book-open"></i> Captivity</a>
+						</div>
+					</li>
+
+					<li class="nav-item dropdown <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
+						<a class="nav-link dropdown-toggle" href="#" id="Headergenetics" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-dna"></i> Genetics</a>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="Headergenetics">
+						<a class="nav-link dropdown-toggle" href="#" id="genetics" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-dna"></i> Genetics</a>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="genetics">
+							<a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="genotypes.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
+							<a class="dropdown-item" href="#"><i class="fas fa-barcode"></i> Haploypes</a>
+						</div>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="individual.php"><i class="fas fa-user"></i> Individual</a>
+					</li>
+				</ul>
+				
+				<!-- User Name -->
+				<span class="d-none navbar-text text-warning"><i class="fas fa-user"></i> Hey, User!</span>
+				
+			</div>
+
+		</nav>
+  </header>
+
+
+
+  <body>
