@@ -56,6 +56,7 @@
 							<i class="fab fa-pagelines"></i> Life History
 						</a>
 						<div class="dropdown-menu" aria-labelledby="lifeHistory">
+							
 							<a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="wild.php"><i class="fab fa-pagelines"></i> Wild</a>
 
 							<a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="mainCaptivity.php"><i class="fas fa-book-open"></i> Captivity</a>
@@ -63,13 +64,23 @@
 					</li>
 
 					<li class="nav-item dropdown <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
-						<a class="nav-link dropdown-toggle" href="#" id="genetics" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a class="nav-link dropdown-toggle" href="#" id="Headergenetics" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<i class="fas fa-dna"></i> Genetics</a>
 						</a>
-						<div class="dropdown-menu" aria-labelledby="genetics">
+						<div class="dropdown-menu" aria-labelledby="Headergenetics">
 							<a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="genotypes.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
 							<a class="dropdown-item" href="#"><i class="fas fa-barcode"></i> Haploypes</a>
-						</div>
+
+							<div class="dropright">
+								<a class="dropdown-item dropdown-toggle dropright" href="#" id="test" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="fas fa-circle"></i> Exemplo</a>
+								</a>
+								<div class="dropdown-menu" aria-labelledby="test">
+									<a class="dropdown-item" href="#">Exemplo 1</a>
+									<a class="dropdown-item" href="#">Exemplo 2</a>
+								</div>
+							</div>
+
 					</li>
 
 					<li class="nav-item">

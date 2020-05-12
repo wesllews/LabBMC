@@ -69,8 +69,18 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 /* SQL Filtros */
 
 	// Table order
+	
+	// Há algumas opções para ordenação da identificação:
+	// Opção 1:  CAST(identification AS INT)							-> Começa com zero(alfabético), mas ordena os numeros corretamente e não ordena o alfabético
+	// Opção 2:  CAST(identification AS INT),identification				-> Alfabéticos primeiro, Ordena alfabéticos mas não varia os numéricos
+	// Opção 3: CASE + list,CAST(identification AS INT)					-> Ele ordena os numeros corretamente mas alfabéticamente não
+	// Opção 4: CASE + list,CAST(identification AS INT),identification	-> Ele ordena os numeros corretamente mas alfabéticamente não
+	// 
+	$case = $sort_order=="ASC"?"(CASE WHEN CAST(identification AS INT) >= 1 THEN 0 ELSE 1 END) as list," : "(CASE WHEN CAST(identification AS INT) >= 1 THEN 1 ELSE 0 END) as list," ; # SEE FIRST, NUMERICS OR ALPHABETICS
+
+	$aux_column = $column=='identification'? 'list,CAST(identification AS INT),identification': $column;
+	$order = " ORDER BY $aux_column $sort_order";
 	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
-	$order = " ORDER BY $column $sort_order"; #ORDER BY CAST(identification AS INT)
 
 	// Captivity filters
 	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
@@ -79,10 +89,10 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 
 
 
-$sql = "SELECT DISTINCT(identification),individual.name as name FROM `individual` INNER JOIN status ON individual.identification=status.id_individual INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
+$sql = "SELECT DISTINCT(identification),$case individual.name as name FROM `individual` INNER JOIN status ON individual.identification=status.id_individual INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
-$result_filter = $mysqli->query($sql_filter);
+$result_filter = $mysqli->query($sql_filter); 
 ?>
 <div class="text-warning m-5" style="white-space: nowrap;"><h1 class="ml-5">Captivity</h1><hr></div>
 
@@ -127,13 +137,13 @@ $result_filter = $mysqli->query($sql_filter);
 			<label>Life Status</label>
 
 			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="status" id="alive" value="1"  <?php echo isset($_GET["status"]) && $_GET["status"]=="1" ? "checked":""; ?>>
-			  <label class="form-check-label" for="alive"> Alive</label>
+			  <input class="form-check-input" type="radio" name="status" id="statusAlive" value="1"  <?php echo isset($_GET["status"]) && $_GET["status"]=="1" ? "checked":""; ?>>
+			  <label class="form-check-label" for="statusAlive"> Alive</label>
 			</div>
 
 			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="radio" name="status" id="death" value="0"  <?php echo isset($_GET["status"]) && $_GET["status"]=="0" ? "checked":""; ?>>
-			  <label class="form-check-label" for="death"> Death</label>
+			  <input class="form-check-input" type="radio" name="status" id="statusDeath" value="0"  <?php echo isset($_GET["status"]) && $_GET["status"]=="0" ? "checked":""; ?>>
+			  <label class="form-check-label" for="statusDeath"> Death</label>
 			</div>
 
 		</div>
@@ -186,6 +196,7 @@ $result_filter = $mysqli->query($sql_filter);
 </form>
 
 <!-- Pagination -->
+<div class="container mt-4">
 	<?php
 	$result = $mysqli->query($sql_pagination);
 	$total_rows =$result->num_rows;
@@ -196,7 +207,7 @@ $result_filter = $mysqli->query($sql_filter);
 	$end = (($pag+$NumLinks) < $total_pages) ? ($pag + $NumLinks) : $total_pages;
 	?>
 
-	<div class="container mt-4">
+	
 		<ul class="pagination pagination-sm justify-content-center">
 	    	<!--First page-->
 	    	<li class="page-item <?php if($pag <= 1){ echo 'disabled'; } ?>">
@@ -220,8 +231,7 @@ $result_filter = $mysqli->query($sql_filter);
 	    	<li class="page-item <?php if($pag >= $total_pages){ echo 'disabled'; } ?>">
 	    		<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo $total_pages;?>';" form="formFiltros" >Last</button>
 	    	</li>
-	    </ul>
-	</div>
+	    </ul></div>
 
 <!--Table-->
 <div class="container-fluid">
@@ -233,23 +243,23 @@ $result_filter = $mysqli->query($sql_filter);
     		<!--Head Table-->
 	    	<thead>
 	    		<tr class="text-center">
-	    			<?php foreach ($header as $value): ?>
-	    				<th scope="col" style="white-space: nowrap;">
-							<div class="d-flex justify-content-center align-items-end text-warning">
-								<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
-								<!--Icon-->
-								<?php if($value!='historic' && $value!='genetics'  && $value!='population'  && $value!='alive'): ?>
-									<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
-									onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
-										<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
-									</button>
-								<?php elseif($value=='historic'): ?>
-									<i class="btn text-warning fas fa-chevron-up px-3" id="showAll" ></i>
-	    						<?php endif; ?>
+    			<?php foreach ($header as $value): ?>
+    				<th scope="col" style="white-space: nowrap;">
+						<div class="d-flex justify-content-center align-items-end text-warning">
+							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
+							<!--Icon-->
+							<?php if($value!='historic' && $value!='genetics'  && $value!='population'  && $value!='alive'): ?>
+								<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
+								onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
+									<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
+								</button>
+							<?php elseif($value=='historic'): ?>
+								<i class="btn text-warning fas fa-chevron-up px-3" id="showAll" ></i>
+    						<?php endif; ?>
 
-							</div>
-						</th>
-					<?php endforeach ?>
+						</div>
+					</th>
+				<?php endforeach ?>
 	    		</tr>
 	    	</thead>
 

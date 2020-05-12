@@ -45,7 +45,8 @@ include 'header.php';
 
 			<!--Button-->
 			<div class="d-flex flex-column text-center h-25">
-				<a href="#" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2 disabled">See More</a>
+				<a href="genotypes.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Genotypes and Alleles</a>
+				<a href="#.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2 disabled">Haploypes</a>
 			</div>
 		</div>
 
