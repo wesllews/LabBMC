@@ -5,7 +5,7 @@ with open('wild/wild.csv', newline='\n') as csvfile:
 	read_wild = csv.DictReader(csvfile, delimiter=',')
 
 	#Escrevendo inserts
-	with open("todos_inserts.sql", 'w') as file:
+	with open("../SQL/8.wild_location.sql", 'w') as file:
 	#with open("wild_location/insert_wild_location.sql", 'w') as file:
 
 		for row in read_wild:
@@ -17,5 +17,5 @@ with open('wild/wild.csv', newline='\n') as csvfile:
 			Longitude = row['Longitude'] if row['Longitude']!="" else None
 			Latitude = row['Latitude'] if row['Latitude']!="" else None
 
-			sql= f"INSERT INTO `wild_location` (`id_individual`, `fragment`, `pop`, `group`, `longitude`, `latitude`, `excluded`, `excluded_date`) VALUES ('{identification}', '{Fragment}', '{Pop}', '{Group}', '{Longitude}', '{Latitude}', NULL, NULL);\n"
+			sql= f"INSERT INTO `wild_location` (`id_individual`, `fragment`, `pop`, `group`, `longitude`, `latitude`) VALUES ('{identification}', '{Fragment}', '{Pop}', '{Group}', '{Longitude}', '{Latitude}');\n"
 			file.write(sql)
