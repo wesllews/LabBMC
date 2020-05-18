@@ -37,17 +37,17 @@ $result_filter = $mysqli->query($sql);
 
 	<div class="container">
 		<div class="row">
-			<div class="col px-4 pb-5">
+			<div class="col-lg-6 px-4 pb-5">
 				<form method="get" action="" id="pop">
 					<input type="hidden" name="captivity" value="s">
 				</form>
 				<button class="col btn btn-dark p-5 hover-shadow" style="transition:0.5s;" form="pop">
 					<h2><i class="fas fa-globe-americas"></i></h2>
-					<h2>Whole Population</h2>
+					<h2>Current Populations</h2>
 				</button>
 			</div>
 			
-			<div class="col px-4 pb-5">
+			<div class="col-lg-6 px-4 pb-5">
 				<form action="captivity.php" method="get" id="full">
 					<input type="hidden" name="fulldata" value="s">
 				</form>

@@ -75,25 +75,24 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 	// Opção 2:  CAST(identification AS INT),identification				-> Alfabéticos primeiro, Ordena alfabéticos mas não varia os numéricos
 	// Opção 3: CASE + list,CAST(identification AS INT)					-> Ele ordena os numeros corretamente mas alfabéticamente não
 	// Opção 4: CASE + list,CAST(identification AS INT),identification	-> Ele ordena os numeros corretamente mas alfabéticamente não
-	// 
-	$case = $sort_order=="ASC"?"(CASE WHEN CAST(identification AS INT) >= 1 THEN 0 ELSE 1 END) as list," : "(CASE WHEN CAST(identification AS INT) >= 1 THEN 1 ELSE 0 END) as list," ; # SEE FIRST, NUMERICS OR ALPHABETICS
 
-	$aux_column = $column=='identification'? 'list,CAST(identification AS INT),identification': $column;
+	$aux_column = $column=='identification'? 'CAST(identification AS INT),identification': $column;
 	$order = " ORDER BY $aux_column $sort_order";
 	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
 
 	// Captivity filters
 	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
 	$status = $status!=""? " AND alive='$_GET[status]'" : "";
-	$filterpopulation = $filterpopulation!=""? " AND id_institute='$_GET[filterpopulation]'" : "";
+	$filterpopulation = $filterpopulation!=""? " AND id_institute=$_GET[filterpopulation]" : "";
 
 
 
-$sql = "SELECT DISTINCT(identification),$case individual.name as name FROM `individual` INNER JOIN status ON individual.identification=status.id_individual INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
+$sql = "SELECT DISTINCT(identification), individual.name as name FROM `individual` INNER JOIN status ON individual.identification=status.id_individual INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter); 
 ?>
+
 <div class="text-warning m-5" style="white-space: nowrap;"><h1 class="ml-5">Captivity</h1><hr></div>
 
 <!--Button-->
@@ -310,6 +309,14 @@ $result_filter = $mysqli->query($sql_filter);
 						    				</td>
 					    				<?php break;?>
 
+    				    				<?php case 'identification': ?>
+    				    				<td scope="row">
+	    				    				<form method="get" action="individual.php" id="individual">
+	    				    					<input type="hidden" name="identification" value="<?php echo $row[$value];?>">
+	    				    					<button class=" btn btn-outline-success btn-block border-0" type="submit"><?php echo $row[$value];?></button>
+	    				    				</form>
+    				    				</td>
+    				    				<?php break;?>
 
 					    				<?php case 'genetics': 
 					    					$sql_genetics = "SELECT * FROM genotype WHERE id_individual = '$row[identification]'";
@@ -319,7 +326,7 @@ $result_filter = $mysqli->query($sql_filter);
 						    						<td scope="row">
 						    						<button type="button" class="btn btn-success">Genetics</button>
 						    						<button type="button" class="btn btn-dark">Genomic</button>
-						    						<button type="button" class="btn btn-warning">Statistics</button>
+						    						<button type="button" class="btn btn-primary">Statistics</button>
 						    						</td>
 						    					<?php else: ?>
 						    						<td scope="row">-</td>

@@ -125,6 +125,16 @@ $result_filter = $mysqli->query($sql_filter);
 				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
 			</select>
 		</div>
+		
+		<!--Category-->
+		<div class="btn-group btn-group-toggle" data-toggle="buttons">
+		  <label class="btn btn-secondary active">
+		    <input type="radio" name="options" id="option1" autocomplete="off" checked> Captivity
+		  </label>
+		  <label class="btn btn-secondary">
+		    <input type="radio" name="options" id="option3" autocomplete="off"> Wild
+		  </label>
+		</div>
 
 		<!--Life Status-->
 		<div class="form-group">
@@ -141,21 +151,6 @@ $result_filter = $mysqli->query($sql_filter);
 			</div>
 
 		</div>
-
-		<!--population-->
-			<div class="form-group">
-				<label>Population</label>
-				<select name="filterpopulation" class="form-control form-control-sm">
-				  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">Select...</option>
-				  <?php 
-				  $sql_institute = "SELECT * FROM institute";
-				  $query = $mysqli->query($sql_institute);
-
-				  while ($row = $query->fetch_array()):?>
-				    <option <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["abbreviation"]," - ",$row["name"]; ?></option>
-				  <?php endwhile; ?>
-				</select>
-			</div>
 
 		<!--Display informations-->
 		<div class="form-group">
