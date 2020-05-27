@@ -70,13 +70,8 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 
 	// Table order
 	
-	// Há algumas opções para ordenação da identificação:
-	// Opção 1:  CAST(identification AS INT)							-> Começa com zero(alfabético), mas ordena os numeros corretamente e não ordena o alfabético
-	// Opção 2:  CAST(identification AS INT),identification				-> Alfabéticos primeiro, Ordena alfabéticos mas não varia os numéricos
-	// Opção 3: CASE + list,CAST(identification AS INT)					-> Ele ordena os numeros corretamente mas alfabéticamente não
-	// Opção 4: CASE + list,CAST(identification AS INT),identification	-> Ele ordena os numeros corretamente mas alfabéticamente não
-
-	$aux_column = $column=='identification'? 'CAST(identification AS INT),identification': $column;
+	// A opção para ordenação da identificação é: CAST(identification AS INT), individual.id
+	$aux_column = in_array($column,array('identification','sire','dam')) ? "CAST($column AS INT)": $column;
 	$order = " ORDER BY $aux_column $sort_order";
 	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
 
@@ -95,95 +90,108 @@ $result_filter = $mysqli->query($sql_filter);
 
 <div class="text-warning m-5" style="white-space: nowrap;"><h1 class="ml-5">Captivity</h1><hr></div>
 
-<!--Button-->
-<div class="d-flex flex-row">
-  <div class="bg-warning text-white text-center p-4 girar" data-toggle="collapse" data-target="#filtro">
-    <i class="fas fa-filter"></i><i class="fas fa-chevron-up " id="girar"></i>
-  </div>
-</div>
+<!-- Filtro -->
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-warning filter px-3" data-toggle="modal" data-target="#filtro">
+	  <i class="fas fa-filter"></i>
+	</button>
 
-<!--Filtro Form-->
-<div class="container-fluid collapse mb-1" id="filtro">
-	
-	<form class="bg-light rounded-bottom p-3" action="captivity.php" method="get" target="_top">
+	<!-- Modal -->
+	<div class="modal fade" id="filtro" tabindex="-1" role="dialog" aria-labelledby="filtro" aria-hidden="true">
+		<div class="modal-dialog modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Filter</h5>
+					<button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
 
-		<!--Iems per page-->
-		<div class="form-group">
-			<label>Items per page</label>
+				<!-- FORM -->
+				<div class="modal-body">
+					<form id="formFiltro" action="captivity.php" method="get">
 
-			<select name="limit" class=" form-control form-control-sm">
-				<?php for ($i=20; $i <= 100; $i+=20):?>
-					<option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-				<?php endfor; ?>
-				<option <?php echo isset($_GET['limit']) && $_GET['limit']=="All" ? "selected":""; ?> value="All">All results</option>
-			</select>
-		</div>
+						<!--Iems per page-->
+						<div class="form-group">
+							<label>Items per page</label>
 
-		<!--Sex-->
-		<div class="form-group">
-			<label>Sex</label>
+							<select name="limit" class=" form-control form-control-sm">
+								<?php for ($i=20; $i <= 100; $i+=20):?>
+									<option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+								<?php endfor; ?>
+								<option <?php echo isset($_GET['limit']) && $_GET['limit']=="All" ? "selected":""; ?> value="All">All results</option>
+							</select>
+						</div>
 
-			<select name="sexFilter" class="form-control form-control-sm">
-				<option <?php echo !isset($_GET['sexFilter']) ? "selected":"";?> value="" >Select...</option>
-				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Female" ? "selected":""; ?> value="Female">Female</option>
-				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Male" ? "selected":""; ?> value="Male">Male</option>
-				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
-			</select>
-		</div>
+						<!--Sex-->
+						<div class="form-group">
+							<label>Sex</label>
 
-		<!--Life Status-->
-		<div class="form-group">
-			<label>Life Status</label>
+							<select name="sexFilter" class="form-control form-control-sm">
+								<option <?php echo !isset($_GET['sexFilter']) ? "selected":"";?> value="" >Select...</option>
+								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Female" ? "selected":""; ?> value="Female">Female</option>
+								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Male" ? "selected":""; ?> value="Male">Male</option>
+								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
+							</select>
+						</div>
 
-			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="status" id="statusAlive" value="1"  <?php echo isset($_GET["status"]) && $_GET["status"]=="1" ? "checked":""; ?>>
-			  <label class="form-check-label" for="statusAlive"> Alive</label>
+						<!--Life Status-->
+						<div class="form-group">
+							<label>Life Status</label>
+
+							<div class="form-check">
+							  <input class="form-check-input" type="radio" name="status" id="statusAlive" value="1"  <?php echo isset($_GET["status"]) && $_GET["status"]=="1" ? "checked":""; ?>>
+							  <label class="form-check-label" for="statusAlive"> Alive</label>
+							</div>
+
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="status" id="statusDeath" value="0"  <?php echo isset($_GET["status"]) && $_GET["status"]=="0" ? "checked":""; ?>>
+							  <label class="form-check-label" for="statusDeath"> Death</label>
+							</div>
+
+						</div>
+
+						<!--population-->
+						<?php if($fulldata=='s'): ?>
+							<div class="form-group">
+								<label>Population</label>
+								<select name="filterpopulation" class="form-control form-control-sm">
+								  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">Select...</option>
+								  <?php 
+								  $sql_institute = "SELECT * FROM institute";
+								  $query = $mysqli->query($sql_institute);
+
+								  while ($row = $query->fetch_array()):?>
+								    <option <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["abbreviation"]," - ",$row["name"]; ?></option>
+								  <?php endwhile; ?>
+								</select>
+							</div>
+						<?php endif; ?>
+
+						<!--Display informations-->
+						<div class="form-group">
+							<label>Display informations</label>
+
+					        <div class="overflow-auto" style="max-height: 300px;">
+					        	<?php foreach ($headersAdicionais as $value):?>
+					        		<div class="custom-control custom-checkbox">
+								 		<input type="checkbox" class="custom-control-input" id="<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) || $flag==0 ? "checked":""; ?>>
+										<label class="custom-control-label" for="<?php echo $value;?>"><?php echo ucfirst(str_replace('_',' ',$value)); ?></label>
+									</div>
+						        <?php endforeach;?>
+					        </div>
+						</div>
+					</form>
+				</div>
+				<!-- FORM -->
+
+				<div class="modal-footer">
+					<button type="submit" form="formFiltro" class="btn btn-warning">Submit</button>
+					<a class="btn btn-warning" href="captivity.php" role="button">Clear All</a>
+				</div>
 			</div>
-
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="radio" name="status" id="statusDeath" value="0"  <?php echo isset($_GET["status"]) && $_GET["status"]=="0" ? "checked":""; ?>>
-			  <label class="form-check-label" for="statusDeath"> Death</label>
-			</div>
-
 		</div>
+	</div>
 
-		<!--population-->
-		<?php if($fulldata=='s'): ?>
-			<div class="form-group">
-				<label>Population</label>
-				<select name="filterpopulation" class="form-control form-control-sm">
-				  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">Select...</option>
-				  <?php 
-				  $sql_institute = "SELECT * FROM institute";
-				  $query = $mysqli->query($sql_institute);
 
-				  while ($row = $query->fetch_array()):?>
-				    <option <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row["id"] ? "selected":""; ?> value="<?php echo $row["id"]; ?>"><?php echo $row["abbreviation"]," - ",$row["name"]; ?></option>
-				  <?php endwhile; ?>
-				</select>
-			</div>
-		<?php endif; ?>
-
-		<!--Display informations-->
-		<div class="form-group">
-			<label>Display informations</label>
-
-	        <div class="overflow-auto" style="max-height: 300px;">
-	        	<?php foreach ($headersAdicionais as $value):?>
-	        		<div class="custom-control custom-checkbox">
-				 		<input type="checkbox" class="custom-control-input" id="<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) || $flag==0 ? "checked":""; ?>>
-						<label class="custom-control-label" for="<?php echo $value;?>"><?php echo ucfirst(str_replace('_',' ',$value)); ?></label>
-					</div>
-		        <?php endforeach;?>
-	        </div>
-		</div>
-
-		<button type="submit" class="btn btn-warning">Submit</button>
-
-		<a class="btn btn-warning" href="captivity.php" role="button">Clear All</a>
-
-	</form>
-</div>
 
 <!-- Forms Hiddens-->
 <form method="get" action="" id="formFiltros">
@@ -237,7 +245,7 @@ $result_filter = $mysqli->query($sql_filter);
 	<!--Table Responsive-->
 	<div class="table-responsive">
 		<!--Table-->
-    	<table class="table ">
+    	<table class="table table-sm">
 
     		<!--Head Table-->
 	    	<thead>

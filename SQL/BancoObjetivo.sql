@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS LABBMC;
-CREATE DATABASE IF NOT EXISTS LABBMC;
+DROP DATABASE IF EXISTS labbmc;
+CREATE DATABASE IF NOT EXISTS labbmc;
 
 
 -- ************************************** `login`
@@ -106,7 +106,7 @@ CONSTRAINT `FK_91` FOREIGN KEY `fkIdx_91` (`id_individual`) REFERENCES `individu
 -- ************************************** `status`
 CREATE TABLE `status`
 (
- `identification` varchar(20) NOT NULL ,
+ `id_individual` varchar(20) NOT NULL ,
  `id_institute`   integer NULL ,
  `alive`          boolean NOT NULL ,
 

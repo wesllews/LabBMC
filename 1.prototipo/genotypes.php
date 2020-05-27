@@ -223,7 +223,7 @@ $result_filter = $mysqli->query($sql_filter);
 	<!--Table Responsive-->
 	<div class="table-responsive">
 		<!--Table-->
-    	<table class="table ">
+    	<table class="table table-sm">
 
 		<!--Head Table-->
     	<thead>
@@ -285,9 +285,13 @@ $result_filter = $mysqli->query($sql_filter);
 
 						case 'identification':?>
 							<td scope="row">
-							<?php echo $row[$value]; ?>
+								<form method="get" action="individual.php" id="individual">
+									<input type="hidden" name="identification" value="<?php echo $row[$value];?>">
+									<button class=" btn btn-outline-success btn-block border-0" type="submit"><?php echo $row[$value];?></button>
+								</form>
 							</td>
-						<?php break; ?>
+						<?php break;?>
+
 
 						<?php case 'category': 
 	    					$sql_category = "SELECT * FROM `individual` INNER JOIN category ON category.id = individual.id_category WHERE identification = '$row[identification]'";

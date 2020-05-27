@@ -9,24 +9,24 @@ $result_filter = $mysqli->query($sql);
 
 <?php if(isset($_GET['captivity'])): ?>
 
+	<div class="mt-3 grid-container">
 	<?php while($row = $result_filter->fetch_array()):
 		$sql = "SELECT * FROM institute WHERE id='$row[id_institute]'";
-		$result = $mysqli->query($sql); ?>
-		<div class="container">
-			<?php while($row_institute = $result->fetch_array()): ?>
-				<form action="captivity.php" method="get" id="<?php echo $row_institute['id'];?>">
-					<input type="hidden" name="filterpopulation" value="<?php echo $row_institute['id'];?>">
-					<input type="hidden" name="fulldata" value="n">
-				</form>
-				<div class="d-flex bg-light border border-light flex-column p-4 mb-2 mt-4 hover-shadow" style="cursor:pointer;transition:0.5s;" onclick="document.getElementById('<?php echo $row_institute['id'];?>').submit();">
-					<h2 class="float-left"><span class="badge badge-warning"><?php echo $row_institute['abbreviation'];?></span></h2>
-					<h2 class="text-center"><?php echo $row_institute['name'];?></h2>
-					<h5 class="text-right"> <?php echo $row_institute['country'];?></h5>
-					<div class="bg-warning pt-1"></div>
-				</div>
-			<?php endwhile; ?>
-		</div>
+		$result = $mysqli->query($sql);
+		$row_institute = $result->fetch_array(); ?>
+			<form action="captivity.php" method="get" id="institute<?php echo $row_institute['id'];?>" style="display:none;">
+				<input type="hidden" name="filterpopulation" value="<?php echo $row_institute['id'];?>">
+				<input type="hidden" name="fulldata" value="n">
+			</form>
+			<button type="submit" form="institute<?php echo $row_institute['id'];?>" class="btn btn-light rounded-0 shadow-sm m-3">
+				<h5 class="justify-content-left"><span class="badge badge-warning"><?php echo $row_institute['abbreviation'];?></span></h5>		
+				<h3 class="text-center"><?php echo $row_institute['name'];?></h3>
+				<h6><div class="text-right"><?php echo $row_institute['country'];?></div></h6>
+				
+			</button>
+
 	<?php endwhile; ?>
+	</div>
 
 <?php else: ?>
 	<div class="container text-center mt-5 p-5">
