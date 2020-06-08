@@ -3,11 +3,15 @@ session_start();
 $_SESSION['pagina']='captivity';
 include 'header.php';
 
-$sql = "SELECT DISTINCT(id_institute) FROM status WHERE alive=1";
+$sql = "SELECT DISTINCT(id_institute), priority FROM status LEFT JOIN institute ON status.id_institute=institute.id WHERE alive=1 ORDER BY ISNULL(priority),priority";
 $result_filter = $mysqli->query($sql);
 ?>
 
 <?php if(isset($_GET['captivity'])): ?>
+	<div class="text-warning m-4" style="white-space: nowrap;">
+		<h1 class="ml-5">Current populations</h1>
+		<hr>
+	</div>
 
 	<div class="mt-3 grid-container">
 	<?php while($row = $result_filter->fetch_array()):
