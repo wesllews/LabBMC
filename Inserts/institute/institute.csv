@@ -1,29 +1,29 @@
-ID,NAME,ABREVIATION,COUNTRY,STATE,CITY
-1,Adelaide Zoological Gardens,Adelaide Zoo,AU,South Australia,Adelaide
-2,Zoo of Bauru,Bauru Zoo,BRA,São Paulo,Bauru
-3,City of Belfast Zoo,Belfast Zoo,UK,Belfast,NA
-4,Zoological Garden of Brasilia,Brasilia Zoo,BRA,Distrito Federal,Brasilia
-5,Bristol Zoo,Bristol Zoo,UK,Clifton,Bristol
-6,Buri Wild,Buri Wild,BRA,São Paulo,Buri
-7,Central Park Wildlife Center,Central Pk NY,USA,New York,New York
-8,North of England Zoo Society,Chester Zoo,UK,NA,NA
-9,Fort Worth Zoological Park,Fortworth Zoo,USA,Texas,NA
-10,Durrell Wildlife Conservation Trust,Jersey Zoo,UK,Channel Islands,NA
-11,Krefelder Zoo,Krefelder Zoo,GER,NA,NA
-12,La Palmyre Zoo,La Palmmyre Zoo,FRA,Royan,NA
-13,Lisbon Zoo,Lisbon Zoo,POR,Lisboa,NA
-14,Morro do Diabo Ecological Park,PEMD Wild,BRA,NA,NA
-15,MIDDLE GOBI  ,M Gobi,MON,NA,NA
-16,Zoologischer Garten Magdeburg,Magdeburg Zoo,GER,Sachsen-anhalt,NA
-17,The Wildlife Conservation Society,Bronx NY,USA,New York,New York
-18,Private Collection,Private Collection,BRA,NA,NA
-19,Prospect Park Wildlife Center,Prospect NY,USA,New York,New York
-20,Ribeirao Bonito Farm,FRBonito,BRA,São Paulo ,NA
-21,Rio de Janeiro Primatology Center,CPRJ,BRA,Rio de Janeiro,Rio de Janeiro
-22,Sao Paulo Zoological Park Foundadion,FPZSP,BRA,São Paulo,São Paulo
-23,Quinzinho de Barros Zoological Park,PZQB,BRA,Sao Paulo,Sorocaba
-24,Sao Carlos Ecological Park,PESC,BRA,Sao Paulo,São Carlos
-25,Unknown Location,Unk 1,BRA,NA,NA
-26,Brazil,Unk 2,BRA,NA,NA
-27,WILD,Unk Wild,BRA,NA,NA
-28,Belo Horizonte Zoo,BH Zoo,BRA,Minas Gerais,Belo Horizonte
+id,name,abbreviation,country,state,city,priority
+1,Adelaide Zoological Gardens,Adelaide Zoo,AU,South Australia,Adelaide,NA
+2,Zoo of Bauru,Bauru Zoo,BRA,São Paulo,Bauru,NA
+3,City of Belfast Zoo,Belfast Zoo,UK,Belfast,NA,NA
+4,Zoological Garden of Brasilia,Brasilia Zoo,BRA,Distrito Federal,Brasilia,NA
+5,Bristol Zoo,Bristol Zoo,UK,Clifton,Bristol,NA
+6,Buri Wild,Buri Wild,BRA,São Paulo,Buri,NA
+7,Central Park Wildlife Center,Central Pk NY,USA,New York,New York,NA
+8,North of England Zoo Society,Chester Zoo,UK,NA,NA,NA
+9,Fort Worth Zoological Park,Fortworth Zoo,USA,Texas,NA,NA
+10,Durrell Wildlife Conservation Trust,Jersey Zoo,UK,Channel Islands,NA,1
+11,Krefelder Zoo,Krefelder Zoo,GER,NA,NA,NA
+12,La Palmyre Zoo,La Palmmyre Zoo,FRA,Royan,NA,NA
+13,Lisbon Zoo,Lisbon Zoo,POR,Lisboa,NA,NA
+14,Morro do Diabo Ecological Park,PEMD Wild,BRA,NA,NA,NA
+15,MIDDLE GOBI  ,M Gobi,MON,NA,NA,NA
+16,Zoologischer Garten Magdeburg,Magdeburg Zoo,GER,Sachsen-anhalt,NA,NA
+17,The Wildlife Conservation Society,Bronx NY,USA,New York,New York,NA
+18,Private Collection,Private Collection,BRA,NA,NA,NA
+19,Prospect Park Wildlife Center,Prospect NY,USA,New York,New York,NA
+20,Ribeirao Bonito Farm,FRBonito,BRA,São Paulo ,NA,NA
+21,Rio de Janeiro Primatology Center,CPRJ,BRA,Rio de Janeiro,Rio de Janeiro,2
+22,Sao Paulo Zoological Park Foundadion,FPZSP,BRA,São Paulo,São Paulo,3
+23,Quinzinho de Barros Zoological Park,PZQB,BRA,Sao Paulo,Sorocaba,NA
+24,Sao Carlos Ecological Park,PESC,BRA,Sao Paulo,São Carlos,4
+25,Unknown Location,Unk 1,BRA,NA,NA,NA
+26,Brazil,Unk 2,BRA,NA,NA,NA
+27,WILD,Unk Wild,BRA,NA,NA,NA
+28,Belo Horizonte Zoo,BH Zoo,BRA,Minas Gerais,Belo Horizonte,NA

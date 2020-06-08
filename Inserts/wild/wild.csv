@@ -1,44 +1,44 @@
-Identification,Name,Sex,Fragment,Pop,Group,Longitude,Latitude
-MAM_0335,LCSP008,Female,IPE Santa Maria,FZSM,1,"-52,296886","-22,236353"
-MAM_0336,LCSP009,Male,IPE Santa Maria,FZSM,1,"-52,296886","-22,236353"
-MAM_0337,LCSP001,Male,IPE Santa Maria,FZSM,2,"-52,308","-22,231806"
-MAM_0338,LCSP002,Female,IPE Santa Maria,FZSM,2,"-52,308","-22,231806"
-MAM_0339,LCSP003,Female,IPE Santa Maria,FZSM,2,"-52,308","-22,231806"
-MAM_0340,LCSP004,Male,IPE Santa Maria,FZSM,2,"-52,308","-22,231806"
-MAM_0341,LCSP005,Female,IPE Santa Maria,FZSM,2,"-52,308","-22,231806"
-MAM_0342,LCSP006,Female,IPE Santa Maria,FZSM,2,"-52,308","-22,231806"
-MAM_0343,LCSP007,Male,IPE Santa Maria,FZSM,2,"-52,308","-22,231806"
-MAM_0344,PEMD1,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,182452","-22,612203"
-MAM_0345,PEMD2,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,182452","-22,612203"
-MAM_0346,PEMD3A,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,182452","-22,612203"
-MAM_0347,PEMD4,Female,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,182452","-22,612203"
-MAM_0348,G03C,Female,Guarei fragments,Guareí,Guareí (Camargo),"-48,241836","-23,416572"
-MAM_0349,G04B,Female,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975"
-MAM_0350,G05B,Male,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975"
-MAM_0351,G06B,Male,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975"
-MAM_0352,G07B,Male,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975"
-MAM_0353,G08B,Female,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975"
-MAM_0430,PB1B,Male,BLT Ecological Station,PB,Ponte Branca,"-52,508509","-22,425176"
-MAM_0431,PB2B,Female,BLT Ecological Station,PB,Ponte Branca,"-52,508509","-22,425176"
-MAM_0432,PB3B,Female,BLT Ecological Station,PB,Ponte Branca,"-52,508509","-22,425176"
-MAM_0433,PEMD5C,Female,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,174668","-22,617833"
-MAM_0434,PEMD6B,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,174668","-22,617833"
-MAM_0435,PEMD7B,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,174668","-22,617833"
-MAM_0436,PEMD8B,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,174668","-22,617833"
-MAM_0437,PEMD9,Female,Morro do Diabo State Park,PEMD,PEMD Sede,,
-MAM_0438,PEMD10,Male,Morro do Diabo State Park,PEMD,PEMD Sede,,
-MAM_0439,PEMD11,Female,Morro do Diabo State Park,PEMD,PEMD Sede,,
-MAM_0440,G09B,Male,Guareí,Guareí,Guareí 02 (Camargo),,
-MAM_0441,G10,Unknown,Guareí,Guareí,Guareí 01 (Camargo),,
-MAM-0001,BLT39,Male,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868"
-MAM-0002,BLT40,Male,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868"
-MAM-0003,BLT41,Male,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868"
-MAM-0004,BLT42,Male,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868"
-MAM-0005,BLT43,Female,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868"
-MAM-0006,BLT44,Female,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291"
-MAM-0007,BLT45,Female,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291"
-MAM-0008,BLT46,Male,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291"
-MAM-0009,BLT47,Male,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291"
-MAM-0010,BLT48,Male,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291"
-MAM-0213,G01A,Male,Riparian forest of Guarei River,Guareí,Guareí - bridge,"-48,208116","-23,376237"
-MAM-0214,B01,Unknown,Buri,,,,
+Identification,Name,Sex,Fragment,Pop,Group,Longitude,Latitude,,Fragment2,Group,Longitude,Latitude,
+MAM_0335,LCSP008,Female,IPE Santa Maria,FZSM,1,"-52,296886","-22,236353",,IPE Santa Maria,1,"-52,296886","-22,236353",
+MAM_0336,LCSP009,Male,IPE Santa Maria,FZSM,1,"-52,296886","-22,236353",,IPE Santa Maria,2,"-52,308","-22,231806",
+MAM_0337,LCSP001,Male,IPE Santa Maria,FZSM,2,"-52,308","-22,231806",,Morro do Diabo State Park,PEMD Sede,"-52,182452","-22,612203",*
+MAM_0338,LCSP002,Female,IPE Santa Maria,FZSM,2,"-52,308","-22,231806",,Guarei fragments,Guareí (Camargo),"-48,241836","-23,416572",*
+MAM_0339,LCSP003,Female,IPE Santa Maria,FZSM,2,"-52,308","-22,231806",,BLT Ecological Station,Ponte Branca,"-52,508509","-22,425176",
+MAM_0340,LCSP004,Male,IPE Santa Maria,FZSM,2,"-52,308","-22,231806",,Guareí,Guareí 02 (Camargo),,,
+MAM_0341,LCSP005,Female,IPE Santa Maria,FZSM,2,"-52,308","-22,231806",,Guareí,Guareí 01 (Camargo),,,
+MAM_0342,LCSP006,Female,IPE Santa Maria,FZSM,2,"-52,308","-22,231806",,Flona Capão Bonito,1,"-48,532665","-23,88868",
+MAM_0343,LCSP007,Male,IPE Santa Maria,FZSM,2,"-52,308","-22,231806",,Flona Capão Bonito,2,"-48,532665","-23,901291",
+MAM_0344,PEMD1,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,182452","-22,612203",,Riparian forest of Guarei River,Guareí - bridge,"-48,208116","-23,376237",
+MAM_0345,PEMD2,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,182452","-22,612203",,,,,,
+MAM_0346,PEMD3A,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,182452","-22,612203",,,,,,
+MAM_0347,PEMD4,Female,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,182452","-22,612203",,,,,,
+MAM_0348,G03C,Female,Guarei fragments,Guareí,Guareí (Camargo),"-48,241836","-23,416572",,,,,,
+MAM_0349,G04B,Female,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975",,,,,,
+MAM_0350,G05B,Male,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975",,,,,,
+MAM_0351,G06B,Male,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975",,,,,,
+MAM_0352,G07B,Male,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975",,,,,,
+MAM_0353,G08B,Female,Guarei fragments,Guareí,Guareí (Camargo),"-48,237983","-23,417975",,,,,,
+MAM_0430,PB1B,Male,BLT Ecological Station,PB,Ponte Branca,"-52,508509","-22,425176",,,,,,
+MAM_0431,PB2B,Female,BLT Ecological Station,PB,Ponte Branca,"-52,508509","-22,425176",,,,,,
+MAM_0432,PB3B,Female,BLT Ecological Station,PB,Ponte Branca,"-52,508509","-22,425176",,,,,,
+MAM_0433,PEMD5C,Female,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,174668","-22,617833",,,,,,
+MAM_0434,PEMD6B,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,174668","-22,617833",,,,,,
+MAM_0435,PEMD7B,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,174668","-22,617833",,,,,,
+MAM_0436,PEMD8B,Male,Morro do Diabo State Park,PEMD,PEMD Sede,"-52,174668","-22,617833",,,,,,
+MAM_0437,PEMD9,Female,Morro do Diabo State Park,PEMD,PEMD Sede,,,,,,,,
+MAM_0438,PEMD10,Male,Morro do Diabo State Park,PEMD,PEMD Sede,,,,,,,,
+MAM_0439,PEMD11,Female,Morro do Diabo State Park,PEMD,PEMD Sede,,,,,,,,
+MAM_0440,G09B,Male,Guareí,Guareí,Guareí 02 (Camargo),,,,,,,,
+MAM_0441,G10,Unknown,Guareí,Guareí,Guareí 01 (Camargo),,,,,,,,
+MAM-0001,BLT39,Male,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868",,,,,,
+MAM-0002,BLT40,Male,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868",,,,,,
+MAM-0003,BLT41,Male,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868",,,,,,
+MAM-0004,BLT42,Male,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868",,,,,,
+MAM-0005,BLT43,Female,Flona Capão Bonito,FNCP,1,"-48,532665","-23,88868",,,,,,
+MAM-0006,BLT44,Female,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291",,,,,,
+MAM-0007,BLT45,Female,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291",,,,,,
+MAM-0008,BLT46,Male,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291",,,,,,
+MAM-0009,BLT47,Male,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291",,,,,,
+MAM-0010,BLT48,Male,Flona Capão Bonito,FNCP,2,"-48,532665","-23,901291",,,,,,
+MAM-0213,G01A,Male,Riparian forest of Guarei River,Guareí,Guareí - bridge,"-48,208116","-23,376237",,,,,,
+MAM-0214,B01,Unknown,Buri,,,,,,,,,,

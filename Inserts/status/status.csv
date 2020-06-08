@@ -259,7 +259,7 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 258,Magdeburg Zoo,184003,Male,0,"0,106",,
 259,Magdeburg Zoo,184004,Male,0,"0,106",,
 260,Unk Wild,________,Male,0,0,,
-261,LA PALMYR,4917,Female,0,0,,
+261,La Palmmyre Zoo,4917,Female,0,0,,
 262,Jersey Zoo,M2153,Unknown,0,0,,
 263,FPZSP,28548,Male,0,0,"-0,3544668588","0,3229527435"
 264,CPRJ,1589,Male,0,0,,
@@ -297,7 +297,7 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 296,CPRJ,1735,Female,0,0,,
 297,CPRJ,1736,Male,0,0,,
 298,CPRJ,1737,Female,0,0,,
-299,LISBON,10170,Female,0,0,,
+299,Lisbon Zoo,10170,Female,0,0,,
 300,CPRJ,________,Male,0,0,,
 301,CPRJ,1924,Female,0,0,,
 302,Jersey Zoo,M2982,Female,0,"0,106",,
@@ -333,7 +333,7 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 332,Jersey Zoo,M3179,Male,0,"0,106",,
 333,Magdeburg Zoo,184017,Male,1,"0,106",,
 334,CPRJ,1879,Male,0,"0,126",,
-335,M DIABO,________,Male,0,"0,126",,
+335,PEMD Wild,________,Male,0,"0,126",,
 336,CPRJ,1886,Female,0,"0,07",,
 337,CPRJ,1885,Female,0,"0,07",,
 338,CPRJ,1899,Unknown,0,"0,1",,
@@ -355,7 +355,7 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 354,FPZSP,29312,Female,0,0,,
 355,PZQB,355,Female,0,0,,
 356,FPZSP,24678,Unknown,0,0,,
-357,M DIABO,________,Male,0,"0,07",,
+357,PEMD Wild,________,Male,0,"0,07",,
 358,FPZSP,24778,Male,0,0,,
 359,FPZSP,24790,Unknown,0,0,,
 360,FPZSP,24791,Unknown,0,0,,
@@ -379,7 +379,7 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 382,FPZSP,26110,Male,0,0,,
 383,FPZSP,26111,Female,0,0,,
 384,CPRJ,2034,Male,0,"0,158","-0,482437276","0,2456421559"
-385,HORIZONTE,UNK,Male,1,"0,158","-0,4135338346","0,2875461545"
+385,BH Zoo,UNK,Male,1,"0,158","-0,4135338346","0,2875461545"
 386,FPZSP,31583,Male,1,"0,07","-0,1983002833","0,4007785442"
 387,CPRJ,2038,Male,1,"0,07","-0,2992398065","0,3218078255"
 388,Belfast Zoo,4153,Unknown,0,"0,106",,
@@ -414,7 +414,7 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 417,FPZSP,28408,Female,0,0,,
 418,Jersey Zoo,M2844,Female,0,"0,106",,
 419,Jersey Zoo,M2845,Male,1,"0,106",,
-420,LA PALMYR,4888,Male,0,"0,106",,
+420,La Palmmyre Zoo,4888,Male,0,"0,106",,
 421,FPZSP,29348,Female,0,0,"-0,4068027211","0,3007413344"
 422,FPZSP,30899,Female,1,0,,
 423,PZQB,0,Male,0,0,,
@@ -493,7 +493,7 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 499,CPRJ,2894,Unknown,0,"0,216",,
 500,PESC,?????,Unknown,0,"0,226","-0,06742370476","0,444314051"
 501,PESC,????,Male,1,"0,226",,
-502,HORIZONTE,UNK,Female,1,0,,
+502,BH Zoo,UNK,Female,1,0,,
 503,Jersey Zoo,M1998,Unknown,0,0,,
 504,Jersey Zoo,M2056,Unknown,0,0,,
 505,Jersey Zoo,M2743,Unknown,0,0,,
