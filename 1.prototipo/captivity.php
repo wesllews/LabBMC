@@ -69,10 +69,25 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 /* SQL Filtros */
 
 	// Table order
-	
-	// A opção para ordenação da identificação é: CAST(identification AS INT), individual.id
-	$aux_column = in_array($column,array('identification','sire','dam')) ? "CAST($column AS INT)": $column;
-	$order = " ORDER BY $aux_column $sort_order";
+	switch ($column) {
+		case 'identification':
+		case 'sire':
+		case 'dam':
+			$order = " ORDER BY CAST($column AS INT) $sort_order, individual.id $sort_order";
+			break;
+
+		case 'population':
+			$order = " ORDER BY abbreviation $sort_order";
+			break;
+
+		case 'name':
+			$order = " ORDER BY ISNULL(individual.name),individual.name $sort_order";
+			break;
+		
+		default:
+			$order = " ORDER BY $column $sort_order";
+			break;
+	}
 	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
 
 	// Captivity filters
@@ -82,13 +97,13 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 
 
 
-$sql = "SELECT DISTINCT(identification), individual.name as name FROM `individual` INNER JOIN status ON individual.identification=status.id_individual INNER JOIN kinship ON kinship.id_individual=individual.identification WHERE id_category=1";
+$sql = "SELECT *,individual.id as id FROM `individual` LEFT JOIN status ON individual.id=status.id_individual LEFT JOIN kinship ON kinship.id_individual=individual.id LEFT JOIN institute ON institute.id=status.id_institute WHERE id_category=1";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter); 
 ?>
 
-<div class="text-warning m-5" style="white-space: nowrap;"><h1 class="ml-5">Captivity</h1><hr></div>
+<div class="text-warning m-4" style="white-space: nowrap;"><h1 class="ml-5">Captivity</h1><hr></div>
 
 <!-- Filtro -->
 	<!-- Button trigger modal -->
@@ -192,7 +207,6 @@ $result_filter = $mysqli->query($sql_filter);
 	</div>
 
 
-
 <!-- Forms Hiddens-->
 <form method="get" action="" id="formFiltros">
 	<?php foreach($array as $key => $value): ?>
@@ -255,9 +269,9 @@ $result_filter = $mysqli->query($sql_filter);
 						<div class="d-flex justify-content-center align-items-end text-warning">
 							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 							<!--Icon-->
-							<?php if($value!='historic' && $value!='genetics'  && $value!='population'  && $value!='alive'): ?>
+							<?php if($value!='historic' && $value!='genetics'): ?>
 								<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
-								onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
+								onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 									<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 								</button>
 							<?php elseif($value=='historic'): ?>
@@ -275,9 +289,8 @@ $result_filter = $mysqli->query($sql_filter);
 			<?php while($row = $result_filter->fetch_array()):
 
 				// Seleciona todos os dados dos indivíduos
-				$sql = "SELECT identification, sex, sire, dam, individual.name as name 
-				FROM `individual` INNER JOIN kinship ON kinship.id_individual=individual.identification 
-				WHERE identification='$row[identification]'";
+				$sql = "SELECT * FROM `individual` LEFT JOIN kinship ON kinship.id_individual=individual.id
+				WHERE id='$row[id]'";
 				$result = $mysqli->query($sql); ?>
 
 						<?php while($row = $result->fetch_array()): ?> 
@@ -285,8 +298,14 @@ $result_filter = $mysqli->query($sql_filter);
 					    		<?php foreach ($header as $value): ?>
 					    			<?php switch($value):
 
-					    				case "historic":
-					    					$sql_historic = "SELECT *, institute.name as institute FROM historic INNER JOIN events ON historic.id_event=events.id INNER JOIN institute ON historic.id_institute=institute.id  WHERE id_individual = '$row[identification]'";
+					    				case 'identification': ?>
+    				    				<td scope="row">
+    				    					<a class="btn btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
+    				    				</td>
+    				    				<?php break;?>
+
+					    				<?php case "historic":
+					    					$sql_historic = "SELECT *, institute.name as institute FROM historic LEFT JOIN events ON historic.id_event=events.id LEFT JOIN institute ON historic.id_institute=institute.id  WHERE id_individual = '$row[id]'";
 					    					$result_historic = $mysqli->query($sql_historic);
 					    					$num = $result_historic->num_rows ?>
 
@@ -317,34 +336,10 @@ $result_filter = $mysqli->query($sql_filter);
 						    				</td>
 					    				<?php break;?>
 
-    				    				<?php case 'identification': ?>
-    				    				<td scope="row">
-	    				    				<form method="get" action="individual.php" id="individual">
-	    				    					<input type="hidden" name="identification" value="<?php echo $row[$value];?>">
-	    				    					<button class=" btn btn-outline-success btn-block border-0" type="submit"><?php echo $row[$value];?></button>
-	    				    				</form>
-    				    				</td>
-    				    				<?php break;?>
-
-					    				<?php case 'genetics': 
-					    					$sql_genetics = "SELECT * FROM genotype WHERE id_individual = '$row[identification]'";
-					    					$result_genetics = $mysqli->query($sql_genetics);
-
-						    					if ($result_genetics->num_rows > 0): ?>
-						    						<td scope="row">
-						    						<button type="button" class="btn btn-success">Genetics</button>
-						    						<button type="button" class="btn btn-dark">Genomic</button>
-						    						<button type="button" class="btn btn-primary">Statistics</button>
-						    						</td>
-						    					<?php else: ?>
-						    						<td scope="row">-</td>
-						    					<?php endif; ?>
-					    				<?php break;?>
-
 					    				<?php case 'population': 
 					    					$sql_population = "SELECT * FROM `status` 
-					    					INNER JOIN institute ON institute.id = status.id_institute
-					    					 WHERE id_individual = '$row[identification]'";
+					    					LEFT JOIN institute ON institute.id = status.id_institute
+					    					 WHERE id_individual = '$row[id]'";
 					    					$result_population = $mysqli->query($sql_population);
 
 						    					if ($result_population->num_rows > 0): 
@@ -359,7 +354,7 @@ $result_filter = $mysqli->query($sql_filter);
 
 					    				<?php case 'alive': 
 					    					$sql_alive = "SELECT * FROM `status` 
-					    					WHERE id_individual = '$row[identification]'";
+					    					WHERE id_individual = '$row[id]'";
 					    					$result_alive = $mysqli->query($sql_alive);
 
 						    					if ($result_alive->num_rows > 0): 
@@ -369,6 +364,25 @@ $result_filter = $mysqli->query($sql_filter);
 						    						</td>
 						    					<?php else: ?>
 						    						<td scope="row">-</td>
+						    					<?php endif; ?>
+					    				<?php break;?>
+
+					    				<?php case 'genetics': 
+					    					$sql_genetics = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
+					    					$result_genetics = $mysqli->query($sql_genetics);
+
+						    					if ($result_genetics->num_rows > 0): ?>
+						    						<td scope="row">
+						    						<button type="button" class="btn btn-success">Genetics</button>
+						    						<button type="button" class="btn btn-dark">Genomic</button>
+						    						<button type="button" class="btn btn-primary">Statistics</button>
+						    						</td>
+						    					<?php else: ?>
+						    						<td scope="row">
+						    						<button type="button" class="btn btn-secondary disabled">Genetics</button>
+						    						<button type="button" class="btn btn-secondary disabled">Genomic</button>
+						    						<button type="button" class="btn btn-secondary disabled">Statistics</button>
+						    						</td>
 						    					<?php endif; ?>
 					    				<?php break;?>
 					    				

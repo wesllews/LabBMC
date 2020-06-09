@@ -367,6 +367,8 @@ INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) V
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='369'), (SELECT id FROM institute WHERE abbreviation='FPZSP'), NULL, '0');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='370'), (SELECT id FROM institute WHERE abbreviation='FPZSP'), NULL, '0');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='371'), (SELECT id FROM institute WHERE abbreviation='Jersey Zoo'), NULL, '0');
+INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='372'), (SELECT id FROM institute WHERE abbreviation='Jersey Zoo'), NULL, '0');
+INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='373'), (SELECT id FROM institute WHERE abbreviation='FPZSP'), NULL, '0');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='374'), (SELECT id FROM institute WHERE abbreviation='FPZSP'), NULL, '0');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='375'), (SELECT id FROM institute WHERE abbreviation='Belfast Zoo'), NULL, '0');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='376'), (SELECT id FROM institute WHERE abbreviation='FPZSP'), NULL, '0');
@@ -456,6 +458,7 @@ INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) V
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='462'), (SELECT id FROM institute WHERE abbreviation='Jersey Zoo'), NULL, '0');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='463'), (SELECT id FROM institute WHERE abbreviation='Jersey Zoo'), NULL, '0');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='464'), (SELECT id FROM institute WHERE abbreviation='FPZSP'), NULL, '1');
+INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='465'), (SELECT id FROM institute WHERE abbreviation='FPZSP'), NULL, '1');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='466'), (SELECT id FROM institute WHERE abbreviation='FPZSP'), NULL, '0');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='467'), (SELECT id FROM institute WHERE abbreviation='FPZSP'), NULL, '1');
 INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='468'), (SELECT id FROM institute WHERE abbreviation='Jersey Zoo'), NULL, '1');

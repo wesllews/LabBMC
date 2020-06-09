@@ -368,6 +368,8 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 369,FPZSP,23445,Male,0,0,,
 370,FPZSP,23446,Female,0,0,,
 371,Jersey Zoo,M2459,Male,0,"0,106",,
+372,Jersey Zoo,,Male,0,,,
+373,FPZSP,,Female,0,,,
 374,FPZSP,24677,Male,0,0,,
 375,Belfast Zoo,3802,Female,0,"0,106",,
 376,FPZSP,25181,Unknown,0,0,,
@@ -457,6 +459,7 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 462,Jersey Zoo,M3050,Female,0,"0,182",,
 463,Jersey Zoo,M3052,Unknown,0,"0,182",,
 464,FPZSP,30154,Male,1,0,"-0,02483343428","0,3981738558"
+465,FPZSP,30168,Male,1,,,
 466,FPZSP,30167,Female,0,0,,
 467,FPZSP,30168,Female,1,0,"-0,5","0,1872227152"
 468,Jersey Zoo,M3144,Male,1,"0,182",,
@@ -491,8 +494,8 @@ ID,Location,LocalID,Sex,Alive,F (Imbreeding),IR (Internal relatedness),HL (Homoz
 497,Jersey Zoo,M3304,Female,1,0,,
 498,Jersey Zoo,M3215,Male,0,"0,182",,
 499,CPRJ,2894,Unknown,0,"0,216",,
-500,PESC,?????,Unknown,0,"0,226","-0,06742370476","0,444314051"
-501,PESC,????,Male,1,"0,226",,
+500,PESC,,Unknown,0,"0,226","-0,06742370476","0,444314051"
+501,PESC,,Male,1,"0,226",,
 502,BH Zoo,UNK,Female,1,0,,
 503,Jersey Zoo,M1998,Unknown,0,0,,
 504,Jersey Zoo,M2056,Unknown,0,0,,
