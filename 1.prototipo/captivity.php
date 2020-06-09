@@ -77,15 +77,15 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 			break;
 
 		case 'population':
-			$order = " ORDER BY abbreviation $sort_order";
+			$order = " ORDER BY abbreviation $sort_order, CAST(identification AS INT) $sort_order, individual.id $sort_order";
 			break;
 
 		case 'name':
-			$order = " ORDER BY ISNULL(individual.name),individual.name $sort_order";
+			$order = " ORDER BY ISNULL(individual.name),individual.name $sort_order, CAST(identification AS INT) $sort_order, individual.id $sort_order";
 			break;
 		
 		default:
-			$order = " ORDER BY $column $sort_order";
+			$order = " ORDER BY $column $sort_order, CAST(identification AS INT) $sort_order, individual.id $sort_order";
 			break;
 	}
 	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
@@ -345,7 +345,58 @@ $result_filter = $mysqli->query($sql_filter);
 						    					if ($result_population->num_rows > 0): 
 						    						$row_population = $result_population->fetch_array();?>
 						    						<td scope="row">
-						    							<?php echo $row_population['abbreviation']; ?>
+						    							<button type="button" class="btn btn-link text-decoration-none" data-toggle="modal" data-target="#<?php echo str_replace(" ","",$row_population['abbreviation'].$row['id']);?>">
+						    							  <?php echo $row_population['abbreviation']; ?>
+						    							</button>
+						    							
+						    							<!-- Modal -->
+						    							<div class="modal fade" id="<?php echo str_replace(" ","",$row_population['abbreviation'].$row['id']);?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						    							  <div class="modal-dialog modal-dialog-centered" role="document">
+						    							    <div class="modal-content">
+						    							      <div class="modal-header">
+						    							        <h5 class="modal-title" id="exampleModalLongTitle">Population</h5>
+						    							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						    							          <span aria-hidden="true">&times;</span>
+						    							        </button>
+						    							      </div>
+						    							      <div class="modal-body">
+						    							      	<table class="table table-sm table-borderless text-left text-capitalize">
+						    							      		<tbody>
+						    							      			<tr>
+						    							      				<th>name</th>
+						    							      				<td><?php echo $row_population['name']; ?></td>
+						    							      			</tr>
+						    							      			<tr>
+						    							      				<th>Abbreviation</th>
+						    							      				<td><?php echo $row_population['abbreviation']; ?></td>
+						    							      			</tr>
+						    							      			<tr>
+						    							      				<th>country</th>
+						    							      				<td><?php echo $row_population['country']; ?></td>
+						    							      			</tr>
+						    							      			<tr>
+						    							      				<th>state</th>
+						    							      				<td><?php echo $row_population['state']; ?></td>
+						    							      			</tr>
+						    							      			<tr>
+						    							      				<th>city</th>
+						    							      				<td><?php echo $row_population['city']; ?></td>
+						    							      			</tr>
+						    							      		</tbody>
+						    							      	</table>
+						    							      </div>
+						    							      <div class="modal-footer">
+						    							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						    							        <form action="captivity.php" method="get">
+			    							        				<input type="hidden" name="filterpopulation" value="<?php echo $row_population['id'];?>">
+			    							        				<input type="hidden" name="fulldata" value="n">
+			    							        				<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row_population['id'] ? "disabled ":""; ?>>Filter population</button>
+						    							        </form>
+						    							        
+						    							      </div>
+						    							    </div>
+						    							  </div>
+						    							</div>
 						    						</td>
 						    					<?php else: ?>
 						    						<td scope="row">-</td>
