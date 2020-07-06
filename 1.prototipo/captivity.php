@@ -98,13 +98,13 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 /* Evita excesso de modal*/
 $institute_population = [];
 
-$sql = "SELECT *,individual.id as id, individual.name as name FROM `individual` LEFT JOIN status ON individual.id=status.id_individual LEFT JOIN kinship ON kinship.id_individual=individual.id  WHERE id_category=1";
+$sql = "SELECT *,individual.id as id, individual.name as name FROM `individual` LEFT JOIN status ON individual.id=status.id_individual LEFT JOIN kinship ON kinship.id_individual=individual.id LEFT JOIN institute ON status.id_institute=institute.id WHERE id_category=1";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter); 
 ?>
 
-<div class="text-warning m-4" style="white-space: nowrap;"><h1 class="ml-5">Captivity</h1><hr></div>
+<div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Captivity</h3><hr></div>
 
 <!-- Filtro -->
 	<!-- Button trigger modal -->
@@ -142,7 +142,7 @@ $result_filter = $mysqli->query($sql_filter);
 							<label>Sex</label>
 
 							<select name="sexFilter" class="form-control form-control-sm">
-								<option <?php echo !isset($_GET['sexFilter']) ? "selected":"";?> value="" >Select...</option>
+								<option <?php echo !isset($_GET['sexFilter']) ? "selected":"";?> value="" >All</option>
 								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Female" ? "selected":""; ?> value="Female">Female</option>
 								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Male" ? "selected":""; ?> value="Male">Male</option>
 								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
@@ -152,8 +152,8 @@ $result_filter = $mysqli->query($sql_filter);
 						<!--Life Status-->
 						<div class="form-group">
 							<label>Life Status</label>
-
-							<div class="form-check">
+							<br>
+							<div class="form-check form-check-inline">
 							  <input class="form-check-input" type="radio" name="status" id="statusAlive" value="1"  <?php echo isset($_GET["status"]) && $_GET["status"]=="1" ? "checked":""; ?>>
 							  <label class="form-check-label" for="statusAlive"> Alive</label>
 							</div>
@@ -162,15 +162,13 @@ $result_filter = $mysqli->query($sql_filter);
 							  <input class="form-check-input" type="radio" name="status" id="statusDeath" value="0"  <?php echo isset($_GET["status"]) && $_GET["status"]=="0" ? "checked":""; ?>>
 							  <label class="form-check-label" for="statusDeath"> Death</label>
 							</div>
-
 						</div>
 
 						<!--population-->
-						<?php if($fulldata=='s'): ?>
 							<div class="form-group">
 								<label>Population</label>
-								<select name="filterpopulation" class="form-control form-control-sm">
-								  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">Select...</option>
+								<select name="filterpopulation" class="form-control form-control-sm" <?php echo $fulldata=='s' ? "":"disabled"; ?>>
+								  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">All</option>
 								  <?php 
 								  $sql_institute = "SELECT * FROM institute";
 								  $query = $mysqli->query($sql_institute);
@@ -180,13 +178,11 @@ $result_filter = $mysqli->query($sql_filter);
 								  <?php endwhile; ?>
 								</select>
 							</div>
-						<?php endif; ?>
-
+						
 						<!--Display informations-->
 						<div class="form-group">
 							<label>Display informations</label>
-
-					        <div class="overflow-auto" style="max-height: 300px;">
+					        <div class="overflow-auto" style="max-height: 150px;">
 					        	<?php foreach ($headersAdicionais as $value):?>
 					        		<div class="custom-control custom-checkbox">
 								 		<input type="checkbox" class="custom-control-input" id="<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) || $flag==0 ? "checked":""; ?>>
@@ -195,13 +191,26 @@ $result_filter = $mysqli->query($sql_filter);
 						        <?php endforeach;?>
 					        </div>
 						</div>
+
+						<!--Hidden informations-->
+						<?php if($fulldata!='s'): ?>
+							<input type="hidden" name="fulldata" value="n">
+							<input type="hidden" name="filterpopulation" value="<?php echo $_GET['filterpopulation'];?>">
+						<?php endif; ?>
 					</form>
 				</div>
 				<!-- FORM -->
 
 				<div class="modal-footer">
 					<button type="submit" form="formFiltro" class="btn btn-warning">Submit</button>
-					<a class="btn btn-warning" href="captivity.php" role="button">Clear All</a>
+
+					<form id="formClear" action="captivity.php" method="get">
+						<input type="hidden" name="fulldata" value="<?php echo $fulldata;?>">
+						<?php if($fulldata!='s'): ?>
+							<input type="hidden" name="filterpopulation" value="<?php echo $_GET['filterpopulation'];?>">
+						<?php endif; ?>
+						<button type="submit" form="formClear" class="btn btn-warning">Clear</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -405,7 +414,7 @@ $result_filter = $mysqli->query($sql_filter);
 			    				$result_kinship = $mysqli->query($sql_kinship);
 			    				$row_kinship = $result_kinship->fetch_array();?>
 			    				<td scope="row">
-			    					<a class="btn btn-link text-decoration-none text-dark btn-block border-0" href="individual.php?identification=<?php echo $row_kinship['identification'];?>"><?php echo $row_kinship['identification'];?></a>
+			    					<a class="btn btn-outline-dark btn-block border-0" href="individual.php?identification=<?php echo $row_kinship['identification'];?>"><?php echo $row_kinship['identification'];?></a>
 			    				</td>
 		    					<?php break;?>
 
@@ -444,10 +453,9 @@ $result_filter = $mysqli->query($sql_filter);
 			    						</td>
 			    					<?php endif; ?>
 		    					<?php break;?>
-		    				
 
 		    				<?php default: ?>
-		    				<td scope="row"><div class="btn" style="cursor:auto;"><?php echo $row[$value];?></div></td>
+		    					<td scope="row"><div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div></td>
 		    				
 		    			<?php endswitch; ?>
 		    		<?php endforeach; ?>
