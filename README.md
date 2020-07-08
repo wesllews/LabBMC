@@ -1,3 +1,17 @@
+# Para fazer (08/06)
+1. O botão de paginação não envia as colunas que eu decidi ocultar
+2. Mudar a cor do checkbox dos filtros 
+3. Aplicar "Grid-container" na página de individuo, para mostras os locus de forma mais concentrada do que uma tabela longa
+
+## Feito
+1. O botão de paginação não envia as colunas que eu decidi ocultar
+2. Mudar a cor do checkbox dos filtros 
+
+## Próximas Etapas
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
 # Para fazer (30/04)
 1. Fazer botão que abra todas as janelas de histórico
 2. Reunião com a Patrícia e Paola

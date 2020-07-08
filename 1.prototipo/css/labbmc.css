@@ -78,13 +78,14 @@
   }
 
 /* DROPDOWN*/
-  .dropdown-menu>a.active, .dropdown-menu>a:hover, .dropdown-menu>a:focus{
-  background-color: #ffc107;
-  color: #fff;
+  .dropdown-menu>a.active{
+    background-color: #ffc107;
+    color: #16181b;
   }
-  .dropdown-menu>a:focus{
-  background-color: #fff;
-  color: #ffc107;
+  .dropdown-menu>a:hover,.dropdown-item:hover,
+  .dropdown-menu>a:focus, .dropdown-item:focus{
+    color: #16181b;
+    background-color: #f8f9fa;
   }
 
 /*SUBMENU DROPDOWN*/
@@ -124,4 +125,10 @@
   grid-auto-flow: row; /*options: row|column|dense*/
   grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(3, auto);
+}
+
+/* CHECKBOX COLOR*/
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  border-color: #ffc107;
+  background-color: #ffc107;
 }

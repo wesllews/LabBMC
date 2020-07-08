@@ -223,6 +223,11 @@ $result_filter = $mysqli->query($sql_filter);
 			<input type="hidden" name="<?php echo $key;?>" value="<?php echo $value;?>">
 			<?php endif;?>
 		<?php endforeach;?>
+		<?php foreach ($header as $value):?>
+			<?php if($value != ""):?>
+			<input type="hidden" name="<?php echo $value;?>" value="s">
+			<?php endif;?>
+		<?php endforeach;?>
 	</form>
 
 <!-- Pagination -->
