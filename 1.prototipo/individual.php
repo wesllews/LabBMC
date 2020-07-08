@@ -30,7 +30,7 @@ if ($row_individual['id_category']==1) {
 	<?php $sql= "SELECT * FROM status INNER JOIN institute ON institute.id=status.id_institute WHERE id_individual='$id_individual';";
 	$query = $mysqli->query($sql);
 	$row_status = $query->fetch_array(); ?>
-	<div class="text-secondary font-weight-bolder mb-2 mt-4"> Basic Information</div>
+	<h5 class="text-secondary mb-2 mt-4"> Basic Information</h5>
 	<table class="table table-sm table-borderless text-capitalize">
 		<?php foreach ($column as $value): ?>
 			<tr>
@@ -80,7 +80,7 @@ if ($row_individual['id_category']==1) {
 	INNER JOIN events ON historic.id_event=events.id
 	WHERE id_individual='$id_individual';";
 	$query = $mysqli->query($sql); ?>
-	<div class="text-secondary font-weight-bolder mb-2 mt-4"> Historic</div>
+	<h5 class="text-secondary mb-2 mt-4"> Historic</h5>
 	<ul class="list-group list-group-flush ">
 		<?php while($row_historic = $query->fetch_array()): ?>
 			<li class="list-group-item pb-1">
@@ -121,22 +121,16 @@ if ($row_individual['id_category']==1) {
 
 
 <!-- Genetics -->
-<?php $sql= "SELECT distinct(id_locus) as id_locus FROM genotype WHERE id_individual='$id_individual';";
-	$query = $mysqli->query($sql);
-	$num_rows =$query->num_rows;?>
+<?php $sql_genetics= "SELECT distinct(id_locus) as id_locus FROM genotype WHERE id_individual='$id_individual';";
+	$query_genetics = $mysqli->query($sql_genetics);
+	$num_rows =$query_genetics->num_rows;?>
 	<?php if($num_rows>0): ?>
 		<div class="container">
 
-			<div class="text-secondary font-weight-bolder mb-2 mt-4"> Genotypes and Alleles</div>
-			<table class="table table-sm text-center text-capitalize">
-				<thead class="thead-dark">
-					<tr>
-						<th class="px-5">Locus</th>
-						<th class="px-5">Alleles</th>
-					</tr>
-				</thead>
+			<h5 class="text-secondary mb-2 mt-4"> Genotypes and Alleles</h5>
 
-				<?php while($row_locus = $query->fetch_array()):
+			<div class="mt-3 grid-genetics">
+				<?php while($row_locus = $query_genetics->fetch_array()):
 					$sql_allele= "SELECT * FROM genotype INNER JOIN locus ON locus.id=genotype.id_locus WHERE id_individual='$id_individual' AND id_locus='$row_locus[id_locus]';";
 					$query_allele = $mysqli->query($sql_allele);
 					$num_rows =$query_allele->num_rows;
@@ -144,13 +138,16 @@ if ($row_individual['id_category']==1) {
 					if($num_rows==2):
 						$row_allele = $query_allele->fetch_array();
 						$flag=0?>
-						<tr>
-							<th class="px-5"><?php echo $row_allele['locus']; ?></th>
-							<td class="px-5"> <?php while ($flag<2) { echo $row_allele['allele']." "; $flag+=1;} ?></td>
-						</tr>
+
+						<div class="m-3 border-bottom">
+							<span class="float-left font-weight-bold"><?php echo $row_allele['locus']; ?></span>
+							<span class="float-right text-secondary"><?php while ($flag<2) { echo $row_allele['allele']." "; $flag+=1;} ?></span>									
+						</div>
 					<?php endif; ?>
 				<?php endwhile; ?>
-			</table>
+			</div>
+<br><br><br>
+
 		</div>
 	<?php endif; ?>
 

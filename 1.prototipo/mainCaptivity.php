@@ -13,7 +13,7 @@ $result_filter = $mysqli->query($sql);
 		<hr>
 	</div>
 
-	<div class="mt-3 grid-container">
+	<div class="mt-3 grid-captivity">
 	<?php while($row = $result_filter->fetch_array()):
 		$sql = "SELECT * FROM institute WHERE id='$row[id_institute]'";
 		$result = $mysqli->query($sql);

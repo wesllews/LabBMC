@@ -88,25 +88,6 @@
     background-color: #f8f9fa;
   }
 
-/*SUBMENU DROPDOWN*/
-  .dropdown-submenu {
-    position: relative;
-  }
-
-  .dropdown-submenu a::after {
-    transform: rotate(-90deg);
-    position: absolute;
-    right: 6px;
-    top: .8em;
-  }
-
-  .dropdown-submenu .dropdown-menu {
-    top: 0;
-    left: 100%;
-    margin-left: .1rem;
-    margin-right: .1rem;
-  }
-
 /*FIXED ELEMENTS*/
   #btnTop{
     position:fixed;
@@ -120,12 +101,18 @@
   }
 
 /*GRID AUTO-FLOW*/
-  .grid-container {
+.grid-captivity {
   display: grid;
   grid-auto-flow: row; /*options: row|column|dense*/
   grid-template-columns: repeat(3, auto);
-  grid-template-rows: repeat(3, auto);
 }
+
+.grid-genetics{
+  display: grid;
+  grid-auto-flow: row; /*options: row|column|dense*/
+  grid-template-columns: repeat(5, auto);
+}
+
 
 /* CHECKBOX COLOR*/
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {

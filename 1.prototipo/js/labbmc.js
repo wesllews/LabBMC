@@ -1,8 +1,3 @@
-// Icon Filtro (captivity)
-$(".girar").click(function(){
-	$("#girar").toggleClass("fa-flip-vertical")  ; 
-})
-
 // Janela de Historico de cada individuo (captivity)
 function girar(id="girar" ) {
 	 $(document).ready(function() {

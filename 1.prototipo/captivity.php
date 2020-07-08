@@ -399,7 +399,7 @@ $result_filter = $mysqli->query($sql_filter);
 															<form action="captivity.php" method="get">
 																<input type="hidden" name="filterpopulation" value="<?php echo $row_population['id'];?>">
 																<input type="hidden" name="fulldata" value="n">
-																<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row_population['id'] ? "disabled ":""; ?>>Filter population</button>
+																<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row_population['id'] ? "disabled ":""; ?>>See this population</button>
 															</form>
 															<button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
 														</div>
