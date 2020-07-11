@@ -1,3 +1,27 @@
+# Para fazer (11/06)
+1. Página de download de dados e formatação em formato excel ou csv.
+
+## Novas ferramentas:
+
+- Eu vou tentar usar o [PhpSpreadsheet](https://phpspreadsheet.readthedocs.io/en/latest/) mas para isso é necessário fazer instalação do [composer](https://getcomposer.org/doc/00-intro.md), eu vou optar por fazer uso de da forma local dele, baixando no pc.
+
+- Foi necessário fazer instalação de alguns programas de requisit do phpSpreadSheet que não havia no meu computador:
+    ```
+    sudo apt install php-xml
+    sudo apt-get install php7.2-mbstring
+    sudo apt-get install php7.2-zip
+    ```
+- Aproveitei e instalei uma ferramenta chamada phpinsights que ajuda a analisar a qualidade do código desenvolvido baseado nesse conteúdo (Como está a saúdo do seu código)[https://imasters.com.br/back-end/como-esta-a-saude-do-seu-codigo].
+
+- (PHP Copy/Paste Detector (PHPCPD))[https://imasters.com.br/back-end/detectando-codigo-duplicado-em-php-com-php-copy-paste-detector-phpcpd]
+    
+
+## Próximas Etapas
+Inserir Grupo dos indivíduos
+Fazer página de Wild Indivíduos
+
+___
+
 # Para fazer (08/06)
 1. O botão de paginação não envia as colunas que eu decidi ocultar
 2. Mudar a cor do checkbox dos filtros 

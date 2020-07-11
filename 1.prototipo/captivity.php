@@ -31,7 +31,6 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
 	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
 
-
 /* Filtros GET*/
 	
 	// Pagination
@@ -88,9 +87,9 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 			$order = " ORDER BY $column $sort_order, CAST(identification AS INT) $sort_order, individual.id $sort_order";
 			break;
 	}
-	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
 
 	// Captivity filters
+	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
 	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
 	$status = $status!=""? " AND alive='$_GET[status]'" : "";
 	$filterpopulation = $filterpopulation!=""? " AND id_institute=$_GET[filterpopulation]" : "";
@@ -101,8 +100,23 @@ $institute_population = [];
 $sql = "SELECT *,individual.id as id, individual.name as name FROM `individual` LEFT JOIN status ON individual.id=status.id_individual LEFT JOIN kinship ON kinship.id_individual=individual.id LEFT JOIN institute ON status.id_institute=institute.id WHERE id_category=1";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
-$result_filter = $mysqli->query($sql_filter); 
+#echo $sql_filter;
+$result_filter = $mysqli->query($sql_filter);
 ?>
+
+<div class="container mt-3">
+	<form id="formDownload" action="download.php" method="post">
+
+		<input type="hidden" name="limit" value="<?php echo $limit_sql; ?>">
+		<input type="hidden" name="sex" value="<?php echo $sexFilter; ?>">
+		<input type="hidden" name="status" value="<?php echo $status; ?>">
+		<input type="hidden" name="population" value="<?php echo $filterpopulation; ?>">
+		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">
+
+		<button type="submit" form="formDownload" class="btn btn-success float-right">Baixar</button>
+	</form>
+</div>
+
 
 <div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Captivity</h3><hr></div>
 
@@ -398,8 +412,8 @@ $result_filter = $mysqli->query($sql_filter);
 														<div class="modal-footer">
 															<form action="captivity.php" method="get">
 																<input type="hidden" name="filterpopulation" value="<?php echo $row_population['id'];?>">
-																<input type="hidden" name="fulldata" value="n">
-																<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row_population['id'] ? "disabled ":""; ?>>See this population</button>
+																<input type="hidden" name="fulldata" value="s">
+																<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row_population['id'] ? "disabled ":""; ?>>Filter by this population</button>
 															</form>
 															<button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
 														</div>
