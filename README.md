@@ -1,3 +1,18 @@
+# Para fazer (01/07)
+1. Inserir grupos de indivíduos de vida livre. 
+2. Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+
+## Próximas Etapas
+Inserir Grupo dos indivíduos
+Fazer página de genótipos
+Impedir SQL Injection
+Página de Login
+Fazer página de Life history > Wild
+Página de pesquisa
+
+___
+
+
 # Para fazer (11/06)
 1. Página de download de dados e formatação em formato excel ou csv.
 

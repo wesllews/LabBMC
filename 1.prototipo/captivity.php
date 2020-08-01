@@ -107,6 +107,7 @@ $result_filter = $mysqli->query($sql_filter);
 <div class="container mt-3">
 	<form id="formDownload" action="download.php" method="post">
 
+		<input type="hidden" name="pagina" value="<?php echo $_SESSION['pagina']; ?>">
 		<input type="hidden" name="limit" value="<?php echo $limit_sql; ?>">
 		<input type="hidden" name="sex" value="<?php echo $sexFilter; ?>">
 		<input type="hidden" name="status" value="<?php echo $status; ?>">
