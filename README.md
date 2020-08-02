@@ -1,9 +1,14 @@
 # Para fazer (01/07)
 1. Inserir grupos de indivíduos de vida livre. 
-2. Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+2. Ajustar nome dos locus em Genotypes and Alleles.
+
+# Feito
+1. Inserir grupos de indivíduos de vida livre.
 
 ## Próximas Etapas
+ Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
 Inserir Grupo dos indivíduos
+Inserir campos de informações de fragmentos e grupos na página Individual.php
 Fazer página de genótipos
 Impedir SQL Injection
 Página de Login
