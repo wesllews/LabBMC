@@ -8,10 +8,10 @@ $header = ['identification'];
 $headersAdicionais =['category','sex','population','alive'];
 
 	// Adiciona os Locus cadastrados aos headers adicionais
-	$sql_locus = "SELECT DISTINCT(id_locus) FROM genotype";
+	$sql_locus = "SELECT DISTINCT(locus) FROM genotype INNER JOIN locus ON locus.id = genotype.id_locus";
 	$query = $mysqli->query($sql_locus);
 	while ($row = $query->fetch_array()) {
-	    array_push($headersAdicionais, $row["id_locus"]); //Sunstituindo . por _ para envio de variáveis pro método get
+	    array_push($headersAdicionais, $row["locus"]); //Sunstituindo . por _ para envio de variáveis pro método get
 	}
 
 	// Testa se algum locus foi enviado
@@ -82,8 +82,18 @@ $headersAdicionais =['category','sex','population','alive'];
 		);
 
 
-$sql= "SELECT DISTINCT(genotype.id_individual) as identification FROM genotype
-INNER JOIN individual ON individual.identification=genotype.id_individual";
+$sql= "SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, alive,
+CASE
+    WHEN id_category = 1 THEN institute.abbreviation
+    WHEN id_category = 2 THEN fragment.fragment
+END AS population
+
+FROM genotype
+
+INNER JOIN individual ON individual.id=genotype.id_individual
+INNER JOIN status ON status.id_individual=genotype.id_individual
+LEFT JOIN institute ON status.id_institute=institute.id
+LEFT JOIN fragment ON status.id_fragment=fragment.id";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter); 
@@ -232,15 +242,12 @@ $result_filter = $mysqli->query($sql_filter);
 				<th scope="col" style="white-space: nowrap;">
 					<div class="d-flex justify-content-center align-items-end">
 
-						<?php if(in_array($value, array('identification','category','sex'))): ?>
+						<?php if(in_array($value, array('identification','category','sex', 'population', 'alive'))): ?>
 							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 							<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
 							onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 								<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 							</button>
-
-						<?php elseif(in_array($value, array('population','alive'))): ?>
-							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 
 						<?php else: ?>
 							<!-- Modal Button-->
@@ -260,6 +267,7 @@ $result_filter = $mysqli->query($sql_filter);
 											$row = $result->fetch_assoc();
 											?>
 											<b>Type:</b> <?php echo ucfirst($row['type']);?><br>
+											<b>Motif:</b> <?php echo ucfirst($row['motif']);?><br>
 											<b>Primer Forward:</b> <?php echo $row['forward'];?><br>
 											<b>Primer Reverse:</b> <?php echo $row['reverse'];?><br>
 											<b>Reference:</b> <?php echo $row['reference'];?><br>
@@ -311,18 +319,10 @@ $result_filter = $mysqli->query($sql_filter);
 	    						</td>
     					<?php break;?>
 
-						<?php case 'population': 
-	    					$sql_population = "SELECT * FROM `status` INNER JOIN institute ON institute.id = status.id_institute WHERE id_individual = '$row[identification]'";
-	    					$result_population = $mysqli->query($sql_population);
-
-		    					if ($result_population->num_rows > 0): 
-		    						$row_population = $result_population->fetch_array();?>
-		    						<td scope="row" style="white-space: nowrap;">
-		    							<?php echo $row_population['abbreviation']; ?>
-		    						</td>
-		    					<?php else: ?>
-		    						<td scope="row">-</td>
-		    					<?php endif; ?>
+						<?php case 'population': ?>
+							<td scope="row" style="white-space: nowrap;">
+								<?php echo $row['population']; ?>
+							</td>
     					<?php break;?>
 
     					<?php case 'alive': 
@@ -341,7 +341,7 @@ $result_filter = $mysqli->query($sql_filter);
 	    				<?php break;?>
 		
 						<?php default:
-						 	$sql_locus = "SELECT * FROM genotype WHERE id_individual='$row[identification]' AND id_locus ='$value' ";
+						 	$sql_locus = "SELECT * FROM genotype WHERE id_individual='$row[id]' AND id_locus =(SELECT id FROM locus WHERE locus='$value'); ";
 						 	$result_locus = $mysqli->query($sql_locus);
 							if ($result_locus->num_rows >=2):?>
 								<td scope="row" style="white-space: nowrap;"> 
