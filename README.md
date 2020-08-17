@@ -1,3 +1,27 @@
+# Para fazer (16/08)
+1. Diminuir recursão dos dados
+2. Botão modal para "population"
+
+# Feito
+1. Filtro de informações com botão modal
+2. Status de alive dividido em 3: True/}False/Unknown
+3. Cabeçalho menor
+4. Adicionado clausule de "WHERE 1=1" na query principal
+5. Botão de páginação está duplicando as restrições do filtro e travando a página (Forms tem que ser antes do 'SQL Filter')
+
+## Próximas Etapas
+Igualar funções da página de captivity com a página de genótipos
+	- Fazer o filtro por por POPULATION
+Fazer página de Life history > Wild
+Inserir campos de informações de fragmentos e grupos na página Individual.php
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Genetics: aparecer os genotipos só do individuos
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+___ 
+
 # Para fazer (13/08)
 1. Fazer Select de "CASE category=1 THEN id_institute ..."
 
@@ -14,7 +38,6 @@ Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
 Impedir SQL Injection
 Página de Login
 Página de pesquisa
-
 ___ 
 
 # Para fazer (01/07)
