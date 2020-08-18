@@ -90,20 +90,10 @@ with open("historic/BLT_historic.csv", 'w') as file:
 # Lendo Arquivo para criar o SQL
 with open('historic/BLT_historic.csv', newline='\n') as csvfile:
 	read_BLT_historic = csv.DictReader(csvfile, delimiter=',')
-	"""
-	stud= "1"
-	id_individual = 3 # o individuo 1 é o wild e 2 o unkown
-	"""
 
 	with open("../SQL/3.historic.sql", 'w') as file:
 		for row in read_BLT_historic:
 
-			id = None
-			"""
-			if stud != row['Stud']:
-				stud = row['Stud']
-				id_individual+=1
-			"""
 			id_individual = row['Stud']
 			id_event = row['Event_id']
 			id_institute = row['id_institute']
@@ -112,7 +102,7 @@ with open('historic/BLT_historic.csv', newline='\n') as csvfile:
 			observation = f"\'{row['Observation']}\'" if row['Observation']!="NA" else "NULL"
 
 			# Usando 'f-string' para criar linha SQL
-			sql = f"INSERT INTO `historic` (`id`, `id_individual`, `id_event`, `id_institute`, `local_id`, `date`, `observation`) VALUES (NULL, '{id_individual}', '{id_event}', '{id_institute}', {Local_id}, {date}, {observation});\n"
+			sql = f"INSERT INTO `historic` (`id`, `id_individual`, `id_event`, `id_institute`, `local_id`, `date`, `observation`) VALUES (NULL, (SELECT id FROM individual WHERE identification='{id_individual}'), '{id_event}', '{id_institute}', {Local_id}, {date}, {observation});\n"
 			
 			#Consistência de dados - removendo a linha sem histórico
 			if id_event !="NA":

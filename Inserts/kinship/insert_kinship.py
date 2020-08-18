@@ -14,7 +14,7 @@ with open('historic/BLT_historic.csv', newline='\n') as csvfile:
 			id_individual = row['Stud']
 
 			# Usando 'f-string' para criar linha SQL
-			sql = f"INSERT INTO `kinship` (`id_individual`, `sire`, `dam`) VALUES ('{id_individual}', '{Sire}', '{Dam}');\n"
+			sql = f"INSERT INTO `kinship` (`id_individual`, `sire`, `dam`) VALUES ((SELECT id FROM individual WHERE identification='{id_individual}'),(SELECT id FROM individual WHERE identification='{Sire}'), (SELECT id FROM individual WHERE identification='{Dam}'));\n"
 			
 			#Consistência de dados - removendo a linha sem histórico
 			if Sire !="NA" and Dam !="NA":

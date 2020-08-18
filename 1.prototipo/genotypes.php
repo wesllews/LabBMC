@@ -8,10 +8,10 @@ $header = ['identification'];
 $headersAdicionais =['category','sex','population','alive'];
 
 	// Adiciona os Locus cadastrados aos headers adicionais
-	$sql_locus = "SELECT DISTINCT(id_locus) FROM genotype";
+	$sql_locus = "SELECT DISTINCT(locus) FROM genotype INNER JOIN locus ON locus.id = genotype.id_locus";
 	$query = $mysqli->query($sql_locus);
 	while ($row = $query->fetch_array()) {
-	    array_push($headersAdicionais, $row["id_locus"]); //Sunstituindo . por _ para envio de variáveis pro método get
+	    array_push($headersAdicionais, $row["locus"]); //Sunstituindo . por _ para envio de variáveis pro método get
 	}
 
 	// Testa se algum locus foi enviado
@@ -56,20 +56,6 @@ $headersAdicionais =['category','sex','population','alive'];
 	$status = isset($_GET['status'])? $_GET['status'] : "";
 	$category = isset($_GET['category']) ? $_GET['category'] : "";
 
-/* SQL Filtros */
-
-	// Table order
-	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
-	$aux_column = $column=='identification'? 'CAST(identification AS INT),identification':$column;
-	$aux_column = $column=='population'? 'id_institute':$column;
-	$aux_column = $column=='category'? 'id_category':$column;
-	$order = " ORDER BY $aux_column $sort_order"; 
-
-	// Genotype filters
-	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
-	$status = $status!=""? " AND alive='$_GET[status]'" : "";
-	$filterpopulation = $filterpopulation!=""? " AND id_institute='$_GET[filterpopulation]'" : "";
-
 /* Forms */
 	$array =  array(
 	    "column" => $column,
@@ -81,96 +67,132 @@ $headersAdicionais =['category','sex','population','alive'];
 	    "filterpopulation" => $filterpopulation,
 		);
 
+/* SQL Filtros */
 
-$sql= "SELECT DISTINCT(genotype.id_individual) as identification FROM genotype
-INNER JOIN individual ON individual.identification=genotype.id_individual";
+	// Table order
+	$limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
+	$aux_column = $column=='identification'? 'CAST(identification AS INT),identification':$column;
+	$aux_column = $column=='category'? 'id_category':$column;
+	$order = " ORDER BY $aux_column $sort_order"; 
+
+	// Genotype filters
+	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
+	$status = $status!=""? " AND alive='$_GET[status]'" : "";
+	$filterpopulation = $filterpopulation!=""? " AND population='$_GET[filterpopulation]'" : "";
+
+/* Evita excesso de modal*/
+$population = [];
+
+$sql= "SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, sex, alive,
+CASE
+    WHEN id_category = 1 THEN institute.abbreviation
+    WHEN id_category = 2 THEN fragment.fragment
+END AS population
+
+FROM genotype
+
+INNER JOIN individual ON individual.id=genotype.id_individual
+INNER JOIN status ON status.id_individual=genotype.id_individual
+LEFT JOIN institute ON status.id_institute=institute.id
+LEFT JOIN fragment ON status.id_fragment=fragment.id
+WHERE 1=1";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
+echo $sql_filter;
 $result_filter = $mysqli->query($sql_filter); 
 ?>
 
-<div class="text-warning m-5" style="white-space: nowrap;"><h1 class="ml-5">Genotypes and Alelles</h1><hr></div>
+<div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Genotypes and Alelles</h3><hr></div>
 
-<!--Button-->
-<div class="d-flex flex-row">
-  <div class="bg-warning text-white text-center p-4 girar" data-toggle="collapse" data-target="#filtro">
-    <i class="fas fa-filter"></i><i class="fas fa-chevron-up" id="girar"></i>
-  </div></div>
+<!-- Filtro -->
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
+	  <i class="fas fa-filter"></i>
+	</button>
 
-<!--Filtro Form-->
-<div class="container-fluid collapse mb-1" id="filtro">
-	
-	<form class="bg-light rounded-bottom p-3" action="genotypes.php" method="get" target="_top">
+	<!-- Modal -->
+	<div class="modal fade" id="filtro" tabindex="-1" role="dialog" aria-labelledby="filtro" aria-hidden="true">
+		<div class="modal-dialog modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Filter</h5>
+					<button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
 
-		<!--Iems per page-->
-		<div class="form-group">
-			<label>Items per page</label>
+				<!-- FORM -->
+				<div class="modal-body">
+					<form id="formFiltro" action="genotypes.php" method="get">
 
-			<select name="limit" class=" form-control form-control-sm">
-				<?php for ($i=20; $i <= 100; $i+=20):?>
-					<option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-				<?php endfor; ?>
-				<option <?php echo isset($_GET['limit']) && $_GET['limit']=="All" ? "selected":""; ?> value="All">All results</option>
-			</select>
-		</div>
+						<!--Iems per page-->
+						<div class="form-group">
+							<label>Items per page</label>
 
-		<!--Sex-->
-		<div class="form-group">
-			<label>Sex</label>
+							<select name="limit" class=" form-control form-control-sm">
+								<?php for ($i=20; $i <= 100; $i+=20):?>
+									<option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+								<?php endfor; ?>
+								<option <?php echo isset($_GET['limit']) && $_GET['limit']=="All" ? "selected":""; ?> value="All">All results</option>
+							</select>
+						</div>
 
-			<select name="sexFilter" class="form-control form-control-sm">
-				<option <?php echo !isset($_GET['sexFilter']) ? "selected":"";?> value="" >Select...</option>
-				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Female" ? "selected":""; ?> value="Female">Female</option>
-				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Male" ? "selected":""; ?> value="Male">Male</option>
-				<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
-			</select>
-		</div>
-		
-		<!--Category-->
-		<div class="btn-group btn-group-toggle" data-toggle="buttons">
-		  <label class="btn btn-secondary active">
-		    <input type="radio" name="options" id="option1" autocomplete="off" checked> Captivity
-		  </label>
-		  <label class="btn btn-secondary">
-		    <input type="radio" name="options" id="option3" autocomplete="off"> Wild
-		  </label>
-		</div>
+						<!--Sex-->
+						<div class="form-group">
+							<label>Sex</label>
 
-		<!--Life Status-->
-		<div class="form-group">
-			<label>Life Status</label>
+							<select name="sexFilter" class="form-control form-control-sm">
+								<option <?php echo !isset($_GET['sexFilter']) ? "selected":"";?> value="" >All</option>
+								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Female" ? "selected":""; ?> value="Female">Female</option>
+								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Male" ? "selected":""; ?> value="Male">Male</option>
+								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
+							</select>
+						</div>
 
-			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="status" id="statusAlive" value="1"  <?php echo isset($_GET["status"]) && $_GET["status"]=="1" ? "checked":""; ?>>
-			  <label class="form-check-label" for="statusAlive"> Alive</label>
+						<!--category-->
+
+						<!--Life Status-->
+						<div class="form-group">
+							<label>Life Status</label>
+							<br>
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="status" id="statusAlive" value="1"  <?php echo isset($_GET["status"]) && $_GET["status"]=="1" ? "checked":""; ?>>
+							  <label class="form-check-label" for="statusAlive"> Alive</label>
+							</div>
+
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="status" id="statusDeath" value="0"  <?php echo isset($_GET["status"]) && $_GET["status"]=="0" ? "checked":""; ?>>
+							  <label class="form-check-label" for="statusDeath"> Death</label>
+							</div>
+						</div>
+
+						<!--population-->
+
+						<!--Display informations-->
+						<div class="form-group">
+							<label>Display informations</label>
+					        <div class="overflow-auto" style="max-height: 150px;">
+					        	<?php foreach ($headersAdicionais as $value):?>
+					        		<div class="custom-control custom-checkbox">
+								 		<input type="checkbox" class="custom-control-input" id="<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) || $flag==0 ? "checked":""; ?>>
+										<label class="custom-control-label" for="<?php echo $value;?>"><?php echo ucfirst(str_replace('_',' ',$value)); ?></label>
+									</div>
+						        <?php endforeach;?>
+					        </div>
+						</div>
+					</form>
+				</div>
+				<!-- FORM -->
+
+				<div class="modal-footer">
+					<button type="submit" form="formFiltro" class="btn btn-warning">Submit</button>
+
+					<form id="formClear" action="genotypes.php" method="get">
+						<button type="submit" form="formClear" class="btn btn-warning">Clear</button>
+					</form>
+				</div>
 			</div>
-
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="radio" name="status" id="statusDeath" value="0"  <?php echo isset($_GET["status"]) && $_GET["status"]=="0" ? "checked":""; ?>>
-			  <label class="form-check-label" for="statusDeath"> Death</label>
-			</div>
-
 		</div>
+	</div>
 
-		<!--Display informations-->
-		<div class="form-group">
-			<label>Display informations</label>
-
-	        <div class="overflow-auto" style="max-height: 300px;">
-	        	<?php foreach ($headersAdicionais as $value):?>
-	        		<div class="custom-control custom-checkbox">
-				 		<input type="checkbox" class="custom-control-input" id="check<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) || $flag==0 ? "checked":""; ?>>
-						<label class="custom-control-label" for="check<?php echo $value;?>"><?php echo ucfirst(str_replace('_',' ',$value)); ?></label>
-					</div>
-		        <?php endforeach;?>
-	        </div>
-		</div>
-
-		<button type="submit" class="btn btn-warning">Submit</button>
-
-		<a class="btn btn-warning" href="genotypes.php" role="button">Clear All</a>
-
-	</form></div>
 
 <!-- Forms Hiddens-->
 <form method="get" action="" id="formFiltros">
@@ -223,7 +245,7 @@ $result_filter = $mysqli->query($sql_filter);
 	<!--Table Responsive-->
 	<div class="table-responsive">
 		<!--Table-->
-    	<table class="table ">
+    	<table class="table table-sm">
 
 		<!--Head Table-->
     	<thead>
@@ -232,15 +254,12 @@ $result_filter = $mysqli->query($sql_filter);
 				<th scope="col" style="white-space: nowrap;">
 					<div class="d-flex justify-content-center align-items-end">
 
-						<?php if(in_array($value, array('identification','category','sex'))): ?>
+						<?php if(in_array($value, array('identification','category','sex', 'population', 'alive'))): ?>
 							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 							<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
 							onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 								<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 							</button>
-
-						<?php elseif(in_array($value, array('population','alive'))): ?>
-							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 
 						<?php else: ?>
 							<!-- Modal Button-->
@@ -260,6 +279,7 @@ $result_filter = $mysqli->query($sql_filter);
 											$row = $result->fetch_assoc();
 											?>
 											<b>Type:</b> <?php echo ucfirst($row['type']);?><br>
+											<b>Motif:</b> <?php echo ucfirst($row['motif']);?><br>
 											<b>Primer Forward:</b> <?php echo $row['forward'];?><br>
 											<b>Primer Reverse:</b> <?php echo $row['reverse'];?><br>
 											<b>Reference:</b> <?php echo $row['reference'];?><br>
@@ -285,12 +305,15 @@ $result_filter = $mysqli->query($sql_filter);
 
 						case 'identification':?>
 							<td scope="row">
-							<?php echo $row[$value]; ?>
+								<form method="get" action="individual.php" id="individual">
+									<input type="hidden" name="identification" value="<?php echo $row[$value];?>">
+									<button class=" btn btn-outline-success btn-block border-0" type="submit"><?php echo $row[$value];?></button>
+								</form>
 							</td>
-						<?php break; ?>
+						<?php break;?>
 
 						<?php case 'category': 
-	    					$sql_category = "SELECT * FROM `individual` INNER JOIN category ON category.id = individual.id_category WHERE identification = '$row[identification]'";
+	    					$sql_category = "SELECT * FROM category WHERE id = '$row[id_category]'";
 	    					$result_category = $mysqli->query($sql_category);
 	    					$row_category = $result_category->fetch_array();?>
 	    						<td scope="row">
@@ -298,46 +321,73 @@ $result_filter = $mysqli->query($sql_filter);
 	    						</td>
     					<?php break;?>
 
-    					<?php case 'sex': 
-	    					$sql_sex = "SELECT * FROM `individual` WHERE identification = '$row[identification]'";
-	    					$result_sex = $mysqli->query($sql_sex);
-	    					$row_sex = $result_sex->fetch_array();?>
-	    						<td scope="row">
-	    							<?php echo ucfirst($row_sex['sex']); ?>
-	    						</td>
+    					<?php case 'sex': ?> 
+    						<td scope="row">
+    							<?php echo ucfirst($row['sex']); ?>
+    						</td>
     					<?php break;?>
 
-						<?php case 'population': 
-	    					$sql_population = "SELECT * FROM `status` INNER JOIN institute ON institute.id = status.id_institute WHERE id_individual = '$row[identification]'";
-	    					$result_population = $mysqli->query($sql_population);
+						<?php case 'population': ?>
+						<td scope="row">
+							<!-- Trigger Modal -->
+							<button type="button" class="btn btn-link text-decoration-none" data-toggle="modal" data-target="#population<?php echo str_replace(' ','_',$row['population']); ?>" style="white-space: nowrap;">
+							  <?php echo $row['population']; ?>
+							</button>
 
-		    					if ($result_population->num_rows > 0): 
-		    						$row_population = $result_population->fetch_array();?>
-		    						<td scope="row" style="white-space: nowrap;">
-		    							<?php echo $row_population['abbreviation']; ?>
-		    						</td>
-		    					<?php else: ?>
-		    						<td scope="row">-</td>
-		    					<?php endif; ?>
+							<!-- Modal -->
+							<?php if(!in_array($row['population'], $population)):
+								array_push($population, $row['population']);?>
+
+								<div class="modal fade" id="population<?php echo str_replace(' ','_',$row['population']); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+
+											<div class="modal-header">
+												<h5 class="modal-title" >Population</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+
+											<div class="modal-body">
+												<table class="table table-sm table-borderless text-left text-capitalize">
+													<tbody>
+														<tr>
+															<th>name</th>
+															<td><?php echo $row['population']; ?></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+
+											<div class="modal-footer">
+												<form action="genotypes.php" method="get">
+													<input type="hidden" name="filterpopulation" value="<?php echo $row['population'];?>">
+													<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row['population'] ? "disabled ":""; ?>>Filter by this population</button>
+												</form>
+												<button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
+		    				<?php endif; ?>
+		    			</td>
     					<?php break;?>
 
-    					<?php case 'alive': 
-	    					$sql_alive = "SELECT * FROM `status` 
-	    					WHERE id_individual = '$row[identification]'";
-	    					$result_alive = $mysqli->query($sql_alive);
-
-		    					if ($result_alive->num_rows > 0): 
-		    						$row_alive = $result_alive->fetch_array();?>
-		    						<td scope="row">
-		    							<?php echo $row_alive['alive']==1 ? '<div class="text-success">True</div>':'<div class="text-danger">False</div>' ;?>
-		    						</td>
-		    					<?php else: ?>
-		    						<td scope="row">-</td>
-		    					<?php endif; ?>
+    					<?php case 'alive': ?>
+	    					<td scope="row">
+			    				<?php if($row['alive']==1):?>
+			    					<div class="text-success">True</div>
+			    				<?php elseif($row['alive']==0 && $row['alive']!=NULL ): ?>
+			    					<div class="text-danger">False</div>
+			    				<?php else: ?>
+			    					<div class="text-info">Unknown</div>
+			    				<?php endif; ?>
+			    			</td>
 	    				<?php break;?>
 		
 						<?php default:
-						 	$sql_locus = "SELECT * FROM genotype WHERE id_individual='$row[identification]' AND id_locus ='$value' ";
+						 	$sql_locus = "SELECT * FROM genotype WHERE id_individual='$row[id]' AND id_locus =(SELECT id FROM locus WHERE locus='$value'); ";
 						 	$result_locus = $mysqli->query($sql_locus);
 							if ($result_locus->num_rows >=2):?>
 								<td scope="row" style="white-space: nowrap;"> 

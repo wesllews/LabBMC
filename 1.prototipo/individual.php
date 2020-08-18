@@ -5,9 +5,11 @@ include 'header.php';
 
 // Select individual
 $identification = $_GET['identification'];
-$sql= "SELECT * FROM individual  INNER JOIN category ON category.id=individual.id_category WHERE individual.identification='$identification';";
+$sql= "SELECT *,individual.id as id FROM individual  INNER JOIN category ON category.id=individual.id_category WHERE individual.identification='$identification';";
 $query = $mysqli->query($sql);
 $row_individual = $query->fetch_array();
+$id_individual = $row_individual['id'];
+
 
 $column=[];
 if ($row_individual['id_category']==1) {
@@ -18,17 +20,17 @@ if ($row_individual['id_category']==1) {
 
 
 ?>
-<div class="container-fluid px-5 pt-5 pb-3">
+<div class="container-fluid px-5 pt-5">
 	<h1>Identification: <?php echo $identification; ?></h1>
 	<div class="pt-1 bg-warning"></div>
 </div>
 
 <!-- Basic Information -->
 <div class="container">
-	<?php $sql= "SELECT * FROM status INNER JOIN institute ON institute.id=status.id_institute WHERE id_individual='$identification';";
+	<?php $sql= "SELECT * FROM status INNER JOIN institute ON institute.id=status.id_institute WHERE id_individual='$id_individual';";
 	$query = $mysqli->query($sql);
 	$row_status = $query->fetch_array(); ?>
-	<div class="text-secondary font-weight-bolder"> Basic Information</div>
+	<h5 class="text-secondary mb-2 mt-4"> Basic Information</h5>
 	<table class="table table-sm table-borderless text-capitalize">
 		<?php foreach ($column as $value): ?>
 			<tr>
@@ -76,10 +78,10 @@ if ($row_individual['id_category']==1) {
 	<?php $sql= "SELECT * FROM historic 
 	INNER JOIN institute ON institute.id=historic.id_institute
 	INNER JOIN events ON historic.id_event=events.id
-	WHERE id_individual='$identification';";
+	WHERE id_individual='$id_individual';";
 	$query = $mysqli->query($sql); ?>
-	<div class="text-secondary font-weight-bolder"> Historic</div>
-	<ul class="list-group list-group-flush">
+	<h5 class="text-secondary mb-2 mt-4"> Historic</h5>
+	<ul class="list-group list-group-flush ">
 		<?php while($row_historic = $query->fetch_array()): ?>
 			<li class="list-group-item pb-1">
 				<div class="d-flex flex-wrap">
@@ -113,9 +115,41 @@ if ($row_individual['id_category']==1) {
 				
 			</li>
 		<?php endwhile; ?>
+		<li class="list-group-item"></li>
 	</ul>
 </div>
 
+
+<!-- Genetics -->
+<?php $sql_genetics= "SELECT distinct(id_locus) as id_locus FROM genotype WHERE id_individual='$id_individual';";
+	$query_genetics = $mysqli->query($sql_genetics);
+	$num_rows =$query_genetics->num_rows;?>
+	<?php if($num_rows>0): ?>
+		<div class="container">
+
+			<h5 class="text-secondary mb-2 mt-4"> Genotypes and Alleles</h5>
+
+			<div class="mt-3 grid-genetics">
+				<?php while($row_locus = $query_genetics->fetch_array()):
+					$sql_allele= "SELECT * FROM genotype INNER JOIN locus ON locus.id=genotype.id_locus WHERE id_individual='$id_individual' AND id_locus='$row_locus[id_locus]';";
+					$query_allele = $mysqli->query($sql_allele);
+					$num_rows =$query_allele->num_rows;
+
+					if($num_rows==2):
+						$row_allele = $query_allele->fetch_array();
+						$flag=0?>
+
+						<div class="m-3 border-bottom">
+							<span class="float-left font-weight-bold"><?php echo $row_allele['locus']; ?></span>
+							<span class="float-right text-secondary"><?php while ($flag<2) { echo $row_allele['allele']." "; $flag+=1;} ?></span>									
+						</div>
+					<?php endif; ?>
+				<?php endwhile; ?>
+			</div>
+<br><br><br>
+
+		</div>
+	<?php endif; ?>
 
 
 

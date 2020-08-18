@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS LABBMC;
-CREATE DATABASE IF NOT EXISTS LABBMC;
+DROP DATABASE IF EXISTS labbmc;
+CREATE DATABASE IF NOT EXISTS labbmc;
 
 
 -- ************************************** `login`
@@ -21,7 +21,6 @@ CREATE TABLE `category`
  `id`            integer NOT NULL AUTO_INCREMENT ,
  `category`      varchar(30) NOT NULL ,
  `excluded`      char NULL ,
- `excluded_date` date NULL ,
 
 PRIMARY KEY (`id`),
 CONSTRAINT key_category UNIQUE (category)
@@ -33,20 +32,20 @@ INSERT INTO `category` (`id`, `category`) VALUES (NULL, 'captive'), (NULL, 'wild
 -- ************************************** `individual`
 CREATE TABLE `individual`
 (
- `identification`      varchar(20),
- `id_category`   integer NOT NULL ,
- `sex`           varchar(15) NOT NULL ,
- `name`          varchar(45) NULL ,
+ `id`             integer  NOT NULL AUTO_INCREMENT,
+ `identification` varchar(20) NOT NULL UNIQUE,
+ `id_category`    integer NOT NULL ,
+ `sex`            varchar(15) NOT NULL ,
+ `name`           varchar(45) NULL ,
 
-PRIMARY KEY (`identification`),
-KEY `fkIdx_74` (`id_category`),
-CONSTRAINT `FK_74` FOREIGN KEY `fkIdx_74` (`id_category`) REFERENCES `category` (`id`)
-);
+PRIMARY KEY (`id`),
+KEY (`id_category`),
+CONSTRAINT FOREIGN KEY  (`id_category`) REFERENCES `category` (`id`)
+)AUTO_INCREMENT=1;
 
--- ** Wild e Unkown individual**
-INSERT INTO `individual` ( `identification`, `id_category`, `sex`, `name`) VALUES ('WILD', '2', 'Female', 'Wild');
-INSERT INTO `individual` ( `identification`, `id_category`, `sex`, `name`) VALUES ('UNKNOWN', '2', 'Unknown', 'Wild');
-
+-- ************************************** Wild e Unkown individual **
+INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`) VALUES (NULL,'WILD', '2', 'Unknown', 'Wild');
+INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`) VALUES (NULL,'UNKNOWN', '2', 'Unknown', 'Wild');
 
 
 -- ************************************** `events`
@@ -73,11 +72,11 @@ CREATE TABLE `institute`
 (
  `id`            integer NOT NULL AUTO_INCREMENT ,
  `name`          varchar(100) NOT NULL ,
- `abbreviation`  varchar(20) NULL ,
+ `abbreviation`  varchar(20) NOT NULL UNIQUE ,
  `country`       varchar(30) NOT NULL ,
- `state`         varchar(30) NOT NULL ,
+ `state`         varchar(30) NULL ,
  `city`          varchar(45) NULL ,
- `excluded`      char NULL ,
+ `priority`      integer NULL ,
 PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
@@ -86,7 +85,7 @@ PRIMARY KEY (`id`)
 CREATE TABLE `historic`
 (
  `id`            integer NOT NULL AUTO_INCREMENT ,
- `id_individual` varchar(20) NOT NULL ,
+ `id_individual` integer NOT NULL ,
  `id_event`      integer NOT NULL ,
  `id_institute`  integer NOT NULL ,
  `local_id`   varchar(15) NULL ,
@@ -94,85 +93,101 @@ CREATE TABLE `historic`
  `observation`   varchar(500) NULL,
 
 PRIMARY KEY (`id`),
-KEY `fkIdx_186` (`id_event`),
-CONSTRAINT `FK_185` FOREIGN KEY `fkIdx_186` (`id_event`) REFERENCES `events` (`id`),
-KEY `fkIdx_193` (`id_institute`),
-CONSTRAINT `FK_193` FOREIGN KEY `fkIdx_193` (`id_institute`) REFERENCES `institute` (`id`),
-KEY `fkIdx_91` (`id_individual`),
-CONSTRAINT `FK_91` FOREIGN KEY `fkIdx_91` (`id_individual`) REFERENCES `individual` (`identification`)
+CONSTRAINT FOREIGN KEY (`id_event`) REFERENCES `events` (`id`),
+CONSTRAINT FOREIGN KEY (`id_institute`) REFERENCES `institute` (`id`),
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`)
 ) AUTO_INCREMENT=1;
 
+-- ************************************** `Fragment`
+CREATE TABLE `fragment`
+(
+ `id`        	integer NOT NULL AUTO_INCREMENT ,
+ `fragment`     varchar(45) NOT NULL ,
+ `abbreviation` varchar(20) NULL ,
+ `country`      varchar(45) NULL ,
+ `state`        varchar(45) NULL ,
+ `city`         varchar(45) NULL ,
+
+PRIMARY KEY (`id`)
+) AUTO_INCREMENT=1;
+
+-- ************************************** `Group`
+CREATE TABLE `group`
+(
+ `id`        	integer NOT NULL AUTO_INCREMENT ,
+ `id_fragment` integer NOT NULL ,
+ `group`       varchar(45) NOT NULL,
+ `longitude`   varchar(15) NULL ,
+ `latitude`    varchar(15) NULL ,
+
+PRIMARY KEY (`id`),
+CONSTRAINT FOREIGN KEY (`id_fragment`) REFERENCES `fragment` (`id`)
+) AUTO_INCREMENT=1;
+
+-- ************************************** `ind_group`
+CREATE TABLE `ind_group`
+(
+ `id_individual` integer NOT NULL ,
+ `id_group`		integer NOT NULL ,
+ `longitude_ind` varchar(45) NULL ,
+ `latitude_ind`  varchar(45) NULL ,
+
+
+ PRIMARY KEY (`id_individual`),
+ CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`),
+ CONSTRAINT FOREIGN KEY (`id_group`) REFERENCES `group` (`id`)
+ );
 
 -- ************************************** `status`
 CREATE TABLE `status`
 (
- `identification` varchar(20) NOT NULL ,
+ `id_individual` integer NOT NULL ,
  `id_institute`   integer NULL ,
- `alive`          boolean NOT NULL ,
+ `id_fragment`   integer NULL ,
+ `alive`          boolean NULL ,
 
-KEY `fkIdx_225` (`identification`),
-CONSTRAINT `FK_225` FOREIGN KEY `fkIdx_225` (`identification`) REFERENCES `individual` (`identification`),
-KEY `fkIdx_235` (`id_institute`),
-CONSTRAINT `FK_235` FOREIGN KEY `fkIdx_235` (`id_institute`) REFERENCES `institute` (`id`)
+PRIMARY KEY (`id_individual`),
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`),
+CONSTRAINT FOREIGN KEY (`id_institute`) REFERENCES `institute` (`id`),
+CONSTRAINT FOREIGN KEY (`id_fragment`) REFERENCES `fragment` (`id`)
 );
-
 
 -- ************************************** `kinship`
 CREATE TABLE `kinship`
 (
- `id_individual` varchar(20) NOT NULL ,
- `sire`          varchar(20) NOT NULL ,
- `dam`           varchar(20) NOT NULL ,
-CONSTRAINT FOREIGN KEY (`sire`) REFERENCES `individual` (`identification`),
-CONSTRAINT FOREIGN KEY (`dam`) REFERENCES `individual` (`identification`),
-CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`identification`)
-);
+ `id_individual` integer NOT NULL ,
+ `sire`          integer NOT NULL ,
+ `dam`           integer NOT NULL ,
 
+CONSTRAINT FOREIGN KEY (`sire`) REFERENCES `individual` (`id`),
+CONSTRAINT FOREIGN KEY (`dam`) REFERENCES `individual` (`id`),
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`)
+);
 
 -- ************************************** `locus`
 CREATE TABLE `locus`
 (
+ `id`        integer NOT NULL AUTO_INCREMENT ,
  `locus`     varchar(30) NOT NULL ,
  `type`      varchar(45) NOT NULL ,
+ `motif` 	 text NULL ,
  `reference` text NULL ,
  `forward`   text NULL ,
  `reverse`   text NULL ,
 
-PRIMARY KEY (`locus`)
-);
+PRIMARY KEY (`id`)
+) AUTO_INCREMENT=1;
 
 
 -- ************************************** `genotype`
 CREATE TABLE `genotype`
 (
- `id_individual` varchar(20) NOT NULL ,
- `id_locus`      varchar(30) NOT NULL ,
+ `id_individual` integer NOT NULL ,
+ `id_locus`      integer(30) NOT NULL ,
  `allele`        integer NOT NULL ,
  `restrict`      char NULL ,
 
-CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`identification`),
-CONSTRAINT FOREIGN KEY (`id_locus`) REFERENCES `locus` (`locus`)
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`),
+CONSTRAINT FOREIGN KEY (`id_locus`) REFERENCES `locus` (`id`)
 );
-
-
--- ************************************** `wild_location`
-CREATE TABLE `wild_location`
-(
- `id_individual` varchar(20) NOT NULL ,
- `fragment`      varchar(45) NOT NULL ,
- `pop`           varchar(25) NULL ,
- `group`         varchar(25) NULL ,
- `longitude`     varchar(15) NULL ,
- `latitude`      varchar(15) NULL ,
- `excluded`      char NULL ,
- `excluded_date` date NULL ,
-
-PRIMARY KEY (`id_individual`),
-KEY `fkIdx_153` (`id_individual`),
-CONSTRAINT `FK_153` FOREIGN KEY `fkIdx_153` (`id_individual`) REFERENCES `individual` (`identification`)
-);
-
-
-
-
 

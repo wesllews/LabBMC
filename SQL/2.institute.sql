@@ -1,56 +1,28 @@
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Adelaide Zoological Gardens','ADELAIDE','Australia','South Australia','Adelaide
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Zoologico de Bauru','BAURU ZOO','Brazil','São Paulo','Bauru
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'City of Belfast Zoo','BELFAST','North Ireland','Belfast','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Jardim Zoologico De Brasilia','BRASILIA','Brazil','Distrito Federal','Brasilia
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Bristol Zoo','BRISTOL','England','Clifton','Bristol
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Buri','BURI','Brazil','São Paulo','Buri
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Central Park Wildlife Center','CENTRALPK','United States of America',' New York',' New York
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'North of England Zoo Society','CHESTER','England','Not specified','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Fort Worth Zoological Park','FORTWORTH','United States of America','Texas','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Durrell Wildlife Conservation Trust','JERSEY','United King','Channel Islands','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Krefelder Zoo','KREFELD','Germany','Not specified','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'La Palmyre Zoo','LA PALMYR','France','Royan','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Jardim Zoologico de Lisboa','LISBON','Potugal ','Lisboa','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Morro do Diabo','M DIABO','Brazil','Not specified','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'MIDDLE GOBI  ','M GOBI','Mongólia','Not specified','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Zoologischer Garten Magdeburg','MAGDEBURG','Gemany','Sachsen-anhalt','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'The Wildlife Conservation Society','NY BRONX','United States of America',' New York',' New York
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Private Collection','PRIVATE','Brazil','Not specified','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Prospect Park Wildlife Center','PROSPECTP','United States of America',' New York',' New York
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Fazenda Ribeirão Bonito','R BONITO','Brazil','São Paulo ','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Centro Primatologia do Rio de Janeiro','RIO PRIM','Brazil','Rio de Janeiro','Rio de Janeiro
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Parque Zoological de Sao Paulo','SAO PAULO','Brazil','São Paulo ','São Paulo 
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Parque Zoológico Municipal Quinzinho de Barros','SOROCABA',' Brazil',' Sao Paulo',' Sorocaba
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Parque Ecologico de Sao Carlos','SAO CARLOS','Brazil',' Sao Paulo','São Carlos
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Unknown Location','UNKNOWN','Brazil','Not specified','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'Brazil','BRAZIL','Brazil','Not specified','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'WILD','WILD','Unknown','Not specified','NA
-', 'n');
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `excluded`) VALUES (NULL,'HORIZONTE','HORIZONTE','Unknown','Not specified','NA
-', 'n');
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Adelaide Zoological Gardens', 'Adelaide Zoo', 'AU', 'South Australia', 'Adelaide', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Zoo of Bauru', 'Bauru Zoo', 'BRA', 'São Paulo', 'Bauru', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'City of Belfast Zoo', 'Belfast Zoo', 'UK', 'Belfast', NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Zoological Garden of Brasilia', 'Brasilia Zoo', 'BRA', 'Distrito Federal', 'Brasilia', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Bristol Zoo', 'Bristol Zoo', 'UK', 'Clifton', 'Bristol', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Buri Wild', 'Buri Wild', 'BRA', 'São Paulo', 'Buri', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Central Park Wildlife Center', 'Central Pk NY', 'USA', 'New York', 'New York', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'North of England Zoo Society', 'Chester Zoo', 'UK', NULL, NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Fort Worth Zoological Park', 'Fortworth Zoo', 'USA', 'Texas', NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Durrell Wildlife Conservation Trust', 'Jersey Zoo', 'UK', 'Channel Islands', NULL, 1);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Krefelder Zoo', 'Krefelder Zoo', 'GER', NULL, NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'La Palmyre Zoo', 'La Palmmyre Zoo', 'FRA', 'Royan', NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Lisbon Zoo', 'Lisbon Zoo', 'POR', 'Lisboa', NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Morro do Diabo Ecological Park', 'PEMD Wild', 'BRA', NULL, NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'MIDDLE GOBI  ', 'M Gobi', 'MON', NULL, NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Zoologischer Garten Magdeburg', 'Magdeburg Zoo', 'GER', 'Sachsen-anhalt', NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'The Wildlife Conservation Society', 'Bronx NY', 'USA', 'New York', 'New York', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Private Collection', 'Private Collection', 'BRA', NULL, NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Prospect Park Wildlife Center', 'Prospect NY', 'USA', 'New York', 'New York', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Ribeirao Bonito Farm', 'FRBonito', 'BRA', 'São Paulo ', NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Rio de Janeiro Primatology Center', 'CPRJ', 'BRA', 'Rio de Janeiro', 'Rio de Janeiro', 2);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Sao Paulo Zoological Park Foundadion', 'FPZSP', 'BRA', 'São Paulo', 'São Paulo', 3);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Quinzinho de Barros Zoological Park', 'PZQB', 'BRA', 'Sao Paulo', 'Sorocaba', NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Sao Carlos Ecological Park', 'PESC', 'BRA', 'Sao Paulo', 'São Carlos', 4);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Unknown Location', 'Unk 1', 'BRA', NULL, NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Brazil', 'Unk 2', 'BRA', NULL, NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'WILD', 'Unk Wild', 'BRA', NULL, NULL, NULL);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Belo Horizonte Zoo', 'BH Zoo', 'BRA', 'Minas Gerais', 'Belo Horizonte', NULL);

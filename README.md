@@ -1,3 +1,127 @@
+# Para fazer (17/08)
+1. Diminuir recursão dos dados
+2. Botão modal para "population"
+
+# Feito
+1. Diminuir recursão dos dados
+2. Botão modal para "population"
+
+## Próximas Etapas
+Igualar funções da página de captivity com a página de genótipos
+	- Fazer o filtro por por POPULATION
+Fazer página de Life history > Wild
+Inserir campos de informações de fragmentos e grupos na página Individual.php
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Genetics: aparecer os genotipos só do individuos
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+___ 
+
+# Para fazer (16/08)
+1. Diminuir recursão dos dados
+2. Botão modal para "population"
+
+# Feito
+1. Filtro de informações com botão modal
+2. Status de alive dividido em 3: True/}False/Unknown
+3. Cabeçalho menor
+4. Adicionado clausule de "WHERE 1=1" na query principal
+5. Botão de páginação está duplicando as restrições do filtro e travando a página (Forms tem que ser antes do 'SQL Filter')
+
+## Próximas Etapas
+Igualar funções da página de captivity com a página de genótipos
+	- Fazer o filtro por por POPULATION
+Fazer página de Life history > Wild
+Inserir campos de informações de fragmentos e grupos na página Individual.php
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Genetics: aparecer os genotipos só do individuos
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+___ 
+
+# Para fazer (13/08)
+1. Fazer Select de "CASE category=1 THEN id_institute ..."
+
+# Feito
+1. Fazer Select de "CASE category=1 THEN id_institute ..."
+
+## Próximas Etapas
+Fazer página de genótipos
+Fazer página de Life history > Wild
+Inserir campos de informações de fragmentos e grupos na página Individual.php
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Genetics: aparecer os genotipos só do individuos
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+___ 
+
+# Para fazer (01/07)
+1. Inserir grupos de indivíduos de vida livre. 
+2. Ajustar nome dos locus em Genotypes and Alleles.
+
+# Feito
+1. Inserir grupos de indivíduos de vida livre.
+
+## Próximas Etapas
+ Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Inserir Grupo dos indivíduos
+Inserir campos de informações de fragmentos e grupos na página Individual.php
+Fazer página de genótipos
+Impedir SQL Injection
+Página de Login
+Fazer página de Life history > Wild
+Página de pesquisa
+
+___
+
+
+# Para fazer (11/06)
+1. Página de download de dados e formatação em formato excel ou csv.
+
+## Novas ferramentas:
+
+- Eu vou tentar usar o [PhpSpreadsheet](https://phpspreadsheet.readthedocs.io/en/latest/) mas para isso é necessário fazer instalação do [composer](https://getcomposer.org/doc/00-intro.md), eu vou optar por fazer uso de da forma local dele, baixando no pc.
+
+- Foi necessário fazer instalação de alguns programas de requisit do phpSpreadSheet que não havia no meu computador:
+    ```
+    sudo apt install php-xml
+    sudo apt-get install php7.2-mbstring
+    sudo apt-get install php7.2-zip
+    ```
+- Aproveitei e instalei uma ferramenta chamada phpinsights que ajuda a analisar a qualidade do código desenvolvido baseado nesse conteúdo (Como está a saúdo do seu código)[https://imasters.com.br/back-end/como-esta-a-saude-do-seu-codigo].
+
+- (PHP Copy/Paste Detector (PHPCPD))[https://imasters.com.br/back-end/detectando-codigo-duplicado-em-php-com-php-copy-paste-detector-phpcpd]
+    
+
+## Próximas Etapas
+Inserir Grupo dos indivíduos
+Fazer página de Wild Indivíduos
+
+___
+
+# Para fazer (08/06)
+1. O botão de paginação não envia as colunas que eu decidi ocultar
+2. Mudar a cor do checkbox dos filtros 
+3. Aplicar "Grid-container" na página de individuo, para mostras os locus de forma mais concentrada do que uma tabela longa
+
+## Feito
+1. O botão de paginação não envia as colunas que eu decidi ocultar
+2. Mudar a cor do checkbox dos filtros
+3. Aplicar "Grid-container" na página de individuo, para mostras os locus de forma mais concentrada do que uma tabela longa
+
+## Próximas Etapas
+Inserir Grupo dos indivíduos
+Fazer página de Wild Indivíduos
+
+___
+
+
 # Para fazer (30/04)
 1. Fazer botão que abra todas as janelas de histórico
 2. Reunião com a Patrícia e Paola

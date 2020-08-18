@@ -1,3 +1,6 @@
+<!-- Go to top -->
+<button class="btn btn-dark" onclick="topFunction()" id="btnTop" title="Go to top"><i class="fas fa-long-arrow-alt-up"></i></button>
+
 <!-- Footer -->
 <footer class="font-small bg-light">
 
