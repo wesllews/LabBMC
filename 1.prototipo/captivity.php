@@ -367,7 +367,7 @@ $result_filter = $mysqli->query($sql_filter);
 		    						$row_population = $result_population->fetch_array();?>
 		    						<td scope="row">
 		    							<!-- Trigger Modal -->
-		    							<button type="button" class="btn btn-link text-decoration-none" data-toggle="modal" data-target="#institute<?php echo $row['id_institute']; ?>">
+		    							<button type="button" class="btn btn-link text-decoration-none" data-toggle="modal" data-target="#institute<?php echo $row['id_institute']; ?>" style="white-space: nowrap;">
 		    							  <?php echo $row_population['abbreviation']; ?>
 		    							</button>
 		    							

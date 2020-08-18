@@ -78,12 +78,12 @@ $headersAdicionais =['category','sex','population','alive'];
 	// Genotype filters
 	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
 	$status = $status!=""? " AND alive='$_GET[status]'" : "";
-	$filterpopulation = $filterpopulation!=""? " AND id_institute='$_GET[filterpopulation]'" : "";
+	$filterpopulation = $filterpopulation!=""? " AND population='$_GET[filterpopulation]'" : "";
 
 /* Evita excesso de modal*/
 $population = [];
 
-$sql= "SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, alive,
+$sql= "SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, sex, alive,
 CASE
     WHEN id_category = 1 THEN institute.abbreviation
     WHEN id_category = 2 THEN fragment.fragment
@@ -98,7 +98,7 @@ LEFT JOIN fragment ON status.id_fragment=fragment.id
 WHERE 1=1";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
-ECHO $sql_filter;
+echo $sql_filter;
 $result_filter = $mysqli->query($sql_filter); 
 ?>
 
@@ -312,9 +312,8 @@ $result_filter = $mysqli->query($sql_filter);
 							</td>
 						<?php break;?>
 
-
 						<?php case 'category': 
-	    					$sql_category = "SELECT * FROM `individual` INNER JOIN category ON category.id = individual.id_category WHERE identification = '$row[identification]'";
+	    					$sql_category = "SELECT * FROM category WHERE id = '$row[id_category]'";
 	    					$result_category = $mysqli->query($sql_category);
 	    					$row_category = $result_category->fetch_array();?>
 	    						<td scope="row">
@@ -322,31 +321,69 @@ $result_filter = $mysqli->query($sql_filter);
 	    						</td>
     					<?php break;?>
 
-    					<?php case 'sex': 
-	    					$sql_sex = "SELECT * FROM `individual` WHERE identification = '$row[identification]'";
-	    					$result_sex = $mysqli->query($sql_sex);
-	    					$row_sex = $result_sex->fetch_array();?>
-	    						<td scope="row">
-	    							<?php echo ucfirst($row_sex['sex']); ?>
-	    						</td>
+    					<?php case 'sex': ?> 
+    						<td scope="row">
+    							<?php echo ucfirst($row['sex']); ?>
+    						</td>
     					<?php break;?>
 
 						<?php case 'population': ?>
-							<td scope="row" style="white-space: nowrap;">
-								<?php echo $row['population']; ?>
-							</td>
+						<td scope="row">
+							<!-- Trigger Modal -->
+							<button type="button" class="btn btn-link text-decoration-none" data-toggle="modal" data-target="#population<?php echo str_replace(' ','_',$row['population']); ?>" style="white-space: nowrap;">
+							  <?php echo $row['population']; ?>
+							</button>
+
+							<!-- Modal -->
+							<?php if(!in_array($row['population'], $population)):
+								array_push($population, $row['population']);?>
+
+								<div class="modal fade" id="population<?php echo str_replace(' ','_',$row['population']); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+
+											<div class="modal-header">
+												<h5 class="modal-title" >Population</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+
+											<div class="modal-body">
+												<table class="table table-sm table-borderless text-left text-capitalize">
+													<tbody>
+														<tr>
+															<th>name</th>
+															<td><?php echo $row['population']; ?></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+
+											<div class="modal-footer">
+												<form action="genotypes.php" method="get">
+													<input type="hidden" name="filterpopulation" value="<?php echo $row['population'];?>">
+													<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row['population'] ? "disabled ":""; ?>>Filter by this population</button>
+												</form>
+												<button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
+		    				<?php endif; ?>
+		    			</td>
     					<?php break;?>
 
     					<?php case 'alive': ?>
-    					<td scope="row">
-		    				<?php if($row['alive']==1):?>
-		    					<div class="text-success">True</div>
-		    				<?php elseif($row['alive']==0 && $row['alive']!=NULL ): ?>
-		    					<div class="text-danger">False</div>
-		    				<?php else: ?>
-		    					<div class="text-info">Unknown</div>
-		    				<?php endif; ?>
-		    			</td>
+	    					<td scope="row">
+			    				<?php if($row['alive']==1):?>
+			    					<div class="text-success">True</div>
+			    				<?php elseif($row['alive']==0 && $row['alive']!=NULL ): ?>
+			    					<div class="text-danger">False</div>
+			    				<?php else: ?>
+			    					<div class="text-info">Unknown</div>
+			    				<?php endif; ?>
+			    			</td>
 	    				<?php break;?>
 		
 						<?php default:
