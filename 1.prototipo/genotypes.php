@@ -78,12 +78,13 @@ $headersAdicionais =['category','sex','population','alive'];
 	// Genotype filters
 	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
 	$status = $status!=""? " AND alive='$_GET[status]'" : "";
-	$filterpopulation = $filterpopulation!=""? " AND population='$_GET[filterpopulation]'" : "";
+	$filterpopulation = $filterpopulation!=""? " AND population ='$_GET[filterpopulation]'" : "";
 
 /* Evita excesso de modal*/
 $population = [];
 
-$sql= "SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, sex, alive,
+$sql_genotype2= "WITH genotype2 AS(
+SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, sex, alive,
 CASE
     WHEN id_category = 1 THEN institute.abbreviation
     WHEN id_category = 2 THEN fragment.fragment
@@ -94,11 +95,11 @@ FROM genotype
 INNER JOIN individual ON individual.id=genotype.id_individual
 INNER JOIN status ON status.id_individual=genotype.id_individual
 LEFT JOIN institute ON status.id_institute=institute.id
-LEFT JOIN fragment ON status.id_fragment=fragment.id
-WHERE 1=1";
+LEFT JOIN fragment ON status.id_fragment=fragment.id)";
+$sql= $sql_genotype2." SELECT * FROM genotype2 WHERE 1=1";
+
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
-echo $sql_filter;
 $result_filter = $mysqli->query($sql_filter); 
 ?>
 
@@ -162,9 +163,27 @@ $result_filter = $mysqli->query($sql_filter);
 							  <input class="form-check-input" type="radio" name="status" id="statusDeath" value="0"  <?php echo isset($_GET["status"]) && $_GET["status"]=="0" ? "checked":""; ?>>
 							  <label class="form-check-label" for="statusDeath"> Death</label>
 							</div>
+
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="status" id="statusUnkown" value="NULL"  <?php echo isset($_GET["status"]) && $_GET["status"]=="NULL" ? "checked":""; ?>>
+							  <label class="form-check-label" for="statusUnkown"> Unkown</label>
+							</div>
 						</div>
 
 						<!--population-->
+						<div class="form-group">
+							<label>Population</label>
+							<select name="filterpopulation" class="form-control form-control-sm">
+							  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">All</option>
+							  <?php 
+							  $sql_population = $sql_genotype2." SELECT DISTINCT(population) as population FROM genotype2";
+							  $query = $mysqli->query($sql_population);
+
+							  while ($row = $query->fetch_array()):?>
+							    <option <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row["population"] ? "selected":""; ?> value="<?php echo $row["population"]; ?>"><?php echo $row["population"]; ?></option>
+							  <?php endwhile; ?>
+							</select>
+						</div>
 
 						<!--Display informations-->
 						<div class="form-group">
