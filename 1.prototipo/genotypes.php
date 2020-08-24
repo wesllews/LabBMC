@@ -83,7 +83,7 @@ $headersAdicionais =['category','sex','population','alive'];
 /* Evita excesso de modal*/
 $population = [];
 
-$sql_genotype2= "WITH genotype2 AS(
+$sql= "SELECT * FROM(
 SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, sex, alive,
 CASE
     WHEN id_category = 1 THEN institute.abbreviation
@@ -95,8 +95,7 @@ FROM genotype
 INNER JOIN individual ON individual.id=genotype.id_individual
 INNER JOIN status ON status.id_individual=genotype.id_individual
 LEFT JOIN institute ON status.id_institute=institute.id
-LEFT JOIN fragment ON status.id_fragment=fragment.id)";
-$sql= $sql_genotype2." SELECT * FROM genotype2 WHERE 1=1";
+LEFT JOIN fragment ON status.id_fragment=fragment.id)genotype2 WHERE 1=1";
 
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
@@ -176,7 +175,19 @@ $result_filter = $mysqli->query($sql_filter);
 							<select name="filterpopulation" class="form-control form-control-sm">
 							  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">All</option>
 							  <?php 
-							  $sql_population = $sql_genotype2." SELECT DISTINCT(population) as population FROM genotype2";
+							  $sql_population =" SELECT DISTINCT(population) as population FROM(
+							  SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, sex, alive,
+							  CASE
+							      WHEN id_category = 1 THEN institute.abbreviation
+							      WHEN id_category = 2 THEN fragment.fragment
+							  END AS population
+
+							  FROM genotype
+
+							  INNER JOIN individual ON individual.id=genotype.id_individual
+							  INNER JOIN status ON status.id_individual=genotype.id_individual
+							  LEFT JOIN institute ON status.id_institute=institute.id
+							  LEFT JOIN fragment ON status.id_fragment=fragment.id)genotype2";
 							  $query = $mysqli->query($sql_population);
 
 							  while ($row = $query->fetch_array()):?>
