@@ -72,19 +72,19 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 		case 'identification':
 		case 'sire':
 		case 'dam':
-			$order = " ORDER BY CAST($column AS INT) $sort_order, identification $sort_order, individual.id $sort_order";
+			$order = " ORDER BY CONVERT($column, SIGNED) $sort_order, identification $sort_order, individual.id $sort_order";
 			break;
 
 		case 'population':
-			$order = " ORDER BY abbreviation $sort_order, CAST(identification AS INT) $sort_order, individual.id $sort_order";
+			$order = " ORDER BY abbreviation $sort_order, CONVERT(identification, SIGNED) $sort_order, individual.id $sort_order";
 			break;
 
 		case 'name':
-			$order = " ORDER BY ISNULL(individual.name),individual.name $sort_order, CAST(identification AS INT) $sort_order, individual.id $sort_order";
+			$order = " ORDER BY ISNULL(individual.name),individual.name $sort_order, CONVERT(identification, SIGNED) $sort_order, individual.id $sort_order";
 			break;
 		
 		default:
-			$order = " ORDER BY $column $sort_order, CAST(identification AS INT) $sort_order, individual.id $sort_order";
+			$order = " ORDER BY $column $sort_order, CONVERT(identification, SIGNED) $sort_order, individual.id $sort_order";
 			break;
 	}
 
@@ -100,7 +100,6 @@ $institute_population = [];
 $sql = "SELECT *,individual.id as id, individual.name as name FROM `individual` LEFT JOIN status ON individual.id=status.id_individual LEFT JOIN kinship ON kinship.id_individual=individual.id LEFT JOIN institute ON status.id_institute=institute.id WHERE id_category=1";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
-#echo $sql_filter;
 $result_filter = $mysqli->query($sql_filter);
 ?>
 
@@ -367,7 +366,7 @@ $result_filter = $mysqli->query($sql_filter);
 		    						$row_population = $result_population->fetch_array();?>
 		    						<td scope="row">
 		    							<!-- Trigger Modal -->
-		    							<button type="button" class="btn btn-link text-decoration-none" data-toggle="modal" data-target="#institute<?php echo $row['id_institute']; ?>" style="white-space: nowrap;">
+		    							<button type="button" class="btn btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#institute<?php echo $row['id_institute']; ?>" style="white-space: nowrap;">
 		    							  <?php echo $row_population['abbreviation']; ?>
 		    							</button>
 		    							

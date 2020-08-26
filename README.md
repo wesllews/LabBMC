@@ -1,3 +1,26 @@
+# Para fazer (25/08)
+1. Colocar informações de population no modal
+2. Status de alive precisa ser recebido como CASE WHEN
+
+# Feito
+1. Arrumado modal de Locus no cabeçalho da tabela
+2. Colocar informações de population no modal
+3. Status de alive precisa ser recebido como CASE WHEN
+
+## Próximas Etapas
+Igualar funções da página de captivity com a página de genótipos
+    - Colocar informações de population no modal
+    - Status de alive precisa ser recebido como CASE WHEN
+Fazer página de Life history > Wild
+Inserir campos de informações de fragmentos e grupos na página Individual.php
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Genetics: aparecer os genotipos só do individuos
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+___ 
+
 # Feito (23/08)
 1. Fazer o filtro por POPULATION
 2. Botão modal para "population"
