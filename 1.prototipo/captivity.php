@@ -5,7 +5,7 @@ include 'header.php';
 
 /* Cabeçalho da tabela */
 $header = ['identification'];
-$headersAdicionais =['historic','population','sex','sire','dam','name','alive','genetics'];
+$headersAdicionais =['historic','population','sex','sire','dam','name','alive','informations'];
 
 	// Testa se algum 'Display informations' foi enviado
 	$flag = 0;
@@ -14,7 +14,7 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 		$flag=1;
 		}
 	}
-	// Se for, adiciona só os enviados
+	// Se pelo menos um for enviado, adiciona só os enviados
 	if ($flag ==1):
 		foreach ($headersAdicionais as $value) {
 			if(isset($_GET[$value])){
@@ -27,9 +27,6 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 			}
 		endif;
 
-	// Sort and Order Table
-	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
-	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
 
 /* Filtros GET*/
 	
@@ -38,6 +35,10 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 	$pag = isset($_GET['pag']) ? $_GET['pag']:1;
 	$limit = isset($_GET['limit'])? $_GET['limit']:$limit;
 	$offset = $limit!="All" ? ($pag-1) * $limit : "";
+
+	// Sort and Order Table
+	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
+	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
 
 	// Some variables we need for the table.
 	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
@@ -298,7 +299,7 @@ $result_filter = $mysqli->query($sql_filter);
 						<div class="d-flex justify-content-center align-items-end text-warning">
 							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 							<!--Icon-->
-							<?php if($value!='historic' && $value!='genetics'): ?>
+							<?php if($value!='historic' && $value!='informations'): ?>
 								<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
 								onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 									<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
@@ -454,20 +455,18 @@ $result_filter = $mysqli->query($sql_filter);
 	    						</td>
 		    					<?php break;?>
 
-		    				<?php case 'genetics': 
-		    					$sql_genetics = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
-		    					$result_genetics = $mysqli->query($sql_genetics);
+		    				<?php case 'informations': 
+		    					$sql_informations = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
+		    					$result_informations = $mysqli->query($sql_informations);
 
-			    					if ($result_genetics->num_rows > 0): ?>
+			    					if ($result_informations->num_rows > 0): ?>
 			    						<td scope="row">
 			    						<button type="button" class="btn btn-success">Genetics</button>
-			    						<button type="button" class="btn btn-dark">Genomic</button>
 			    						<button type="button" class="btn btn-primary">Statistics</button>
 			    						</td>
 			    					<?php else: ?>
 			    						<td scope="row">
 			    						<button type="button" class="btn btn-secondary disabled">Genetics</button>
-			    						<button type="button" class="btn btn-secondary disabled">Genomic</button>
 			    						<button type="button" class="btn btn-secondary disabled">Statistics</button>
 			    						</td>
 			    					<?php endif; ?>

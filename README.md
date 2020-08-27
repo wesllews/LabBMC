@@ -1,3 +1,22 @@
+# Para fazer (26/08)
+1. Fazer página de Life history > Wild
+2. Status de alive precisa ser recebido como CASE WHEN
+
+# Feito
+1. algumas mudanças na arquitetura do código atual.
+2. Colocado modal de filtro
+
+## Próximas Etapas
+Fazer página de Life history > Wild
+Inserir campos de informações de fragmentos e grupos na página Individual.php
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Genetics: aparecer os genotipos só do individuos
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+___ 
+
 # Para fazer (25/08)
 1. Colocar informações de population no modal
 2. Status de alive precisa ser recebido como CASE WHEN
