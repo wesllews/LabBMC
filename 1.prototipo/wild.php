@@ -72,7 +72,6 @@ $headersAdicionais =['name','sex','fragment','group','longitude','latitude'];
 			"pag" => $pag,
 			"limit" => $limit,
 			"sexFilter" => $sexFilter,
-			"status" => $status,
 			"filterfragment" => $filterfragment,
 		);
 

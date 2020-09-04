@@ -107,11 +107,9 @@ $result_filter = $mysqli->query($sql_filter);
 <div class="container mt-3">
 	<form id="formDownload" action="download.php" method="post">
 
-		<input type="hidden" name="pagina" value="<?php echo $_SESSION['pagina']; ?>">
+		<input type="hidden" name="sql" value="<?php echo $sql_pagination.$order; ?>">
 		<input type="hidden" name="limit" value="<?php echo $limit_sql; ?>">
-		<input type="hidden" name="sex" value="<?php echo $sexFilter; ?>">
-		<input type="hidden" name="status" value="<?php echo $status; ?>">
-		<input type="hidden" name="population" value="<?php echo $filterpopulation; ?>">
+		<input type="hidden" name="page" value="captivity">
 		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">
 
 		<button type="submit" form="formDownload" class="btn btn-success float-right">Baixar</button>

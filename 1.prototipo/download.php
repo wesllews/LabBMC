@@ -1,116 +1,119 @@
 <?php 
 session_start();
 include 'connection.php';
-require 'vendor/autoload.php';
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-$spreadsheet = new Spreadsheet();
 
-$pagina = $_POST['pagina'];
-$limit = $_POST['limit'];
-$sex = $_POST['sex'];
-$status = $_POST['status'];
-$population = $_POST['population'];
 $header = unserialize($_POST['header']);
+$query = $mysqli->query($_REQUEST['sql']);
+?>
 
-$headerTable=array();
-$columnSQL = '';
-foreach ($header as $value){
-		switch($value){
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>Download</title>
+	<head>
+	<body>
+		<table>
 
-			case 'identification':
-				array_push($headerTable, $value);
-				$columnSQL.='identification';
-			break; 
+		<!-- Captivity -->
+		<?php if ($_REQUEST['page']=='captivity'):?>
+			
+			<!--Head Table-->
+			<tr style="text-transform: capitalize;">
+				<?php foreach ($header as $value): ?>
+					<?php switch($value):
+						case 'informations':?><?php break; ?>
 
-			case 'historic':
-				array_push($headerTable, 'events','date','institute','local_id');
-				$columnSQL.=', events, date, local_id, historic.id_institute, (SELECT name FROM institute WHERE historic.id_institute=institute.id) as institute';
-			break;
+						<?php default:?>
+							<th><?php echo $value ?></th>
+					<?php endswitch; ?>
+				<?php endforeach; ?>
+			</tr>
 
-			case 'population':
-				array_push($headerTable, $value);
-				$columnSQL.=', status.id_institute, (SELECT name FROM institute WHERE status.id_institute=institute.id) as population';
-			break;
+			<!--Body Table -->
+			<?php while($row = $query->fetch_array()): ?>
+		    	<tr class="text-center">
+		    		<?php foreach ($header as $value): ?>
+		    			<?php switch($value):
 
-			case 'sex':
-				array_push($headerTable, $value);
-				$columnSQL.=', sex';
-			break;
+		    				case 'identification': ?>
+			    				<td scope="row">
+			    					<?php echo $row[$value];?>
+			    				</td>
+		    				<?php break;?>
 
-			case 'sire':
-				array_push($headerTable, $value);
-				$columnSQL.=', kinship.sire as sire_id, (SELECT identification FROM individual WHERE kinship.sire=individual.id) as sire';
-			break;
+		    				<?php case "historic":
+		    					$sql_historic = "SELECT *, institute.name as institute FROM historic LEFT JOIN events ON historic.id_event=events.id LEFT JOIN institute ON historic.id_institute=institute.id  WHERE id_individual = '$row[id]'";
+		    					$result_historic = $mysqli->query($sql_historic);
+		    					$num = $result_historic->num_rows ?>
 
-			case 'dam':
-				array_push($headerTable, $value);
-				$columnSQL.=', kinship.dam as dam_id, (SELECT identification FROM individual WHERE kinship.dam=individual.id) as dam';
-			break;
+		    					<td scope="row">
+			    					<?php if ($num>=1): ?>
+			    						<ul>
+			    							<?php while ($row_historic = $result_historic->fetch_array()): ?>
+			    								<li>
+			    									<?php echo $row_historic['events']," on "; ?>
+			    									<?php echo $row_historic['date']; ?>
+			    									<?php echo " at the ",$row_historic['institute'],".";?>
+			    									<?php echo $row_historic['observation'];?>
+			    								</li>
+			    							<?php endwhile; ?>		
+			    						</ul>	    						
+			    					<?php else: ?>
+			    						-
+			    					<?php endif; ?>
+			    				</td>
+		    				<?php break;?>
 
-			case 'name':
-				array_push($headerTable, $value);
-				$columnSQL.=', name';
-			break;
+		    				<?php case 'population':					
+		    					$sql_population = "SELECT * FROM institute WHERE id = '$row[id_institute]';";
+		    					$result_population = $mysqli->query($sql_population);
 
-			case 'alive':
-				array_push($headerTable, $value);
-				$columnSQL.=', alive';
-			break;
-		}
-	}
+		    					if ($result_population->num_rows > 0): 
+		    						$row_population = $result_population->fetch_array();?>
+		    						<td scope="row">
+		    							<?php echo $row_population['abbreviation']; ?>
+		    						</td>
+		    					<?php else: ?>
+		    						<td scope="row">-</td>
+		    					<?php endif; ?>
+		    				<?php break;?>
 
-if ($pagina=='captivity'){
-	$sql = 'SELECT '.$columnSQL.' 
-		FROM `individual`
+		    				<?php case "sire": ?>
+		    				<?php case "dam": 
+		    					$sql_kinship = "SELECT * FROM `individual` WHERE id='$row[$value]'";
+			    				$result_kinship = $mysqli->query($sql_kinship);
+			    				$row_kinship = $result_kinship->fetch_array();?>
+			    				<td scope="row">
+			    					<?php echo $row_kinship['identification'];?>
+			    				</td>
+		    					<?php break;?>
 
-		LEFT JOIN status ON individual.id=status.id_individual 
-		LEFT JOIN kinship ON kinship.id_individual=individual.id 
-		LEFT JOIN historic ON historic.id_individual=individual.id 
-		LEFT JOIN events ON historic.id_event=events.id
+		    				<?php case 'alive': ?>
+	    						<td scope="row">
+	    							<?php switch($row[$value]):
+	    							case '1': ?>
+	    								True
+	    							<?php break;?>
 
-		WHERE id_category=1';
-}
+	    							<?php case '0': ?>
+	    								False
+	    							<?php break;?>
 
-$sql.=$limit;
+	    							<?php default: ?>
+	    								Unknown
+	    							<?php endswitch; ?>
+	    						</td>
+		    				<?php break;?>
 
-$result = $mysqli->query($sql);
-$arrayData=array();
-while($row = $result->fetch_array()){
+		    				<?php case 'informations': ?><?php break;?>
 
-	$data=array();
-	foreach ($headerTable as $value) {
-		array_push($data,$row[$value]);
-	}
-
-	array_push($arrayData,$data);
-}
-
-$spreadsheet->getActiveSheet()
-    ->fromArray(
-        $headerTable,  // The data to set
-        NULL,        // Array values with this value will not be set
-        'A1'         // Top left coordinate of the worksheet range where
-                     //    we want to set these values (default is A1)
-    );
-
-$spreadsheet->getActiveSheet()
-    ->fromArray(
-        $arrayData,  // The data to set
-        NULL,        // Array values with this value will not be set
-        'A2'         // Top left coordinate of the worksheet range where
-                     //    we want to set these values (default is A1)
-    );
-
-// Definindo nomes
-$nome = 'BLT_database.xlsx';
-$arquivo = getcwd().'/'.$nome;
-
-// Criando o arquivo
-$writer = new Xlsx($spreadsheet);
-$writer->save($nome);
-
-// output headers so that the file is downloaded rather than displayed
-  header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); #https://stackoverflow.com/questions/10198524/php-xlsx-header
-  header('Content-disposition: attachment; filename ='.$nome);
-  readfile($arquivo);
+		    				<?php default: ?>
+		    					<td scope="row"><div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div></td>
+		    				
+		    			<?php endswitch; ?>
+		    		<?php endforeach; ?>
+		    	</tr>
+			<?php endwhile; ?>
+		
+		<?php endif; ?>
