@@ -1,10 +1,63 @@
+# Para fazer (03/09)
+1. Inserir campos de informações de fragmentos e grupos na página Individual.php
+
+# Feito
+1. Inserir campos de informações de fragmentos e grupos na página Individual.php
+
+## Próximas Etapas
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Genetics: aparecer os genotipos só do individuos
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+___ 
+
+# Para fazer (02/09)
+1. Colocar as informações do corpo da tabela
+2. Inserir campos de informações de fragmentos e grupos na página Individual.php
+
+# Feito
+1. Colocar as informações do corpo da tabela
+
+## Próximas Etapas
+Fazer página de Life history > Wild
+
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Genetics: aparecer os genotipos só do individuos
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+___ 
+
+# Para fazer (01/09)
+1. Cabeçalho da tabela em WILD
+
+# Feito
+1. Melhorei o SQL de principal
+2. Cabeçalho da tabela Wild
+
+## Próximas Etapas
+Fazer página de Life history > Wild
+Inserir campos de informações de fragmentos e grupos na página Individual.php
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Genetics: aparecer os genotipos só do individuos
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+
+OBS: lembrar semrpe que para a tabela GROUP é necessário usar acento de crase para escrever o nome da tabela, deste modo: `group`
+___ 
+
 # Para fazer (26/08)
 1. Fazer página de Life history > Wild
 2. Status de alive precisa ser recebido como CASE WHEN
 
 # Feito
-1. algumas mudanças na arquitetura do código atual.
-2. Colocado modal de filtro
+1. algumas mudanças na arquitetura do código das páginas.
+2. Colocado modal de filtro na pagina wild.
 
 ## Próximas Etapas
 Fazer página de Life history > Wild

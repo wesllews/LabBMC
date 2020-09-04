@@ -7,32 +7,7 @@ $sql = "SELECT DISTINCT(id_institute), priority FROM status LEFT JOIN institute 
 $result_filter = $mysqli->query($sql);
 ?>
 
-<?php if(isset($_GET['captivity'])): ?>
-	<div class="text-warning m-4" style="white-space: nowrap;">
-		<h1 class="ml-5">Current populations</h1>
-		<hr>
-	</div>
-
-	<div class="mt-3 grid-captivity">
-	<?php while($row = $result_filter->fetch_array()):
-		$sql = "SELECT * FROM institute WHERE id='$row[id_institute]'";
-		$result = $mysqli->query($sql);
-		$row_institute = $result->fetch_array(); ?>
-			<form action="captivity.php" method="get" id="institute<?php echo $row_institute['id'];?>" style="display:none;">
-				<input type="hidden" name="filterpopulation" value="<?php echo $row_institute['id'];?>">
-				<input type="hidden" name="fulldata" value="n">
-			</form>
-			<button type="submit" form="institute<?php echo $row_institute['id'];?>" class="btn btn-light rounded-0 shadow-sm m-3">
-				<h5 class="justify-content-left"><span class="badge badge-warning"><?php echo $row_institute['abbreviation'];?></span></h5>		
-				<h3 class="text-center"><?php echo $row_institute['name'];?></h3>
-				<h6><div class="text-right"><?php echo $row_institute['country'];?></div></h6>
-				
-			</button>
-
-	<?php endwhile; ?>
-	</div>
-
-<?php else: ?>
+<?php if(!isset($_GET['captivity'])): ?>
 	<div class="container text-center mt-5 p-5">
 		<h1 class="text-warning font-weight-bold">Captivity</h1>
 		<h5 class="text-justify">Take a look into the captivity to search information about the life history of captive populations and studbook data.</h5>
@@ -63,6 +38,31 @@ $result_filter = $mysqli->query($sql);
 
 			
 		</div>
+	</div>
+
+<?php else: ?>
+	<div class="text-warning m-4" style="white-space: nowrap;">
+		<h1 class="ml-5">Current populations</h1>
+		<hr>
+	</div>
+
+	<div class="mt-3 grid-captivity">
+	<?php while($row = $result_filter->fetch_array()):
+		$sql = "SELECT * FROM institute WHERE id='$row[id_institute]'";
+		$result = $mysqli->query($sql);
+		$row_institute = $result->fetch_array(); ?>
+			<form action="captivity.php" method="get" id="institute<?php echo $row_institute['id'];?>" style="display:none;">
+				<input type="hidden" name="filterpopulation" value="<?php echo $row_institute['id'];?>">
+				<input type="hidden" name="fulldata" value="n">
+			</form>
+			<button type="submit" form="institute<?php echo $row_institute['id'];?>" class="btn btn-light rounded-0 shadow-sm m-3">
+				<h5 class="justify-content-left"><span class="badge badge-warning"><?php echo $row_institute['abbreviation'];?></span></h5>		
+				<h3 class="text-center"><?php echo $row_institute['name'];?></h3>
+				<h6><div class="text-right"><?php echo $row_institute['country'];?></div></h6>
+				
+			</button>
+
+	<?php endwhile; ?>
 	</div>
 <?php endif; ?>
 
