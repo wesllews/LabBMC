@@ -69,6 +69,8 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="Headergenetics">
 							<a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="genotypes.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
+
+						<!--
 							<a class="dropdown-item" href="#"><i class="fas fa-barcode"></i> Haploypes</a>
 
 							<div class="dropright">
@@ -80,18 +82,17 @@
 									<a class="dropdown-item" href="#">Exemplo 2</a>
 								</div>
 							</div>
+						-->
 
 					</li>
 				</ul>
 
+				<!-- Search 
 				<form class="form-inline mt-2 mt-md-0" >
 					<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
 					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 				</form>
-				
-				<!-- User Name -->
-				<span class="d-none navbar-text text-warning"><i class="fas fa-user"></i> Hey, User!</span>
-				
+				-->
 			</div>
 
 		</nav>

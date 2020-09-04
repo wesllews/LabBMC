@@ -1,116 +1,136 @@
 <?php 
 session_start();
 include 'connection.php';
-require 'vendor/autoload.php';
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-$spreadsheet = new Spreadsheet();
 
-$pagina = $_POST['pagina'];
-$limit = $_POST['limit'];
-$sex = $_POST['sex'];
-$status = $_POST['status'];
-$population = $_POST['population'];
 $header = unserialize($_POST['header']);
-
-$headerTable=array();
-$columnSQL = '';
-foreach ($header as $value){
-		switch($value){
-
-			case 'identification':
-				array_push($headerTable, $value);
-				$columnSQL.='identification';
-			break; 
-
-			case 'historic':
-				array_push($headerTable, 'events','date','institute','local_id');
-				$columnSQL.=', events, date, local_id, historic.id_institute, (SELECT name FROM institute WHERE historic.id_institute=institute.id) as institute';
-			break;
-
-			case 'population':
-				array_push($headerTable, $value);
-				$columnSQL.=', status.id_institute, (SELECT name FROM institute WHERE status.id_institute=institute.id) as population';
-			break;
-
-			case 'sex':
-				array_push($headerTable, $value);
-				$columnSQL.=', sex';
-			break;
-
-			case 'sire':
-				array_push($headerTable, $value);
-				$columnSQL.=', kinship.sire as sire_id, (SELECT identification FROM individual WHERE kinship.sire=individual.id) as sire';
-			break;
-
-			case 'dam':
-				array_push($headerTable, $value);
-				$columnSQL.=', kinship.dam as dam_id, (SELECT identification FROM individual WHERE kinship.dam=individual.id) as dam';
-			break;
-
-			case 'name':
-				array_push($headerTable, $value);
-				$columnSQL.=', name';
-			break;
-
-			case 'alive':
-				array_push($headerTable, $value);
-				$columnSQL.=', alive';
-			break;
-		}
-	}
-
-if ($pagina=='captivity'){
-	$sql = 'SELECT '.$columnSQL.' 
-		FROM `individual`
-
-		LEFT JOIN status ON individual.id=status.id_individual 
-		LEFT JOIN kinship ON kinship.id_individual=individual.id 
-		LEFT JOIN historic ON historic.id_individual=individual.id 
-		LEFT JOIN events ON historic.id_event=events.id
-
-		WHERE id_category=1';
+if (!isset($_REQUEST['condicao'])) {
+	$sql = $_REQUEST['sql'].$_REQUEST['limit'];
 }
+$query = $mysqli->query($sql);
+?>
 
-$sql.=$limit;
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>Download</title>
+	<head>
+	<body>
 
-$result = $mysqli->query($sql);
-$arrayData=array();
-while($row = $result->fetch_array()){
+	<!-- Captivity -->
+	<?php if ($_REQUEST['page']=='captivity'):?>
+		<?php
+		// Definimos o nome do arquivo que será exportado
+		$arquivo = 'captivity.xls';
+		
+		// Criamos uma tabela HTML com o formato da planilha
+		$html = '';
+		$html .= '<table>';
+		
+		//<!-- Table Head -->
+		$html.='<tr>';
+			foreach ($header as $value):
+				switch($value):
+					case 'informations': break;
 
-	$data=array();
-	foreach ($headerTable as $value) {
-		array_push($data,$row[$value]);
-	}
+					default:
+					$html.='<th>'.ucfirst($value).'</th>';
+				endswitch;
+			endforeach;
+		$html.='</tr>';
 
-	array_push($arrayData,$data);
-}
+		//<!--Body Table -->
+		while($row = $query->fetch_array()):
+	    	$html.='<tr>';
+	    		foreach ($header as $value):
+	    			switch($value):
 
-$spreadsheet->getActiveSheet()
-    ->fromArray(
-        $headerTable,  // The data to set
-        NULL,        // Array values with this value will not be set
-        'A1'         // Top left coordinate of the worksheet range where
-                     //    we want to set these values (default is A1)
-    );
+	    				case 'identification':
+		    				$html.='<td scope="row">'.$row[$value].'</td>';
+	    				break;
 
-$spreadsheet->getActiveSheet()
-    ->fromArray(
-        $arrayData,  // The data to set
-        NULL,        // Array values with this value will not be set
-        'A2'         // Top left coordinate of the worksheet range where
-                     //    we want to set these values (default is A1)
-    );
+	    				case "historic":
+	    					$sql_historic = "SELECT *, institute.name as institute FROM historic LEFT JOIN events ON historic.id_event=events.id LEFT JOIN institute ON historic.id_institute=institute.id  WHERE id_individual = '$row[id]'";
+	    					$result_historic = $mysqli->query($sql_historic);
+	    					$num = $result_historic->num_rows;
+	    					if ($num>=1):
+	    						$html.='<td scope="row">';
+	    							while ($row_historic = $result_historic->fetch_array()):
+	    								//$html.='<li>';
+	    									$html.= $row_historic['events']." on ";
+	    									$html.= $row_historic['date'];
+	    									$html.=' at the '.$row_historic['institute'].'.';
+	    									$html.= $row_historic['observation'];
+	    								$html.='<br>';
+	    							endwhile;	
+    							$html.='</td>';	    						
+	    					else:
+	    						$html.='<td scope="row">-</td>';
+	    					endif;
+	    				break;
 
-// Definindo nomes
-$nome = 'BLT_database.xlsx';
-$arquivo = getcwd().'/'.$nome;
+	    				case 'population':					
+	    					$sql_population = "SELECT * FROM institute WHERE id = '$row[id_institute]';";
+	    					$result_population = $mysqli->query($sql_population);
 
-// Criando o arquivo
-$writer = new Xlsx($spreadsheet);
-$writer->save($nome);
+	    					if ($result_population->num_rows > 0): 
+	    						$row_population = $result_population->fetch_array();
+	    						$html.='<td scope="row">'.$row_population['abbreviation'].'</td>';
+	    					else:
+	    						$html.='<td scope="row">-</td>';
+	    					endif;
+	    				break;
 
-// output headers so that the file is downloaded rather than displayed
-  header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); #https://stackoverflow.com/questions/10198524/php-xlsx-header
-  header('Content-disposition: attachment; filename ='.$nome);
-  readfile($arquivo);
+	    				case "sire":
+	    				case "dam": 
+	    					$sql_kinship = "SELECT * FROM `individual` WHERE id='$row[$value]'";
+		    				$result_kinship = $mysqli->query($sql_kinship);
+		    				$row_kinship = $result_kinship->fetch_array();
+		    				
+		    				$html.='<td scope="row">'.$row_kinship['identification'].'</td>';
+	    				break;
+
+	    				case 'alive':
+
+							switch($row[$value]):
+								case '1':
+									$html.='<td scope="row">True</td>';
+								break;
+
+								case '0':
+									$html.='<td scope="row">False</td>';
+								break;
+
+								default: 	
+									$html.='<td scope="row">Unknown</td>';
+								break;
+							endswitch;
+	    				break;
+
+	    				case 'informations':
+	    				break;
+
+	    				default:
+	    					$html.='<td scope="row">'.$row[$value].'</td>';
+	    			endswitch;
+	    		endforeach;
+	    	$html.='</tr>';
+		endwhile;
+
+		$html .= '</table>';
+	
+	endif;
+
+	// Configurações header para forçar o download
+		header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+		header ("Cache-Control: no-cache, must-revalidate");
+		header ("Pragma: no-cache");
+		header ("Content-type: application/x-msexcel");
+		header ("Content-Disposition: attachment; filename=\"{$arquivo}\"" );
+		header ("Content-Description: PHP Generated Data" );
+		// Envia o conteúdo do arquivo
+		echo $html;
+		exit; ?>
+	</body>
+</html>
