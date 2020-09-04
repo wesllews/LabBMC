@@ -3,7 +3,7 @@
 2. conseguir alocar o arquivo em uma pasta e deleta-lo.
 
 # Feito
-1. Inserir campos de informações de fragmentos e grupos na página Individual.php
+1. Refiz o script de download de informação de um jeito que não é necessário criar novos arquivos no servidor. A desvantagem é que eu não entendo completamento como o script funciona :)
 
 ## Próximas Etapas
 Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
