@@ -112,7 +112,7 @@ $result_filter = $mysqli->query($sql_filter);
 		<input type="hidden" name="page" value="captivity">
 		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">
 
-		<button type="submit" form="formDownload" class="btn btn-success float-right">Baixar</button>
+		<button type="submit" form="formDownload" class="btn btn-sm btn-success float-right">Baixar</button>
 	</form>
 </div>
 
@@ -121,7 +121,7 @@ $result_filter = $mysqli->query($sql_filter);
 
 <!-- Filtro -->
 	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
+	<button type="button" class="btn btn-sm btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
 	  <i class="fas fa-filter"></i>
 	</button>
 
@@ -215,14 +215,14 @@ $result_filter = $mysqli->query($sql_filter);
 				<!-- FORM -->
 
 				<div class="modal-footer">
-					<button type="submit" form="formFiltro" class="btn btn-warning">Submit</button>
+					<button type="submit" form="formFiltro" class="btn btn-sm btn-warning">Submit</button>
 
 					<form id="formClear" action="captivity.php" method="get">
 						<input type="hidden" name="fulldata" value="<?php echo $fulldata;?>">
 						<?php if($fulldata!='s'): ?>
 							<input type="hidden" name="filterpopulation" value="<?php echo $_GET['filterpopulation'];?>">
 						<?php endif; ?>
-						<button type="submit" form="formClear" class="btn btn-warning">Clear</button>
+						<button type="submit" form="formClear" class="btn btn-sm btn-warning">Clear</button>
 					</form>
 				</div>
 			</div>
@@ -298,12 +298,12 @@ $result_filter = $mysqli->query($sql_filter);
 							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 							<!--Icon-->
 							<?php if($value!='historic' && $value!='informations'): ?>
-								<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
+								<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
 								onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 									<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 								</button>
 							<?php elseif($value=='historic'): ?>
-								<i class="btn text-warning fas fa-chevron-up px-3" id="showAll" ></i>
+								<i class="btn btn-sm text-warning fas fa-chevron-up px-3" id="showAll" ></i>
     						<?php endif; ?>
 
 						</div>
@@ -321,7 +321,7 @@ $result_filter = $mysqli->query($sql_filter);
 
 		    				case 'identification': ?>
 			    				<td scope="row">
-			    					<a class="btn btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
+			    					<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
 			    				</td>
 		    					<?php break;?>
 
@@ -333,7 +333,7 @@ $result_filter = $mysqli->query($sql_filter);
 		    					<td scope="row">
 			    					<?php if ($num>=1): ?>
 			    						<div class="card">
-											<div class="btn btn-light" onclick="girar('girar<?php echo $row['identification'];?>')" data-toggle="collapse" data-target="#collapse<?php echo $row['identification'];?>">
+											<div class="btn btn-sm btn-light" onclick="girar('girar<?php echo $row['identification'];?>')" data-toggle="collapse" data-target="#collapse<?php echo $row['identification'];?>">
 												Historic
 												<div class="badge badge-dark"><?php echo $num;?></div>
 												<i class="fas fa-chevron-up ml-3" id="girar<?php echo $row['identification'];?>"></i>
@@ -365,7 +365,7 @@ $result_filter = $mysqli->query($sql_filter);
 		    						$row_population = $result_population->fetch_array();?>
 		    						<td scope="row">
 		    							<!-- Trigger Modal -->
-		    							<button type="button" class="btn btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#institute<?php echo $row['id_institute']; ?>" style="white-space: nowrap;">
+		    							<button type="button" class="btn btn-sm btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#institute<?php echo $row['id_institute']; ?>" style="white-space: nowrap;">
 		    							  <?php echo $row_population['abbreviation']; ?>
 		    							</button>
 		    							
@@ -412,9 +412,9 @@ $result_filter = $mysqli->query($sql_filter);
 															<form action="captivity.php" method="get">
 																<input type="hidden" name="filterpopulation" value="<?php echo $row_population['id'];?>">
 																<input type="hidden" name="fulldata" value="s">
-																<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row_population['id'] ? "disabled ":""; ?>>Filter by this population</button>
+																<button type="submit" class="btn btn-sm btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row_population['id'] ? "disabled ":""; ?>>Filter by this population</button>
 															</form>
-															<button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+															<button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
 														</div>
 													</div>
 												</div>
@@ -432,7 +432,7 @@ $result_filter = $mysqli->query($sql_filter);
 			    				$result_kinship = $mysqli->query($sql_kinship);
 			    				$row_kinship = $result_kinship->fetch_array();?>
 			    				<td scope="row">
-			    					<a class="btn btn-outline-dark btn-block border-0" href="individual.php?identification=<?php echo $row_kinship['identification'];?>"><?php echo $row_kinship['identification'];?></a>
+			    					<a class="btn btn-sm btn-outline-dark btn-block border-0" href="individual.php?identification=<?php echo $row_kinship['identification'];?>"><?php echo $row_kinship['identification'];?></a>
 			    				</td>
 		    					<?php break;?>
 
@@ -440,15 +440,15 @@ $result_filter = $mysqli->query($sql_filter);
 	    						<td scope="row">
 	    							<?php switch($row[$value]):
 	    							case '1': ?>
-	    								<div class="btn text-success" style="cursor:auto;">True</div>
+	    								<div class="btn btn-sm text-success" style="cursor:auto;">True</div>
 	    							<?php break;?>
 
 	    							<?php case '0': ?>
-	    								<div class="btn text-danger" style="cursor:auto;" > False</div>
+	    								<div class="btn btn-sm text-danger" style="cursor:auto;" > False</div>
 	    							<?php break;?>
 
 	    							<?php default: ?>
-	    								<div class="btn text-secondary" style="cursor:auto;">Unknown</div>
+	    								<div class="btn btn-sm text-secondary" style="cursor:auto;">Unknown</div>
 	    							<?php endswitch; ?>
 	    						</td>
 		    					<?php break;?>
@@ -459,13 +459,13 @@ $result_filter = $mysqli->query($sql_filter);
 
 			    					if ($result_informations->num_rows > 0): ?>
 			    						<td scope="row">
-			    						<button type="button" class="btn btn-success">Genetics</button>
-			    						<button type="button" class="btn btn-primary">Statistics</button>
+			    						<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
+			    						<button type="button" class="btn btn-sm btn-primary disabled">Statistics</button>
 			    						</td>
 			    					<?php else: ?>
 			    						<td scope="row">
-			    						<button type="button" class="btn btn-secondary disabled">Genetics</button>
-			    						<button type="button" class="btn btn-secondary disabled">Statistics</button>
+			    						<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
+			    						<button type="button" class="btn btn-sm btn-secondary disabled">Statistics</button>
 			    						</td>
 			    					<?php endif; ?>
 		    					<?php break;?>

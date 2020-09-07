@@ -111,7 +111,7 @@ $result_filter = $mysqli->query($sql_filter);
 
 <!-- Filtro -->
 	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
+	<button type="button" class="btn btn-sm btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
 	  <i class="fas fa-filter"></i>
 	</button>
 
@@ -218,10 +218,10 @@ $result_filter = $mysqli->query($sql_filter);
 				<!-- FORM -->
 
 				<div class="modal-footer">
-					<button type="submit" form="formFiltro" class="btn btn-warning">Submit</button>
+					<button type="submit" form="formFiltro" class="btn btn-sm btn-warning">Submit</button>
 
 					<form id="formClear" action="genotypes.php" method="get">
-						<button type="submit" form="formClear" class="btn btn-warning">Clear</button>
+						<button type="submit" form="formClear" class="btn btn-sm btn-warning">Clear</button>
 					</form>
 				</div>
 			</div>
@@ -291,7 +291,7 @@ $result_filter = $mysqli->query($sql_filter);
 
 						<?php if(in_array($value, array('identification','category','sex', 'population', 'alive'))): ?>
 							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
-							<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
+							<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
 							onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 								<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 							</button>
@@ -319,7 +319,7 @@ $result_filter = $mysqli->query($sql_filter);
 											<b>Primer Reverse:</b> <?php echo $row['reverse'];?><br>
 											<b>Reference:</b> <?php echo $row['reference'];?><br>
 										</div>
-										<div class="modal-footer"><button type="button" class="btn btn-warning text-white" data-dismiss="modal">Close</button></div>
+										<div class="modal-footer"><button type="button" class="btn btn-sm btn-warning text-white" data-dismiss="modal">Close</button></div>
 									</div>
 								</div>
 							</div>
@@ -342,7 +342,7 @@ $result_filter = $mysqli->query($sql_filter);
 							<td scope="row">
 								<form method="get" action="individual.php" id="individual">
 									<input type="hidden" name="identification" value="<?php echo $row[$value];?>">
-									<button class=" btn btn-outline-success btn-block border-0" type="submit"><?php echo $row[$value];?></button>
+									<button class=" btn btn-sm btn-outline-success btn-block border-0" type="submit"><?php echo $row[$value];?></button>
 								</form>
 							</td>
 						<?php break;?>
@@ -365,7 +365,7 @@ $result_filter = $mysqli->query($sql_filter);
 						<?php case 'population': ?>
 							<td scope="row">
 								<!-- Trigger Modal -->
-								<button type="button" class="btn btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#population<?php echo str_replace(' ','_',$row['population']); ?>" style="white-space: nowrap;">
+								<button type="button" class="btn btn-sm btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#population<?php echo str_replace(' ','_',$row['population']); ?>" style="white-space: nowrap;">
 								  <?php echo $row['population']; ?>
 								</button>
 
@@ -447,9 +447,9 @@ $result_filter = $mysqli->query($sql_filter);
 												<div class="modal-footer">
 													<form action="genotypes.php" method="get">
 														<input type="hidden" name="filterpopulation" value="<?php echo $row['population'];?>">
-														<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row['population'] ? "disabled ":""; ?>>Filter by this population</button>
+														<button type="submit" class="btn btn-sm btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row['population'] ? "disabled ":""; ?>>Filter by this population</button>
 													</form>
-													<button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+													<button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
 												</div>
 											</div>
 										</div>

@@ -72,6 +72,7 @@ $headersAdicionais =['name','sex','fragment','group','longitude','latitude'];
 			"pag" => $pag,
 			"limit" => $limit,
 			"sexFilter" => $sexFilter,
+			"status" => $status,
 			"filterfragment" => $filterfragment,
 		);
 
@@ -94,7 +95,7 @@ $result_filter = $mysqli->query($sql_filter);
 
 <!-- Filtro -->
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
+  <button type="button" class="btn btn-sm btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
 	<i class="fas fa-filter"></i>
   </button>
 
@@ -170,10 +171,10 @@ $result_filter = $mysqli->query($sql_filter);
 		<!-- FORM -->
 
 		<div class="modal-footer">
-		  <button type="submit" form="formFiltro" class="btn btn-warning">Submit</button>
+		  <button type="submit" form="formFiltro" class="btn btn-sm btn-warning">Submit</button>
 
 		  <form id="formClear" action="wild.php" method="get">
-			<button type="submit" form="formClear" class="btn btn-warning">Clear</button>
+			<button type="submit" form="formClear" class="btn btn-sm btn-warning">Clear</button>
 		  </form>
 		</div>
 	  </div>
@@ -248,7 +249,7 @@ $result_filter = $mysqli->query($sql_filter);
 				  <div class="d-flex justify-content-center align-items-end text-warning">
 					<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 					<!--Icon-->
-					<button class="btn btn-link text-warning" type="submit" form="formFiltros" 
+					<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
 					onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 					<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 					</button>
@@ -267,14 +268,14 @@ $result_filter = $mysqli->query($sql_filter);
 
 					case 'identification': ?>
 					  <td scope="row">
-						<a class="btn btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
+						<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
 					  </td>
 					<?php break;?>
 
 					<?php case 'fragment': ?>
 						<td scope="row">
 							<!-- Trigger Modal -->
-							<button type="button" class="btn btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#fragment<?php echo str_replace(' ','_',$row['fragment']); ?>" style="white-space: nowrap;">
+							<button type="button" class="btn btn-sm btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#fragment<?php echo str_replace(' ','_',$row['fragment']); ?>" style="white-space: nowrap;">
 							  <?php echo $row['fragment']; ?>
 							</button>
 
@@ -328,9 +329,9 @@ $result_filter = $mysqli->query($sql_filter);
 											<div class="modal-footer">
 												<form action="wild.php" method="get">
 													<input type="hidden" name="filterfragment" value="<?php echo $row['fragment'];?>">
-													<button type="submit" class="btn btn-warning" <?php echo isset($_GET['filterfragment']) && $_GET['filterfragment']==$row['fragment'] ? "disabled ":""; ?>>Filter by this fragment</button>
+													<button type="submit" class="btn btn-sm btn-warning" <?php echo isset($_GET['filterfragment']) && $_GET['filterfragment']==$row['fragment'] ? "disabled ":""; ?>>Filter by this fragment</button>
 												</form>
-												<button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+												<button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
 											</div>
 										</div>
 									</div>
