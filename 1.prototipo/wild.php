@@ -5,7 +5,7 @@ include 'header.php';
 
 /* Cabeçalho da tabela */
 $header = ['identification'];
-$headersAdicionais =['name','sex','fragment','group','longitude','latitude'];
+$headersAdicionais =['name','sex','fragment','group','longitude','latitude','informations'];
 
 	// Testa se algum 'Display informations' foi enviado
 	  $flag = 0;
@@ -339,6 +339,23 @@ $result_filter = $mysqli->query($sql_filter);
 		    				<?php endif; ?>
 		    			</td>
 					<?php break;?>
+
+					<?php case 'informations': 
+    					$sql_informations = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
+    					$result_informations = $mysqli->query($sql_informations);
+
+	    					if ($result_informations->num_rows > 0): ?>
+	    						<td scope="row">
+		    						<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
+		    						<button type="button" class="btn btn-sm btn-primary disabled">Statistics</button>
+	    						</td>
+	    					<?php else: ?>
+	    						<td scope="row">
+		    						<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
+		    						<button type="button" class="btn btn-sm btn-secondary disabled">Statistics</button>
+	    						</td>
+	    					<?php endif; ?>
+		    		<?php break;?>
 
 					<?php default: ?>
 					  <td scope="row"><div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div></td>
