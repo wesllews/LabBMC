@@ -1,3 +1,5 @@
+<?php include "connection.php";
+session_start(); ?>
 <!doctype html>
 <html lang="pt">
 
@@ -25,29 +27,53 @@
 
 	<body class="p-5 bg-dark text-white">
 
-  		<form class="form-signin my-auto">
+		<?php 
+		$email = $_REQUEST['email'];
+		$password = md5($_REQUEST['password']);
 
-	      <span ><i width="72" height="72"class="fas fa-database text-warning shadow-lg"></i>BLT Database</span>
+		$sql= "SELECT * FROM login WHERE email='$email' and password='$password';";
+		$query = $mysqli->query($sql);
 
-	      <h3 class="mb-3 font-weight-normal">Please sign in</h3>
+		if(($query->num_rows)==0 && isset($_REQUEST['email'])): ?>
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Error!</strong> User or Password are wrong! Try Again.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		<?php elseif(($query->num_rows)==1): ?>
+			<?php $row = $query->fetch_array();
+			$_SESSION['admin']= $row['name']; ?>
 
-	      <label for="inputEmail" class="sr-only">Email address</label>
-	      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-	     
-	     <label for="inputPassword" class="sr-only">Password</label>
-	      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-	      
-	      <div class="checkbox mb-3">
-	        <label>
-	          <input type="checkbox" value="remember-me"> Remember me
-	        </label>
-	      </div>
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				Welcome <strong><?php echo $row['name'];?></strong>!
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		<?php endif; ?>
 
-	      <button class="btn btn-lg btn-warning btn-block" type="submit">Sign in</button>
-	      <p class="mt-4 text-muted">Esqueci a senha</p>
+  		<form method='POST' class="form-signin my-auto">
 
+			<span ><i width="72" height="72"class="fas fa-database text-warning shadow-lg"></i> BLT Database</span>
+
+			<h3 class="mb-3 font-weight-normal">Please sign in</h3>
+
+			<label for="inputEmail" class="sr-only">Email address</label>
+			<input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" value="<?php echo $_REQUEST['email']?>">
+
+			<label for="inputPassword" class="sr-only">Password</label>
+			<input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+
+			<div class="checkbox mb-3">
+				<label>
+					<input type="checkbox" value="remember-me" disabled> Remember me
+				</label>
+			</div>
+
+			<button class="btn btn-lg btn-warning btn-block" type="submit">Sign in</button>
+			<a class="btn btn-link text-muted" href=#>Esqueci a senha</a>
 	    </form>
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

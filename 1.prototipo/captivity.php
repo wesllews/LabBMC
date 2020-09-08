@@ -111,8 +111,11 @@ $result_filter = $mysqli->query($sql_filter);
 		<input type="hidden" name="limit" value="<?php echo $limit_sql; ?>">
 		<input type="hidden" name="page" value="captivity">
 		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">
-
-		<button type="submit" form="formDownload" class="btn btn-sm btn-success float-right">Baixar</button>
+		<?php if(isset($_SESSION['admin'])): ?>
+			<button type="submit" form="formDownload" class="btn btn-sm btn-primary float-right">Baixar</button>
+		<?php else: ?>
+			<button type="submit" form="formDownload" class="btn btn-sm btn-success float-right">Baixar</button>
+		<?php endif; ?>
 	</form>
 </div>
 
