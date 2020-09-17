@@ -112,9 +112,9 @@ $result_filter = $mysqli->query($sql_filter);
 		<input type="hidden" name="page" value="captivity">
 		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">
 		<?php if(isset($_SESSION['admin'])): ?>
-			<button type="submit" form="formDownload" class="btn btn-sm btn-primary float-right">Baixar</button>
+			<button type="submit" form="formDownload" class="btn btn-sm btn-primary float-right">Download</button>
 		<?php else: ?>
-			<button type="submit" form="formDownload" class="btn btn-sm btn-success float-right">Baixar</button>
+			<button type="submit" form="formDownload" class="btn btn-sm btn-success float-right">Download</button>
 		<?php endif; ?>
 	</form>
 </div>
@@ -125,7 +125,8 @@ $result_filter = $mysqli->query($sql_filter);
 <!-- Filtro -->
 	<!-- Button trigger modal -->
 	<button type="button" class="btn btn-sm btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
-	  <i class="fas fa-filter"></i>
+		Filter 
+		<i class="fas fa-filter"></i>
 	</button>
 
 	<!-- Modal -->
@@ -463,12 +464,12 @@ $result_filter = $mysqli->query($sql_filter);
 			    					if ($result_informations->num_rows > 0): ?>
 			    						<td scope="row">
 			    						<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
-			    						<button type="button" class="btn btn-sm btn-primary disabled">Statistics</button>
+			    						<button type="button" class="btn btn-sm btn-primary disabled">Genomics</button>
 			    						</td>
 			    					<?php else: ?>
 			    						<td scope="row">
 			    						<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
-			    						<button type="button" class="btn btn-sm btn-secondary disabled">Statistics</button>
+			    						<button type="button" class="btn btn-sm btn-secondary disabled">Genomics</button>
 			    						</td>
 			    					<?php endif; ?>
 		    					<?php break;?>

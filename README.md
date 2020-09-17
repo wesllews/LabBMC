@@ -1,3 +1,18 @@
+# Feito (17/09)
+1. Menu de populações da página Wild
+
+## Próximas Etapas
+Adicionar em Home, um ícone de Register e User no canto superior Direito
+Adicionar os Haplótipos (mesmo vazio) e linkar com Dloop, CytB, COI
+Vida livre tem que ter a data de coleta
+vida livre tem que ter idade (age) que na verdade vai ser cub, juvenile or adult. 
+Modal do botão de download que defina Baixar todos os dados ou apenas a pagina atual.
+Home para "BLT Projects" contendo link para o wix do genoma e o bltdatabase
+Impedir SQL Injection
+Página de Login
+Página de pesquisa
+___ 
+
 # Para fazer (04/09)
 1. Aprender a escrever corretamente um arquivo em formato excel.
 2. conseguir alocar o arquivo em uma pasta e deleta-lo.

@@ -1,10 +1,9 @@
 <?php
 #xampp conexão
-$server = '127.0.0.1';
-$user = 'root';
-$pass = '';
-#$db = 'LABBMC';
-$db = 'labbmc';
+$server = 'web-db.ufscar.br';
+$user = 'admbltdb';
+$pass = 'ya3hLBrlfrig6cEp#wo&O';
+$db = 'bltdatabase_db';
 
 
 $mysqli = new mysqli($server,$user,$pass,$db);

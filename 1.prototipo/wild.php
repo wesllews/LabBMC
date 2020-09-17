@@ -62,8 +62,8 @@ $headersAdicionais =['name','sex','fragment','group','longitude','latitude','inf
   $sexFilter_sql = $sexFilter!=""? " AND sex='$sexFilter'" : "";
 
   // Fragment
-  $filterfragment = isset($_GET['filterfragment'])? $_GET['filterfragment'] : "";
-  $filterfragment_sql = $filterfragment!=""? " AND fragment ='$_GET[filterfragment]'" : "";
+  $filterpopulation = isset($_GET['filterpopulation'])? $_GET['filterpopulation'] : "";
+  $filterpopulation_sql = $filterpopulation!=""? " AND fragment.id ='$_GET[filterpopulation]'" : "";
 
 /* Forms */
 	$array =  array(
@@ -73,7 +73,7 @@ $headersAdicionais =['name','sex','fragment','group','longitude','latitude','inf
 			"limit" => $limit,
 			"sexFilter" => $sexFilter,
 			"status" => $status,
-			"filterfragment" => $filterfragment,
+			"filterpopulation" => $filterpopulation,
 		);
 
 /* Evita excesso de modal*/
@@ -86,7 +86,7 @@ INNER JOIN fragment ON status.id_fragment=fragment.id
 LEFT JOIN ind_group ON individual.id=ind_group.id_individual
 LEFT JOIN `group` ON `group`.id=ind_group.id_group
 WHERE id_category=2";
-$sql_pagination = $sql.$sexFilter_sql.$filterfragment_sql;
+$sql_pagination = $sql.$sexFilter_sql.$filterpopulation_sql;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
 ?>
@@ -96,6 +96,7 @@ $result_filter = $mysqli->query($sql_filter);
 <!-- Filtro -->
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-sm btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
+	Filter
 	<i class="fas fa-filter"></i>
   </button>
 
@@ -139,17 +140,17 @@ $result_filter = $mysqli->query($sql_filter);
 			<!--Fragment-->
 			<div class="form-group">
 			  <label>Fragment</label>
-			  <select name="filterfragment" class="form-control form-control-sm">
-				<option <?php echo !isset($_GET['filterfragment']) ? "selected":""; ?> value="">All</option>
+			  <select name="filterpopulation" class="form-control form-control-sm">
+				<option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">All</option>
 				<?php 
-				$sql_fragment =" SELECT DISTINCT(fragment) as fragment
+				$sql_fragment =" SELECT DISTINCT(fragment) as fragment, id_fragment
 				FROM individual
 				INNER JOIN status ON individual.id=status.id_individual
 				INNER JOIN fragment ON status.id_fragment=fragment.id";
 				$query = $mysqli->query($sql_fragment);
 
 				while ($row = $query->fetch_array()):?>
-				  <option <?php echo isset($_GET['filterfragment']) && $_GET['filterfragment']==$row["fragment"] ? "selected":""; ?> value="<?php echo $row["fragment"]; ?>"><?php echo $row["fragment"]; ?></option>
+				  <option <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row["id_fragment"] ? "selected":""; ?> value="<?php echo $row["id_fragment"]; ?>"><?php echo $row["fragment"]; ?></option>
 				<?php endwhile; ?>
 			  </select>
 			</div>
@@ -328,8 +329,8 @@ $result_filter = $mysqli->query($sql_filter);
 
 											<div class="modal-footer">
 												<form action="wild.php" method="get">
-													<input type="hidden" name="filterfragment" value="<?php echo $row['fragment'];?>">
-													<button type="submit" class="btn btn-sm btn-warning" <?php echo isset($_GET['filterfragment']) && $_GET['filterfragment']==$row['fragment'] ? "disabled ":""; ?>>Filter by this fragment</button>
+													<input type="hidden" name="filterpopulation" value="<?php echo $row_fragment['id'];?>">
+													<button type="submit" class="btn btn-sm btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row_fragment['id'] ? "disabled ":""; ?>>Filter by this fragment</button>
 												</form>
 												<button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Close</button>
 											</div>
@@ -347,12 +348,12 @@ $result_filter = $mysqli->query($sql_filter);
 	    					if ($result_informations->num_rows > 0): ?>
 	    						<td scope="row">
 		    						<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
-		    						<button type="button" class="btn btn-sm btn-primary disabled">Statistics</button>
+		    						<button type="button" class="btn btn-sm btn-primary">Genomics</button>
 	    						</td>
 	    					<?php else: ?>
 	    						<td scope="row">
 		    						<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
-		    						<button type="button" class="btn btn-sm btn-secondary disabled">Statistics</button>
+		    						<button type="button" class="btn btn-sm btn-secondary disabled">Genomics</button>
 	    						</td>
 	    					<?php endif; ?>
 		    		<?php break;?>
