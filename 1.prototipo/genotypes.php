@@ -298,7 +298,7 @@ $result_filter = $mysqli->query($sql_filter);
 
 						<?php else: ?>
 							<!-- Modal Button-->
-							<span type="button" class="text-warning" data-toggle="modal" data-target="#Modal<?php echo $value;?>">
+							<span type="button" class="btn btn-outline-light font-weight-bold text-warning border-0 py-0" data-toggle="modal" data-target="#Modal<?php echo $value;?>">
 								<?php echo ucfirst(str_replace('_',' ',$value)); ?>
 							</span>
 
