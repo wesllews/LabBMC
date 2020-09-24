@@ -11,14 +11,36 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
-$header = ['identification','historic','population','sex','sire','dam','name','alive','informations'];
+$header = ['identification','category','historic','population','sex','sire','dam','name','alive','informations'];
+$header = ['identification','category','sex','events','institute','local_id','date','observation','name','sire','dam', 'alive'];
 $alphabet = range('A', 'Z');
 
 foreach ($header as $key => $value) {
 	$sheet->setCellValue($alphabet[$key].'1', ucfirst($value));
 }
 
+$colunas = ", institute.name as institute, individual.name as name";
+$sql = "select *".$colunas." from individual
+INNER JOIN category ON category.id=individual.id_category
+INNER JOIN historic ON individual.id=historic.id_individual
+INNER JOIN institute ON institute.id=historic.id_institute
+INNER JOIN kinship ON kinship.id_individual=individual.id
+INNER JOIN status ON status.id_individual=individual.id
+LEFT JOIN events ON events.id=historic.id_event WHERE id_category=1";
+$result = $mysqli->query($sql.$_POST['sql_filter']);
+if($result->num_rows > 0){
+	$rowNum = 2;
+	while($row = $result->fetch_assoc()){
 
+		foreach ($header as $key => $value) {
+
+			$sheet->setCellValue($alphabet[$key].$rowNum, $row[$value]);
+		}
+		$rowNum++;
+	}
+} else {
+	$sheet->setCellValue("A2", $sql.$_POST['sql_filter']);
+		}
 
 
 $filename = 'database-'.time().'.xlsx';

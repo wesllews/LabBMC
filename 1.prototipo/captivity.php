@@ -104,22 +104,20 @@ $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
 ?>
 
+<!-- Download -->
+<?php if(!isset($_SESSION['admin'])): ?>
 <div class="container mt-3">
 	<form id="formDownload" action="download.php" method="post">
-
-		<input type="hidden" name="sql" value="<?php echo $sql_pagination.$order; ?>">
-		<input type="hidden" name="limit" value="<?php echo $limit_sql; ?>">
-		<input type="hidden" name="page" value="captivity">
+		<input type="hidden" name="pagina" value="captivity">
+		<input type="hidden" name="sql_filter" value="<?php echo $sexFilter.$status.$filterpopulation.$order.$limit_sql; ?>">
 		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">
-		<?php if(isset($_SESSION['admin'])): ?>
-			<button type="submit" form="formDownload" class="btn btn-sm btn-primary float-right">Download</button>
-		<?php else: ?>
-			<button type="submit" form="formDownload" class="btn btn-sm btn-success float-right">Download</button>
-		<?php endif; ?>
+
+		<button type="submit" form="formDownload" class="btn btn-sm btn-success float-right">Download</button>
 	</form>
 </div>
+<?php endif; ?>
 
-
+<!-- Header page -->
 <div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Captivity</h3><hr></div>
 
 <!-- Filtro -->
