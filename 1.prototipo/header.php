@@ -1,4 +1,6 @@
-<?php include "connection.php"; ?>
+<?php
+session_start();
+include "connection.php"; ?>
 <!doctype html>
 <html lang="pt">
 
@@ -37,7 +39,7 @@
 	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
 
 	    	<!-- Brand -->
-	    	<a class="navbar-brand font-weight-bold" href="http://localhost/phpmyadmin/index.php"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
+	    	<a class="navbar-brand font-weight-bold" href="http://web-01.ufscar.br/webdb/"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
 
 		    <!-- Toggler -->
 		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -57,7 +59,7 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="lifeHistory">
 							
-							<a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="wild.php"><i class="fab fa-pagelines"></i> Wild</a>
+							<a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="mainWild.php"><i class="fab fa-pagelines"></i> Wild</a>
 
 							<a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="mainCaptivity.php"><i class="fas fa-book-open"></i> Captivity</a>
 						</div>
@@ -86,6 +88,13 @@
 
 					</li>
 				</ul>
+
+				<!-- User Name -->
+				<?php if($_SESSION['login']=="sim"): ?>
+					<a class="btn btn-danger my-2 my-sm-0" href="logout.php">Logout</a>
+				<?php else: ?>
+					<a class="btn btn-success my-2 my-sm-0" href="login.php">Register / Login</a>
+				<?php endif; ?>
 
 				<!-- Search 
 				<form class="form-inline mt-2 mt-md-0" >

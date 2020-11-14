@@ -15,8 +15,8 @@
 
       <!-- Partners -->
       <div class="col-lg-12 mx-auto p-0">
-
-        <!-- line-1 -->
+<!--
+        
         <div class="d-flex flex-row justify-content-around">
           <div class="p-2 align-self-center"><img src="img/ufscar.png" title="UFScar" alt="UFScar" style="width: 90px;"></div>
 
@@ -24,7 +24,7 @@
 
           <div class="p-2"><img src="img/zoosp.png"  title="São Paulo Zoo (São Paulo, SP, Brazil)" alt="São Paulo Zoo (São Paulo, SP, Brazil)" style="width: 70px;"></div>
         </div>
-        <!-- line-1 -->
+        <
         <div class="d-flex flex-row justify-content-around mt-3">
           <div class="p-2"><img src="img/durrell.png" title="Durrell Wildlife Conservation Trust (Jersey, Channel Islands, Europe)" alt="Durrell Wildlife Conservation Trust (Jersey, Channel Islands, Europe)" style="width: 70px;"></div>
 
@@ -34,6 +34,7 @@
         </div>
                 
       </div>
+  -->
       <!-- Partners -->
     </div>
     <!-- Row-content -->

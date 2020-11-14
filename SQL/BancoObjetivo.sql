@@ -5,12 +5,13 @@ CREATE DATABASE IF NOT EXISTS labbmc;
 -- ************************************** `login`
 CREATE TABLE `login`
 (
- `email`         varchar(50) NOT NULL ,
  `name`          varchar(50) NOT NULL ,
- `password`      varchar(100) NOT NULL ,
- `privilege`     char NOT NULL ,
- `excluded`      char NULL ,
- `excluded_date` date NULL ,
+ `institution`   varchar(70) NOT NULL ,
+ `justification` text NOT NULL ,
+ `email`         varchar(50) NOT NULL ,
+ `password`      varchar(100) NULL,
+ `status`        varchar(20) NOT NULL,
+ `status_date` date NULL ,
 
 PRIMARY KEY (`email`)
 );

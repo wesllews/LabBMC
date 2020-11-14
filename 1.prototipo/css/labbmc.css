@@ -98,7 +98,7 @@
   .filter{   
       position:fixed;
       top:75px; 
-      left:0px;
+      right:5px;
   }
 
 /*GRID AUTO-FLOW*/
@@ -116,7 +116,7 @@
 
 
 /* CHECKBOX COLOR*/
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-  border-color: #ffc107;
-  background-color: #ffc107;
-}
+  .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #ffc107;
+    background-color: #ffc107;
+  }

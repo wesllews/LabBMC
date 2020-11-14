@@ -6,7 +6,7 @@ with open('wild_location/fragment.csv', newline='\n') as csvfile:
 
 	with open("../SQL/6.fragment.sql", 'w') as file:
 		for row in read_fragment:
-			sql= f"INSERT INTO `fragment` (`id`, `fragment`, `abbreviation`, `country`, `state`, `city`) VALUES (NULL, '{row['fragment']}', NULL, NULL, NULL, NULL);\n"
+			sql= f"INSERT INTO `fragment` (`id`, `fragment`, `abbreviation`, `country`, `state`, `city`) VALUES (NULL, '{row['fragment']}', NULL, '{row['country']}', '{row['state']}', NULL);\n"
 			file.write(sql)
 
 # GROUP
