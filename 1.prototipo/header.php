@@ -1,4 +1,6 @@
-<?php include "connection.php"; ?>
+<?php
+session_start();
+include "connection.php"; ?>
 <!doctype html>
 <html lang="pt">
 
@@ -88,7 +90,11 @@
 				</ul>
 
 				<!-- User Name -->
-				<span class="navbar-text text-warning"><i class="fas fa-user"></i> Hey, User! </span>
+				<?php if($_SESSION['login']=="sim"): ?>
+					<a class="btn btn-danger my-2 my-sm-0" href="logout.php">Logout</a>
+				<?php else: ?>
+					<a class="btn btn-success my-2 my-sm-0" href="login.php">Register / Login</a>
+				<?php endif; ?>
 
 				<!-- Search 
 				<form class="form-inline mt-2 mt-md-0" >
