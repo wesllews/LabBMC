@@ -87,10 +87,17 @@ include "connection.php"; ?>
 						-->
 
 					</li>
+
+					<?php if(in_array($_SESSION['login'],array("administrator","colaborador"))): ?>
+						<li class="nav-item">
+							<a class="nav-link text-warning <?php if($_SESSION['pagina']=='admin'){echo "active";} ?>" href="admin.php"><i class="fas fa-cog"></i> Dashboard</a>
+						</li>
+					<?php endif; ?>
+
 				</ul>
 
 				<!-- User Name -->
-				<?php if($_SESSION['login']=="sim"): ?>
+				<?php if(isset($_SESSION['login']) && $_SESSION['login']!="nao"): ?>
 					<a class="btn btn-danger my-2 my-sm-0" href="logout.php">Logout</a>
 				<?php else: ?>
 					<a class="btn btn-success my-2 my-sm-0" href="login.php">Register / Login</a>

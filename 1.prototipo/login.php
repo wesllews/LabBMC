@@ -50,7 +50,7 @@ include "connection.php"; ?>
 						$rows = $result->fetch_array();
 
 						if($rows['status']!="requested"){
-							$_SESSION['login']="sim";
+							$_SESSION['login']=$rows['status'];
 							header("Location: index.php");
 						} else {
 							$_SESSION['login']="requested";
@@ -64,7 +64,7 @@ include "connection.php"; ?>
 							<?php
 						}
 					}	elseif(isset($_POST['email'])) {
-						session_destroy();
+						$_SESSION['login']="nao";
 						?>
 						<div class="alert alert-danger alert-dismissible fade show" role="alert">
 						  Something went wrong with the <strong>User</strong> or <strong>Password</strong>!
