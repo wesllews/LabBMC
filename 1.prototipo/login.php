@@ -81,7 +81,7 @@ include "connection.php"; ?>
 							<p class="text-uppercase font-weight-bold"> Login using your account: </p>	
 
 							<div class="form-group">
-								<input type="email" name="email" id="email" class="form-control input-lg" placeholder="e-mail" required>
+								<input type="email" name="email" id="email" class="form-control input-lg" placeholder="E-mail" required>
 							</div>
 							<div class="form-group">
 								<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" required>
