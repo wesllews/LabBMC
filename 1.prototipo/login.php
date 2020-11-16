@@ -120,7 +120,7 @@ include "connection.php"; ?>
 
 					<?php elseif($_SESSION['register']=="error"): ?>
 						<div class="alert alert-warning alert-dismissible fade show" role="alert">
-							Somethong got wrong with your registration submit. Please, try again!!
+							Something got wrong with your registration submit. Please, try again!!
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>

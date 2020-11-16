@@ -5,15 +5,17 @@ CREATE DATABASE IF NOT EXISTS labbmc;
 -- ************************************** `login`
 CREATE TABLE `login`
 (
+ `id`            integer NOT NULL AUTO_INCREMENT ,
  `name`          varchar(50) NOT NULL ,
  `institution`   varchar(70) NOT NULL ,
  `justification` text NOT NULL ,
- `email`         varchar(50) NOT NULL ,
+ `email`         varchar(50) NOT NULL UNIQUE,
  `password`      varchar(100) NULL,
  `status`        varchar(20) NOT NULL,
- `status_date` date NULL ,
+ `request_date` date NULL ,
+ `approval_date` date NULL ,
 
-PRIMARY KEY (`email`)
+PRIMARY KEY (`id`)
 );
 
 -- ************************************** `category`

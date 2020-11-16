@@ -88,7 +88,7 @@ include "connection.php"; ?>
 
 					</li>
 
-					<?php if(in_array($_SESSION['login'],array("administrator","colaborador"))): ?>
+					<?php if(in_array($_SESSION['login'],array("administrator","collaborator"))): ?>
 						<li class="nav-item">
 							<a class="nav-link text-warning <?php if($_SESSION['pagina']=='admin'){echo "active";} ?>" href="admin.php"><i class="fas fa-cog"></i> Dashboard</a>
 						</li>
