@@ -12,7 +12,7 @@ include 'header.php';
 <div class="container">
 	<div class="row">
 
-		<!---->
+		<!--Users-->
 		<div class="col-lg-4 p-4">
 			<?php 
 				$query= "SELECT * FROM `login` WHERE status='requested';";
@@ -25,31 +25,31 @@ include 'header.php';
 		</div>
 		<!---->		
 		<div class="col-lg-4 p-4">
-			<a class="col btn bg-light shadow-sm border-0 py-2" href="#">
+			<a class="col btn bg-light shadow-sm border-0 py-2 disabled" href="#">
 				<h4>Populations</h4>
 			</a>
 		</div>
 		<!---->
 		<div class="col-lg-4 p-4">
-			<a class="col btn bg-light shadow-sm border-0 py-2" href="#">
+			<a class="col btn bg-light shadow-sm border-0 py-2 disabled" href="#">
 				<h4>Captivity</h4>
 			</a>
 		</div>
 		<!---->
 		<div class="col-lg-4 p-4">
-			<a class="col btn bg-light shadow-sm border-0 py-2" href="#">
+			<a class="col btn bg-light shadow-sm border-0 py-2 disabled" href="#">
 				<h4>Wild</h4>
 			</a>
 		</div>
 		<!---->
 		<div class="col-lg-4 p-4">
-			<a class="col btn bg-light shadow-sm border-0 py-2" href="#">
+			<a class="col btn bg-light shadow-sm border-0 py-2 disabled" href="#">
 				<h4>Genetics</h4>
 			</a>
 		</div>
 		<!---->
 		<div class="col-lg-4 p-4">
-			<a class="col btn bg-light shadow-sm border-0 py-2" href="#">
+			<a class="col btn bg-light shadow-sm border-0 py-2 disabled" href="#">
 				<h4>Locus</h4>
 			</a>
 		</div>
