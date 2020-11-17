@@ -51,6 +51,7 @@ include "connection.php"; ?>
 
 						if($rows['status']!="requested"){
 							$_SESSION['login']=$rows['status'];
+							$_SESSION['email']=$rows['email'];
 							header("Location: index.php");
 						} else {
 							$_SESSION['login']="requested";

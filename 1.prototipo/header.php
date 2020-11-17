@@ -8,7 +8,7 @@ include "connection.php"; ?>
 
   <head>
 
-		<meta http-equiv="refresh" content="3">
+		<meta http-equiv="refresh" content="10000">
 
 		<!-- Required meta tags -->
 		<meta charset="utf-8">

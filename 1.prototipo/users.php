@@ -36,25 +36,29 @@ $result_filter = $mysqli->query($sql_filter);
 ?>
 
 <div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Users</h3><hr></div>
+
 <!--Table-->
 <div class="container-fluid">
 	<!--Table Responsive-->
 	<div class="table-responsive">
 		<!--Table-->
-		<table class="table table-sm table-hover">
+		<table class="table table-sm table-responsive table-hover">
 
 			<!--Head Table-->
-			<thead>
+			<thead class="text-warning">
 				<tr class="text-center text-capitalize">
 					<?php foreach ($header as $value): ?>
 						<th scope="col" style="white-space: nowrap;">
 							<div class="d-flex justify-content-center align-items-end">
 								<span><?php echo str_replace('_',' ',$value); ?></span>
-								<!--Icon-->
-								<button class="btn btn-link btn-sm text-dark" type="submit" form="formFiltros" 
-								onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
-								<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
-								</button>
+
+								<?php if(!in_array($value, array('justification'))): ?>
+									<!--Icon-->
+									<button class="btn btn-sm text-warning" type="submit" form="formFiltros" 
+									onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
+									<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
+									</button>
+								<?php endif;?>
 							</div>
 						</th>
 					<?php endforeach ?>
@@ -65,11 +69,35 @@ $result_filter = $mysqli->query($sql_filter);
 			<tbody>
 				<?php while($row = $result_filter->fetch_array()): ?>
 				<tr class="text-center">
+
 					<?php foreach ($header as $value): ?>
-						<td scope="row">
-							<div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div>
-						</td>
+					<td scope="col">
+
+						<?php switch ($value):
+							case 'email':?>
+								<td scope="row">
+									<form method="POST" action="send_email.php" target="_blank">
+										<input type="hidden" name="ToEmail" value="<?php echo $row[$value];?>">
+										<input type="hidden" name="name" value="<?php echo $row[name];?>">
+										<button class=" btn btn-sm btn-outline-primary btn-block border-0" type="submit"><?php echo $row[$value];?></button>
+									</form>
+								</td>
+							 <?php break; ?>
+
+							<?php case 'justification':?>
+								<div class="overflow-auto text-justify p-2" style="max-height: 150px;">
+									<?php echo $row[$value]; ?>
+								</div>
+							 <?php break; ?>
+							
+							<?php default:?>
+								<div class="btn" style="cursor: auto; white-space: nowrap;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div>
+							<?php break;?>
+						<?php endswitch; ?>
+
+					</td>
 					<?php endforeach; ?>
+
 				</tr>
 				<?php endwhile; ?>
 			</tbody>
@@ -77,8 +105,4 @@ $result_filter = $mysqli->query($sql_filter);
 	</div>
 </div>
 
-
-
-<div class="fixed-bottom">
-	<?php include 'footer.php'; ?>
-</div>
+<?php include 'footer.php'; ?>
