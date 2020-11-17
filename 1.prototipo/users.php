@@ -75,19 +75,38 @@ $result_filter = $mysqli->query($sql_filter);
 
 						<?php switch ($value):
 							case 'email':?>
-								<td scope="row">
-									<form method="POST" action="send_email.php" target="_blank">
-										<input type="hidden" name="ToEmail" value="<?php echo $row[$value];?>">
-										<input type="hidden" name="name" value="<?php echo $row[name];?>">
-										<button class=" btn btn-sm btn-outline-primary btn-block border-0" type="submit"><?php echo $row[$value];?></button>
-									</form>
-								</td>
+								<form method="POST" action="send_email.php" target="_blank">
+									<input type="hidden" name="ToEmail" value="<?php echo $row[$value];?>">
+									<input type="hidden" name="name" value="<?php echo $row[name];?>">
+									<button class=" btn btn-sm btn-outline-primary btn-block border-0" type="submit"><?php echo $row[$value];?></button>
+								</form>
 							 <?php break; ?>
 
 							<?php case 'justification':?>
 								<div class="overflow-auto text-justify p-2" style="max-height: 150px;">
 									<?php echo nl2br($row[$value]); ?>
 								</div>
+							 <?php break; ?>
+
+							<?php case 'status':?>
+									<select class="form-control form-control-sm" name="<?php echo $row[id];?>" style="min-width: 120px;">
+										<option <?php echo $row[$value]=="administrator"? "selected":"";?>>
+											Administrator
+										</option>
+										<option <?php echo $row[$value]=="collaborator"? "selected":"";?>>
+											Collaborator
+										</option>
+										<option <?php echo $row[$value]=="denied"? "selected":"";?>>
+											Denied
+										</option>
+										<option <?php echo $row[$value]=="requested"? "selected":"";?>>
+											Requested
+										</option>
+									</select>
+							<?php break; ?>
+
+							<?php case 'request_date':?>
+								<?php echo date('d/m/Y', strtotime($row[$value])); ?>
 							 <?php break; ?>
 							
 							<?php default:?>
