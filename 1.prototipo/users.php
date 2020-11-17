@@ -86,7 +86,7 @@ $result_filter = $mysqli->query($sql_filter);
 
 							<?php case 'justification':?>
 								<div class="overflow-auto text-justify p-2" style="max-height: 150px;">
-									<?php echo $row[$value]; ?>
+									<?php echo nl2br($row[$value]); ?>
 								</div>
 							 <?php break; ?>
 							
