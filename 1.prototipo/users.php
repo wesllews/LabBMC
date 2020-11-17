@@ -4,29 +4,38 @@ $_SESSION['pagina']='admin';
 include 'header.php';
 
 /* Cabeçalho da tabela */
-$header = ['id','name','institution','justification','email','status','request_date'];
+$header = ['id','name','institution','justification','email','status','request_date','approval_date'];
 
-/* Filtros */
+/* Recebe as variaveis*/
   // Pagination
   $pag = isset($_GET['pag']) ? $_GET['pag']:1;
-
-  // Limit
   $limit = isset($_GET['limit'])? $_GET['limit']:20;
   $offset = $limit!="All" ? ($pag-1) * $limit : "";
-  $limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
 
   // Sort Table
   $column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
   $sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
-  $order = " ORDER BY `$column` $sort_order, approval_date";
 
-  // Order
+  // Some variables we need for the table.
   $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order);
   $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
 
-  //Status
+/* SQL Filtros */
   $status = isset($_GET['status'])? $_GET['status'] : "";
+  $limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
   $status_sql = $status!=""? " AND sex='$status'" : "";
+  $order = " ORDER BY `$column` $sort_order, approval_date";
+
+
+/* Forms */
+	$array =  array(
+		    "column" => $column,
+		    "sort_order" => $sort_order,
+		    "pag" => $pag,
+		    "limit" => $limit,
+		    "sexFilter" => $sexFilter,
+		    "status" => $status
+		);
 
 
 $sql= "SELECT * FROM `login` WHERE 1=1";
@@ -37,12 +46,26 @@ $result_filter = $mysqli->query($sql_filter);
 
 <div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Users</h3><hr></div>
 
+
+<!-- Forms Hiddens-->
+	<form method="get" action="" id="formFiltros">
+		<?php foreach($array as $key => $value): ?>
+			<?php if($value != ""):?>
+			<input type="hidden" name="<?php echo $key;?>" value="<?php echo $value;?>">
+			<?php endif;?>
+		<?php endforeach;?>
+	</form>
+
+<!-- Pagination -->
+<?php include 'pagination.php'; ?>
+
+
 <!--Table-->
 <div class="container-fluid">
 	<!--Table Responsive-->
 	<div class="table-responsive">
 		<!--Table-->
-		<table class="table table-sm table-responsive table-hover">
+		<table class="table table-sm table-hover">
 
 			<!--Head Table-->
 			<thead class="text-warning">
