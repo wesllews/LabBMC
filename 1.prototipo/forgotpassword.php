@@ -135,7 +135,7 @@ if (isset($_POST['email']) && !isset($_POST["validatepassword"])) {
 						$result = $mysqli->query($query);
 						$rows=$result->num_rows; ?>
 						<?php if($rows==1): ?>			
-							<form role="form" method="POST" action="password_update.php">
+							<form role="form" method="POST" action="user_update.php">
 								<fieldset>							
 									<p class="text-uppercase font-weight-bold"> Reset your password: </p>	
 											

@@ -112,18 +112,17 @@ $result_filter = $mysqli->query($sql_filter);
 			<tbody>
 				<?php while($row = $result_filter->fetch_array()): ?>
 				<tr class="text-center">
-					<form action="user_update.php" method="post" id="userupdate">
 
 					<?php foreach ($header as $value): ?>
 					<td scope="col">
 
 						<?php switch ($value):
 							case 'email':?>
-								<!--<form method="POST" action="send_email.php" target="_blank">
+								<form method="POST" action="send_email.php" target="_blank">
 									<input type="hidden" name="ToEmail" value="<?php echo $row[$value];?>">
 									<input type="hidden" name="name" value="<?php echo $row[name];?>">
 									<button class=" btn btn-sm btn-outline-primary btn-block border-0" type="submit"><?php echo $row[$value];?></button>
-								</form>-->
+								</form>
 							 <?php break; ?>
 
 							<?php case 'justification':?>
@@ -133,20 +132,24 @@ $result_filter = $mysqli->query($sql_filter);
 							 <?php break; ?>
 
 							<?php case 'status':?>
-									<select class="form-control form-control-sm" name="user<?php echo $row[id];?>" style="min-width: 120px;">
-										<option <?php echo $row[$value]=="administrator"? "selected":"";?>>
+								<form action="user_update.php" method="post" target="_blank">
+									<input type="hidden" name="update" value="status">
+									<input type="hidden" name="id" value="<?php echo $row[id];?>">
+									<select class="form-control form-control-sm" name="status" style="min-width: 120px;" onchange="this.form.submit()">
+										<option value="administrator" <?php echo $row[$value]=="administrator"? "selected":"";?>>
 											Administrator
 										</option>
-										<option <?php echo $row[$value]=="collaborator"? "selected":"";?>>
+										<option value="collaborator" <?php echo $row[$value]=="collaborator"? "selected":"";?>>
 											Collaborator
 										</option>
-										<option <?php echo $row[$value]=="denied"? "selected":"";?>>
+										<option value="denied" <?php echo $row[$value]=="denied"? "selected":"";?>>
 											Denied
 										</option>
-										<option <?php echo $row[$value]=="requested"? "selected":"";?>>
+										<option value="requested" <?php echo $row[$value]=="requested"? "selected":"";?>>
 											Requested
 										</option>
 									</select>
+								</form>
 							<?php break; ?>
 
 							<?php case 'request_date':?>
@@ -160,13 +163,12 @@ $result_filter = $mysqli->query($sql_filter);
 
 					</td>
 					<?php endforeach; ?>
-					</form>
+
 				</tr>
 				<?php endwhile; ?>
 			</tbody>
 		</table>
 	</div>
 </div>
-<input type="submit" form="userupdate" class="btn btn-warning btn-block" value="Submit">
 
 <?php include 'footer.php'; ?>
