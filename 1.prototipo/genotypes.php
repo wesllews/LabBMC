@@ -243,7 +243,7 @@ $result_filter = $mysqli->query($sql_filter);
 <!--Table-->
 <div class="container-fluid">
 	<!--Table Responsive-->
-	<div class="table-responsive">
+	<div class="table-responsive" style="min-height: 270px;">
 		<!--Table-->
     	<table class="table table-sm">
 

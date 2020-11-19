@@ -9,7 +9,7 @@ $header = ['id','name','institution','justification','email','status','request_d
 /* Recebe as variaveis*/
   // Pagination
   $pag = isset($_GET['pag']) ? $_GET['pag']:1;
-  $limit = isset($_GET['limit'])? $_GET['limit']:20;
+  $limit = isset($_GET['limit'])? $_GET['limit']:10;
   $offset = $limit!="All" ? ($pag-1) * $limit : "";
 
   // Sort Table
@@ -21,9 +21,9 @@ $header = ['id','name','institution','justification','email','status','request_d
   $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
 
 /* SQL Filtros */
-  $status = isset($_GET['status'])? $_GET['status'] : "";
+  $status = isset($_GET['status'])? $_GET['status'] : "All";
   $limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
-  $status_sql = $status!=""? " AND sex='$status'" : "";
+  $status_sql = $status!="All" ? " AND status='$status'" : "";
   $order = " ORDER BY `$column` $sort_order, approval_date";
 
 
@@ -33,7 +33,6 @@ $header = ['id','name','institution','justification','email','status','request_d
 		    "sort_order" => $sort_order,
 		    "pag" => $pag,
 		    "limit" => $limit,
-		    "sexFilter" => $sexFilter,
 		    "status" => $status
 		);
 
@@ -60,10 +59,31 @@ $result_filter = $mysqli->query($sql_filter);
 <?php include 'pagination.php'; ?>
 
 
-<!--Table-->
+<!--Filtros-->
 <div class="container-fluid">
+		<form action="users.php" method="get" class="form-inline pb-1">
+			<label for="status">Status: </label>
+			<select class="btn btn-sm border mr-2" name="status" id="status">
+				<option <?php echo $status=="administrator"? "selected":"";?> value="administrator">Administrator</option>
+				<option <?php echo $status=="collaborator"? "selected":"";?> value="collaborator">Collaborator</option>
+				<option <?php echo $status=="denied"? "selected":"";?> value="denied">Denied</option>
+				<option <?php echo $status=="requested"? "selected":"";?> value="requested">Requested</option>
+				<option <?php echo $status=="All"? "selected":"";?> value="All">All status</option>
+			</select>
+
+			<label for="limit">Show: </label>
+			<select class="btn btn-sm border mr-2" name="limit" id="limit">
+				<?php for ($i=10; $i <= 50; $i+=10):?>
+					<option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+				<?php endfor; ?>
+				<option <?php echo isset($_GET['limit']) && $_GET['limit']=="All" ? "selected":""; ?> value="All">All results</option>
+			</select>
+			<button type="submit" class="btn btn-success btn-sm">Submit</button>
+		</form>
+		
+	
 	<!--Table Responsive-->
-	<div class="table-responsive">
+	<div class="table-responsive" style="min-height: 270px;">
 		<!--Table-->
 		<table class="table table-sm table-hover">
 
@@ -92,17 +112,18 @@ $result_filter = $mysqli->query($sql_filter);
 			<tbody>
 				<?php while($row = $result_filter->fetch_array()): ?>
 				<tr class="text-center">
+					<form action="user_update.php" method="post" id="userupdate">
 
 					<?php foreach ($header as $value): ?>
 					<td scope="col">
 
 						<?php switch ($value):
 							case 'email':?>
-								<form method="POST" action="send_email.php" target="_blank">
+								<!--<form method="POST" action="send_email.php" target="_blank">
 									<input type="hidden" name="ToEmail" value="<?php echo $row[$value];?>">
 									<input type="hidden" name="name" value="<?php echo $row[name];?>">
 									<button class=" btn btn-sm btn-outline-primary btn-block border-0" type="submit"><?php echo $row[$value];?></button>
-								</form>
+								</form>-->
 							 <?php break; ?>
 
 							<?php case 'justification':?>
@@ -112,7 +133,7 @@ $result_filter = $mysqli->query($sql_filter);
 							 <?php break; ?>
 
 							<?php case 'status':?>
-									<select class="form-control form-control-sm" name="<?php echo $row[id];?>" style="min-width: 120px;">
+									<select class="form-control form-control-sm" name="user<?php echo $row[id];?>" style="min-width: 120px;">
 										<option <?php echo $row[$value]=="administrator"? "selected":"";?>>
 											Administrator
 										</option>
@@ -139,12 +160,13 @@ $result_filter = $mysqli->query($sql_filter);
 
 					</td>
 					<?php endforeach; ?>
-
+					</form>
 				</tr>
 				<?php endwhile; ?>
 			</tbody>
 		</table>
 	</div>
 </div>
+<input type="submit" form="userupdate" class="btn btn-warning btn-block" value="Submit">
 
 <?php include 'footer.php'; ?>
