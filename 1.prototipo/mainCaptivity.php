@@ -11,7 +11,6 @@ $result_filter = $mysqli->query($sql);
 	<div class="container text-center mt-5 p-5">
 		<h1 class="text-warning font-weight-bold">Captivity</h1>
 		<h5 class="text-justify">Take a look into the captivity to search information about the life history of captive populations and studbook data.</h5>
-
 	</div>
 
 	<div class="container">
