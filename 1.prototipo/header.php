@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if(!in_array($_SESSION['login'],array("administrator","collaborator")) && $_SESSION['pagina']=='admin'){
+	header("Location: login.php");
+}
+
 include "connection.php"; ?>
 <!doctype html>
 <html lang="pt">

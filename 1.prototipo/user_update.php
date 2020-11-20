@@ -37,7 +37,11 @@ switch ($_POST['update']) {
 		$id = $_POST['id'];
 		$status = $_POST['status'];
 		$query= "UPDATE `login` SET status = '$status' WHERE id='$id';";
-		$result = $mysqli->query($query) or die($mysqli->error);
+		if ($id != 1) {
+			$result = $mysqli->query($query) or die($mysqli->error);
+		} else{
+			echo "<script>alert('You are not allowed to change the status of that user!');</script>";
+		}
 		echo "<script>window.close();</script>";
 	break;
 
