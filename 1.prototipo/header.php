@@ -1,11 +1,19 @@
 <?php
 session_start();
+include "connection.php";
 
-if(!in_array($_SESSION['login'],array("administrator","collaborator")) && $_SESSION['pagina']=='admin'){
-	header("Location: login.php");
+//Checa se a pessoa é administradora
+if(in_array($_SESSION['login'],array("administrator","collaborator"))){
+	$_SESSION['adm']="sim";
+} else{
+	$_SESSION['adm']="nao";
 }
 
-include "connection.php"; ?>
+// Não deixa entrar em paginas de administração
+if($_SESSION['adm']=="nao" && $_SESSION['pagina']=='admin'){
+	header("Location: login.php");
+}
+ ?>
 <!doctype html>
 <html lang="pt">
 

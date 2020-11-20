@@ -95,37 +95,34 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 	$status = $status!=""? " AND alive='$_GET[status]'" : "";
 	$filterpopulation = $filterpopulation!=""? " AND id_institute=$_GET[filterpopulation]" : "";
 
-/* Evita excesso de modal*/
-$institute_population = [];
-
 $sql = "SELECT *,individual.id as id, individual.name as name FROM `individual` LEFT JOIN status ON individual.id=status.id_individual LEFT JOIN kinship ON kinship.id_individual=individual.id LEFT JOIN institute ON status.id_institute=institute.id WHERE id_category=1";
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
+
+/* Evita excesso de modal*/
+$institute_population = [];
+
+/* Ids dos individuos para download*/
+$download_ids = [];
 ?>
-
-<!-- Download -->
-<?php if(!isset($_SESSION['admin'])): ?>
-<div class="container mt-3">
-	<form id="formDownload" action="download.php" method="post">
-		<input type="hidden" name="pagina" value="captivity">
-		<input type="hidden" name="sql_filter" value="<?php echo $sexFilter.$status.$filterpopulation.$order.$limit_sql; ?>">
-		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">
-
-		<button type="submit" form="formDownload" class="btn btn-sm btn-success float-right">Download</button>
-	</form>
-</div>
-<?php endif; ?>
 
 <!-- Header page -->
 <div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Captivity</h3><hr></div>
 
 <!-- Filtro -->
 	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-sm btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
-		Filter 
-		<i class="fas fa-filter"></i>
-	</button>
+	<div class="filter">
+		<?php if ($_SESSION['adm']=="sim"):?>
+			<div class="mb-2"><button type="submit" form="formDownload" class="btn btn-sm btn-success btn-block">Download</button></div>
+		<?php endif; ?>
+		<div class="mb-2">
+			<button type="button" class="btn btn-sm btn-warning text-white px-3" data-toggle="modal" data-target="#filtro">
+				Filter <i class="fas fa-filter"></i>
+			</button>
+		</div>
+	</div>
+	
 
 	<!-- Modal -->
 	<div class="modal fade" id="filtro" tabindex="-1" role="dialog" aria-labelledby="filtro" aria-hidden="true">
@@ -286,6 +283,7 @@ $result_filter = $mysqli->query($sql_filter);
 		    			<?php switch($value):
 
 		    				case 'identification': ?>
+		    					<?php array_push($download_ids,$row["id"]); ?>
 			    				<td scope="row">
 			    					<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
 			    				</td>
@@ -447,5 +445,11 @@ $result_filter = $mysqli->query($sql_filter);
     	</table>
 	</div>
 </div>
+
+<!-- Download -->
+	<form id="formDownload" action="download.php" method="post">
+		<input type="hidden" name="pagina" value="captivity">	
+		<input type="hidden" name="download_ids" value="<?php echo htmlentities(serialize($download_ids)); ?>">		
+	</form>
 
 <?php include 'footer.php'; ?>
