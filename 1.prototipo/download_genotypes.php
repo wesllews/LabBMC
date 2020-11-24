@@ -15,7 +15,7 @@ $sheet = $spreadsheet->getActiveSheet();
 $alphabet = range('A', 'Z');
 
 // Imprime cabeçalho
-$header = ['identification','category','sex','sire','dam', 'events','institute','local_id','date','observation','name','alive'];
+$header = unserialize($_POST['header']);
 foreach ($header as $key => $value) {
 	$sheet->setCellValue($alphabet[$key].'1', ucfirst($value));
 }
@@ -28,28 +28,56 @@ $rowNum = 2;
 
 
 foreach ($download_ids as $value) {
-	$colunas = ", institute.name as institute, individual.name as name, CASE
+	$sql = "SELECT * FROM(
+	SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, category, sex,
+	CASE
 	    WHEN alive = 1 THEN 'True'
 	    WHEN alive = 0 THEN 'False'
 	    ELSE 'Unknown'
-		END AS alive";
-	$sql = "select *".$colunas." from individual
-	INNER JOIN category ON category.id=individual.id_category
-	INNER JOIN historic ON individual.id=historic.id_individual
-	INNER JOIN institute ON institute.id=historic.id_institute
-	INNER JOIN kinship ON kinship.id_individual=individual.id
-	INNER JOIN status ON status.id_individual=individual.id
-	LEFT JOIN events ON events.id=historic.id_event WHERE individual.id='$value';";
+		END AS alive,
+	CASE
+	    WHEN id_category = 1 THEN institute.abbreviation
+	    WHEN id_category = 2 THEN fragment.fragment
+		END AS population
+
+	FROM genotype
+
+	INNER JOIN individual ON individual.id=genotype.id_individual
+	INNER JOIN status ON status.id_individual=genotype.id_individual
+	LEFT JOIN institute ON status.id_institute=institute.id
+	LEFT JOIN category ON individual.id_category=category.id
+	LEFT JOIN fragment ON status.id_fragment=fragment.id)genotype2 WHERE id='$value';";
 	$result = $mysqli->query($sql);
 
 	if($result->num_rows > 0){
-		while($row = $result->fetch_assoc()){
+		$row = $result->fetch_assoc();
 
-			foreach ($header as $key => $value) {
-				$sheet->setCellValue($alphabet[$key].$rowNum, $row[$value]);
+		foreach ($header as $key => $value) {
+
+			switch ($value) {
+				case 'identification':
+				case 'category':
+				case 'sex':
+				case 'population':
+				case 'alive':
+					$sheet->setCellValue($alphabet[$key].$rowNum, $row[$value]);
+					break;
+				
+				default:
+				 	$sql_locus = "SELECT * FROM genotype WHERE restricted!='s' AND id_individual='$row[id]' AND id_locus =(SELECT id FROM locus WHERE locus='$value'); ";
+				 	$result_locus = $mysqli->query($sql_locus);
+				 	$alleles="-";
+					if ($result_locus->num_rows >=2){
+						$alleles="";//limpa alleles
+						while($row_locus = $result_locus->fetch_array()){
+							$alleles.= $row_locus['allele']." ";	
+						}
+					}
+					$sheet->setCellValue($alphabet[$key].$rowNum, trim($alleles));
+					break;
 			}
-			$rowNum++;
 		}
+		$rowNum++;
 	} else {
 		$sheet->setCellValue("A".$rowNum, "Something went wrong!");
 			}

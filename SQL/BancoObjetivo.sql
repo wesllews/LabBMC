@@ -188,7 +188,7 @@ CREATE TABLE `genotype`
  `id_individual` integer NOT NULL ,
  `id_locus`      integer(30) NOT NULL ,
  `allele`        integer NOT NULL ,
- `restrict`      char NULL ,
+ `restricted`      char NULL ,
 
 CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`),
 CONSTRAINT FOREIGN KEY (`id_locus`) REFERENCES `locus` (`id`)

@@ -80,9 +80,6 @@ $headersAdicionais =['category','sex','population','alive'];
 	$status = $status!=""? " AND alive='$_GET[status]'" : "";
 	$filterpopulation = $filterpopulation!=""? " AND population ='$_GET[filterpopulation]'" : "";
 
-/* Evita excesso de modal*/
-$population = [];
-
 $sql= "SELECT * FROM(
 SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, sex,
 CASE
@@ -104,16 +101,29 @@ LEFT JOIN fragment ON status.id_fragment=fragment.id)genotype2 WHERE 1=1";
 
 $sql_pagination = $sql.$sexFilter.$status.$filterpopulation;
 $sql_filter = $sql_pagination.$order.$limit_sql;
-$result_filter = $mysqli->query($sql_filter); 
+$result_filter = $mysqli->query($sql_filter);
+
+/* Evita excesso de modal*/
+$population = []; 
+
+/* Ids dos individuos para download*/
+$download_ids = [];
 ?>
 
 <div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Genotypes and Alelles</h3><hr></div>
 
 <!-- Filtro -->
 	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-sm btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
-	  <i class="fas fa-filter"></i>
-	</button>
+	<div class="filter">
+		<?php if ($_SESSION['adm']=="sim"):?>
+			<div class="mb-2"><button type="submit" form="formDownload" class="btn btn-sm btn-success btn-block">Download</button></div>
+		<?php endif; ?>
+		<div class="mb-2">
+			<button type="button" class="btn btn-sm btn-warning text-white px-3" data-toggle="modal" data-target="#filtro">
+				Filter <i class="fas fa-filter"></i>
+			</button>
+		</div>
+	</div>
 
 	<!-- Modal -->
 	<div class="modal fade" id="filtro" tabindex="-1" role="dialog" aria-labelledby="filtro" aria-hidden="true">
@@ -228,14 +238,14 @@ $result_filter = $mysqli->query($sql_filter);
 		</div>
 	</div>
 
-
 <!-- Forms Hiddens-->
-<form method="get" action="" id="formFiltros">
-	<?php foreach($array as $key => $value): ?>
-		<?php if($value != ""):?>
-		<input type="hidden" name="<?php echo $key;?>" value="<?php echo $value;?>">
-		<?php endif;?>
-	<?php endforeach;?></form>
+	<form method="get" action="" id="formFiltros">
+		<?php foreach($array as $key => $value): ?>
+			<?php if($value != ""):?>
+			<input type="hidden" name="<?php echo $key;?>" value="<?php echo $value;?>">
+			<?php endif;?>
+		<?php endforeach;?>
+	</form>
 
 <!-- Pagination -->
 <?php include 'pagination.php'; ?>
@@ -304,11 +314,9 @@ $result_filter = $mysqli->query($sql_filter);
 					<?php switch ($value):
 
 						case 'identification':?>
+							<?php array_push($download_ids,$row["id"]); ?>
 							<td scope="row">
-								<form method="get" action="individual.php" id="individual">
-									<input type="hidden" name="identification" value="<?php echo $row[$value];?>">
-									<button class=" btn btn-sm btn-outline-success btn-block border-0" type="submit"><?php echo $row[$value];?></button>
-								</form>
+								<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
 							</td>
 						<?php break;?>
 
@@ -436,7 +444,7 @@ $result_filter = $mysqli->query($sql_filter);
 	    				<?php break;?>
 		
 						<?php default:
-						 	$sql_locus = "SELECT * FROM genotype WHERE id_individual='$row[id]' AND id_locus =(SELECT id FROM locus WHERE locus='$value'); ";
+						 	$sql_locus = "SELECT * FROM genotype WHERE restricted!='s' AND id_individual='$row[id]' AND id_locus =(SELECT id FROM locus WHERE locus='$value'); ";
 						 	$result_locus = $mysqli->query($sql_locus);
 							if ($result_locus->num_rows >=2):?>
 								<td scope="row" style="white-space: nowrap;"> 
@@ -460,5 +468,11 @@ $result_filter = $mysqli->query($sql_filter);
 	</div>
 </div>
 
+<!-- Download -->
+	<form id="formDownload" action="download_genotypes.php" method="post">
+		<input type="hidden" name="pagina" value="genotypes">	
+		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">		
+		<input type="hidden" name="download_ids" value="<?php echo htmlentities(serialize($download_ids)); ?>">		
+	</form>
 
 <?php include 'footer.php'; ?>
