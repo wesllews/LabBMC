@@ -36,7 +36,8 @@ switch ($_POST['update']) {
 	case "status":
 		$id = $_POST['id'];
 		$status = $_POST['status'];
-		$query= "UPDATE `login` SET status = '$status' WHERE id='$id';";
+		$date = date('Y-m-d');
+		$query= "UPDATE `login` SET status = '$status', approval_date='$date' WHERE id='$id';";
 		if ($id != 1) {
 			$result = $mysqli->query($query) or die($mysqli->error);
 		} else{
