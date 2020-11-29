@@ -45,44 +45,42 @@ switch ($_POST['update']) {
 			exit;
 		}
 
-		$query= "SELECT * FROM `login` WHERE id='$id';";
-		$result = $mysqli->query($query);
-		$rows = $result->fetch_array();
-
 		//Enviar email notificando a analise do cadastro pela primeira vez apenas
-		if ($rows["approval_date"]=="") {
+		$email = $rows['email'];
+		$subject = 'BLT Database: Login request analyzed';
+		$headers = "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$headers .= "MIME-Version: 1.0\r\n";
 
-			$email = $rows['email'];
-			$subject = 'BLT Database: Login request analyzed';
-			$headers = "Content-Type: text/html; charset=ISO-8859-1\r\n";
-			$headers .= "MIME-Version: 1.0\r\n";
+		// Vars of CSS
+		$permission = "background-color: #007bff;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none; display:inline-block; ";
+		$container = " width: 300px; max-height: 300px; margin:10px auto 10px auto; padding:10% 25% 10% 25%; text-align:center; background-color: #f8f9fa;";
 
-			// Vars of CSS
-			$permission = "background-color: #007bff;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none; display:inline-block; ";
-			$container = " width: 300px; max-height: 300px; margin:10px auto 10px auto; padding:10% 25% 10% 25%; text-align:center; background-color: #f8f9fa;";
+		//Email body
+		$message = '<html><body>';
+		$message .= '
+		<div style="'.$container.'">
+			<h1 style="color: #343a40;">The database administrators have analyzed your login request!</h1>
+			<br>
+			<h2 style="color: #343a40;"> Permission status:<br><b style="'.$permission.'">'.ucfirst($status).'</b></h2>
+		</div>';
+		$message .= '</body></html>';
 
-			//Email body
-			$message = '<html><body>';
-			$message .= '
-			<div style="'.$container.'">
-				<h1 style="color: #343a40;">The database administrators have analyzed your login request!</h1>
-				<br>
-				<h2 style="color: #343a40;"> Permission status:<br><b style="'.$permission.'">'.ucfirst($status).'</b></h2>
-			</div>';
-			$message .= '</body></html>';
-
-			if (mail($email, $subject, $message, $headers)) {
+		if (mail($email, $subject, $message, $headers)) {
+			$query= "SELECT * FROM `login` WHERE id='$id';";
+			$result = $mysqli->query($query);
+			$rows = $result->fetch_array();
+			if ($rows['approval_date']!="") {
 				$query= "UPDATE `login` SET status = '$status',approval_date='$date' WHERE id='$id';";
-				$result = $mysqli->query($query) or die($mysqli->error);
-			} else {
-				echo "<script>alert('Something went wrong! Try Again!!');</script>";
+			}else {
+				$query= "UPDATE `login` SET status = '$status' WHERE id='$id';";
 			}
-		}
-		// Se já foi avaliado alguma vez, ele só atualiza o status sem enviar email 
-		else {
-			$query= "UPDATE `login` SET status = '$status' WHERE id='$id';";
 			$result = $mysqli->query($query) or die($mysqli->error);
 		}
+		else {
+			echo "<script>alert('Something went wrong! Try Again!!');</script>";
+		}
+
+		//Fecha a janela
 		echo "<script>window.close();</script>";
 	break;
 

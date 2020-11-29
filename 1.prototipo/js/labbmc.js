@@ -1,19 +1,3 @@
-// Janela de Historico de cada individuo (captivity)
-function girar(id="girar" ) {
-	 $(document).ready(function() {
-	 	if ($("#"+id).hasClass("fa-chevron-up")) {
-	 		$("#"+id).removeClass("fa-chevron-down");
-	 		$("#"+id).removeClass("fa-chevron-up");
-	 		$("#"+id).addClass("fa-chevron-down");
-	 	} else {
-	 		$("#"+id).removeClass("fa-chevron-up");
-	 		$("#"+id).removeClass("fa-chevron-down");
-	 		$("#"+id).addClass("fa-chevron-up");
-	 	}
-	 });
-}
-
-
 /*OPEN ALL COLLAPSES OF HISTORICS*/
 	$("#showAll").click(function(){
 		$("#showAll").toggleClass("fa-chevron-up").toggleClass("fa-chevron-down");
@@ -85,3 +69,18 @@ function girar(id="girar" ) {
 	  document.body.scrollTop = 0;
 	  document.documentElement.scrollTop = 0;
 	};
+
+// Disable change button if select wasn't changed
+function changeaButton(id){
+    
+}
+
+function changeButton(id, valorAtual) {
+	 $(document).ready(function() {
+	 	if(document.getElementById("selectStatus"+id).value!=valorAtual){
+	 	    document.getElementById("changeStatus"+id).disabled=false;
+	 	} else{
+	 		document.getElementById("changeStatus"+id).disabled=true;
+	 	}
+	 });
+}

@@ -135,7 +135,11 @@ $result_filter = $mysqli->query($sql_filter);
 								<form action="user_update.php" method="post" target="_blank">
 									<input type="hidden" name="update" value="status">
 									<input type="hidden" name="id" value="<?php echo $row[id];?>">
-									<select class="form-control form-control-sm" name="status" style="min-width: 120px;" onchange="this.form.submit()">
+									<div class="d-flex flex-nowrap">
+										<select class="form-control form-control-sm" style="min-width: 120px;" name="status" id="selectStatus<?php echo $row[id];?>" onchange="changeButton('<?php echo $row[id];?>','<?php echo $row[status];?>')">
+										<?php if ($row[$value]=="requested"): ?>
+											<option selected disabled> Requested</option>
+										<?php endif; ?>
 										<option value="administrator" <?php echo $row[$value]=="administrator"? "selected":"";?>>
 											Administrator
 										</option>
@@ -145,15 +149,16 @@ $result_filter = $mysqli->query($sql_filter);
 										<option value="denied" <?php echo $row[$value]=="denied"? "selected":"";?>>
 											Denied
 										</option>
-										<option value="requested" <?php echo $row[$value]=="requested"? "selected":"";?>>
-											Requested
-										</option>
 									</select>
+									<button type="submit" class="btn btn-success btn-sm ml-2" id ="changeStatus<?php echo $row[id];?>" disabled>Change</button>
+									</div>
+									
 								</form>
 							<?php break; ?>
 
 							<?php case 'request_date':?>
-								<?php echo date('d/m/Y', strtotime($row[$value])); ?>
+							<?php case 'approval_date':?>
+								<?php echo date('m/d/Y', strtotime($row[$value])); ?>
 							 <?php break; ?>
 							
 							<?php default:?>
