@@ -45,9 +45,14 @@ switch ($_POST['update']) {
 			exit;
 		}
 
+		// Carrega dados do usuário alterado
+		$query= "SELECT * FROM `login` WHERE id='$id';";
+		$result = $mysqli->query($query);
+		$rows = $result->fetch_array();
+
 		//Enviar email notificando a analise do cadastro pela primeira vez apenas
 		$email = $rows['email'];
-		$subject = 'BLT Database: Login request analyzed';
+		$subject = 'BLT Database: Profile analysis';
 		$headers = "Content-Type: text/html; charset=ISO-8859-1\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 
@@ -59,16 +64,16 @@ switch ($_POST['update']) {
 		$message = '<html><body>';
 		$message .= '
 		<div style="'.$container.'">
-			<h1 style="color: #343a40;">The database administrators have analyzed your login request!</h1>
+			<h1 style="color: #343a40;">The database administrators analyzed your profile.</h1>
 			<br>
 			<h2 style="color: #343a40;"> Permission status:<br><b style="'.$permission.'">'.ucfirst($status).'</b></h2>
 		</div>';
 		$message .= '</body></html>';
+		$message .= 'Contact '.$_SESSION['email'].' for more information on analyzing your profile.';
+
+		
 
 		if (mail($email, $subject, $message, $headers)) {
-			$query= "SELECT * FROM `login` WHERE id='$id';";
-			$result = $mysqli->query($query);
-			$rows = $result->fetch_array();
 			if ($rows['approval_date']!="") {
 				$query= "UPDATE `login` SET status = '$status',approval_date='$date' WHERE id='$id';";
 			}else {
