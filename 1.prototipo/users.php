@@ -158,7 +158,11 @@ $result_filter = $mysqli->query($sql_filter);
 
 							<?php case 'request_date':?>
 							<?php case 'approval_date':?>
-								<?php echo date('m/d/Y', strtotime($row[$value])); ?>
+								<?php if ($row[$value]!=""){
+									echo date('m/d/Y', strtotime($row[$value]));
+								} else{
+									echo "-";
+								} ?>
 							 <?php break; ?>
 							
 							<?php default:?>

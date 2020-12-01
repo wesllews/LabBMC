@@ -74,7 +74,7 @@ switch ($_POST['update']) {
 		
 
 		if (mail($email, $subject, $message, $headers)) {
-			if ($rows['approval_date']!="") {
+			if ($rows['approval_date']=="") {
 				$query= "UPDATE `login` SET status = '$status',approval_date='$date' WHERE id='$id';";
 			}else {
 				$query= "UPDATE `login` SET status = '$status' WHERE id='$id';";
