@@ -76,9 +76,6 @@ $headersAdicionais =['name','sex','fragment','group','longitude','latitude','inf
 			"filterpopulation" => $filterpopulation,
 		);
 
-/* Evita excesso de modal*/
-$fragment = [];
-
 $sql = "SELECT *,individual.id as id
 FROM `individual` 
 INNER JOIN status ON individual.id=status.id_individual 
@@ -89,16 +86,29 @@ WHERE id_category=2";
 $sql_pagination = $sql.$sexFilter_sql.$filterpopulation_sql;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
+
+/* Evita excesso de modal*/
+$fragment = [];
+
+/* Ids dos individuos para download*/
+$download_ids = [];
 ?>
 
+<!-- Header page -->
 <div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Wild</h3><hr></div>
 
 <!-- Filtro -->
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-sm btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
-	Filter
-	<i class="fas fa-filter"></i>
-  </button>
+  <div class="filter">
+  	<?php if ($_SESSION['adm']=="sim"):?>
+  		<div class="mb-2"><button type="submit" form="formDownload" class="btn btn-sm btn-success btn-block">Download</button></div>
+  	<?php endif; ?>
+  	<div class="mb-2">
+  		<button type="button" class="btn btn-sm btn-warning text-white px-3" data-toggle="modal" data-target="#filtro">
+  			Filter <i class="fas fa-filter"></i>
+  		</button>
+  	</div>
+  </div>
 
   <!-- Modal -->
   <div class="modal fade" id="filtro" tabindex="-1" role="dialog" aria-labelledby="filtro" aria-hidden="true">
@@ -214,10 +224,12 @@ $result_filter = $mysqli->query($sql_filter);
 				  <div class="d-flex justify-content-center align-items-end text-warning">
 					<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 					<!--Icon-->
-					<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
-					onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
-					<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
-					</button>
+					<?php if($value!='informations'): ?>
+						<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
+						onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
+							<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
+						</button>
+					<?php endif; ?>
 				  </div>
 				</th>
 			  <?php endforeach ?>
@@ -232,6 +244,7 @@ $result_filter = $mysqli->query($sql_filter);
 				  <?php switch($value):
 
 					case 'identification': ?>
+						<?php array_push($download_ids,$row["id"]); ?>
 					  <td scope="row">
 						<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
 					  </td>
@@ -333,6 +346,12 @@ $result_filter = $mysqli->query($sql_filter);
 	</table>
   </div>
 </div>
+
+<!-- Download -->
+	<form id="formDownload" action="download_wild.php" method="post">
+		<input type="hidden" name="pagina" value="wild">	
+		<input type="hidden" name="download_ids" value="<?php echo htmlentities(serialize($download_ids)); ?>">		
+	</form>
 
 
 
