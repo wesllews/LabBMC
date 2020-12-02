@@ -3,7 +3,7 @@ session_start();
 include "connection.php";
 
 //Checa se a pessoa é administradora
-if(in_array($_SESSION['login'],array("administrator","collaborator"))){
+if(in_array($_SESSION['status'],array("administrator","collaborator"))){
 	$_SESSION['adm']="sim";
 } else{
 	$_SESSION['adm']="nao";
@@ -101,7 +101,7 @@ if($_SESSION['adm']=="nao" && $_SESSION['pagina']=='admin'){
 
 					</li>
 
-					<?php if(in_array($_SESSION['login'],array("administrator","collaborator"))): ?>
+					<?php if(in_array($_SESSION['status'],array("administrator","collaborator"))): ?>
 						<li class="nav-item">
 							<a class="nav-link text-warning <?php if($_SESSION['pagina']=='admin'){echo "active";} ?>" href="admin.php"><i class="fas fa-cog"></i> Dashboard</a>
 						</li>
@@ -110,7 +110,7 @@ if($_SESSION['adm']=="nao" && $_SESSION['pagina']=='admin'){
 				</ul>
 
 				<!-- User Name -->
-				<?php if(isset($_SESSION['login']) && $_SESSION['login']!="nao"): ?>
+				<?php if(isset($_SESSION['login']) && $_SESSION['login']=="sim"): ?>
 					<a class="btn btn-danger my-2 my-sm-0" href="logout.php">Logout</a>
 				<?php else: ?>
 					<a class="btn btn-success my-2 my-sm-0" href="login.php">Register / Login</a>
