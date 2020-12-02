@@ -90,7 +90,7 @@ if (isset($_POST['email']) && !isset($_POST["validatepassword"])) {
 
 				<div class="col-xs-12 col-lg-6 my-5 py-5">
 
-				<!------- ALERTS ------>
+					<!------- ALERTS ------>
 					<?php if($_SESSION['password']=="sent"): ?>
 						<div class="alert alert-success alert-dismissible fade show" role="alert">
 							Check your email and spam for the subject "BLT Database: New password".
@@ -114,7 +114,7 @@ if (isset($_POST['email']) && !isset($_POST["validatepassword"])) {
 						</div>
 					<?php endif; ?>
 
-				<!------- Forms ------>
+					<!-- Inserir email cadastrado -->
 					<?php if (!isset($_POST["validatepassword"]) && !in_array($_SESSION['password'], array("sent","changed"))):?>		
 							<form role="form" method="POST" action="forgotpassword.php">
 								<fieldset>							
@@ -128,6 +128,8 @@ if (isset($_POST['email']) && !isset($_POST["validatepassword"])) {
 									</div>
 									</fieldset>
 							</form>	
+
+					<!-- Link vindo do email -->
 					<?php elseif(isset($_POST["validatepassword"])): ?>
 						<?php 
 						$validatepassword = md5($_POST["validatepassword"]);
@@ -138,14 +140,33 @@ if (isset($_POST['email']) && !isset($_POST["validatepassword"])) {
 							<form role="form" method="POST" action="user_update.php">
 								<fieldset>							
 									<p class="text-uppercase font-weight-bold"> Reset your password: </p>	
-											
+									<!--Input email -->
 									<div class="form-group">
 										<input type="email" name="email" class="form-control input-lg" value="<?php echo $email; ?>" readonly>
-										<br>
-										<input type="password" name="password" id="password" class="form-control input-lg" placeholder="New Password" required>
-										<input type="hidden" name="update" value="password">
 									</div>
+									<!--Input senha -->
+									<div class="form-group">
+										<div class="input-group">
+											<input type="password" name="password" id="password" class="form-control input-lg" placeholder="New Password" required>
+											<div class="input-group-prepend">
+												<div class="input-group-text" data-toggle="popover" tabindex="0"  data-trigger="focus" data-container="body" data-placement="top" data-html="true" data-content="
+												The password must contain:
+												<ul>
+													<li>Lowercase alphabetical character</li>
+													<li>Uppercase alphabetical character</li>
+													<li>Numeric character</li>
+													<li>Special character(e.g. !@#$%^&*)</li>
+													<li>8 characters or longer</li>
+												</ul>">
+													<i class="fas fa-question"></i>
+												</div>
+											</div>
+										</div>								
+										<small id="password-sm" class="text-danger"></small>
+									</div>
+									<!--Botão Submit-->
 									<div>
+										<input type="hidden" name="update" value="password">
 										<input type="submit" class="btn btn-warning btn-block" value="Submit">
 									</div> 
 									</fieldset>
@@ -159,7 +180,7 @@ if (isset($_POST['email']) && !isset($_POST["validatepassword"])) {
 							</div>
 						<?php endif;?>
 
-				<!---- Changed --->
+					<!---- Senha trocada --->
 					<?php elseif($_SESSION['password']=="changed"): ?>
 						<div class="alert alert-success alert-dismissible fade show" role="alert">
 							Your password has been successfully changed!!!

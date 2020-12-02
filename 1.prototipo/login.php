@@ -40,6 +40,7 @@ include "connection.php"; ?>
 			<hr>
 
 			<div class="row">
+				<!--Login-->
 				<div class="order-xs-1 col-md-5">
 					<?php 
 					$password = md5($_POST['password']);
@@ -49,21 +50,31 @@ include "connection.php"; ?>
 					if ($rows==1) {
 						$rows = $result->fetch_array();
 
-						if($rows['status']!="requested"){
+						if(!in_array($rows['status'], array("requested","denied"))){
 							$_SESSION['login']=$rows['status'];
 							$_SESSION['email']=$rows['email'];
 							header("Location: index.php");
-						} else {
-							$_SESSION['login']="requested";
+						} elseif($rows['status']=="requested") {
+							$_SESSION['login']=$rows['status'];
 							?>
-							<div class="alert alert-success alert-dismissible fade show" role="alert">
-								Your request is under evaluation! We will contact you by email when it is approved!
+							<div class="alert alert-primary alert-dismissible fade show" role="alert">
+								Your request is under evaluation! We will contact you by email when it is analyzed!
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
 							<?php
-						}
+						} elseif($rows['status']=="denied") {
+							$_SESSION['login']=$rows['status'];
+							?>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Unfortunately your access was denied! Try to contact our administrators to review your profile.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<?php
+						}						
 					}	elseif(isset($_POST['email'])) {
 						$_SESSION['login']="nao";
 						?>
@@ -85,7 +96,7 @@ include "connection.php"; ?>
 								<input type="email" name="email" id="email" class="form-control input-lg" placeholder="E-mail" required>
 							</div>
 							<div class="form-group">
-								<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" required>
+								<input type="password" name="password" id="login_password" class="form-control input-lg" placeholder="Password" required>
 								<a href="forgotpassword.php" class="btn float-right font-italic text-decoration-none text-secondary" style="font-size: 12px;">Forgot your password?</a>
 							</div>
 							<div>
@@ -100,6 +111,7 @@ include "connection.php"; ?>
 					<!-------null------>
 				</div>
 
+				<!--Register-->
 				<div class="col-md-5">
 					<?php if($_SESSION['register']=="exist"):	?>
 						<div class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -129,27 +141,50 @@ include "connection.php"; ?>
 						<?php unset($_SESSION['register']); ?>
 					<?php endif;?>
 
-					<form role="form" method="post" action="register.php">
+					<form id="register" method="post" action="#">
 						<fieldset>							
 							<p class="text-uppercase font-weight-bold"> Register</p>	
 								<div class="form-group">
-								<input type="text" name="name" id="name" class="form-control input-lg" placeholder="Name" required>
+								<input type="text" name="name" id="register_name" class="form-control input-lg" placeholder="Name" required>
+								<small id="register_name-sm" class="text-danger"></small>
 							</div>
 
 							<div class="form-group">
-								<input type="text" name="institution" id="institution" class="form-control input-lg" placeholder="Institution" required>
-							</div>
-							<div class="form-group">
-								<input type="email" name="email" id="email" class="form-control input-lg" placeholder="E-mail Address" required>
-							</div>
-							<div class="form-group">
-								<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" required>
-							</div>
-							<div class="form-group">
-								<textarea class="form-control input-lg" name="justification" placeholder="Justify Permission" rows="3" required></textarea>
+								<input type="text" name="institution" id="register_institution" class="form-control input-lg" placeholder="Institution" required>
+								<small id="register_institution-sm" class="text-danger"></small>
 							</div>
 
-							<input type="submit" class="btn btn-secondary btn-block float-right" value="Register">
+							<div class="form-group">
+								<input type="email" name="email" id="register_email" class="form-control input-lg" placeholder="E-mail Address" required>
+								<small id="register_email-sm" class="text-danger"></small>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group">
+									<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" required>
+									<div class="input-group-prepend">
+										<div class="input-group-text" data-toggle="popover" tabindex="0"  data-trigger="focus" data-container="body" data-placement="top" data-html="true" data-content="
+										The password must contain:
+										<ul>
+											<li>Lowercase alphabetical character</li>
+											<li>Uppercase alphabetical character</li>
+											<li>Numeric character</li>
+											<li>Special character(e.g. !@#$%^&*)</li>
+											<li>8 characters or longer</li>
+										</ul>">
+											<i class="fas fa-question"></i>
+										</div>
+									</div>
+								</div>								
+								<small id="password-sm" class="text-danger"></small>
+							</div>
+
+							<div class="form-group">
+								<textarea class="form-control input-lg" name="justification" id="register_justification" placeholder="Justify Permission" rows="3" required></textarea>
+								<small id="register_justification-sm" class="text-danger"></small>
+							</div>
+
+							<input type="submit" form="register" class="btn btn-secondary btn-block float-right" value="Register">
 						</fieldset>
 					</form>
 				</div>					

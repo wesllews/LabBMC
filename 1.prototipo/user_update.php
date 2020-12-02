@@ -29,7 +29,8 @@ switch ($_POST['update']) {
 			$result = $mysqli->query($query) or die($mysqli->error);
 			$_SESSION['password']="changed";
 			header("Location: forgotpassword.php");
-
+		} else {
+			echo $query= "UPDATE `login` SET password = '$novasenha_md5' WHERE email='$email';";
 		}
 	break;
 
