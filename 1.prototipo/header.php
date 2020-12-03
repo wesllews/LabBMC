@@ -2,15 +2,15 @@
 session_start();
 include "connection.php";
 
-//Checa se a pessoa é administradora
+//Define as regras de permissão
 if(in_array($_SESSION['status'],array("administrator","collaborator"))){
-	$_SESSION['adm']="sim";
+	$_SESSION['permission'] = array("download","dashboard");
 } else{
-	$_SESSION['adm']="nao";
+	$_SESSION['permission'] = array("read");
 }
 
 // Não deixa entrar em paginas de administração
-if($_SESSION['adm']=="nao" && $_SESSION['pagina']=='admin'){
+if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin'){
 	header("Location: login.php");
 }
  ?>
@@ -101,7 +101,7 @@ if($_SESSION['adm']=="nao" && $_SESSION['pagina']=='admin'){
 
 					</li>
 
-					<?php if(in_array($_SESSION['status'],array("administrator","collaborator"))): ?>
+					<?php if(in_array("dashboard",$_SESSION['permission'])): ?>
 						<li class="nav-item">
 							<a class="nav-link text-warning <?php if($_SESSION['pagina']=='admin'){echo "active";} ?>" href="admin.php"><i class="fas fa-cog"></i> Dashboard</a>
 						</li>
@@ -115,13 +115,6 @@ if($_SESSION['adm']=="nao" && $_SESSION['pagina']=='admin'){
 				<?php else: ?>
 					<a class="btn btn-success my-2 my-sm-0" href="login.php">Register / Login</a>
 				<?php endif; ?>
-
-				<!-- Search 
-				<form class="form-inline mt-2 mt-md-0" >
-					<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-				</form>
-				-->
 			</div>
 
 		</nav>

@@ -113,7 +113,7 @@ $download_ids = [];
 <!-- Filtro -->
 	<!-- Button trigger modal -->
 	<div class="filter">
-		<?php if ($_SESSION['adm']=="sim"):?>
+		<?php if(in_array("download",$_SESSION['permission'])):?>
 			<div class="mb-2"><button type="submit" form="formDownload" class="btn btn-sm btn-success btn-block">Download</button></div>
 		<?php endif; ?>
 		<div class="mb-2">
