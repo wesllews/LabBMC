@@ -23,16 +23,16 @@ include 'header.php';
 				<h4>Users <span class="badge badge-dark"><?php echo $num; ?></span></h4>
 			</a>
 		</div>
+		<!---->
+		<div class="col-lg-4 p-4">
+			<a class="col btn bg-light shadow-sm border-0 py-2" href="captivity_insert.php">
+				<h4>Captivity</h4>
+			</a>
+		</div>
 		<!---->		
 		<div class="col-lg-4 p-4">
 			<a class="col btn bg-light shadow-sm border-0 py-2 disabled" href="#">
 				<h4>Populations</h4>
-			</a>
-		</div>
-		<!---->
-		<div class="col-lg-4 p-4">
-			<a class="col btn bg-light shadow-sm border-0 py-2 disabled" href="#">
-				<h4>Captivity</h4>
 			</a>
 		</div>
 		<!---->

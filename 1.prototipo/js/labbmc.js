@@ -144,15 +144,17 @@ if ($("#register_name").length) {
   var passwordReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
   return passwordReg.test(password);
 }
-document.getElementById("password").addEventListener("focusout", function(){
-	password = document.getElementById("password").value;
-	if(!validatepassword(password)){
-		$("#password").addClass("is-invalid");
-		document.getElementById("password-sm").textContent="Please, enter a valid password!";
-		document.getElementById("password").focus();
-	} else {
-		$("#password").removeClass("is-invalid");
- 		$("#password").addClass("is-valid");
- 		document.getElementById("password-sm").textContent="";
-	}
-});
+if ($("#password").length) {
+	document.getElementById("password").addEventListener("focusout", function(){
+		password = document.getElementById("password").value;
+		if(!validatepassword(password)){
+			$("#password").addClass("is-invalid");
+			document.getElementById("password-sm").textContent="Please, enter a valid password!";
+			document.getElementById("password").focus();
+		} else {
+			$("#password").removeClass("is-invalid");
+	 		$("#password").addClass("is-valid");
+	 		document.getElementById("password-sm").textContent="";
+		}
+	});
+}
