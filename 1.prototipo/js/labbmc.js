@@ -158,3 +158,51 @@ if ($("#password").length) {
 		}
 	});
 }
+
+if ($("#hidden_institute").length) {
+	//https://stackoverflow.com/questions/25856704/how-can-i-access-an-array-declared-in-an-html-hidden-input-from-a-javascript-fun
+	$(document).ready(function(){
+
+		$(this).on("click",".add_historic",function(){
+			var institute = document.getElementById("hidden_institute").value.split(',');
+			var id = document.getElementById("hidden_id").value.split(',');
+			var html = '<div class="row">\
+				<div class="form-group col">\
+					<label>Event:</label>\
+					<select name="sex" class="form-control form-control-sm">\
+						<option selected disabled>Choose...</option>\
+						<option value="Birth">Birth</option>\
+						<option value="Capture">Capture</option>\
+						<option value="Death">Death</option>\
+					</select>\
+				</div>\
+				<div class="form-group col">\
+					<label>Date:</label>\
+					<input type="date" name="date" class="form-control form-control-sm">\
+				</div>\
+				<div class="form-group col">\
+					<label>Population:</label>\
+					<select name="institution" class="form-control form-control-sm">\
+						<option selected disabled>Choose...</option>';
+						for (var i = 0; i < id.length; i++) {
+							html+='<option value="'+id[i]+'">'+institute[i]+'</option>'
+						}
+			html+=	'</select>\
+				</div>\
+				<div class="form-group col">\
+					<label>ID local:</label>\
+					<input type="text" name="local_id" class="form-control form-control-sm" placeholder="Identifier at the specific institution">\
+				</div>\
+				<div class="form-group col-lg-1 mt-auto px-1">\
+					<button class="btn btn-sm btn-block btn-danger float-center remove_historic" style="white-space: nowrap;">Remove</button>\
+				</div>\
+			</div>';
+			$(".historic").append(html);
+		});
+
+		$(this).on("click",".remove_historic",function(){
+			var target_input = $(this).parentsUntil(".historic");
+			target_input.remove();
+		});
+	});
+}

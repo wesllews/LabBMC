@@ -3,71 +3,91 @@ session_start();
 $_SESSION['pagina']='admin';
 include 'header.php';
 ?>
-<div class="container text-center mt-3">
-	<h4 class="text-warning font-weight-bold">Add Captivity Individuals</h4>
-	<hr>
+<div class="container text-center mt-5 mb-5">
+	<h4 class="text-warning font-weight-bold">Captivity Individuals</h4>
 </div>
-<div class="container">
+<div class="container mb-4">
+	
+	<!-- Informações sobre o indivíduo-->
+	<div class="font-weight-bold">Individual<hr class="mt-0 mb-2"></div>
 	<div class="row">
-		<!-- Informações sobre o indivíduo-->
-		<div class="col-sm-3">
-			<div class="form-group row">
-				<label>Identification:</label>
-				<input type="text" name="identification" class="form-control" placeholder="e.g. 478, TE064, MAM-0001">
-			</div>
-			<div class="form-group row">
-				<label>Category:</label>
-				<select name="category" class="form-control">
-					<option selected disabled>Choose...</option>
-					<option value="1">Captivity</option>
-					<option value="2">Wild</option>
-				</select>
-			</div>
-			<div class="form-group row">
-				<label>Sex:</label>
-				<select name="sex" class="form-control">
-					<option selected disabled>Choose...</option>
-					<option value="Female">Female</option>
-					<option value="Male">Male</option>
-					<option value="Unknown">Unknown</option>
-				</select>
-			</div>
-			<div class="form-group row">
-				<label>Name:</label>
-				<input type="text" name="name" class="form-control" placeholder="e.g. ROXXANE">
-			</div>
+		<div class="form-group col">
+			<label>Identification:</label>
+			<input type="text" name="identification" class="form-control form-control-sm" placeholder="e.g. 478, TE064, MAM-0001">
+		</div>
+		<div class="form-group col">
+			<label>Sex:</label>
+			<select name="sex" class="form-control form-control-sm">
+				<option selected disabled>Choose...</option>
+				<option value="Female">Female</option>
+				<option value="Male">Male</option>
+				<option value="Unknown">Unknown</option>
+			</select>
+		</div>
+		<div class="form-group col">
+			<label>Name:</label>
+			<input type="text" name="name" class="form-control form-control-sm" placeholder="e.g. ROXXANE">
+		</div>
+		<div class="form-group col">
+			<label>Status:</label>
+			<select name="category" class="form-control form-control-sm">
+				<option selected disabled>Choose...</option>
+				<option value="1">Alive</option>
+				<option value="0">Death</option>
+				<option value="">Unkknown</option>
+			</select>
 		</div>
 
-		<!-- Form de histórico-->
-		<div class="offset-sm-1 col-sm-8">
-			<div class="form-group row">
+	</div>
+
+	<!-- Form de histórico-->
+	<div class="historic">
+		
+		<div class="font-weight-bold">Historic<hr class="mt-0 mb-2"></div>		
+		<div class="row">
+			<div class="form-group col">
 				<label>Event:</label>
-				<select name="sex" class="form-control">
+				<select name="sex" class="form-control form-control-sm">
 					<option selected disabled>Choose...</option>
 					<option value="Birth">Birth</option>
 					<option value="Capture">Capture</option>
 					<option value="Death">Death</option>
 				</select>
 			</div>
-			<div class="form-group row">
+			<div class="form-group col">
 				<label>Date:</label>
-				<input type="date" name="date" class="form-control">
+				<input type="date" name="date" class="form-control form-control-sm">
 			</div>
-			<div class="form-group row">
-				<label>Institution:</label>
-				<select name="institution" class="form-control">
+			<div class="form-group col">
+				<label>Population:</label>
+				<select name="institution" class="form-control form-control-sm">
 					<option selected disabled>Choose...</option>
-					<option value="1">Dureel</option>
-					<option value="2">Zoo Bauru</option>
+					<?php 
+					$sql_institute = "SELECT * FROM institute";
+					$query = $mysqli->query($sql_institute);
+					$institute="";
+					$id="";				
+					while ($row = $query->fetch_array()):?>
+					  <option value="<?php echo $row["id"]; ?>"><?php echo $row["abbreviation"]," - ",$row["name"]; ?></option>
+						<?php
+						$institute.=$row["abbreviation"]." - ".$row["name"].",";
+						$id.=$row["id"].",";
+						?>
+					<?php endwhile; ?>
+					<input type="hidden" id="hidden_institute" value="<?php echo $institute;?>">
+					<input type="hidden" id="hidden_id" value="<?php echo $id;?>">
 				</select>
 			</div>
-			<div class="form-group row">
-				<label>ID local:</label>
-				<input type="text" name="local_id" class="form-control" placeholder="Identifier at the specific institution">
+			<div class="form-group col">
+				<label style="white-space: nowrap;">ID local:</label>
+				<input type="text" name="local_id" class="form-control form-control-sm" placeholder="Identifier at the specific institution">
+			</div>
+			<div class="form-group col-lg-1 mt-auto px-1">
+				<button class="btn btn-sm btn-block btn-success add_historic" style="white-space: nowrap;">Add more</button>
 			</div>
 		</div>
+		<hr class="mt-0 mb-2">
 	</div>
+	<button class="btn btn-block btn-success mt-5" style="white-space: nowrap;">Insert Data</button>	
 </div>
-
-
 <?php include 'footer.php'; ?>
