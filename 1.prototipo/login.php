@@ -50,10 +50,10 @@ include "connection.php"; ?>
 							<p class="text-uppercase font-weight-bold"> Login using your account: </p>	
 
 							<div class="form-group">
-								<input type="email" name="email" id="email" class="form-control input-lg" placeholder="E-mail" required>
+								<input type="email" name="login_email" id="email" class="form-control input-lg" placeholder="E-mail" required>
 							</div>
 							<div class="form-group">
-								<input type="password" name="password" id="login_password" class="form-control input-lg" placeholder="Password" required>
+								<input type="password" name="login_password" id="login_password" class="form-control input-lg" placeholder="Password" required>
 								<a href="forgotpassword.php" class="btn float-right font-italic text-decoration-none text-secondary" style="font-size: 12px;">Forgot your password?</a>
 							</div>
 							<div>
@@ -98,7 +98,7 @@ include "connection.php"; ?>
 						<?php unset($_SESSION['register']); ?>
 					<?php endif;?>
 
-					<form id="register" method="post" action="#">
+					<form id="register" method="post" action="register.php">
 						<fieldset>							
 							<p class="text-uppercase font-weight-bold"> Register</p>	
 								<div class="form-group">

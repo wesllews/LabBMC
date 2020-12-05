@@ -1,6 +1,6 @@
 <?php 
-$password = md5($_POST['password']);
-$query= "SELECT * FROM `login` WHERE email='$_POST[email]' and password='$password';";
+$password = md5($_POST['login_password']);
+$query= "SELECT * FROM `login` WHERE email='$_POST[login_email]' and password='$password';";
 $result = $mysqli->query($query);
 $rows =$result->num_rows;
 if ($rows==1) {
@@ -32,7 +32,7 @@ if ($rows==1) {
 		</div>
 		<?php
 	}						
-}	elseif(isset($_POST['email'])) {
+}	elseif(isset($_POST['login_email'])) {
 	$_SESSION['login']="nao";
 	?>
 	<div class="alert alert-danger alert-dismissible fade show" role="alert">
