@@ -40,7 +40,7 @@ switch ($_POST['update']) {
 		$date = date('Y-m-d');
 
 		// Testa se não é um usuário protegido de alteração
-		if (in_array($id, array(7)) ) {
+		if (in_array($id, array(1)) ) {
 			echo "<script>alert('You are not allowed to change the status of that user!');</script>";
 			echo "<script>window.close();</script>";
 			exit;

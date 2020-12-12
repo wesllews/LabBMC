@@ -26,6 +26,7 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="google-site-verification" content="w3Rey0pC0aRXS90rt23RMktJ-EewjpZ_l_YQU1PnCsU" />
 
 		<!--Bootstrap CSS-->
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
