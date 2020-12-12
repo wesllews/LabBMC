@@ -280,13 +280,12 @@ $download_ids = [];
 			<?php while($row = $result_filter->fetch_array()): ?>
 		    	<tr class="text-center">
 		    		<?php foreach ($header as $value): ?>
+		    			<td scope="row">
 		    			<?php switch($value):
 
 		    				case 'identification': ?>
 		    					<?php array_push($download_ids,$row["id"]); ?>
-			    				<td scope="row">
 			    					<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
-			    				</td>
 		    					<?php break;?>
 
 		    				<?php case "historic":
@@ -294,7 +293,6 @@ $download_ids = [];
 		    					$result_historic = $mysqli->query($sql_historic);
 		    					$num = $result_historic->num_rows ?>
 
-		    					<td scope="row">
 			    					<?php if ($num>=1): ?>
 			    						<div class="card">
 											<div class="btn btn-sm btn-light" onclick="girar('girar<?php echo $row['identification'];?>')" data-toggle="collapse" data-target="#collapse<?php echo $row['identification'];?>">
@@ -318,7 +316,6 @@ $download_ids = [];
 			    					<?php else: ?>
 			    						-
 			    					<?php endif; ?>
-			    				</td>
 		    					<?php break;?>
 
 		    				<?php case 'population':					
@@ -327,7 +324,6 @@ $download_ids = [];
 
 		    					if ($result_population->num_rows > 0): 
 		    						$row_population = $result_population->fetch_array();?>
-		    						<td scope="row">
 		    							<!-- Trigger Modal -->
 		    							<button type="button" class="btn btn-sm btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#institute<?php echo $row['id_institute']; ?>" style="white-space: nowrap;">
 		    							  <?php echo $row_population['abbreviation']; ?>
@@ -384,60 +380,51 @@ $download_ids = [];
 												</div>
 											</div>
 		    							<?php endif; ?>
-		    						</td>
 		    					<?php else: ?>
-		    						<td scope="row">-</td>
+		    						-
 		    					<?php endif; ?>
-		    					<?php break;?>
+		    				<?php break;?>
 
 		    				<?php case "sire": ?>
 		    				<?php case "dam": 
 		    					$sql_kinship = "SELECT * FROM `individual` WHERE id='$row[$value]'";
 			    				$result_kinship = $mysqli->query($sql_kinship);
 			    				$row_kinship = $result_kinship->fetch_array();?>
-			    				<td scope="row">
 			    					<a class="btn btn-sm btn-outline-dark btn-block border-0" href="individual.php?identification=<?php echo $row_kinship['identification'];?>"><?php echo $row_kinship['identification'];?></a>
-			    				</td>
 		    					<?php break;?>
 
 		    				<?php case 'alive': ?>
-	    						<td scope="row">
-	    							<?php switch($row[$value]):
-	    							case '1': ?>
-	    								<div class="btn btn-sm text-success" style="cursor:auto;">True</div>
-	    							<?php break;?>
+    							<?php switch($row[$value]):
+    							case '1': ?>
+    								<div class="btn btn-sm text-success" style="cursor:auto;">True</div>
+    							<?php break;?>
 
-	    							<?php case '0': ?>
-	    								<div class="btn btn-sm text-danger" style="cursor:auto;" > False</div>
-	    							<?php break;?>
+    							<?php case '0': ?>
+    								<div class="btn btn-sm text-danger" style="cursor:auto;" > False</div>
+    							<?php break;?>
 
-	    							<?php default: ?>
-	    								<div class="btn btn-sm text-secondary" style="cursor:auto;">Unknown</div>
-	    							<?php endswitch; ?>
-	    						</td>
-		    					<?php break;?>
+    							<?php default: ?>
+    								<div class="btn btn-sm text-secondary" style="cursor:auto;">Unknown</div>
+    							<?php endswitch; ?>
+	    					<?php break;?>
 
 		    				<?php case 'informations': 
 		    					$sql_informations = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
 		    					$result_informations = $mysqli->query($sql_informations);
 
 			    					if ($result_informations->num_rows > 0): ?>
-			    						<td scope="row">
 			    						<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
 			    						<button type="button" class="btn btn-sm btn-primary disabled">Genomics</button>
-			    						</td>
 			    					<?php else: ?>
-			    						<td scope="row">
 			    						<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
 			    						<button type="button" class="btn btn-sm btn-secondary disabled">Genomics</button>
-			    						</td>
 			    					<?php endif; ?>
 		    					<?php break;?>
 
 		    				<?php default: ?>
-		    					<td scope="row"><div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div></td>
-		    				
+		    					<div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div>		    				
 		    			<?php endswitch; ?>
+		    			</td>   			
 		    		<?php endforeach; ?>
 		    	</tr>
 			<?php endwhile; ?>

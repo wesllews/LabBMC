@@ -30,7 +30,7 @@ include 'header.php';
 			</div>
 			<div class="form-group col">
 				<label>Status:</label>
-				<select name="category" class="form-control form-control-sm">
+				<select name="status" class="form-control form-control-sm">
 					<option selected disabled>Choose...</option>
 					<option value="1">Alive</option>
 					<option value="0">Death</option>
