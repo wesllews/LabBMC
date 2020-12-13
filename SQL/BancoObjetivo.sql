@@ -162,6 +162,7 @@ CREATE TABLE `kinship`
  `sire`          integer NOT NULL ,
  `dam`           integer NOT NULL ,
 
+PRIMARY KEY (`id_individual`),
 CONSTRAINT FOREIGN KEY (`sire`) REFERENCES `individual` (`id`),
 CONSTRAINT FOREIGN KEY (`dam`) REFERENCES `individual` (`id`),
 CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`)

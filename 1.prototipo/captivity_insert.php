@@ -7,7 +7,7 @@ include 'header.php';
 	<h4 class="text-warning font-weight-bold">Captivity Individuals</h4>
 </div>
 <?php if(!isset($_GET['identification'])):?>
-	<form method="GET"class="container mb-4">
+	<form method="GET" class="container mb-4">
 		
 		<!-- Informações sobre o indivíduo-->
 			<div class="font-weight-bold">Individual<hr class="mt-0 mb-2"></div>
@@ -49,7 +49,7 @@ include 'header.php';
 				</div>
 				<div class="form-group col">
 					<label>Dam identification:</label>
-					<input type="text" name="Dam" class="form-control form-control-sm" placeholder="e.g. 478, TE064, MAM-0001">
+					<input type="text" name="dam" class="form-control form-control-sm" placeholder="e.g. 478, TE064, MAM-0001">
 				</div>
 			</div>
 
@@ -114,22 +114,34 @@ include 'header.php';
 	$problem=FALSE;
 
 	// Inserir individuo
-	$name= $_GET["name"]!=""?"'$_GET[name]'":"NULL";
-	$sql = "INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`) VALUES (NULL, '$_GET[identification]', '1', '$_GET[sex]', ".$name.");";
+	$identification = $_GET['identification'];
+	$id_category = 1;
+	$sex = $_GET['sex'];
+	$name = $_GET["name"]!=""?"'$_GET[name]'":"NULL";
+	$sql = "INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`) VALUES (NULL, '$identification', '$id_category', '$sex', ".$name.");";
 	$result = $mysqli->query($sql);
-	if (!$result) {
-		$problem=TRUE;
+	if ($result==FALSE){
+		$problem="\\nIndividual";
 	}
+
+	// Inserir Kinship
+	$sire = $_GET['sire'];
+	$dam = $_GET['dam'];
+	$sql = "INSERT INTO `kinship` (`id_individual`, `sire`, `dam`) VALUES ((SELECT id FROM individual WHERE identification='$identification'),(SELECT id FROM individual WHERE identification='$sire'), (SELECT id FROM individual WHERE identification='$dam'));";
+	$result = $mysqli->query($sql);
+	if ($result==FALSE) {
+		$problem.="\\nKinship";
+	}
+
+	
 
 	//Commit ou Rollback
 	if ($problem==FALSE) {
-		$mysqli->commit();
+		//$mysqli->commit();
 		echo '<script>alert("Inserido");</script>';
-		header("Location: captivity_insert.php");
 	} else{
 		$mysqli->rollback();
-		echo '<script>alert("Rollback");</script>';
-		header("Location: captivity_insert.php");
+		echo '<script>alert("There is something wrong with: '.$problem.'");</script>';
 	}
 
 endif;
