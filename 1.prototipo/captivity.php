@@ -289,7 +289,7 @@ $download_ids = [];
 		    					<?php break;?>
 
 		    				<?php case "historic":
-		    					$sql_historic = "SELECT *, institute.name as institute FROM historic LEFT JOIN events ON historic.id_event=events.id LEFT JOIN institute ON historic.id_institute=institute.id  WHERE id_individual = '$row[id]'";
+		    					$sql_historic = "SELECT *, institute.name as institute FROM historic LEFT JOIN events ON historic.id_event=events.id LEFT JOIN institute ON historic.id_institute=institute.id  WHERE id_individual = '$row[id]' ORDER BY date ASC;";
 		    					$result_historic = $mysqli->query($sql_historic);
 		    					$num = $result_historic->num_rows ?>
 
@@ -305,9 +305,9 @@ $download_ids = [];
 				    							<?php while ($row_historic = $result_historic->fetch_array()): ?>
 				    								<li class="list-group-item">
 				    									<?php echo $row_historic['events'],":" ?>
-				    									<div class="text-warning"><?php echo $row_historic['date'] ?></div>
+				    									<div class="text-warning"><?php echo date("d-m-Y", strtotime($row_historic['date'])); ?></div>
 				    									<?php echo $row_historic['institute']?>
-				    									<div class="text-secondary"><?php echo $row_historic['observation']?></div>
+				    									<div class="text-secondary"><?php echo $row_historic['observation'];?></div>
 				    									
 				    								</li>
 				    							<?php endwhile; ?>
