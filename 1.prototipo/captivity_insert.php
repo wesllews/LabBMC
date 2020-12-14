@@ -121,6 +121,7 @@ include 'header.php';
 	<button type ="submit" class="btn btn-block btn-success mt-5" style="white-space: nowrap;">Insert Data</button>	
 </form>
 <?php if(isset($_GET['identification'])):
+	$mysqli->autocommit(FALSE);
 	$problem=FALSE;
 
 	// Inserir individuo
@@ -149,16 +150,20 @@ include 'header.php';
 	$institute = $_GET['institute'];
 	$local_id = $_GET['local_id'];
 	$observation = $_GET['observation'];
+	$flag=FALSE;
 	foreach ($event as $key => $value) {
 		$this_local_id = $local_id[$key]!=""?"'$local_id[$key]'":"NULL";
 		$this_observation = $observation[$key]!=""?"'$observation[$key]'":"NULL";
-		$sql="INSERT INTO `historic` (`id`, `id_individual`, `id_event`, `id_institute`, `local_id`, `date`, `observation`)
-		VALUES (NULL, (SELECT id FROM individual WHERE identification='$identification'), '$event[$key]', '$institute[$key]', $this_local_id, '$date[$key]', $this_observation);";
+		$sql="INSERT INTO `historic` (`id`, `id_individual`, `id_event`, `id_institute`, `local_id`, `date`, `observation`) VALUES (NULL, (SELECT id FROM individual WHERE identification='$identification'), '$event[$key]', '$institute[$key]', $this_local_id, '$date[$key]', $this_observation);";
+		$result = $mysqli->query($sql);
+		if ($result==FALSE) {
+			$flag="ERROR";
+		}
 	}
-	$result = $mysqli->query($sql);
-	if ($result==FALSE) {
-		$problem.="\\nHistoric";
-	}
+	if ($flag=="ERROR") {
+			$problem.="\\nHistoric";
+		}
+	
 
 	//Insert Status
 	$mostRecent=0;
