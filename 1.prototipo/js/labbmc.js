@@ -165,36 +165,42 @@ if ($("#hidden_institute").length) {
 
 		$(this).on("click",".add_historic",function(){
 			var institute = document.getElementById("hidden_institute").value.split(',');
-			var id = document.getElementById("hidden_id").value.split(',');
+			var id_institute = document.getElementById("hidden_id_institute").value.split(',');
+			var events = document.getElementById("hidden_events").value.split(',');
+			var id_events = document.getElementById("hidden_id_events").value.split(',');
 			var html = '<div class="row">\
 				<div class="form-group col">\
 					<label>Event:</label>\
-					<select name="sex" class="form-control form-control-sm">\
-						<option selected disabled>Choose...</option>\
-						<option value="Birth">Birth</option>\
-						<option value="Capture">Capture</option>\
-						<option value="Death">Death</option>\
-					</select>\
+					<select name="event[]" class="form-control form-control-sm">\
+						<option selected disabled>Choose...</option>';
+						for (var i = 0; i < id_events.length; i++) {
+							html+='<option value="'+id_events[i]+'">'+events[i]+'</option>';
+						}
+			html+=	'</select>\
 				</div>\
 				<div class="form-group col">\
 					<label>Date:</label>\
-					<input type="date" name="date" class="form-control form-control-sm">\
+					<input type="date" name="date[]" class="form-control form-control-sm">\
 				</div>\
 				<div class="form-group col">\
 					<label>Population:</label>\
-					<select name="institution" class="form-control form-control-sm">\
+					<select name="institute[]" class="form-control form-control-sm">\
 						<option selected disabled>Choose...</option>';
-						for (var i = 0; i < id.length; i++) {
-							html+='<option value="'+id[i]+'">'+institute[i]+'</option>'
+						for (var i = 0; i < id_institute.length; i++) {
+							html+='<option value="'+id_institute[i]+'">'+institute[i]+'</option>';
 						}
 			html+=	'</select>\
 				</div>\
 				<div class="form-group col">\
 					<label>ID local:</label>\
-					<input type="text" name="local_id" class="form-control form-control-sm" placeholder="Identifier at the specific institution">\
+					<input type="text" name="local_id[]" class="form-control form-control-sm" placeholder="Identifier at the specific institution">\
+				</div>\
+				<div class="form-group col">\
+					<label style="white-space: nowrap;">Observation:</label>\
+					<input type="text" name="observation[]" class="form-control form-control-sm" placeholder="Autopsy or extra information">\
 				</div>\
 				<div class="form-group col-lg-1 mt-auto px-1">\
-					<button class="btn btn-sm btn-block btn-danger float-center remove_historic" style="white-space: nowrap;">Remove</button>\
+					<span class="btn btn-sm btn-block btn-danger float-center remove_historic" style="white-space: nowrap;">Remove</span>\
 				</div>\
 			</div>';
 			$(".historic").append(html);
