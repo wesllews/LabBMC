@@ -40,87 +40,100 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
 		<!--LABBMC CSS-->
 		<link rel="stylesheet" type="text/css" href="css/labbmc.css">
 
+		  <!-- Custom styles for this template -->
+		<link href="css/simple-sidebar.css" rel="stylesheet">
+
 		<!-- Title and Icon page -->
 		<title>BLT Database</title>
 		<link rel="icon" href="img/dna-solid.svg">
   </head>
 
+<body>
 
+  <div class="d-flex" id="wrapper">
 
-  <header>
+    <!-- Sidebar -->
+    <div class="bg-light" id="sidebar-wrapper">
+      <div class="sidebar-heading">Start Bootstrap </div>
+      <div class="list-group list-group-flush">
+      	<a href="admin.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-cog"></i> Dashboard</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
 
-	    <!-- NavBar-Class -->
-	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
 
-	    	<!-- Brand -->
-	    	<a class="navbar-brand font-weight-bold" href="http://web-01.ufscar.br/webdb/"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
+            
+            <!-- Brand -->
+            <a class="navbar-brand font-weight-bold"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
 
-		    <!-- Toggler -->
-		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
-		    <!-- Collapse links, flex-justify-->
-			<div class="collapse navbar-collapse justify-content-between rounded" id="navbar-list">
-				
-				<!-- Pages links -->
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> home</a>
-					</li>
+            <!-- Collapse links, flex-justify-->
+          <div class="collapse navbar-collapse justify-content-between rounded" id="navbar-list">
+            
+            <!-- Pages links -->
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> home</a>
+              </li>
 
-					<li class="nav-item dropdown  <?php if($_SESSION['pagina']=='wild' || $_SESSION['pagina']=='captivity'){echo "active";} ?>">
-						<a class="nav-link dropdown-toggle" href="#" id="lifeHistory" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fab fa-pagelines"></i> Life History
-						</a>
-						<div class="dropdown-menu" aria-labelledby="lifeHistory">
-							
-							<a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="mainWild.php"><i class="fab fa-pagelines"></i> Wild</a>
+              <li class="nav-item dropdown  <?php if($_SESSION['pagina']=='wild' || $_SESSION['pagina']=='captivity'){echo "active";} ?>">
+                <a class="nav-link dropdown-toggle" href="#" id="lifeHistory" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fab fa-pagelines"></i> Life History
+                </a>
+                <div class="dropdown-menu" aria-labelledby="lifeHistory">
+                  
+                  <a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="mainWild.php"><i class="fab fa-pagelines"></i> Wild</a>
 
-							<a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="mainCaptivity.php"><i class="fas fa-book-open"></i> Captivity</a>
-						</div>
-					</li>
+                  <a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="mainCaptivity.php"><i class="fas fa-book-open"></i> Captivity</a>
+                </div>
+              </li>
 
-					<li class="nav-item dropdown <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
-						<a class="nav-link dropdown-toggle" href="#" id="Headergenetics" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-dna"></i> Genetics</a>
-						</a>
-						<div class="dropdown-menu" aria-labelledby="Headergenetics">
-							<a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="genotypes.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
+              <li class="nav-item dropdown <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
+                <a class="nav-link dropdown-toggle" href="#" id="Headergenetics" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-dna"></i> Genetics</a>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="Headergenetics">
+                  <a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="genotypes.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
 
-						<!--
-							<a class="dropdown-item" href="#"><i class="fas fa-barcode"></i> Haploypes</a>
+                <!--
+                  <a class="dropdown-item" href="#"><i class="fas fa-barcode"></i> Haploypes</a>
 
-							<div class="dropright">
-								<a class="dropdown-item dropdown-toggle dropright" href="#" id="test" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<i class="fas fa-circle"></i> Exemplo</a>
-								</a>
-								<div class="dropdown-menu" aria-labelledby="test">
-									<a class="dropdown-item" href="#">Exemplo 1</a>
-									<a class="dropdown-item" href="#">Exemplo 2</a>
-								</div>
-							</div>
-						-->
+                  <div class="dropright">
+                    <a class="dropdown-item dropdown-toggle dropright" href="#" id="test" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-circle"></i> Exemplo</a>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="test">
+                      <a class="dropdown-item" href="#">Exemplo 1</a>
+                      <a class="dropdown-item" href="#">Exemplo 2</a>
+                    </div>
+                  </div>
+                -->
 
-					</li>
+              </li>
 
-					<?php if(in_array("dashboard",$_SESSION['permission'])): ?>
-						<li class="nav-item">
-							<a class="nav-link text-warning <?php if($_SESSION['pagina']=='admin'){echo "active";} ?>" href="admin.php"><i class="fas fa-cog"></i> Dashboard</a>
-						</li>
-					<?php endif; ?>
+              <?php if(in_array("dashboard",$_SESSION['permission'])): ?>
+              	<button class="btn btn-outline-light" id="menu-toggle">Dashboard</button>
+              <?php endif; ?>
 
-				</ul>
+            </ul>
 
-				<!-- User Name -->
-				<?php if(isset($_SESSION['login']) && $_SESSION['login']=="sim"): ?>
-					<a class="btn btn-danger my-2 my-sm-0" href="logout.php">Logout</a>
-				<?php else: ?>
-					<a class="btn btn-success my-2 my-sm-0" href="login.php">Register / Login</a>
-				<?php endif; ?>
-			</div>
+            <!-- User Name -->
+            <?php if(isset($_SESSION['login']) && $_SESSION['login']=="sim"): ?>
+              <a class="btn btn-danger my-2 my-sm-0" href="logout.php">Logout</a>
+            <?php else: ?>
+              <a class="btn btn-success my-2 my-sm-0" href="login.php">Register / Login</a>
+            <?php endif; ?>
+          </div>
 
-		</nav>
-  </header>
+        </nav>
 
-
-
-  <body>

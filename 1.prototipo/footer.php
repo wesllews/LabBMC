@@ -1,3 +1,9 @@
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
 <!-- Go to top -->
 <button class="btn btn-dark" onclick="topFunction()" id="btnTop" title="Go to top"><i class="fas fa-long-arrow-alt-up"></i></button>
 
@@ -18,6 +24,15 @@
   <script type="text/javascript" src="js/bootstrap.js"></script>
 
   <script type="text/javascript" src="js/labbmc.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#wrapper").toggleClass("toggled");
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
   
 </body>
 </html>

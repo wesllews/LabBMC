@@ -9,7 +9,7 @@ include 'header.php';
 	<hr>
 </div>
 
-<div class="container">
+<div class="container-fluid">
 	<div class="row">
 
 		<!--Users-->
@@ -57,6 +57,4 @@ include 'header.php';
 	</div>
 </div>
 
-<div class="fixed-bottom">
-	<?php include 'footer.php'; ?>
-</div>
+<?php include 'footer.php'; ?>
