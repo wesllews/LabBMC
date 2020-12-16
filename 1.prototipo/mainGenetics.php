@@ -9,29 +9,29 @@ $result_filter = $mysqli->query($sql);
 
 <?php if(!isset($_GET['captivity'])): ?>
 	<div class="container text-center mt-5 p-5">
-		<h1 class="text-warning font-weight-bold">Captivity</h1>
-		<h5 class="text-justify">Take a look at the captivity section to search information about the life history of captive populations and studbook data.</h5>
+		<h1 class="text-warning font-weight-bold">Genetics</h1>
+		<h5 class="text-justify">This section shows alleles and genotypes for microsatellite loci, and haplotypes or FASTA sequences for mitochondrial data.</h5>
 	</div>
 
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-6 px-4 pb-5">
-				<form method="get" action="" id="pop">
-					<input type="hidden" name="captivity" value="s">
+				<form method="get" action="genotypes.php" id="pop">
+					
 				</form>
 				<button class="col btn btn-dark p-5 hover-shadow" style="transition:0.5s;" form="pop">
 					<h2><i class="fas fa-globe-americas"></i></h2>
-					<h2>Populations</h2>
+					<h2>Microsatellites</h2>
 				</button>
 			</div>
 			
 			<div class="col-lg-6 px-4 pb-5">
-				<form action="captivity.php" method="get" id="full">
+				<form action="" method="get" id="full">
 					<input type="hidden" name="fulldata" value="s">
 				</form>
 				<button class="col btn btn-dark p-5 hover-shadow" style="transition:0.5s;" form="full">
 					<h2><i class="fas fa-stream"></i></h2>
-					<h2>Full Data</h2>
+					<h2>Mitochondrial</h2>
 				</button>
 			</div>
 

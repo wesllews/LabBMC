@@ -10,7 +10,7 @@ $result_filter = $mysqli->query($sql);
 <?php if(!isset($_GET['wild'])): ?>
 	<div class="container text-center mt-5 p-5">
 		<h1 class="text-warning font-weight-bold">Wild</h1>
-		<h5 class="text-justify">Take a look into the wild to search information about the life history of wild populations, fragments and groups data.</h5>
+		<h5 class="text-justify">Take a look at the wild section to search information about the life history of wild populations, fragments and groups data.</h5>
 
 	</div>
 
@@ -22,7 +22,7 @@ $result_filter = $mysqli->query($sql);
 				</form>
 				<button class="col btn btn-dark p-5 hover-shadow" style="transition:0.5s;" form="pop">
 					<h2><i class="fas fa-globe-americas"></i></h2>
-					<h2>Current Populations</h2>
+					<h2>Populations</h2>
 				</button>
 			</div>
 			
@@ -42,7 +42,7 @@ $result_filter = $mysqli->query($sql);
 
 <?php else: ?>
 	<div class="text-warning m-4" style="white-space: nowrap;">
-		<h1 class="ml-5">Current populations</h1>
+		<h1 class="ml-5">Wild Populations</h1>
 		<hr>
 	</div>
 

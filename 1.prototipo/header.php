@@ -52,11 +52,12 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
 
   <div class="d-flex" id="wrapper">
 
-    <!-- Sidebar -->
+
+    	    <!-- Sidebar -->
     <div class="bg-light" id="sidebar-wrapper">
       <div class="sidebar-heading">Start Bootstrap </div>
       <div class="list-group list-group-flush">
-      	<a href="admin.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-cog"></i> Dashboard</a>
+        <a href="admin.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-cog"></i> Dashboard</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
@@ -65,10 +66,8 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
-
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
             
             <!-- Brand -->
@@ -103,22 +102,7 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
                   <i class="fas fa-dna"></i> Genetics</a>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="Headergenetics">
-                  <a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="genotypes.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
-
-                <!--
-                  <a class="dropdown-item" href="#"><i class="fas fa-barcode"></i> Haploypes</a>
-
-                  <div class="dropright">
-                    <a class="dropdown-item dropdown-toggle dropright" href="#" id="test" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-circle"></i> Exemplo</a>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="test">
-                      <a class="dropdown-item" href="#">Exemplo 1</a>
-                      <a class="dropdown-item" href="#">Exemplo 2</a>
-                    </div>
-                  </div>
-                -->
-
+                  <a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="mainGenetics.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
               </li>
 
               <?php if(in_array("dashboard",$_SESSION['permission'])): ?>
