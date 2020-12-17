@@ -272,32 +272,20 @@ $download_ids = [];
 							</button>
 
 						<?php else: ?>
-							<!-- Modal Button-->
-							<span type="button" class="btn btn-outline-light font-weight-bold text-warning border-0 py-0" data-toggle="modal" data-target="#Modal<?php echo $value;?>">
+							<?php
+							$sql="SELECT * FROM locus WHERE locus='$value'";
+							$result= $mysqli->query($sql);
+							$row = $result->fetch_assoc();?>
+							<!-- Popover-->
+							<span class="btn btn-outline-light font-weight-bold text-warning border-0 py-0" data-toggle="popover" data-trigger="click hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true"
+							data-content="
+								<b>Type:</b> <?php echo ucfirst($row['type']);?><br>
+								<b>Motif:</b> <?php echo ucfirst($row['motif']);?><br>
+								<b>Primer Forward:</b> <?php echo $row['forward'];?><br>
+								<b>Primer Reverse:</b> <?php echo $row['reverse'];?><br>
+								<b>Reference:</b> <?php echo $row['reference'];?><br>">
 								<?php echo ucfirst(str_replace('_',' ',$value)); ?>
-							</span>
-
-							<!-- Modal -->
-							<div class="modal fade" id="Modal<?php echo $value;?>" tabindex="-1" role="dialog" >
-								<div class="modal-dialog modal-dialog-centered" role="document">
-									<div class="modal-content">
-										<div class="modal-header"><h5 class="modal-title text-warning font-weight-bolder"><?php echo $value;?></h5></div>
-										<div class="modal-body text-justify text-capitalize font-weight-normal">
-											<?php 
-											$sql="SELECT * FROM locus WHERE locus='$value'";
-											$result= $mysqli->query($sql);
-											$row = $result->fetch_assoc();
-											?>
-											<b>Type:</b> <?php echo ucfirst($row['type']);?><br>
-											<b>Motif:</b> <?php echo ucfirst($row['motif']);?><br>
-											<b>Primer Forward:</b> <?php echo $row['forward'];?><br>
-											<b>Primer Reverse:</b> <?php echo $row['reverse'];?><br>
-											<b>Reference:</b> <?php echo $row['reference'];?><br>
-										</div>
-										<div class="modal-footer"><button type="button" class="btn btn-sm btn-warning text-white" data-dismiss="modal">Close</button></div>
-									</div>
-								</div>
-							</div>
+							</span>		
 						<?php endif; ?>
 					</div>
 				</th>
