@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['pagina']='genotypes';
+$_SESSION['pagina']='genetics';
 include 'header.php';
 
 /* Cabeçalho da tabela */

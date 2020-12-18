@@ -52,19 +52,21 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
 
   <div class="d-flex" id="wrapper">
 
-
-    	    <!-- Sidebar -->
-    <div class="bg-light" id="sidebar-wrapper">
-      <div class="sidebar-heading">Dashboard</div>
-      <div class="list-group list-group-flush">
-        <a href="users.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users-cog"> </i>Users</a>
-        <a href="captivity_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Wild</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Institute</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
+    <!-- Sidebar -->
+    <?php if(in_array("dashboard",$_SESSION['permission'])): ?>
+      <div class="bg-light" id="sidebar-wrapper">
+        <div class="sidebar-heading">Dashboard</div>
+        <div class="list-group list-group-flush">
+          <a href="users.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users-cog"> </i>Users</a>
+          <a href="captivity_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Wild</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Institute</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
+        </div>
       </div>
-    </div>
+    <?php endif; ?>
     <!-- /#sidebar-wrapper -->
+
     <!-- Page Content -->
     <div id="page-content-wrapper">
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
@@ -83,7 +85,7 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
             <!-- Pages links -->
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> home</a>
+                <a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> Home</a>
               </li>
 
               <li class="nav-item dropdown  <?php if($_SESSION['pagina']=='wild' || $_SESSION['pagina']=='captivity'){echo "active";} ?>">
@@ -92,14 +94,14 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
                 </a>
                 <div class="dropdown-menu" aria-labelledby="lifeHistory">
                   
-                  <a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="mainWild.php"><i class="fab fa-pagelines"></i> Wild</a>
+                  <a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="menu.php?page=wild"><i class="fab fa-pagelines"></i> Wild</a>
 
-                  <a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="mainCaptivity.php"><i class="fas fa-book-open"></i> Captivity</a>
+                  <a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="menu.php?page=captivity"><i class="fas fa-book-open"></i> Captivity</a>
                 </div>
               </li>
 
-              <li class="nav-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
-                <a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="mainGenetics.php"  data-toggle="popover" data-trigger="hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true" data-content="Genotypes and Haplotypes informations">
+              <li class="nav-item">
+                <a class="nav-link <?php if($_SESSION['pagina']=='genetics'){echo "active";} ?>" href="menu.php?page=genetics"  data-toggle="popover" data-trigger="hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true" data-content="Genotypes and Haplotypes informations">
                   <i class="fas fa-dna"></i> Genetics</a>
               </li>
             </ul>
