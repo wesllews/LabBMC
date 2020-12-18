@@ -8,7 +8,7 @@ if ($rows==1) {
 
 	if(!in_array($rows['status'], array("requested","denied"))){
 		$_SESSION['login']="sim";
-		$_SESSION['status']=$rows['status'];
+		$_SESSION['status']=$rows['permission'];
 		$_SESSION['email']=$rows['email'];
 		header("Location: index.php");
 	} elseif($rows['status']=="requested") {

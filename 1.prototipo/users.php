@@ -4,7 +4,7 @@ $_SESSION['pagina']='admin';
 include 'header.php';
 
 /* Cabeçalho da tabela */
-$header = ['id','name','institution','justification','email','status','request_date','approval_date'];
+$header = ['id','name','institution','justification','email','permission','request_date','analyzed_date'];
 
 /* Recebe as variaveis*/
   // Pagination
@@ -21,10 +21,10 @@ $header = ['id','name','institution','justification','email','status','request_d
   $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
 
 /* SQL Filtros */
-  $status = isset($_GET['status'])? $_GET['status'] : "All";
+  $permission = isset($_GET['permission'])? $_GET['permission'] : "All";
   $limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
-  $status_sql = $status!="All" ? " AND status='$status'" : "";
-  $order = " ORDER BY `$column` $sort_order, approval_date";
+  $permission_sql = $permission!="All" ? " AND permission='$permission'" : "";
+  $order = " ORDER BY `$column` $sort_order, analyzed_date";
 
 
 /* Forms */
@@ -33,12 +33,12 @@ $header = ['id','name','institution','justification','email','status','request_d
 		    "sort_order" => $sort_order,
 		    "pag" => $pag,
 		    "limit" => $limit,
-		    "status" => $status
+		    "permission" => $permission
 		);
 
 
 $sql= "SELECT * FROM `login` WHERE 1=1";
-$sql_pagination = $sql.$status_sql;
+$sql_pagination = $sql.$permission_sql;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
 ?>
@@ -62,13 +62,13 @@ $result_filter = $mysqli->query($sql_filter);
 <!--Filtros-->
 <div class="container-fluid">
 		<form action="users.php" method="get" class="form-inline pb-1">
-			<label for="status">Status: </label>
-			<select class="btn btn-sm border mr-2" name="status" id="status">
-				<option <?php echo $status=="administrator"? "selected":"";?> value="administrator">Administrator</option>
-				<option <?php echo $status=="collaborator"? "selected":"";?> value="collaborator">Collaborator</option>
-				<option <?php echo $status=="denied"? "selected":"";?> value="denied">Denied</option>
-				<option <?php echo $status=="requested"? "selected":"";?> value="requested">Requested</option>
-				<option <?php echo $status=="All"? "selected":"";?> value="All">All status</option>
+			<label for="permission">Permission: </label>
+			<select class="btn btn-sm border mr-2" name="permission" id="permission">
+				<option <?php echo $permission=="administrator"? "selected":"";?> value="administrator">Administrator</option>
+				<option <?php echo $permission=="collaborator"? "selected":"";?> value="collaborator">Collaborator</option>
+				<option <?php echo $permission=="denied"? "selected":"";?> value="denied">Denied</option>
+				<option <?php echo $permission=="requested"? "selected":"";?> value="requested">Requested</option>
+				<option <?php echo $permission=="All"? "selected":"";?> value="All">All</option>
 			</select>
 
 			<label for="limit">Show: </label>
@@ -81,7 +81,6 @@ $result_filter = $mysqli->query($sql_filter);
 			<button type="submit" class="btn btn-success btn-sm">Submit</button>
 		</form>
 		
-	
 	<!--Table Responsive-->
 	<div class="table-responsive" style="min-height: 270px;">
 		<!--Table-->
@@ -131,12 +130,12 @@ $result_filter = $mysqli->query($sql_filter);
 								</div>
 							 <?php break; ?>
 
-							<?php case 'status':?>
+							<?php case 'permission':?>
 								<form action="user_update.php" method="post" target="_blank">
-									<input type="hidden" name="update" value="status">
+									<input type="hidden" name="update" value="permission">
 									<input type="hidden" name="id" value="<?php echo $row[id];?>">
 									<div class="d-flex flex-nowrap">
-										<select class="form-control form-control-sm" style="min-width: 120px;" name="status" id="selectStatus<?php echo $row[id];?>" onchange="changeButton('<?php echo $row[id];?>','<?php echo $row[status];?>')">
+										<select class="form-control form-control-sm" style="min-width: 120px;" name="permission" id="selectpermission<?php echo $row[id];?>" onchange="changeButton('<?php echo $row[id];?>','<?php echo $row[permission];?>')">
 										<?php if ($row[$value]=="requested"): ?>
 											<option selected disabled> Requested</option>
 										<?php endif; ?>
@@ -150,14 +149,14 @@ $result_filter = $mysqli->query($sql_filter);
 											Denied
 										</option>
 									</select>
-									<button type="submit" class="btn btn-success btn-sm ml-2" id ="changeStatus<?php echo $row[id];?>" disabled>Change</button>
+									<button type="submit" class="btn btn-success btn-sm ml-2" id ="changepermission<?php echo $row[id];?>" disabled>Change</button>
 									</div>
 									
 								</form>
 							<?php break; ?>
 
 							<?php case 'request_date':?>
-							<?php case 'approval_date':?>
+							<?php case 'analyzed_date':?>
 								<?php if ($row[$value]!=""){
 									echo date('m/d/Y', strtotime($row[$value]));
 								} else{
