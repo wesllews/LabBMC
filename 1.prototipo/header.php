@@ -99,7 +99,7 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
               </li>
 
               <li class="nav-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
-                <a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="mainGenetics.php"  data-toggle="popover" data-trigger="click hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true" data-content="Genotypes and Haplotypes informations">
+                <a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="mainGenetics.php"  data-toggle="popover" data-trigger="hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true" data-content="Genotypes and Haplotypes informations">
                   <i class="fas fa-dna"></i> Genetics</a>
               </li>
             </ul>
