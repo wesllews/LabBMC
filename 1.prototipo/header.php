@@ -55,21 +55,22 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
 
     	    <!-- Sidebar -->
     <div class="bg-light" id="sidebar-wrapper">
-      <div class="sidebar-heading">Start Bootstrap </div>
+      <div class="sidebar-heading">Dashboard</div>
       <div class="list-group list-group-flush">
-        <a href="admin.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-cog"></i> Dashboard</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+        <a href="users.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users-cog"> </i>Users</a>
+        <a href="captivity_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Wild</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Institute</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
     <!-- Page Content -->
     <div id="page-content-wrapper">
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
-            
+            <?php if(in_array("dashboard",$_SESSION['permission'])): ?>
+              <button class="btn btn-secondary mr-5" id="menu-toggle">Dashboard</button>
+            <?php endif; ?>
             <!-- Brand -->
             <a class="navbar-brand font-weight-bold"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
 
@@ -97,21 +98,13 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
                 </div>
               </li>
 
-              <li class="nav-item dropdown <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
-                <a class="nav-link dropdown-toggle" href="#" id="Headergenetics" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <li class="nav-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
+                <a class="nav-link <?php if($_SESSION['pagina']=='genotypes'){echo "active";} ?>" href="mainGenetics.php"  data-toggle="popover" data-trigger="click hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true" data-content="Genotypes and Haplotypes informations">
                   <i class="fas fa-dna"></i> Genetics</a>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="Headergenetics">
-                  <a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="mainGenetics.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
               </li>
-
-              <?php if(in_array("dashboard",$_SESSION['permission'])): ?>
-              	<button class="btn btn-outline-light" id="menu-toggle">Dashboard</button>
-              <?php endif; ?>
-
             </ul>
 
-            <!-- User Name -->
+            <!-- Login/Logout -->
             <?php if(isset($_SESSION['login']) && $_SESSION['login']=="sim"): ?>
               <a class="btn btn-danger my-2 my-sm-0" href="logout.php">Logout</a>
             <?php else: ?>
