@@ -27,6 +27,10 @@ $headersAdicionais =['historic','population','sex','sire','dam','name','alive','
 			}
 		endif;
 
+if(in_array("delete",$_SESSION['permission'])){
+	array_push($header, "manager");
+}
+
 
 /* Filtros GET*/
 	
@@ -260,7 +264,7 @@ $download_ids = [];
 						<div class="d-flex justify-content-center align-items-end text-warning">
 							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 							<!--Icon-->
-							<?php if($value!='historic' && $value!='informations'): ?>
+							<?php if(!in_array($value,["historic","informations","manager"])): ?>
 								<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
 								onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 									<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
@@ -411,15 +415,21 @@ $download_ids = [];
 		    				<?php case 'informations': 
 		    					$sql_informations = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
 		    					$result_informations = $mysqli->query($sql_informations);
-
-			    					if ($result_informations->num_rows > 0): ?>
-			    						<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
-			    						<button type="button" class="btn btn-sm btn-primary disabled">Genomics</button>
-			    					<?php else: ?>
-			    						<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
-			    						<button type="button" class="btn btn-sm btn-secondary disabled">Genomics</button>
-			    					<?php endif; ?>
+		    					$num =$result_informations->num_rows; 
+		    					?>
+			    				<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm <?php echo $num > 0? "btn-success":"btn-secondary disabled"; ?>">Genetics</a>
 		    					<?php break;?>
+
+		    				<?php case 'manager': ?>
+			    				<form action="delete.php" method="GET" id="delete" target="_blank">
+			    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
+			    				</form>
+			    				<form action="edit.php" method="post" id="edit">
+			    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
+			    				</form>
+		    					<button type="submit" form="delete" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+		    					<button type="submit" form="edit" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>			    				
+		    					<?php break;?>		
 
 		    				<?php default: ?>
 		    					<div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div>		    				

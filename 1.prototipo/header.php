@@ -4,7 +4,7 @@ include "connection.php";
 
 //Define as regras de permissão
 if(in_array($_SESSION['status'],array("administrator","collaborator"))){
-	$_SESSION['permission'] = array("download","dashboard");
+	$_SESSION['permission'] = array("download","dashboard","delete");
 } else{
 	$_SESSION['permission'] = array("read");
 }
