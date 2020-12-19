@@ -1,10 +1,10 @@
 INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Santa Maria Farm'), '1', '-52,296886', '-22,236353');
 INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Santa Maria Farm'), '2', '-52,308', '-22,231806');
 INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Morro do Diabo State Park'), 'PEMD Sede', NULL, NULL);
-INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Guarei fragments'), 'Guareí (Camargo)', NULL, NULL);
+INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Guarei Fragments'), 'Guareí (Camargo)', NULL, NULL);
 INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='BLT Ecological Station'), 'Ponte Branca', '-52,508509', '-22,425176');
-INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Guareí Riparian Forest'), 'Guareí 02 (Camargo)', NULL, NULL);
-INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Guareí Riparian Forest'), 'Guareí 01 (Camargo)', NULL, NULL);
+INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Guarei Fragments'), 'Guareí 02 (Camargo)', NULL, NULL);
+INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Guarei Fragments'), 'Guareí 01 (Camargo)', NULL, NULL);
 INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Capão Bonito National Forest'), '1', '-48,532665', '-23,88868');
 INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Capão Bonito National Forest'), '2', '-48,532665', '-23,901291');
-INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Riparian forest of Guarei River'), 'Guareí - bridge', '-48,208116', '-23,376237');
+INSERT INTO `group` (`id`, `id_fragment`, `group`, `longitude`, `latitude`) VALUES (NULL, (SELECT id FROM fragment WHERE fragment='Guarei Fragments'), 'Guareí - bridge', '-48,208116', '-23,376237');
