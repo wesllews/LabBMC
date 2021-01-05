@@ -36,7 +36,7 @@ if(isset($_GET["id"])){
 				</form>
 				<div class="form-group row mt-5">
 					<div class="col"><button type="submit" form="delete" class="btn btn-success btn-block">Yes</button></div>		
-				<div class="col"><button onclick="window.history.go(-1); return false;" class="btn btn-danger btn-block" autofocus>No</button></div>	
+				<div class="col"><button onclick="window.close(); return false;" class="btn btn-danger btn-block" autofocus>No</button></div>	
 				</div>
 					
 		</div>

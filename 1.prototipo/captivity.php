@@ -282,9 +282,9 @@ $download_ids = [];
 	    	<!--Body Table -->
 			<tbody>
 			<?php while($row = $result_filter->fetch_array()): ?>
-		    	<tr class="text-center">
+		    	<tr class="text-center" scope="row">
 		    		<?php foreach ($header as $value): ?>
-		    			<td scope="row">
+		    			<td scope="col">
 		    			<?php switch($value):
 
 		    				case 'identification': ?>
@@ -421,13 +421,13 @@ $download_ids = [];
 		    					<?php break;?>
 
 		    				<?php case 'manager': ?>
-			    				<form action="delete.php" method="GET" id="delete" target="_blank">
+			    				<form action="delete.php" method="GET" id="delete<?php echo $row['identification'];?>'" target="_blank">
+			    					<input type="hidden" name="identification" value='<?php echo $row['identification'];?>'>
+			    				</form>
+			    				<form action="edit.php" method="GET" id="edit">
 			    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
 			    				</form>
-			    				<form action="edit.php" method="post" id="edit">
-			    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
-			    				</form>
-		    					<button type="submit" form="delete" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+		    					<button type="submit" form="delete<?php echo $row['identification'];?>'" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
 		    					<button type="submit" form="edit" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>			    				
 		    					<?php break;?>		
 

@@ -159,6 +159,7 @@ if ($("#password").length) {
 	});
 }
 
+/* ADICIONA OU REMOVE LINHA DE INPUTS EM "CAPTIVITY_INSERT.PHP" */
 if ($("#hidden_institute").length) {
 	//https://stackoverflow.com/questions/25856704/how-can-i-access-an-array-declared-in-an-html-hidden-input-from-a-javascript-fun
 	$(document).ready(function(){
@@ -211,4 +212,11 @@ if ($("#hidden_institute").length) {
 			target_input.remove();
 		});
 	});
+}
+
+function deleteHistoric(id) {
+	$("#historic"+id).remove();
+	html= '<input type="hidden" name="remove_historic[]" value="'+id+'">';
+	$(".historic").append(html);
+    alert("Deleted!");
 }

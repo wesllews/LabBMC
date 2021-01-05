@@ -14,7 +14,7 @@ include 'header.php';
 		<div class="row">
 			<div class="form-group col">
 				<label>Identification:</label>
-				<input type="text" name="identification" class="form-control form-control-sm" placeholder="e.g. 478, TE064, MAM-0001">
+				<input type="text" name="identification" class="form-control form-control-sm" placeholder="e.g. 478, TE64, MAM-0001">
 			</div>
 			<div class="form-group col">
 				<label>Sex:</label>
@@ -45,11 +45,11 @@ include 'header.php';
 		<div class="row">
 			<div class="form-group col">
 				<label>Sire identification:</label>
-				<input type="text" name="sire" class="form-control form-control-sm" placeholder="e.g. 478, TE064, MAM-0001">
+				<input type="text" name="sire" class="form-control form-control-sm" placeholder="e.g. 478, TE64, MAM-0001">
 			</div>
 			<div class="form-group col">
 				<label>Dam identification:</label>
-				<input type="text" name="dam" class="form-control form-control-sm" placeholder="e.g. 478, TE064, MAM-0001">
+				<input type="text" name="dam" class="form-control form-control-sm" placeholder="e.g. 478, TE64, MAM-0001">
 			</div>
 		</div>
 
@@ -114,7 +114,6 @@ include 'header.php';
 					<span class="btn btn-sm btn-block btn-success add_historic" style="white-space: nowrap;">Add more</span>
 				</div>
 			</div>
-			<hr class="mt-0 mb-2">
 		</div>
 
 	<!-- Form submit -->
@@ -129,7 +128,7 @@ include 'header.php';
 	$id_category = 1;
 	$sex = $_GET['sex'];
 	$name = $_GET["name"]!=""?"'$_GET[name]'":"NULL";
-	$sql = "INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`) VALUES (NULL, '$identification', '$id_category', '$sex', ".$name.");";
+	echo $sql = "INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`) VALUES (NULL, '$identification', '$id_category', '$sex', ".$name.");";
 	$result = $mysqli->query($sql);
 	if ($result==FALSE){
 		$problem="\\nIndividual";
@@ -138,7 +137,7 @@ include 'header.php';
 	// Inserir Kinship
 	$sire = $_GET['sire'];
 	$dam = $_GET['dam'];
-	$sql= "INSERT INTO `kinship` (`id_individual`, `sire`, `dam`) VALUES ((SELECT id FROM individual WHERE identification='$identification'),(SELECT id FROM individual WHERE identification='$sire'), (SELECT id FROM individual WHERE identification='$dam'));";
+	echo $sql= "INSERT INTO `kinship` (`id_individual`, `sire`, `dam`) VALUES ((SELECT id FROM individual WHERE identification='$identification'),(SELECT id FROM individual WHERE identification='$sire'), (SELECT id FROM individual WHERE identification='$dam'));";
 	$result = $mysqli->query($sql);
 	if ($result==FALSE) {
 		$problem.="\\nKinship";
@@ -154,7 +153,7 @@ include 'header.php';
 	foreach ($event as $key => $value) {
 		$this_local_id = $local_id[$key]!=""?"'$local_id[$key]'":"NULL";
 		$this_observation = $observation[$key]!=""?"'$observation[$key]'":"NULL";
-		$sql="INSERT INTO `historic` (`id`, `id_individual`, `id_event`, `id_institute`, `local_id`, `date`, `observation`) VALUES (NULL, (SELECT id FROM individual WHERE identification='$identification'), '$event[$key]', '$institute[$key]', $this_local_id, '$date[$key]', $this_observation);";
+		echo $sql="INSERT INTO `historic` (`id`, `id_individual`, `id_event`, `id_institute`, `local_id`, `date`, `observation`) VALUES (NULL, (SELECT id FROM individual WHERE identification='$identification'), '$event[$key]', '$institute[$key]', $this_local_id, '$date[$key]', $this_observation);";
 		$result = $mysqli->query($sql);
 		if ($result==FALSE) {
 			$flag="ERROR";
@@ -176,7 +175,7 @@ include 'header.php';
 	  }
 	}
 	$status =$_GET["status"]!=""?"'$_GET[status]'":"NULL";
-	$sql= "INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='$identification'),'$institute[$mostRecent_id]', NULL, $status);";
+	echo $sql= "INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='$identification'),'$institute[$mostRecent_id]', NULL, $status);";
 	$result = $mysqli->query($sql);
 	if ($result==FALSE) {
 		$problem.="\\nStatus";
