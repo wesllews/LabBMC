@@ -424,7 +424,7 @@ $download_ids = [];
 			    				<form action="delete.php" method="GET" id="delete<?php echo $row['identification'];?>'" target="_blank">
 			    					<input type="hidden" name="identification" value='<?php echo $row['identification'];?>'>
 			    				</form>
-			    				<form action="edit.php" method="GET" id="edit">
+			    				<form action="edit.php" method="GET" id="edit" target="_blank">
 			    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
 			    				</form>
 		    					<button type="submit" form="delete<?php echo $row['identification'];?>'" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
