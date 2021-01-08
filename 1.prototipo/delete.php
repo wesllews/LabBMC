@@ -10,6 +10,7 @@ $result = $mysqli->query($query);
 $rows =$result->num_rows;
 if ($rows==1) {
 	$row = $result->fetch_array();
+	$dentification = $row['identification'];
 }
 
 

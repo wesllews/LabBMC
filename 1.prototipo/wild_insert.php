@@ -4,7 +4,7 @@ $_SESSION['pagina']='admin';
 include 'header.php';
 ?>
 <div class="container text-center mt-5 mb-5">
-	<h4 class="text-warning font-weight-bold">Captivity Individuals</h4>
+	<h4 class="text-warning font-weight-bold">Wild Individuals</h4>
 </div>
 
 <form method="GET" class="container mb-4">
@@ -19,7 +19,7 @@ include 'header.php';
 			<div class="form-group col">
 				<label>Sex:</label>
 				<select name="sex" class="form-control form-control-sm">
-					<option selected disabled>Choose...</option>
+					<option selected hidden>Choose...</option>
 					<?php foreach (array("Female","Male","Unknown") as $value): ?>
 						<option value="<?php echo $value; ?>" <?php echo $value==$_GET['sex']?"selected":"";?>>
 							<?php echo $value; ?>
@@ -34,7 +34,7 @@ include 'header.php';
 			<div class="form-group col">
 				<label>Status:</label>
 				<select name="status" class="form-control form-control-sm">
-					<option selected disabled>Choose...</option>
+					<option selected hidden>Choose...</option>
 					<?php foreach (array(1 =>"Alive",0 => "Death","" =>"Unknown") as $key => $value): ?>
 						<option value="<?php echo $key; ?>" <?php echo $key==$_GET['status'] && isset($_GET['status'])?"selected":"";?>>
 							<?php echo $value; ?>
@@ -50,7 +50,7 @@ include 'header.php';
 			<div class="form-group col">
 				<label>Fragment:</label>
 				<select name="fragment" class="form-control form-control-sm"  onchange="this.form.submit()">
-					<option selected disabled>Choose...</option>
+					<option selected hidden>Choose...</option>
 					<?php 
 					$sql = "SELECT * FROM fragment ORDER BY id ASC;";
 					$query = $mysqli->query($sql);			
@@ -68,19 +68,16 @@ include 'header.php';
 					if(isset($_GET["fragment"])):
 						$id_fragment = $_GET["fragment"];
 						$query= "SELECT * FROM `group` WHERE id_fragment='$id_fragment';";
-						$result = $mysqli->query($query);
-						if ($result->num_rows > 0):?>
-							<?php while ($row_group = $result->fetch_array()):?>
-								<option value="<?php echo $row_group['id'];?>">
-									<?php echo $row_group['group'];?>
-								</option>
-							<?php endwhile; ?>
-						<?php else: ?>
-							<option value="no">No One Group</option>
-							<option value="new">Insert New Group</option>
-						<?php endif; ?>
+						$result = $mysqli->query($query);?>
+						<option value="" selected hidden>Choose...</option>
+						<option value="none" <?php echo $_GET['group']=="none"?"selected":"";?>>No one group</option>
+						<?php while ($row_group = $result->fetch_array()):?>
+							<option value="<?php echo $row_group['id'];?>"  <?php echo $row_group["id"]==$_GET['group']?"selected":"";?>>
+								<?php echo $row_group['group'];?>
+							</option>
+						<?php endwhile; ?>
 					<?php else: ?>
-						<option selected disabled>Choose Fragment First</option>
+						<option value="" selected hidden>Choose Fragment First</option>
 					<?php endif; ?>
 				</select>
 			</div>
@@ -91,24 +88,24 @@ include 'header.php';
 		<div class="row">
 			<div class="form-group col">
 				<label> Latitude individual:</label>
-				<input type="text" name="dam" list="datalistDam" class="form-control form-control-sm" placeholder="e.g. -22,425176">
+				<input type="text" name="latitude" list="datalistDam" class="form-control form-control-sm" placeholder="e.g. -22,425176" value="<?php echo $_GET['latitude'];?>">
 			</div>
 			<div class="form-group col">
 				<label> Longitude individual:</label>
-				<input type="text" name="dam" list="datalistDam" class="form-control form-control-sm" placeholder="e.g. -52,508509">
+				<input type="text" name="longitude" list="datalistDam" class="form-control form-control-sm" placeholder="e.g. -52,508509" value="<?php echo $_GET['longitude'];?>">
 			</div>
 		</div>
 
 	<!-- Form submit -->
 	<button type ="submit" class="btn btn-block btn-success mt-5" style="white-space: nowrap;">Insert Data</button>	
 </form>
-<?php /*if(isset($_GET['identification'])):
+<?php if(isset($_GET['group']) && $_GET['group']!=""):
 	$mysqli->autocommit(FALSE);
 	$problem=FALSE;
 
 	// Inserir individuo
 	$identification = $_GET['identification'];
-	$id_category = 1;
+	$id_category = 2;
 	$sex = $_GET['sex'];
 	$name = $_GET["name"]!=""?"'$_GET[name]'":"NULL";
 	$sql = "INSERT INTO `individual` (`id`, `identification`, `id_category`, `sex`, `name`) VALUES (NULL, '$identification', '$id_category', '$sex', ".$name.");";
@@ -117,50 +114,23 @@ include 'header.php';
 		$problem="\\nIndividual";
 	}
 
-	// Inserir Kinship
-	$sire = $_GET['sire'];
-	$dam = $_GET['dam'];
-	$sql= "INSERT INTO `kinship` (`id_individual`, `sire`, `dam`) VALUES ((SELECT id FROM individual WHERE identification='$identification'),(SELECT id FROM individual WHERE identification='$sire'), (SELECT id FROM individual WHERE identification='$dam'));";
-	$result = $mysqli->query($sql);
-	if ($result==FALSE) {
-		$problem.="\\nKinship";
-	}
-
-	//Inserir Historico
-	$event = $_GET['event'];
-	$date = $_GET['date'];
-	$institute = $_GET['institute'];
-	$local_id = $_GET['local_id'];
-	$observation = $_GET['observation'];
-	$flag=FALSE;
-	foreach ($event as $key => $value) {
-		$this_local_id = $local_id[$key]!=""?"'$local_id[$key]'":"NULL";
-		$this_observation = $observation[$key]!=""?"'$observation[$key]'":"NULL";
-		$sql="INSERT INTO `historic` (`id`, `id_individual`, `id_event`, `id_institute`, `local_id`, `date`, `observation`) VALUES (NULL, (SELECT id FROM individual WHERE identification='$identification'), '$event[$key]', '$institute[$key]', $this_local_id, '$date[$key]', $this_observation);";
-		$result = $mysqli->query($sql);
-		if ($result==FALSE) {
-			$flag="ERROR";
-		}
-	}
-	if ($flag=="ERROR") {
-			$problem.="\\nHistoric";
-		}
-
-	//Insert Status
-	$mostRecent=0;
-	$mostRecent_id=0;
-	foreach($date as $key => $value){
-	  $curDate = strtotime($value);
-	  if ($curDate > $mostRecent) {
-	     $mostRecent = $curDate;
-	     $mostRecent_id = $key;
-	  }
-	}
+	// Inserir Population/Status
+	$fragment = $_GET['fragment'];
 	$status =$_GET["status"]!=""?"'$_GET[status]'":"NULL";
-	$sql= "INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='$identification'),'$institute[$mostRecent_id]', NULL, $status);";
+	$sql= "INSERT INTO `status` (`id_individual`, `id_institute`, `id_fragment`, `alive`) VALUES ((SELECT id FROM individual WHERE identification='$identification'), NULL, '$fragment', $status);";
 	$result = $mysqli->query($sql);
 	if ($result==FALSE) {
-		$problem.="\\nStatus";
+		$problem.="\\n Fragment or Status";
+	}
+
+	// Inserir Ind_Group
+	$group = $_GET['group'];
+	$latitude =$_GET["latitude"]!=""?"'$_GET[latitude]'":"NULL";
+	$longitude =$_GET["longitude"]!=""?"'$_GET[longitude]'":"NULL";
+	$sql= "INSERT INTO `ind_group` (`id_individual`, `id_group`, `longitude_ind`, `latitude_ind`) VALUES ( (SELECT id FROM individual WHERE identification='$identification'), '$group', $longitude, $latitude);";
+	$result = $mysqli->query($sql);
+	if ($result==FALSE) {
+		$problem.="\\nGroup ou Global position";
 	}
 
 	//Commit ou Rollback
@@ -171,6 +141,6 @@ include 'header.php';
 		$mysqli->rollback();
 		echo '<script>alert("There is something wrong with: '.$problem.'");</script>';
 	}
-endif; */?>
+endif;?>
 
 <?php include 'footer.php'; ?>

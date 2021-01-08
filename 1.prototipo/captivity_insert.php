@@ -19,7 +19,7 @@ include 'header.php';
 			<div class="form-group col">
 				<label>Sex:</label>
 				<select name="sex" class="form-control form-control-sm">
-					<option selected disabled>Choose...</option>
+					<option selected hidden>Choose...</option>
 					<option value="Female">Female</option>
 					<option value="Male">Male</option>
 					<option value="Unknown">Unknown</option>
@@ -32,7 +32,7 @@ include 'header.php';
 			<div class="form-group col">
 				<label>Status:</label>
 				<select name="status" class="form-control form-control-sm">
-					<option selected disabled>Choose...</option>
+					<option selected hidden>Choose...</option>
 					<option value="1">Alive</option>
 					<option value="0">Death</option>
 					<option value="">Unkknown</option>
@@ -77,7 +77,7 @@ include 'header.php';
 				<div class="form-group col">
 					<label>Event:</label>
 					<select name="event[]" class="form-control form-control-sm">
-						<option selected disabled>Choose...</option>
+						<option selected hidden>Choose...</option>
 						<?php 
 						$sql = "SELECT * FROM events";
 						$query = $mysqli->query($sql);
@@ -101,7 +101,7 @@ include 'header.php';
 				<div class="form-group col">
 					<label>Population:</label>
 					<select name="institute[]" class="form-control form-control-sm">
-						<option selected disabled>Choose...</option>
+						<option selected hidden>Choose...</option>
 						<?php 
 						$sql_institute = "SELECT * FROM institute";
 						$query = $mysqli->query($sql_institute);

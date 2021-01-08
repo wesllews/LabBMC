@@ -134,7 +134,7 @@ CREATE TABLE `ind_group`
 
  PRIMARY KEY (`id_individual`),
  CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE,
- CONSTRAINT FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE CASCADE
+ CONSTRAINT FOREIGN KEY (`id_group`) REFERENCES `group` (`id`)
  );
 
 -- ************************************** `status`

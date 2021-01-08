@@ -71,18 +71,17 @@
   }
 
 /*GRID AUTO-FLOW*/
-.grid-captivity {
-  display: grid;
-  grid-auto-flow: row; /*options: row|column|dense*/
-  grid-template-columns: repeat(3, auto);
-}
+  .grid-captivity {
+    display: grid;
+    grid-auto-flow: row; /*options: row|column|dense*/
+    grid-template-columns: repeat(3, auto);
+  }
 
-.grid-genetics{
-  display: grid;
-  grid-auto-flow: row; /*options: row|column|dense*/
-  grid-template-columns: repeat(5, auto);
-}
-
+  .grid-genetics{
+    display: grid;
+    grid-auto-flow: row; /*options: row|column|dense*/
+    grid-template-columns: repeat(5, auto);
+  }
 
 /* CHECKBOX COLOR*/
   .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
