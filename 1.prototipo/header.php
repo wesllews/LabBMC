@@ -59,7 +59,7 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
         <div class="list-group list-group-flush">
           <a href="users.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users-cog"> </i>Users</a>
           <a href="captivity_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Wild</a>
+          <a href="wild_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Wild</a>
           <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Institute</a>
           <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
         </div>

@@ -21,7 +21,6 @@ if(isset($_GET["id"])){
 		echo "<script>window.close();</script>";
 		exit;
 }
-
 ?>
 <div class="container">
 	<div class="row py-5">

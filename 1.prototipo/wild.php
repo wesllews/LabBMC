@@ -27,6 +27,10 @@ $headersAdicionais =['name','sex','fragment','group','longitude','latitude','inf
 		  }
 		endif;
 
+if(in_array("delete",$_SESSION['permission'])){
+	array_push($header, "manager");
+}
+
 /* Filtros */
   // Pagination
   $pag = isset($_GET['pag']) ? $_GET['pag']:1;
@@ -224,7 +228,7 @@ $download_ids = [];
 				  <div class="d-flex justify-content-center align-items-end text-warning">
 					<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 					<!--Icon-->
-					<?php if($value!='informations'): ?>
+					<?php if(!in_array($value,["informations","manager"])): ?>
 						<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
 						onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 							<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
@@ -239,19 +243,17 @@ $download_ids = [];
 	  <!--Body Table -->
 	  <tbody>
 			<?php while($row = $result_filter->fetch_array()): ?>
-			  <tr class="text-center">
+				<tr class="text-center" scope="row">
 				<?php foreach ($header as $value): ?>
-				  <?php switch($value):
+					<td scope="col">
+					<?php switch($value):
 
-					case 'identification': ?>
-						<?php array_push($download_ids,$row["id"]); ?>
-					  <td scope="row">
-						<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
-					  </td>
-					<?php break;?>
+						case 'identification': ?>
+							<?php array_push($download_ids,$row["id"]); ?>
+							<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
+						<?php break;?>
 
-					<?php case 'fragment': ?>
-						<td scope="row">
+						<?php case 'fragment': ?>
 							<!-- Trigger Modal -->
 							<button type="button" class="btn btn-sm btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#fragment<?php echo str_replace(' ','_',$row['fragment']); ?>" style="white-space: nowrap;">
 							  <?php echo $row['fragment']; ?>
@@ -314,33 +316,38 @@ $download_ids = [];
 										</div>
 									</div>
 								</div>
-		    				<?php endif; ?>
-		    			</td>
-					<?php break;?>
+							<?php endif; ?>
+						<?php break;?>
 
-					<?php case 'informations': 
-    					$sql_informations = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
-    					$result_informations = $mysqli->query($sql_informations);
+						<?php case 'informations': 
+							$sql_informations = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
+							$result_informations = $mysqli->query($sql_informations);
+							if ($result_informations->num_rows > 0): ?>
+								<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
+								<button type="button" class="btn btn-sm btn-primary">Genomics</button>
+							<?php else: ?>
+								<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
+								<button type="button" class="btn btn-sm btn-secondary disabled">Genomics</button>
+							<?php endif; ?>
+						<?php break;?>
 
-	    					if ($result_informations->num_rows > 0): ?>
-	    						<td scope="row">
-		    						<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
-		    						<button type="button" class="btn btn-sm btn-primary">Genomics</button>
-	    						</td>
-	    					<?php else: ?>
-	    						<td scope="row">
-		    						<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
-		    						<button type="button" class="btn btn-sm btn-secondary disabled">Genomics</button>
-	    						</td>
-	    					<?php endif; ?>
-		    		<?php break;?>
+						<?php case 'manager': ?>
+							<form action="delete.php" method="GET" id="delete<?php echo $row['identification'];?>'" target="_blank">
+								<input type="hidden" name="identification" value='<?php echo $row['identification'];?>'>
+							</form>
+							<form action="edit.php" method="GET" id="edit" target="_blank">
+								<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
+							</form>
+							<button type="submit" form="delete<?php echo $row['identification'];?>'" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+							<button type="submit" form="edit" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>			    				
+						<?php break;?>
 
-					<?php default: ?>
-					  <td scope="row"><div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div></td>
-					  
-				  <?php endswitch; ?>
+						<?php default: ?>
+						<div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div>					  
+					<?php endswitch; ?>
+					</td>
 				<?php endforeach; ?>
-			  </tr>
+				</tr>
 			<?php endwhile; ?>
 	  </tbody>
 	</table>
