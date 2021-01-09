@@ -18,9 +18,15 @@ if(isset($_GET["id"])){
 	//$mysqli->autocommit(FALSE);
 	$query= "DELETE FROM `individual` WHERE id='$id';";
 	$result = $mysqli->query($query);
+	$rows =$result->num_rows;
+	if ($rows==1) {
 		echo '<script> alert("Individual Deleted!");</script>';
 		echo "<script>window.close();</script>";
 		exit;
+	} else{
+		echo '<script> alert("Something went wrong!");</script>';
+		echo "<script>window.close();</script>";
+	}
 }
 ?>
 <div class="container">

@@ -332,14 +332,15 @@ $download_ids = [];
 						<?php break;?>
 
 						<?php case 'manager': ?>
-							<form action="delete.php" method="GET" id="delete<?php echo $row['identification'];?>'" target="_blank">
-								<input type="hidden" name="identification" value='<?php echo $row['identification'];?>'>
-							</form>
-							<form action="edit.php" method="GET" id="edit" target="_blank">
-								<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
-							</form>
-							<button type="submit" form="delete<?php echo $row['identification'];?>'" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
-							<button type="submit" form="edit" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>			    				
+		    				<form action="delete.php" method="GET" id="delete<?php echo $row['identification'];?>" target="_blank">
+		    					<input type="hidden" name="identification" value='<?php echo $row['identification'];?>'>
+		    				</form>
+		    				<form action="wild_insert.php" method="GET" id="edit<?php echo $row['identification'];?>" target="_blank">
+		    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
+		    					<input type="hidden" name="action" value="edit">
+		    				</form>
+	    					<button type="submit" form="delete<?php echo $row['identification'];?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+	    					<button type="submit" form="edit<?php echo $row['identification'];?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>			    				
 						<?php break;?>
 
 						<?php default: ?>

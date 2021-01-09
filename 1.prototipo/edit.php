@@ -184,7 +184,7 @@ if ($rows==1) {
 	$mysqli->autocommit(FALSE);
 	$problem=FALSE;
 
-	// Inserir individuo
+	//Update individuo
 	$identification = $_GET['identification'];
 	$id = $_GET['id'];
 	$id_category = 1;

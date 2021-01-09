@@ -220,3 +220,9 @@ function deleteHistoric(id) {
 	$(".historic").append(html);
     alert("Deleted!");
 }
+
+/* MUDA VALOR DO HIDDEN ACTION */
+function changeValue(id, value){
+    document.getElementById(id).value = value;
+    return true;
+}
