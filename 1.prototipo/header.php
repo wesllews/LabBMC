@@ -57,11 +57,21 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
       <div class="bg-light" id="sidebar-wrapper">
         <div class="sidebar-heading">Dashboard</div>
         <div class="list-group list-group-flush">
-          <a href="users.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users-cog"> </i>Users</a>
-          <a href="captivity_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity</a>
-          <a href="wild_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Wild</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Institute</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
+          <a href="users.php" class="list-group-item list-group-item-action bg-light">Users</a>
+
+          <!-- Individual -->
+          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#individual">Individuals</a>
+          <div id="individual" class="collapse list-group list-group-flush">
+            <a href="captivity_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity</a>
+            <a href="wild_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Wild</a>
+          </div>
+
+          <!-- Population -->
+          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#population">Populations</a>
+          <div id="population" class="collapse list-group list-group-flush">
+            <a href="institute_adm" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Institute</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
+          </div>
         </div>
       </div>
     <?php endif; ?>
