@@ -67,9 +67,9 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
           </div>
 
           <!-- Population -->
-          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#population">Populations</a>
+          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#population">Populations and Group</a>
           <div id="population" class="collapse list-group list-group-flush">
-            <a href="institute_adm" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Institute</a>
+            <a href="institute.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity Institute</a>
             <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
           </div>
         </div>

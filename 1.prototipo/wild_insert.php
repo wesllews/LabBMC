@@ -13,7 +13,7 @@ if ($action == "edit" && !isset($_GET["id"])) {
 	} else{
 		include 'notfound.php';
 	}
-} else {
+} elseif($action == "edit" && isset($_GET["id"])) {
 	$id = $_GET["id"]; 
 	$query= "SELECT * FROM `individual` WHERE id='$id';";
 	$result = $mysqli->query($query);
@@ -128,7 +128,14 @@ if ($action == "edit" && !isset($_GET["id"])) {
 
 	<!-- Form submit -->
 	<input type="hidden" id="action" name="action" value="<?php echo $_GET["action"];?>">
-	<button type ="submit" class="btn btn-block btn-success mt-5" style="white-space: nowrap;" onclick="changeValue('action','<?php echo $action=="edit"?"edited":"insert"?>')">Submit</button>	
+	<div class="row mt-5">
+		<div class="col">
+			<button type ="submit" class="btn btn-success  btn-block" style="white-space: nowrap;" onclick="changeValue('action','<?php echo $action=="edit"?"edited":"insert"?>')">Submit</button>
+		</div>
+		<div class="col">
+			<button onclick="<?php echo $action=="edit"?"window.close(); return false;":"window.history.back(); return false;"?>" class="btn btn-danger btn-block" autofocus>Cancel</button>
+		</div>
+	</div>		
 </form>
 <?php if(isset($_GET['action']) && $_GET['action']=="insert"):
 	$mysqli->autocommit(FALSE);
@@ -168,7 +175,7 @@ if ($action == "edit" && !isset($_GET["id"])) {
 	if ($problem==FALSE) {
 		$mysqli->commit();
 		echo '<script>alert("Inserted");</script>';
-		echo "<script>window.close();</script>";
+		echo "<script>window.location.replace('wild_insert.php')</script>";
 	} else{
 		$mysqli->rollback();
 		echo '<script>alert("There is something wrong with: '.$problem.'");</script>';

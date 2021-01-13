@@ -142,7 +142,7 @@ if ($rows==1) {
 							$institute="";
 							$id_institute="";				
 							while ($row_institute = $query->fetch_array()):?>
-							  <option value="<?php echo $row_institute["id"]; ?>" <?php echo $row_institute["id"]==$row_historic["id_institute"]?"class='text-success' selected":"";?> ><?php echo $row_institute["abbreviation"]," - ",$row_insitute["name"]; ?></option>
+							  <option value="<?php echo $row_institute["id"]; ?>" <?php echo $row_institute["id"]==$row_historic["id_institute"]?"class='text-success' selected":"";?>> <?php echo $row_institute["abbreviation"]," - ",$row_institute["name"]; ?></option>
 								<?php
 								$institute.=$row_institute["abbreviation"]." - ".$row_institute["name"].",";
 								$id_institute.=$row_institute["id"].",";
@@ -178,7 +178,14 @@ if ($rows==1) {
 		</div>
 
 	<!-- Form submit -->
-	<button type ="submit" class="btn btn-block btn-success mt-5" style="white-space: nowrap;">Edit Data</button>	
+	<div class="row mt-5">
+		<div class="col">
+			<button type ="submit" class="btn btn-success btn-block" style="white-space: nowrap;">Submit</button>
+		</div>
+		<div class="col">
+			<button onclick="window.close(); return false;" class="btn btn-danger btn-block" autofocus>Cancel</button>
+		</div>
+	</div>	
 </form>
 <?php if(isset($_GET['id'])):
 	$mysqli->autocommit(FALSE);
@@ -277,7 +284,7 @@ $sql = "SELECT * , historic.id AS id_historic FROM historic LEFT JOIN events ON 
 	//Commit ou Rollback
 	if ($problem==FALSE) {
 		$mysqli->commit();
-		echo '<script>alert("Alterado");</script>';
+		echo '<script>alert("Edited");</script>';
 		echo "<script>window.close();</script>";
 	} else{
 		$mysqli->rollback();

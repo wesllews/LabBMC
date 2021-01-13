@@ -133,7 +133,14 @@ include 'header.php';
 		</div>
 
 	<!-- Form submit -->
-	<button type ="submit" class="btn btn-block btn-success mt-5" style="white-space: nowrap;">Insert Data</button>	
+	<div class="row mt-5">
+		<div class="col">
+			<button type ="submit" class="btn btn-block btn-success" style="white-space: nowrap;">Submit</button>
+		</div>
+		<div class="col">
+			<button onclick="window.history.back(); return false;" class="btn btn-danger btn-block" autofocus>Cancel</button>
+		</div>
+	</div>
 </form>
 <?php if(isset($_GET['identification'])):
 	$mysqli->autocommit(FALSE);
@@ -199,7 +206,8 @@ include 'header.php';
 	//Commit ou Rollback
 	if ($problem==FALSE) {
 		$mysqli->commit();
-		echo '<script>alert("Inserido");</script>';
+		echo '<script>alert("Inserted");</script>';
+		echo "<script>window.location.replace('captivity_insert.php')</script>";
 	} else{
 		$mysqli->rollback();
 		echo '<script>alert("There is something wrong with: '.$problem.'");</script>';
