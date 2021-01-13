@@ -48,7 +48,7 @@ if ($action == "edit" && !isset($_GET["id"])) {
 							</option>
 					<?php endforeach ?>
 				</select>
-				</div>
+			</div>
 			<div class="form-group col">
 				<label>Name:</label>
 				<input type="text" name="name" class="form-control form-control-sm" placeholder="e.g. ROXXANE" value="<?php echo $action=="edit" && !isset($_GET["name"])?$row_individual["name"]:$_GET['name'];?>">
