@@ -287,10 +287,6 @@ $download_ids = [];
 															<td><?php echo $row_fragment['fragment']; ?></td>
 														</tr>
 														<tr>
-															<th>Abbreviation</th>
-															<td><?php echo $row_fragment['abbreviation']; ?></td>
-														</tr>
-														<tr>
 															<th>country</th>
 															<td><?php echo $row_fragment['country']; ?></td>
 														</tr>
@@ -302,6 +298,20 @@ $download_ids = [];
 															<th>city</th>
 															<td><?php echo $row_fragment['city']; ?></td>
 														</tr>
+														
+														<?php if(in_array("edit",$_SESSION['permission'])):?>
+															<tr>
+																<th></th>
+																<td>
+																	<form action="fragment.php" method="GET" id="editPopulation<?php echo $row_fragment['id'];?>" target="_blank">
+																		<input type="hidden" name="id" value="<?php echo $row_fragment['id'];?>">
+																		<input type="hidden" name="action" value="edit">
+
+																	</form>
+																	<button type="submit" form="editPopulation<?php echo $row_fragment['id'];?>" class="btn btn-primary float-right"><i class="fas fa-edit"></i></button>
+																</td>
+															</tr>
+														<?php endif ?>
 													</tbody>
 												</table>
 											</div>

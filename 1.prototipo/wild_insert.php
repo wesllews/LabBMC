@@ -78,7 +78,7 @@ if ($action == "edit" && !isset($_GET["id"])) {
 				<select name="fragment" class="form-control form-control-sm"  onchange="this.form.submit()">
 					<option selected hidden>Choose...</option>
 					<?php 
-					$sql = "SELECT * FROM fragment ORDER BY id ASC;";
+					$sql = "SELECT * FROM fragment ORDER BY fragment ASC;";
 					$query = $mysqli->query($sql);			
 					while ($row = $query->fetch_array()):?>
 					  <option value="<?php echo $row["id"];?>" <?php echo $action=="edit" && !isset($_GET["fragment"])? ($row["id"]==$row_status["id_fragment"]?"selected":""):($row["id"]==$_GET['fragment']?"selected":"");?>>
@@ -118,11 +118,11 @@ if ($action == "edit" && !isset($_GET["id"])) {
 		<div class="row">
 			<div class="form-group col">
 				<label> Latitude individual:</label>
-				<input type="text" name="latitude" list="datalistDam" class="form-control form-control-sm" placeholder="e.g. -22,425176" value="<?php echo $action=="edit" && !isset($_GET["latitude"]) ? $row_group["latitude_ind"]:$_GET['latitude'];?>">
+				<input type="text" name="latitude" class="form-control form-control-sm" placeholder="e.g. -22,425176" value="<?php echo $action=="edit" && !isset($_GET["latitude"]) ? $row_group["latitude_ind"]:$_GET['latitude'];?>">
 			</div>
 			<div class="form-group col">
 				<label> Longitude individual:</label>
-				<input type="text" name="longitude" list="datalistDam" class="form-control form-control-sm" placeholder="e.g. -52,508509" value="<?php echo $action=="edit" && !isset($_GET["longitude"]) ? $row_group["longitude_ind"]:$_GET['longitude'];?>">
+				<input type="text" name="longitude" class="form-control form-control-sm" placeholder="e.g. -52,508509" value="<?php echo $action=="edit" && !isset($_GET["longitude"]) ? $row_group["longitude_ind"]:$_GET['longitude'];?>">
 			</div>
 		</div>
 

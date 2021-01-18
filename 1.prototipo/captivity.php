@@ -369,17 +369,20 @@ $download_ids = [];
 																		<th>city</th>
 																		<td><?php echo $row_population['city']; ?></td>
 																	</tr>
-																	<tr>
-																		<th></th>
-																		<td>
-																			<form action="institute.php" method="GET" id="editPopulation<?php echo $row_population['id'];?>" target="_blank">
-																				<input type="hidden" name="id" value="<?php echo $row_population['id'];?>">
-																				<input type="hidden" name="action" value="edit">
+																	
+																	<?php if(in_array("edit",$_SESSION['permission'])):?>
+																		<tr>
+																			<th></th>
+																			<td>
+																				<form action="institute.php" method="GET" id="editPopulation<?php echo $row_population['id'];?>" target="_blank">
+																					<input type="hidden" name="id" value="<?php echo $row_population['id'];?>">
+																					<input type="hidden" name="action" value="edit">
 
-																			</form>
-																			<button type="submit" form="editPopulation<?php echo $row_population['id'];?>" class="btn btn-primary float-right"><i class="fas fa-edit"></i></button>
-																		</td>
-																	</tr>
+																				</form>
+																				<button type="submit" form="editPopulation<?php echo $row_population['id'];?>" class="btn btn-primary float-right"><i class="fas fa-edit"></i></button>
+																			</td>
+																		</tr>
+																	<?php endif; ?>
 																</tbody>
 															</table>
 														</div>

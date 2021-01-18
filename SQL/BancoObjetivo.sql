@@ -102,8 +102,7 @@ CREATE TABLE `fragment`
 (
  `id`        	integer NOT NULL AUTO_INCREMENT ,
  `fragment`     varchar(45) NOT NULL ,
- `abbreviation` varchar(20) NULL ,
- `country`      varchar(45) NULL ,
+ `country`      varchar(45) NOT NULL ,
  `state`        varchar(45) NULL ,
  `city`         varchar(45) NULL ,
 
