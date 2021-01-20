@@ -69,10 +69,12 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
           <!-- Population -->
           <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#population">Populations and Group</a>
           <div id="population" class="collapse list-group list-group-flush">
+            <a href="institute.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Institutes</a>
+            <a href="fragment.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Fragments</a>
+            <a href="group.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Groups</a>
             <a href="institute_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity Institute</a>
-            <a href="institute.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Captivity Institute List</a>
-            <a href="fragment.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
-            <a href="group.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Group</a>
+            <a href="fragment_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
+            <a href="group_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Group</a>
           </div>
         </div>
       </div>

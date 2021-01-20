@@ -1,138 +1,144 @@
-<?php 
+<?php
 session_start();
 $_SESSION['pagina']='admin';
 include 'header.php';
 
-$action= $_GET["action"];
-if ($action == "edit") {
-	$id = $_GET["id"]; 
-	$query= "SELECT * FROM `fragment` WHERE id='$id';";
-	$result = $mysqli->query($query);
-	if ($result->num_rows==1) {
-		$row_fragment = $result->fetch_array();
-	} else{
-		include 'notfound.php';
-	}
-} 
+/* Cabeçalho da tabela */
+$header = ['fragment','country','state','city'];
+if(in_array("delete",$_SESSION['permission'])){
+	array_push($header, "manager");
+}
+
+/* Recebe as variaveis*/
+  // Pagination
+  $pag = isset($_GET['pag']) ? $_GET['pag']:1;
+  $limit = isset($_GET['limit'])? $_GET['limit']:10;
+  $offset = $limit!="All" ? ($pag-1) * $limit : "";
+
+  // Sort Table
+  $column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
+  $sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
+
+  // Some variables we need for the table.
+  $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order);
+  $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
+
+/* SQL Filtros */
+  $limit_sql = $limit!="All" ? " LIMIT $offset,$limit":"";
+  $order = " ORDER BY `$column` $sort_order";
+
+/* Forms */
+	$array =  array(
+		    "column" => $column,
+		    "sort_order" => $sort_order,
+		    "pag" => $pag,
+		    "limit" => $limit
+		);
+
+
+$sql= "SELECT * FROM `fragment` WHERE 1=1";
+$sql_pagination = $sql;
+$sql_filter = $sql_pagination.$order.$limit_sql;
+$result_filter = $mysqli->query($sql_filter);
 ?>
-<div class="container text-center mt-5 mb-5">
-	<h4 class="text-warning font-weight-bold">Wild Fragment</h4>
+
+<div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Fragments</h3><hr></div>
+
+
+<!-- Forms Hiddens-->
+	<form method="get" action="" id="formFiltros">
+		<?php foreach($array as $key => $value): ?>
+			<?php if($value != ""):?>
+			<input type="hidden" name="<?php echo $key;?>" value="<?php echo $value;?>">
+			<?php endif;?>
+		<?php endforeach;?>
+	</form>
+
+<!-- Pagination -->
+<?php include 'pagination.php'; ?>
+
+
+<!--Filtros-->
+<div class="container-fluid">
+	<form method="get" class="form-inline pb-1">
+		<label for="limit">Show: </label>
+		<select class="btn btn-sm border mr-2" name="limit" id="limit">
+			<?php for ($i=10; $i <= 50; $i+=10):?>
+				<option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+			<?php endfor; ?>
+			<option <?php echo isset($_GET['limit']) && $_GET['limit']=="All" ? "selected":""; ?> value="All">All results</option>
+		</select>
+		<button type="submit" class="btn btn-success btn-sm">Submit</button>
+	</form>
+		
+	<!--Table Responsive-->
+	<div class="table-responsive" style="min-height: 270px;">
+		<!--Table-->
+		<table class="table table-sm table-hover">
+
+			<!--Head Table-->
+			<thead class="text-warning">
+				<tr class="text-center text-capitalize">
+					<?php foreach ($header as $value): ?>
+						<th scope="col" style="white-space: nowrap;">
+							<div class="d-flex justify-content-center align-items-end">
+								<span><?php echo str_replace('_',' ',$value); ?></span>
+								<!--Icon-->
+								<?php if(!in_array($value, array('manager'))): ?>
+									<button class="btn btn-sm text-warning" type="submit" form="formFiltros" 
+									onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
+									<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
+									</button>
+								<?php endif;?>
+							</div>
+						</th>
+					<?php endforeach ?>
+				</tr>
+			</thead>
+
+			<!--Body Table -->
+			<tbody>
+				<?php while($row = $result_filter->fetch_array()): ?>
+				<tr class="text-center">
+
+					<?php foreach ($header as $value): ?>
+					<td scope="col">
+
+						<?php switch ($value):
+							case 'fragment': ?>
+			    				<form action="wild.php" method="GET" id="view<?php echo $row['id'];?>" target="_blank">
+			    					<input type="hidden" name="filterpopulation" value='<?php echo $row['id'];?>'>
+			    					<input type="hidden" name="fulldata" value='n'>
+			    					<button type="submit" form="view<?php echo $row['id'];?>" class="btn btn-sm btn-outline-success btn-block border-0"><?php echo $row[$value];?></button>
+			    				</form>
+		    				<?php break;?>
+
+							<?php case 'manager': ?>
+			    				<form action="delete.php" method="GET" id="delete<?php echo $row['id'];?>" target="_blank">
+			    					<input type="hidden" name="id" value='<?php echo $row['id'];?>'>
+			    					<input type="hidden" name="delete" value='fragment'>
+			    				</form>
+			    				<form action="fragment_insert.php" method="GET" id="edit<?php echo $row['id'];?>" target="_blank">
+			    					<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+			    					<input type="hidden" name="action" value="edit">
+			    				</form>
+		    					<button type="submit" form="delete<?php echo $row['id'];?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+		    					<button type="submit" form="edit<?php echo $row['id'];?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+		    					<?php break;?>	
+
+							<?php default:?>
+								<div style="cursor: auto; white-space: nowrap;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div>
+							<?php break;?>
+						<?php endswitch; ?>
+
+					</td>
+					<?php endforeach; ?>
+
+				</tr>
+				<?php endwhile; ?>
+			</tbody>
+		</table>
+	</div>
 </div>
 
-<form method="GET" class="container mb-4">
-	
-	<!-- Nome do instituto e da população -->
-		<div class="font-weight-bold">Identification<hr class="mt-0 mb-2"></div>
-		<div class="row">
-			<div class="form-group col">
-				<label>Fragment Name:</label>
-				<input type="text" name="fragment" class="form-control form-control-sm" placeholder="e.g. Capão Bonito National Forest" value="<?php echo $action=="edit" && !isset($_GET["fragment"])?$row_fragment["fragment"]:$_GET['fragment'];?>" required>
-			</div>
-		</div>
-
-	<!-- Localização -->
-		<div class="font-weight-bold">Location<hr class="mt-0 mb-2"></div>
-		<div class="row">
-			<div class="form-group col">
-				<label>Country:</label>
-				<input type="text" name="country" list="datalistCountry" class="form-control form-control-sm" placeholder="e.g. AU, BRA, UK" value="<?php echo $action=="edit" && !isset($_GET["country"])?$row_fragment["country"]:$_GET['country'];?>" required>
-				<?php 
-				$query= "SELECT distinct(country) as country FROM `fragment`;";
-				$result = $mysqli->query($query);?>
-				<datalist id="datalistCountry">
-					<?php while ($row_datalist = $result->fetch_array()):?>
-						<option value="<?php echo $row_datalist['country'];?>">
-					<?php endwhile; ?>
-				</datalist>
-			</div>
-
-			<div class="form-group col">
-				<label>State:</label>
-				<input type="text" name="state" list="datalistState" class="form-control form-control-sm" placeholder="e.g. South Australia, Distrito Federal" value="<?php echo $action=="edit" && !isset($_GET["state"])?$row_fragment["state"]:$_GET['state'];?>">
-				<?php 
-				$query= "SELECT distinct(state) as state FROM `fragment` where state != 'NULL' ORDER BY state ASC;";
-				$result = $mysqli->query($query);?>
-				<datalist id="datalistState">
-					<?php while ($row_datalist = $result->fetch_array()):?>
-						<option value="<?php echo $row_datalist['state'];?>">
-					<?php endwhile; ?>
-				</datalist>
-			</div>
-
-			<div class="form-group col">
-				<label>City:</label>
-				<input type="text" name="city" list="datalistCity" class="form-control form-control-sm" placeholder="e.g. New York, Brasilia" value="<?php echo $action=="edit" && !isset($_GET["city"])?$row_fragment["city"]:$_GET['city'];?>">
-				<?php 
-				$query= "SELECT distinct(city) as city FROM `fragment` where city!= 'NULL' ORDER BY city ASC;";
-				$result = $mysqli->query($query);?>
-				<datalist id="datalistCity">
-					<?php while ($row_datalist = $result->fetch_array()):?>
-						<option value="<?php echo $row_datalist['city'];?>">
-					<?php endwhile; ?>
-				</datalist>
-			</div>
-		</div>
-
-	<!-- Form submit -->
-		<input type="hidden" id="action" name="action" value="<?php echo $_GET["action"];?>">
-		<input type="hidden" name="id" value="<?php echo $row_fragment['id'];?>">
-		<div class="row mt-5">
-			<div class="col">
-				<button type ="submit" class="btn btn-success btn-block" style="white-space: nowrap;" onclick="changeValue('action','<?php echo $action=="edit"?"edited":"insert"?>')">Submit</button>
-			</div>
-			<div class="col">
-				<button onclick="<?php echo $action=="edit"?"window.close(); return false;":"window.history.back();"?>" class="btn btn-danger btn-block" autofocus>Cancel</button>
-			</div>
-		</div>	
-</form>
-<?php if(isset($_GET['action']) && $_GET['action']=="insert"):
-	$mysqli->autocommit(FALSE);
-	$problem=FALSE;
-
-	// Inserir individuo
-	$fragment = $_GET['fragment'];
-	$country = $_GET['country'];
-	$state = $_GET["state"]!=""?"'$_GET[state]'":"NULL";
-	$city = $_GET["city"]!=""?"'$_GET[city]'":"NULL";
-	$sql = "INSERT INTO `fragment` (`id`, `fragment`, `country`, `state`, `city`) VALUES (NULL, '$fragment', '$country', ".$state.", ".$city.");";
-	$result = $mysqli->query($sql);
-	if($result==FALSE){
-		$problem=TRUE;
-	}
-
-	//Commit ou Rollback
-	if ($problem==FALSE) {
-		$mysqli->commit();
-		echo '<script>alert("Inserted");</script>';
-		echo "<script>window.location.replace('fragment.php')</script>";
-	} else{
-		$mysqli->rollback();
-		echo '<script>alert("Something went wrong");</script>';
-	}
-elseif(isset($_GET['action']) && $_GET['action']=="edited"):
-	$mysqli->autocommit(FALSE);
-	$problem=FALSE;
-
-	// Inserir individuo
-	$id = $_GET['id'];
-	$fragment = $_GET['fragment'];
-	$country = $_GET['country'];
-	$state = $_GET["state"]!=""?"'$_GET[state]'":"NULL";
-	$city = $_GET["city"]!=""?"'$_GET[city]'":"NULL";
-	$sql = "UPDATE `fragment` SET  `fragment`='$fragment', `country`='$country', `state`=$state, `city`=$city WHERE id = '$id';";
-	$result = $mysqli->query($sql);
-	if($result==FALSE){
-		$problem=TRUE;
-	}
-
-	//Commit ou Rollback
-	if ($problem==FALSE) {
-		$mysqli->commit();
-		echo '<script>alert("Edited");</script>';
-		echo "<script>window.close();</script>";
-	} else{
-		$mysqli->rollback();
-		echo '<script>alert("Something went wrong");</script>';
-	}
-endif;?>
 <?php include 'footer.php'; ?>

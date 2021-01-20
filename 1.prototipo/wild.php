@@ -303,7 +303,7 @@ $download_ids = [];
 															<tr>
 																<th></th>
 																<td>
-																	<form action="fragment.php" method="GET" id="editPopulation<?php echo $row_fragment['id'];?>" target="_blank">
+																	<form action="fragment_insert.php" method="GET" id="editPopulation<?php echo $row_fragment['id'];?>" target="_blank">
 																		<input type="hidden" name="id" value="<?php echo $row_fragment['id'];?>">
 																		<input type="hidden" name="action" value="edit">
 

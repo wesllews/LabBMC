@@ -34,6 +34,34 @@ switch ($delete) {
 	 		include "notfound.php";
 	 	}
  		break;
+
+ 	case 'fragment':
+	 	$id = $_GET["id"]; 
+	 	$query= "SELECT * FROM `fragment` WHERE id='$id';";
+	 	$result = $mysqli->query($query);
+	 	$rows =$result->num_rows;
+	 	if ($rows==1) {
+	 		$row = $result->fetch_array();
+	 		$identification = $row['fragment'];
+	 		$sql= "DELETE FROM `fragment` WHERE id='$id';";
+	 	} else{
+	 		include "notfound.php";
+	 	}
+ 		break;
+
+ 	case 'group':
+	 	$id = $_GET["id"]; 
+	 	$query= "SELECT * FROM `group` WHERE id='$id';";
+	 	$result = $mysqli->query($query);
+	 	$rows =$result->num_rows;
+	 	if ($rows==1) {
+	 		$row = $result->fetch_array();
+	 		$identification = $row['group'];
+	 		$sql= "DELETE FROM `group` WHERE id='$id';";
+	 	} else{
+	 		include "notfound.php";
+	 	}
+ 		break;
  }
 
 

@@ -163,13 +163,16 @@ if ($action == "edit" && !isset($_GET["id"])) {
 
 	// Inserir Ind_Group
 	$group = $_GET['group'];
-	$latitude =$_GET["latitude"]!=""?"'$_GET[latitude]'":"NULL";
-	$longitude =$_GET["longitude"]!=""?"'$_GET[longitude]'":"NULL";
-	$sql= "INSERT INTO `ind_group` (`id_individual`, `id_group`, `longitude_ind`, `latitude_ind`) VALUES ( (SELECT id FROM individual WHERE identification='$identification'), '$group', $longitude, $latitude);";
-	$result = $mysqli->query($sql);
-	if ($result==FALSE) {
-		$problem.="\\nGroup ou Global position";
+	if ($group!="none") {
+		$latitude =$_GET["latitude"]!=""?"'$_GET[latitude]'":"NULL";
+		$longitude =$_GET["longitude"]!=""?"'$_GET[longitude]'":"NULL";
+		$sql= "INSERT INTO `ind_group` (`id_individual`, `id_group`, `longitude_ind`, `latitude_ind`) VALUES ( (SELECT id FROM individual WHERE identification='$identification'), '$group', $longitude, $latitude);";
+		$result = $mysqli->query($sql);
+		if ($result==FALSE) {
+			$problem.="\\nGroup ou Global position";
+		}
 	}
+	
 
 	//Commit ou Rollback
 	if ($problem==FALSE) {
@@ -208,12 +211,38 @@ elseif (isset($_GET['action']) && $_GET['action']=="edited"):
 
 	// Update Ind_Group
 	$group = $_GET['group'];
-	$latitude =$_GET["latitude"]!=""?"'$_GET[latitude]'":"NULL";
-	$longitude =$_GET["longitude"]!=""?"'$_GET[longitude]'":"NULL";
-	$sql = "UPDATE `ind_group` SET id_group='$group',longitude_ind=$longitude,latitude_ind=$latitude WHERE id_individual='$id';";
-	$result = $mysqli->query($sql);
-	if ($result==FALSE) {
-		$problem.="\\nGroup ou Global position";
+	if ($group!="none") { 
+		$latitude =$_GET["latitude"]!=""?"'$_GET[latitude]'":"NULL";
+		$longitude =$_GET["longitude"]!=""?"'$_GET[longitude]'":"NULL";
+		
+		// Seja existe registro no banco de dados atualiza
+		$query= "SELECT * FROM `ind_group` WHERE id_individual='$id';";
+		$result = $mysqli->query($query);
+		if ($result->num_rows==1) {
+			$sql = "UPDATE `ind_group` SET id_group='$group',longitude_ind=$longitude,latitude_ind=$latitude WHERE id_individual='$id';";
+			$result = $mysqli->query($sql);
+			if ($result==FALSE) {
+				$problem.="\\nGroup ou Global position";
+			}
+		} else{ // Se não existe faz o insert
+			$sql= "INSERT INTO `ind_group` (`id_individual`, `id_group`, `longitude_ind`, `latitude_ind`) VALUES ( (SELECT id FROM individual WHERE identification='$identification'), '$group', $longitude, $latitude);";
+			$result = $mysqli->query($sql);
+			if ($result==FALSE) {
+				$problem.="\\nGroup ou Global position";
+			}
+		}
+	} else{ 
+		// Seja existe registro no banco de dados atualiza
+		$query= "SELECT * FROM `ind_group` WHERE id_individual='$id';";
+		$result = $mysqli->query($query);
+		
+		if ($result->num_rows==1) {
+			$sql = "DELETE FROM `ind_group` WHERE id_individual='$id';";
+			$result = $mysqli->query($sql);
+			if ($result==FALSE) {
+				$problem.="\\nGroup ou Global position";
+			}
+		}
 	}
 
 	//Commit ou Rollback
