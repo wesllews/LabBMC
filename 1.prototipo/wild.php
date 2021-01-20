@@ -343,7 +343,8 @@ $download_ids = [];
 
 						<?php case 'manager': ?>
 		    				<form action="delete.php" method="GET" id="delete<?php echo $row['identification'];?>" target="_blank">
-		    					<input type="hidden" name="identification" value='<?php echo $row['identification'];?>'>
+		    					<input type="hidden" name="id" value='<?php echo $row['id'];?>'>
+			    				<input type="hidden" name="delete" value='individual'>
 		    				</form>
 		    				<form action="wild_insert.php" method="GET" id="edit<?php echo $row['identification'];?>" target="_blank">
 		    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
