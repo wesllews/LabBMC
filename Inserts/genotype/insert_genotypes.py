@@ -18,7 +18,7 @@ with open('genotype/genotipos.csv', newline='\n') as csvfile:
 				alelo = row[i]
 
 				if alelo !="0":
-					sql = f"INSERT INTO `genotype` (`id_individual`, `id_locus`, `allele`, `restricted`) VALUES ((SELECT id FROM individual WHERE identification='{id_individual}'), (SELECT id FROM locus WHERE locus='{id_locus}'), '{alelo}', 'n') ;\n"		
+					sql = f"INSERT INTO `genotype` (`id`,`id_individual`, `id_locus`, `allele`, `restricted`) VALUES (NULL, (SELECT id FROM individual WHERE identification='{id_individual}'), (SELECT id FROM locus WHERE locus='{id_locus}'), '{alelo}', 0) ;\n"		
 					file.write(sql)
 
 		

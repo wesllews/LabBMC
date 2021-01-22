@@ -217,8 +217,8 @@ $download_ids = [];
 					        <div class="overflow-auto" style="max-height: 150px;">
 					        	<?php foreach ($headersAdicionais as $value):?>
 					        		<div class="custom-control custom-checkbox">
-								 		<input type="checkbox" class="custom-control-input" id="<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) || $flag==0 ? "checked":""; ?>>
-										<label class="custom-control-label" for="<?php echo $value;?>"><?php echo ucfirst(str_replace('_',' ',$value)); ?></label>
+								 		<input type="checkbox" class="custom-control-input" id="display<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) || $flag==0 ? "checked":""; ?>>
+										<label class="custom-control-label" for="display<?php echo $value;?>"><?php echo ucfirst(str_replace('_',' ',$value)); ?></label>
 									</div>
 						        <?php endforeach;?>
 					        </div>
@@ -432,7 +432,7 @@ $download_ids = [];
 	    				<?php break;?>
 		
 						<?php default:
-						 	$sql_locus = "SELECT * FROM genotype WHERE restricted!='s' AND id_individual='$row[id]' AND id_locus =(SELECT id FROM locus WHERE locus='$value'); ";
+						 	$sql_locus = "SELECT * FROM genotype WHERE restricted ='0' AND id_individual='$row[id]' AND id_locus=(SELECT id FROM locus WHERE locus='$value'); ";
 						 	$result_locus = $mysqli->query($sql_locus);
 							if ($result_locus->num_rows >=2):?>
 								<td scope="row" style="white-space: nowrap;"> 

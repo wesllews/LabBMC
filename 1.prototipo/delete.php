@@ -62,6 +62,20 @@ switch ($delete) {
 	 		include "notfound.php";
 	 	}
  		break;
+
+ 	case 'locus':
+	 	$id = $_GET["id"]; 
+	 	$query= "SELECT * FROM `locus` WHERE id='$id';";
+	 	$result = $mysqli->query($query);
+	 	$rows =$result->num_rows;
+	 	if ($rows==1) {
+	 		$row = $result->fetch_array();
+	 		$identification = $row['locus'];
+	 		$sql= "DELETE FROM `locus` WHERE id='$id';";
+	 	} else{
+	 		include "notfound.php";
+	 	}
+ 		break;
  }
 
 

@@ -76,6 +76,13 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
             <a href="fragment_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
             <a href="group_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Group</a>
           </div>
+
+          <!-- Genetics -->
+          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#genetics">Genetic</a>
+          <div id="genetics" class="collapse list-group list-group-flush">
+            <a href="locus.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Locus</a>
+            <a href="locus_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Locus</a>
+          </div>
         </div>
       </div>
     <?php endif; ?>

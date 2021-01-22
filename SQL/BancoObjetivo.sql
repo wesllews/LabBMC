@@ -181,12 +181,13 @@ PRIMARY KEY (`id`)
 -- ************************************** `genotype`
 CREATE TABLE `genotype`
 (
+ `id`        	 integer NOT NULL AUTO_INCREMENT ,
  `id_individual` integer NOT NULL ,
  `id_locus`      integer(30) NOT NULL ,
  `allele`        integer NOT NULL ,
- `restricted`      char NULL ,
-
+ `restricted`    boolean NULL ,
+PRIMARY KEY (`id`),
 CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE,
 CONSTRAINT FOREIGN KEY (`id_locus`) REFERENCES `locus` (`id`)
-);
+) AUTO_INCREMENT=1;
 

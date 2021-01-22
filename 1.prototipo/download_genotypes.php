@@ -14,10 +14,22 @@ $sheet = $spreadsheet->getActiveSheet();
 // Variavel alfabética para utilizar nas colunas da tabela
 $alphabet = range('A', 'Z');
 
+// Duplica locus no cabeçalho
+$headerAux=unserialize($_POST['header']);
+$header = [];
+foreach ($headerAux as $key => $value) {
+	if (in_array($value,array('identification','category','sex','population','alive'))) {
+		//key não pode começar em zero, então é necessário setar o "nome" da posição e o valor
+		$header[$key+1] = $value; 
+	} else{
+		array_push($header,$value); 
+		array_push($header,$value); 
+	}
+}
+
 // Imprime cabeçalho
-$header = unserialize($_POST['header']);
 foreach ($header as $key => $value) {
-	$sheet->setCellValue($alphabet[$key].'1', ucfirst($value));
+	$sheet->setCellValueByColumnAndRow($key,1, ucfirst($value));
 }
 
 // Recebe os ids dos indivíduos
@@ -28,58 +40,64 @@ $rowNum = 2;
 
 
 foreach ($download_ids as $value) {
-	$sql = "SELECT * FROM(
-	SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, category, sex,
+	$sql = "SELECT *, individual.id as id,
 	CASE
 	    WHEN alive = 1 THEN 'True'
 	    WHEN alive = 0 THEN 'False'
 	    ELSE 'Unknown'
 		END AS alive,
+
 	CASE
 	    WHEN id_category = 1 THEN institute.abbreviation
 	    WHEN id_category = 2 THEN fragment.fragment
-		END AS population
-
-	FROM genotype
-
-	INNER JOIN individual ON individual.id=genotype.id_individual
-	INNER JOIN status ON status.id_individual=genotype.id_individual
+		END AS population  
+	FROM individual 
+	INNER JOIN status ON status.id_individual=individual.id
 	LEFT JOIN institute ON status.id_institute=institute.id
 	LEFT JOIN category ON individual.id_category=category.id
-	LEFT JOIN fragment ON status.id_fragment=fragment.id)genotype2 WHERE id='$value';";
+	LEFT JOIN fragment ON status.id_fragment=fragment.id
+	WHERE individual.id='$value';";
 	$result = $mysqli->query($sql);
 
 	if($result->num_rows > 0){
-		$row = $result->fetch_assoc();
-
+		$row = $result->fetch_array();
 		foreach ($header as $key => $value) {
-
 			switch ($value) {
 				case 'identification':
 				case 'category':
 				case 'sex':
 				case 'population':
 				case 'alive':
-					$sheet->setCellValue($alphabet[$key].$rowNum, $row[$value]);
+					$sheet->setCellValueByColumnAndRow($key,$rowNum, $row[$value]);
+					$aux = $value;
 					break;
 				
 				default:
-				 	$sql_locus = "SELECT * FROM genotype WHERE restricted!='s' AND id_individual='$row[id]' AND id_locus =(SELECT id FROM locus WHERE locus='$value'); ";
-				 	$result_locus = $mysqli->query($sql_locus);
-				 	$alleles="-";
-					if ($result_locus->num_rows >=2){
-						$alleles="";//limpa alleles
-						while($row_locus = $result_locus->fetch_array()){
-							$alleles.= $row_locus['allele']." ";	
-						}
+					// Imprime o valor dos dois alelos a primeira vez que passa no código e depois na segunda não entra pra imprimir nada
+					if ($aux != $value) {
+						$sql_locus = "SELECT * FROM genotype 
+				 		LEFT JOIN locus ON locus.id=genotype.id_locus 
+				 		WHERE restricted='0' AND id_individual='$row[id]' AND locus='$value';";
+				 		$result_locus = $mysqli->query($sql_locus);
+				 		
+				 		// Garante que não ocupar mais que 2 colunas com informação do locus
+				 		$flag=0;
+				 		while($row_locus = $result_locus->fetch_array()){ 
+				 			if ($flag<2) {
+				 				$colum=$key+$flag;
+				 				$sheet->setCellValueByColumnAndRow($colum,$rowNum, $row_locus['allele']);
+				 			}
+				 			$flag++;
+				 		}
+				 		$aux = $value;
 					}
-					$sheet->setCellValue($alphabet[$key].$rowNum, trim($alleles));
 					break;
 			}
 		}
 		$rowNum++;
 	} else {
 		$sheet->setCellValue("A".$rowNum, "Something went wrong!");
+		$sheet->setCellValue("B".$rowNum, $mysqli->error);
 			}
 }
 
