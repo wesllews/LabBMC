@@ -42,8 +42,9 @@ if (isset($_POST['submit'])) {
           $problem=TRUE;
           $error =$mysqli->error;?>
           <div class=" container alert alert-danger" role="alert">
-            Something went wrong on row: <b><?php echo $numRow;?></b>, locus: <b><?php echo $locus;?></b> and value:<b><?php echo $allele;?></b>
-            <small><b>MySQL Error: </b><?php echo $error; ?></small>
+            <p><b>Row <?php echo $numRow;?> wansn't inserted!</b></p>
+            Something went wrong on locus: <b><?php echo $locus;?></b> and value:<b><?php echo $allele;?>. </b>
+            <small>[<b>MySQL Error: </b><?php echo $error; ?>]</small>
           </div>
           <?php
         }// if-Insert

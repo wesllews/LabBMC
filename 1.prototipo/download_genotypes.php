@@ -10,10 +10,6 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
-
-// Variavel alfabética para utilizar nas colunas da tabela
-$alphabet = range('A', 'Z');
-
 // Duplica locus no cabeçalho
 $headerAux=unserialize($_POST['header']);
 $header = [];
