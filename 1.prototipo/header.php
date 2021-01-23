@@ -17,11 +17,7 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
 <!doctype html>
 <html lang="pt">
 
-
-
   <head>
-
-		<meta http-equiv="refresh" content="10000">
 
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
@@ -82,6 +78,7 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
           <div id="genetics" class="collapse list-group list-group-flush">
             <a href="locus.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Locus</a>
             <a href="locus_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Locus</a>
+            <a href="genotypes_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Genotypes</a>
           </div>
         </div>
       </div>
