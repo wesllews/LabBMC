@@ -1,42 +1,14 @@
 <?php
 session_start();
-$_SESSION['pagina']='genetics';
+$_SESSION['pagina']='genomics';
 include 'header.php';
 
 /* Cabeçalho da tabela */
-$header = ['identification'];
-$headersAdicionais =['category','sex','population','alive'];
+$header = ['identification','category','population','avaible_information'];
 
-	// Adiciona os Locus cadastrados aos headers adicionais
-	$sql_locus = "SELECT DISTINCT(locus) FROM genotype INNER JOIN locus ON locus.id = genotype.id_locus";
-	$query = $mysqli->query($sql_locus);
-	while ($row = $query->fetch_array()) {
-	    array_push($headersAdicionais, $row["locus"]); //Sunstituindo . por _ para envio de variáveis pro método get
-	}
-
-	// Testa se algum locus foi enviado
-	$flag = 0;
-	foreach ($headersAdicionais as $value) {
-		if(isset($_GET[$value])){
-		$flag=1;
-		}
-	}
-	// Se for, adiciona só os enviados
-	if ($flag ==1):
-		foreach ($headersAdicionais as $value) {
-			if(isset($_GET[$value])){
-				array_push($header, $value);
-			}
-		}
-		else:
-			foreach ($headersAdicionais as $value) {
-				array_push($header, $value);
-			}
-		endif;
-
-	// Sort and Order Table
-	$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
-	$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
+// Sort and Order Table
+$column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
+$sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == 'desc' ? 'DESC' : 'ASC';
 
 /* Filtros GET*/
 
@@ -50,10 +22,8 @@ $headersAdicionais =['category','sex','population','alive'];
 	$up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
 	$asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
 
-	// Genotype filters
-	$sexFilter = isset($_GET['sexFilter'])? $_GET['sexFilter'] : "";
+	// Genomic filters
 	$filterpopulation = isset($_GET['filterpopulation'])? $_GET['filterpopulation'] : "";
-	$status = isset($_GET['status'])? $_GET['status'] : "";
 	$category = isset($_GET['filterCategory']) ? $_GET['filterCategory'] : "";
 
 /* Forms */
@@ -62,8 +32,6 @@ $headersAdicionais =['category','sex','population','alive'];
 	    "sort_order" => $sort_order,
 	    "pag" => $pag,
 	    "limit" => $limit,
-	    "sexFilter" => $sexFilter,
-	    "status" => $status,
 	    "filterpopulation" => $filterpopulation,
 	    "filterCategory" => $category
 		);
@@ -76,33 +44,24 @@ $headersAdicionais =['category','sex','population','alive'];
 	$aux_column = $column=='category'? 'category':$column;
 	$order = " ORDER BY $aux_column $sort_order"; 
 
-	// Genotype filters
-	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
-	$status = $status!=""? " AND alive='$_GET[status]'" : "";
+	// genomic filters
 	$filterpopulation = $filterpopulation!=""? " AND population ='$_GET[filterpopulation]'" : "";
 	$category = $category!=""? " AND id_category ='$_GET[filterCategory]'" : "";
 
-$sql= "SELECT * FROM(
-SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, category, sex,
-CASE
-    WHEN alive = 1 THEN 'True'
-    WHEN alive = 0 THEN 'False'
-    ELSE 'Unknown'
-	END AS alive,
-CASE
-    WHEN id_category = 1 THEN institute.abbreviation
-    WHEN id_category = 2 THEN fragment.fragment
-	END AS population
+$sql= "SELECT * FROM (
+	SELECT identification,genomic.id_individual as id,id_category,category, platform,link,
+		CASE
+		WHEN id_category = 1 THEN institute.abbreviation
+		WHEN id_category = 2 THEN fragment.fragment
+		END AS population 
+	FROM genomic
+	INNER JOIN individual ON individual.id=genomic.id_individual
+	INNER JOIN status ON status.id_individual=genomic.id_individual
+	INNER JOIN category ON individual.id_category=category.id
+	LEFT JOIN institute ON status.id_institute=institute.id
+	LEFT JOIN fragment ON status.id_fragment=fragment.id) genomic2 WHERE 1=1";
 
-FROM genotype
-
-INNER JOIN individual ON individual.id=genotype.id_individual
-INNER JOIN status ON status.id_individual=genotype.id_individual
-INNER JOIN category ON individual.id_category=category.id
-LEFT JOIN institute ON status.id_institute=institute.id
-LEFT JOIN fragment ON status.id_fragment=fragment.id)genotype2 WHERE 1=1";
-
-$sql_pagination = $sql.$sexFilter.$status.$filterpopulation.$category;
+$sql_pagination = $sql.$filterpopulation.$category;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
 
@@ -113,7 +72,7 @@ $population = [];
 $download_ids = [];
 ?>
 
-<div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Genotypes and Alelles</h3><hr></div>
+<div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Genomics</h3><hr></div>
 
 <!-- Filtro -->
 	<!-- Button trigger modal -->
@@ -139,7 +98,7 @@ $download_ids = [];
 
 				<!-- FORM -->
 				<div class="modal-body">
-					<form id="formFiltro" action="genotypes.php" method="get">
+					<form id="formFiltro" action="genomics.php" method="get">
 
 						<!--Iems per page-->
 						<div class="form-group">
@@ -150,18 +109,6 @@ $download_ids = [];
 									<option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
 								<?php endfor; ?>
 								<option <?php echo isset($_GET['limit']) && $_GET['limit']=="All" ? "selected":""; ?> value="All">All results</option>
-							</select>
-						</div>
-
-						<!--Sex-->
-						<div class="form-group">
-							<label>Sex</label>
-
-							<select name="sexFilter" class="form-control form-control-sm">
-								<option <?php echo !isset($_GET['sexFilter']) ? "selected":"";?> value="" >All</option>
-								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Female" ? "selected":""; ?> value="Female">Female</option>
-								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Male" ? "selected":""; ?> value="Male">Male</option>
-								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
 							</select>
 						</div>
 
@@ -180,26 +127,6 @@ $download_ids = [];
 							</div>
 						</div>
 
-						<!--Life Status-->
-						<div class="form-group">
-							<label>Life Status</label>
-							<br>
-							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="status" id="statusAlive" value="True"  <?php echo isset($_GET["status"]) && $_GET["status"]=="True" ? "checked":""; ?>>
-							  <label class="form-check-label" for="statusAlive"> Alive</label>
-							</div>
-
-							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="status" id="statusDeath" value="False"  <?php echo isset($_GET["status"]) && $_GET["status"]=="False" ? "checked":""; ?>>
-							  <label class="form-check-label" for="statusDeath"> Death</label>
-							</div>
-
-							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="status" id="statusUnkown" value="Unknown"  <?php echo isset($_GET["status"]) && $_GET["status"]=="Unknown" ? "checked":""; ?>>
-							  <label class="form-check-label" for="statusUnkown"> Unkown</label>
-							</div>
-						</div>
-
 						<!--population-->
 						<div class="form-group">
 							<label>Population</label>
@@ -207,37 +134,22 @@ $download_ids = [];
 							  <option <?php echo !isset($_GET['filterpopulation']) ? "selected":""; ?> value="">All</option>
 							  <?php 
 							  $sql_population =" SELECT DISTINCT(population) as population FROM(
-							  SELECT DISTINCT(genotype.id_individual) as id, identification, id_category, sex, alive,
-							  CASE
-							      WHEN id_category = 1 THEN institute.abbreviation
-							      WHEN id_category = 2 THEN fragment.fragment
-							  END AS population
-
-							  FROM genotype
-
-							  INNER JOIN individual ON individual.id=genotype.id_individual
-							  INNER JOIN status ON status.id_individual=genotype.id_individual
-							  LEFT JOIN institute ON status.id_institute=institute.id
-							  LEFT JOIN fragment ON status.id_fragment=fragment.id)genotype2";
+							  SELECT 
+							  		CASE
+							  		WHEN id_category = 1 THEN institute.abbreviation
+							  		WHEN id_category = 2 THEN fragment.fragment
+							  		END AS population 
+							  	FROM genomic
+							  	INNER JOIN individual ON individual.id=genomic.id_individual
+							  	INNER JOIN status ON status.id_individual=genomic.id_individual
+							  	LEFT JOIN institute ON status.id_institute=institute.id
+							  	LEFT JOIN fragment ON status.id_fragment=fragment.id) genomic2";
 							  $query = $mysqli->query($sql_population);
 
 							  while ($row = $query->fetch_array()):?>
 							    <option <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row["population"] ? "selected":""; ?> value="<?php echo $row["population"]; ?>"><?php echo $row["population"]; ?></option>
 							  <?php endwhile; ?>
 							</select>
-						</div>
-
-						<!--Display informations-->
-						<div class="form-group">
-							<label>Display informations</label>
-					        <div class="overflow-auto" style="max-height: 150px;">
-					        	<?php foreach ($headersAdicionais as $value):?>
-					        		<div class="custom-control custom-checkbox">
-								 		<input type="checkbox" class="custom-control-input" id="display<?php echo $value;?>" name="<?php echo $value;?>" value="s"  <?php echo isset($_GET[$value]) || $flag==0 ? "checked":""; ?>>
-										<label class="custom-control-label" for="display<?php echo $value;?>"><?php echo ucfirst(str_replace('_',' ',$value)); ?></label>
-									</div>
-						        <?php endforeach;?>
-					        </div>
 						</div>
 					</form>
 				</div>
@@ -246,7 +158,7 @@ $download_ids = [];
 				<div class="modal-footer">
 					<button type="submit" form="formFiltro" class="btn btn-sm btn-warning">Submit</button>
 
-					<form id="formClear" action="genotypes.php" method="get">
+					<form id="formClear" action="genomics.php" method="get">
 						<button type="submit" form="formClear" class="btn btn-sm btn-warning">Clear</button>
 					</form>
 				</div>
@@ -280,28 +192,12 @@ $download_ids = [];
 				<th scope="col" style="white-space: nowrap;">
 					<div class="d-flex justify-content-center align-items-end">
 
-						<?php if(in_array($value, array('identification','category','sex', 'population', 'alive'))): ?>
-							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
+						<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
+						<?php if(!in_array($value, array('avaible_information'))): ?>
 							<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
 							onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 								<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 							</button>
-
-						<?php else: ?>
-							<?php
-							$sql="SELECT * FROM locus WHERE locus='$value'";
-							$result= $mysqli->query($sql);
-							$row = $result->fetch_assoc();?>
-							<!-- Popover-->
-							<span class="btn btn-outline-light font-weight-bold text-warning border-0 py-0" data-toggle="popover" data-trigger="click hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true"
-							data-content="
-								<b>Type:</b> <?php echo ucfirst($row['type']);?><br>
-								<b>Motif:</b> <?php echo ucfirst($row['motif']);?><br>
-								<b>Primer Forward:</b> <?php echo $row['forward'];?><br>
-								<b>Primer Reverse:</b> <?php echo $row['reverse'];?><br>
-								<b>Reference:</b> <?php echo $row['reference'];?><br>">
-								<?php echo ucfirst(str_replace('_',' ',$value)); ?>
-							</span>		
 						<?php endif; ?>
 					</div>
 				</th>
@@ -324,18 +220,9 @@ $download_ids = [];
 							</td>
 						<?php break;?>
 
-						<?php case 'category': 
-	    					$sql_category = "SELECT * FROM category WHERE id = '$row[id_category]'";
-	    					$result_category = $mysqli->query($sql_category);
-	    					$row_category = $result_category->fetch_array();?>
-	    						<td scope="row">
-	    							<?php echo ucfirst($row_category['category']); ?>
-	    						</td>
-    					<?php break;?>
-
-    					<?php case 'sex': ?> 
+						<?php case 'category': ?>
     						<td scope="row">
-    							<?php echo ucfirst($row['sex']); ?>
+    							<?php echo ucfirst($row['category']); ?>
     						</td>
     					<?php break;?>
 
@@ -422,7 +309,7 @@ $download_ids = [];
 												</div>
 
 												<div class="modal-footer">
-													<form action="genotypes.php" method="get">
+													<form action="genomics.php" method="get">
 														<input type="hidden" name="filterpopulation" value="<?php echo $row['population'];?>">
 														<button type="submit" class="btn btn-sm btn-warning" <?php echo isset($_GET['filterpopulation']) && $_GET['filterpopulation']==$row['population'] ? "disabled ":""; ?>>Filter by this population</button>
 													</form>
@@ -435,31 +322,11 @@ $download_ids = [];
 			    			</td>
     					<?php break;?>
 
-    					<?php case 'alive': ?>
-	    					<td scope="row">
-			    				<?php if($row['alive']=="True"):?>
-			    					<div class="text-success">True</div>
-			    				<?php elseif($row['alive']=="False"): ?>
-			    					<div class="text-danger">False</div>
-			    				<?php else: ?>
-			    					<div class="text-secondary">Unknown</div>
-			    				<?php endif; ?>
-			    			</td>
-	    				<?php break;?>
-		
-						<?php default:
-						 	$sql_locus = "SELECT * FROM genotype WHERE restricted ='0' AND id_individual='$row[id]' AND id_locus=(SELECT id FROM locus WHERE locus='$value'); ";
-						 	$result_locus = $mysqli->query($sql_locus);
-							if ($result_locus->num_rows >=2):?>
-								<td scope="row" style="white-space: nowrap;"> 
-									<?php while($row_locus = $result_locus->fetch_array()){
-										echo $row_locus['allele']," ";	
-									}?>
-								</td>
-							<?php else: ?>
-								<td scope="row">-</td>
-							<?php endif;?>
-						<?php break; ?>
+    					<?php case 'avaible_information': ?>
+    						<td scope="row">
+								<a class="btn btn-sm btn-dark btn-block" href="<?php echo $row[link];?>"><?php echo $row['platform'];?></a>
+							</td>
+    					<?php break;?>
 
 					<?php endswitch; ?> 
 				<?php endforeach; ?>
@@ -473,8 +340,8 @@ $download_ids = [];
 </div>
 
 <!-- Download -->
-	<form id="formDownload" action="download_genotypes.php" method="post">
-		<input type="hidden" name="pagina" value="genotypes">	
+	<form id="formDownload" action="download_genomics.php" method="post">
+		<input type="hidden" name="pagina" value="genomics">	
 		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">		
 		<input type="hidden" name="download_ids" value="<?php echo htmlentities(serialize($download_ids)); ?>">		
 	</form>

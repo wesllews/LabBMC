@@ -191,3 +191,13 @@ CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELET
 CONSTRAINT FOREIGN KEY (`id_locus`) REFERENCES `locus` (`id`)
 ) AUTO_INCREMENT=1;
 
+-- ************************************** `genomic`
+CREATE TABLE `genomic`
+(
+ `id`        	 integer NOT NULL AUTO_INCREMENT ,
+ `id_individual` integer NOT NULL ,
+ `platform`      varchar(15) NOT NULL ,
+ `link`        	 text NOT NULL ,
+PRIMARY KEY (`id`),
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE
+) AUTO_INCREMENT=1;

@@ -62,17 +62,6 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
             <a href="wild_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Wild</a>
           </div>
 
-          <!-- Population -->
-          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#population">Populations and Group</a>
-          <div id="population" class="collapse list-group list-group-flush">
-            <a href="institute.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Institutes</a>
-            <a href="fragment.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Fragments</a>
-            <a href="group.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Groups</a>
-            <a href="institute_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity Institute</a>
-            <a href="fragment_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
-            <a href="group_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Group</a>
-          </div>
-
           <!-- Genetics -->
           <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#genetics">Genetic</a>
           <div id="genetics" class="collapse list-group list-group-flush">
@@ -80,6 +69,23 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
             <a href="locus_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Locus</a>
             <a href="genotypes_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Genotypes</a>
           </div>
+        </div>
+
+        <!-- Genetics -->
+          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#genomic">Genomic</a>
+          <div id="genomic" class="collapse list-group list-group-flush">
+            <a href="genomic_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Genomic</a>
+          </div>
+
+        <!-- Population -->
+        <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#population">Populations and Group</a>
+        <div id="population" class="collapse list-group list-group-flush">
+          <a href="institute.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Institutes</a>
+          <a href="fragment.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Fragments</a>
+          <a href="group.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Groups</a>
+          <a href="institute_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity Institute</a>
+          <a href="fragment_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
+          <a href="group_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Group</a>
         </div>
       </div>
     <?php endif; ?>
@@ -121,6 +127,11 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
               <li class="nav-item">
                 <a class="nav-link <?php if($_SESSION['pagina']=='genetics'){echo "active";} ?>" href="menu.php?page=genetics"  data-toggle="popover" data-trigger="hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true" data-content="Genotypes and Haplotypes informations">
                   <i class="fas fa-dna"></i> Genetics</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link <?php if($_SESSION['pagina']=='genomics'){echo "active";} ?>" href="genomics.php"  data-toggle="popover" data-trigger="hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true" data-content="Whole genome, their annotated genes, SNPs and others">
+                  <i class="fas fa-microscope"></i> Genomics</a>
               </li>
             </ul>
 
