@@ -5,6 +5,9 @@ include 'header.php';
 
 /* Cabeçalho da tabela */
 $header = ['identification','category','population','avaible_information'];
+if(in_array("delete",$_SESSION['permission'])){
+	array_push($header, "manager");
+}
 
 // Sort and Order Table
 $column = isset($_GET['column']) && in_array($_GET['column'], $header) ? $_GET['column'] : $header[0];
@@ -49,7 +52,7 @@ $sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == '
 	$category = $category!=""? " AND id_category ='$_GET[filterCategory]'" : "";
 
 $sql= "SELECT * FROM (
-	SELECT identification,genomic.id_individual as id,id_category,category, platform,link,
+	SELECT identification,genomic.id as id,id_category,category, platform,link,
 		CASE
 		WHEN id_category = 1 THEN institute.abbreviation
 		WHEN id_category = 2 THEN fragment.fragment
@@ -193,7 +196,7 @@ $download_ids = [];
 					<div class="d-flex justify-content-center align-items-end">
 
 						<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
-						<?php if(!in_array($value, array('avaible_information'))): ?>
+						<?php if(!in_array($value, array('avaible_information','manager'))): ?>
 							<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
 							onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 								<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
@@ -214,7 +217,7 @@ $download_ids = [];
 					<?php switch ($value):
 
 						case 'identification':?>
-							<?php array_push($download_ids,$row["id"]); ?>
+							<?php array_push($download_ids,$row['id']); ?>
 							<td scope="row">
 								<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
 							</td>
@@ -327,6 +330,21 @@ $download_ids = [];
 								<a class="btn btn-sm btn-dark btn-block" href="<?php echo $row[link];?>"><?php echo $row['platform'];?></a>
 							</td>
     					<?php break;?>
+
+    					<?php case 'manager': ?>
+    					<td scope="row">
+		    				<form action="delete.php" method="GET" id="delete<?php echo $row['id'];?>" target="_blank">
+		    					<input type="hidden" name="id" value='<?php echo $row['id'];?>'>
+		    					<input type="hidden" name="delete" value='genomics'>
+		    				</form>
+		    				<form action="genomics_insert.php" method="GET" id="edit<?php echo $row['id'];?>" target="_blank">
+		    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
+		    					<input type="hidden" name="action" value="edit">
+		    				</form>
+	    					<button type="submit" form="delete<?php echo $row['id'];?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+	    					<button type="submit" form="edit<?php echo $row['id'];?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+	    				</td>
+	    				<?php break;?>
 
 					<?php endswitch; ?> 
 				<?php endforeach; ?>

@@ -5,10 +5,9 @@ include 'header.php';
 
 $delete = $_GET["delete"];
 $identification = "";
-
+$id = $_GET["id"];
 switch ($delete) {
  	case 'institute':
-	 	$id = $_GET["id"]; 
 	 	$query= "SELECT * FROM `institute` WHERE id='$id';";
 	 	$result = $mysqli->query($query);
 	 	$rows =$result->num_rows;
@@ -22,7 +21,6 @@ switch ($delete) {
  		break;
 
  	case 'individual':
-	 	$id = $_GET["id"]; 
 	 	$query= "SELECT * FROM `individual` WHERE id='$id';";
 	 	$result = $mysqli->query($query);
 	 	$rows =$result->num_rows;
@@ -36,7 +34,6 @@ switch ($delete) {
  		break;
 
  	case 'fragment':
-	 	$id = $_GET["id"]; 
 	 	$query= "SELECT * FROM `fragment` WHERE id='$id';";
 	 	$result = $mysqli->query($query);
 	 	$rows =$result->num_rows;
@@ -50,7 +47,6 @@ switch ($delete) {
  		break;
 
  	case 'group':
-	 	$id = $_GET["id"]; 
 	 	$query= "SELECT * FROM `group` WHERE id='$id';";
 	 	$result = $mysqli->query($query);
 	 	$rows =$result->num_rows;
@@ -64,7 +60,6 @@ switch ($delete) {
  		break;
 
  	case 'locus':
-	 	$id = $_GET["id"]; 
 	 	$query= "SELECT * FROM `locus` WHERE id='$id';";
 	 	$result = $mysqli->query($query);
 	 	$rows =$result->num_rows;
@@ -72,6 +67,19 @@ switch ($delete) {
 	 		$row = $result->fetch_array();
 	 		$identification = $row['locus'];
 	 		$sql= "DELETE FROM `locus` WHERE id='$id';";
+	 	} else{
+	 		include "notfound.php";
+	 	}
+ 		break;
+
+ 	case 'genomics':
+	 	$query= "SELECT * FROM `genomic` WHERE id='$id';";
+	 	$result = $mysqli->query($query);
+	 	$rows =$result->num_rows;
+	 	if ($rows==1) {
+	 		$row = $result->fetch_array();
+	 		$identification = "<a href='$row[link]'>$row[platform]</a>";
+	 		$sql= "DELETE FROM `genomic` WHERE id='$id';";
 	 	} else{
 	 		include "notfound.php";
 	 	}
@@ -105,7 +113,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="delete"){
 		</div>
 
 		<div class="col-xs-12 col-lg-8 p-5 mt-5 bg-light shadow-sm text-center">	
-			<h4>Are You sure about delete <?php echo $delete ?>: <b><?php echo $identification ?></b>?</h4>
+			<h4>Are you sure about delete <b><?php echo $identification ?></b> from <?php echo $delete ?>?</h4>
 			<form action="delete.php" method="GET" id="delete">
 				<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 				<input type="hidden" name="delete" value="<?php echo $_GET['delete'];?>">

@@ -71,10 +71,10 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
           </div>
         </div>
 
-        <!-- Genetics -->
+        <!-- Genomics -->
           <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#genomic">Genomic</a>
           <div id="genomic" class="collapse list-group list-group-flush">
-            <a href="genomic_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Genomic</a>
+            <a href="genomics_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Genomic</a>
           </div>
 
         <!-- Population -->
