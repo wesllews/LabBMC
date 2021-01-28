@@ -226,3 +226,37 @@ function changeValue(id, value){
     document.getElementById(id).value = value;
     return true;
 }
+
+/* ADICIONA OU REMOVE LINHA DE INPUTS EM "genomics_insert.php" */
+if ($("#genomic").length) {
+	$(document).ready(function(){
+
+		$(this).on("click",".add_genomic",function(){
+			var html = '<div class="row">\
+							<div class="form-group col">\
+								<label> Platform:</label>\
+								<input type="text" name="platform[]" list="datalistPlatform" class="form-control form-control-sm" placeholder="e.g. NCBI, PUBMED, etc" required>\
+							</div>\
+							<div class="form-group col">\
+								<label> Link:</label>\
+								<input type="text" name="link[]" class="form-control form-control-sm" placeholder="Acess on..." required>\
+							</div>';
+				html+=	'	<div class="form-group col-lg-1 mt-auto px-1">\
+								<span class="btn btn-sm btn-block btn-danger float-center remove_genomic" style="white-space: nowrap;">Remove</span>\
+							</div>\
+						</div>';
+			$(".genomic").append(html);
+		});
+
+		$(this).on("click",".remove_genomic",function(){
+			var target_input = $(this).parentsUntil(".genomic");
+			target_input.remove();
+		});
+	});
+}
+
+function deleteItem(page,id) {
+	$("#"+page+id).remove();
+	html= '<input type="hidden" name="remove[]" value="'+id+'">';
+	$("."+page).append(html);
+}

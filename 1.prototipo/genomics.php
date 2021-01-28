@@ -4,7 +4,7 @@ $_SESSION['pagina']='genomics';
 include 'header.php';
 
 /* Cabeçalho da tabela */
-$header = ['identification','category','population','avaible_information'];
+$header = ['identification','category','sex','population','avaible_information'];
 if(in_array("delete",$_SESSION['permission'])){
 	array_push($header, "manager");
 }
@@ -28,6 +28,7 @@ $sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == '
 	// Genomic filters
 	$filterpopulation = isset($_GET['filterpopulation'])? $_GET['filterpopulation'] : "";
 	$category = isset($_GET['filterCategory']) ? $_GET['filterCategory'] : "";
+	$sexFilter = isset($_GET['sexFilter'])? $_GET['sexFilter'] : "";
 
 /* Forms */
 	$array =  array(
@@ -36,7 +37,8 @@ $sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == '
 	    "pag" => $pag,
 	    "limit" => $limit,
 	    "filterpopulation" => $filterpopulation,
-	    "filterCategory" => $category
+	    "filterCategory" => $category,
+	    "sexFilter" => $sexFilter
 		);
 
 /* SQL Filtros */
@@ -50,9 +52,10 @@ $sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == '
 	// genomic filters
 	$filterpopulation = $filterpopulation!=""? " AND population ='$_GET[filterpopulation]'" : "";
 	$category = $category!=""? " AND id_category ='$_GET[filterCategory]'" : "";
+	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
 
 $sql= "SELECT * FROM (
-	SELECT identification,genomic.id as id,id_category,category, platform,link,
+	SELECT DISTINCT(genomic.id_individual) as id,identification, id_category,category,sex,
 		CASE
 		WHEN id_category = 1 THEN institute.abbreviation
 		WHEN id_category = 2 THEN fragment.fragment
@@ -64,7 +67,7 @@ $sql= "SELECT * FROM (
 	LEFT JOIN institute ON status.id_institute=institute.id
 	LEFT JOIN fragment ON status.id_fragment=fragment.id) genomic2 WHERE 1=1";
 
-$sql_pagination = $sql.$filterpopulation.$category;
+$sql_pagination = $sql.$filterpopulation.$category.$sexFilter;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
 
@@ -112,6 +115,18 @@ $download_ids = [];
 									<option <?php echo isset($_GET['limit']) && $_GET['limit']==$i ? "selected":""; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
 								<?php endfor; ?>
 								<option <?php echo isset($_GET['limit']) && $_GET['limit']=="All" ? "selected":""; ?> value="All">All results</option>
+							</select>
+						</div>
+
+						<!--Sex-->
+						<div class="form-group">
+							<label>Sex</label>
+
+							<select name="sexFilter" class="form-control form-control-sm">
+								<option <?php echo !isset($_GET['sexFilter']) ? "selected":"";?> value="" >All</option>
+								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Female" ? "selected":""; ?> value="Female">Female</option>
+								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Male" ? "selected":""; ?> value="Male">Male</option>
+								<option <?php echo isset($_GET['sexFilter']) && $_GET['sexFilter']=="Unknown" ? "selected":""; ?> value="Unknown">Unknown</option>
 							</select>
 						</div>
 
@@ -229,6 +244,12 @@ $download_ids = [];
     						</td>
     					<?php break;?>
 
+    					<?php case 'sex': ?>
+    						<td scope="row">
+    							<?php echo ucfirst($row['sex']); ?>
+    						</td>
+    					<?php break;?>
+
 						<?php case 'population': ?>
 							<td scope="row">
 								<!-- Trigger Modal -->
@@ -325,23 +346,24 @@ $download_ids = [];
 			    			</td>
     					<?php break;?>
 
-    					<?php case 'avaible_information': ?>
-    						<td scope="row">
-								<a class="btn btn-sm btn-dark btn-block" href="<?php echo $row[link];?>"><?php echo $row['platform'];?></a>
+    					<?php case 'avaible_information':
+    						$query= "SELECT * FROM `genomic` WHERE id_individual='$row[id]';";
+    						$result = $mysqli->query($query);?>
+    						<td class="row" scope="row">
+	    						<?php while ($row_link = $result->fetch_array()):?>
+	    							<div class="col px-1">
+										<a class="btn btn-dark btn-sm btn-block" href="<?php echo $row_link[link];?>" target="_blank"><?php echo $row_link['platform'];?></a>
+	    							</div>
+	    						<?php endwhile; ?>
 							</td>
     					<?php break;?>
 
     					<?php case 'manager': ?>
     					<td scope="row">
-		    				<form action="delete.php" method="GET" id="delete<?php echo $row['id'];?>" target="_blank">
-		    					<input type="hidden" name="id" value='<?php echo $row['id'];?>'>
-		    					<input type="hidden" name="delete" value='genomics'>
-		    				</form>
 		    				<form action="genomics_insert.php" method="GET" id="edit<?php echo $row['id'];?>" target="_blank">
 		    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
 		    					<input type="hidden" name="action" value="edit">
 		    				</form>
-	    					<button type="submit" form="delete<?php echo $row['id'];?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
 	    					<button type="submit" form="edit<?php echo $row['id'];?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
 	    				</td>
 	    				<?php break;?>
@@ -360,7 +382,6 @@ $download_ids = [];
 <!-- Download -->
 	<form id="formDownload" action="download_genomics.php" method="post">
 		<input type="hidden" name="pagina" value="genomics">	
-		<input type="hidden" name="header" value="<?php echo htmlentities(serialize($header)); ?>">		
 		<input type="hidden" name="download_ids" value="<?php echo htmlentities(serialize($download_ids)); ?>">		
 	</form>
 
