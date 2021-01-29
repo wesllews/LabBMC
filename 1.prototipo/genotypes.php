@@ -7,6 +7,10 @@ include 'header.php';
 $header = ['identification'];
 $headersAdicionais =['category','sex','population','alive'];
 
+if(in_array("delete",$_SESSION['permission'])){
+		array_push($headersAdicionais, "manager");
+	}
+
 	// Adiciona os Locus cadastrados aos headers adicionais
 	$sql_locus = "SELECT DISTINCT(locus) FROM genotype INNER JOIN locus ON locus.id = genotype.id_locus";
 	$query = $mysqli->query($sql_locus);
@@ -286,6 +290,9 @@ $download_ids = [];
 							onclick="document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
 								<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
 							</button>
+						
+						<?php elseif($value=="manager"): ?>
+							<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 
 						<?php else: ?>
 							<?php
@@ -445,6 +452,16 @@ $download_ids = [];
 			    					<div class="text-secondary">Unknown</div>
 			    				<?php endif; ?>
 			    			</td>
+	    				<?php break;?>
+
+	    				<?php case 'manager': ?>
+    					<td scope="row">
+		    				<form action="genotypes_edit.php" method="GET" id="edit<?php echo $row['id'];?>" target="_blank">
+		    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
+		    					<input type="hidden" name="action" value="edit">
+		    				</form>
+	    					<button type="submit" form="edit<?php echo $row['id'];?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+	    				</td>
 	    				<?php break;?>
 		
 						<?php default:
