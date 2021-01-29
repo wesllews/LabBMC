@@ -1,18 +1,28 @@
 <?php
 session_start();
-include "connection.php"; ?>
+include "connection.php";
+
+//Define as regras de permissão
+if(in_array($_SESSION['status'],array("administrator","collaborator"))){
+	$_SESSION['permission'] = array("download","dashboard","edit","delete");
+} else{
+	$_SESSION['permission'] = array("read");
+}
+
+// Não deixa entrar em paginas de administração
+if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin'){
+	header("Location: login.php");
+}
+ ?>
 <!doctype html>
 <html lang="pt">
 
-
-
   <head>
-
-		<!--<meta http-equiv="refresh" content="100">-->
 
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="google-site-verification" content="w3Rey0pC0aRXS90rt23RMktJ-EewjpZ_l_YQU1PnCsU" />
 
 		<!--Bootstrap CSS-->
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -26,87 +36,112 @@ include "connection.php"; ?>
 		<!--LABBMC CSS-->
 		<link rel="stylesheet" type="text/css" href="css/labbmc.css">
 
+		  <!-- Custom styles for this template -->
+		<link href="css/simple-sidebar.css" rel="stylesheet">
+
 		<!-- Title and Icon page -->
 		<title>BLT Database</title>
 		<link rel="icon" href="img/dna-solid.svg">
   </head>
 
+<body>
 
+  <div class="d-flex" id="wrapper">
 
-  <header>
+    <!-- Sidebar -->
+    <?php if(in_array("dashboard",$_SESSION['permission'])): ?>
+      <div class="bg-light" id="sidebar-wrapper">
+        <div class="sidebar-heading">Dashboard</div>
+        <div class="list-group list-group-flush">
+          <a href="users.php" class="list-group-item list-group-item-action bg-light">Users</a>
 
-	    <!-- NavBar-Class -->
-	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
+          <!-- Individual -->
+          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#individual">Individuals</a>
+          <div id="individual" class="collapse list-group list-group-flush">
+            <a href="captivity_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity</a>
+            <a href="wild_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Wild</a>
+          </div>
 
-	    	<!-- Brand -->
-	    	<a class="navbar-brand font-weight-bold" href="http://web-01.ufscar.br/webdb/"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
+          <!-- Genetics -->
+          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#genetics">Genetic</a>
+          <div id="genetics" class="collapse list-group list-group-flush">
+            <a href="locus.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Locus</a>
+            <a href="locus_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Locus</a>
+            <a href="genotypes_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Genotypes</a>
+          </div>
+        </div>
 
-		    <!-- Toggler -->
-		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <!-- Genomics -->
+          <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#genomic">Genomic</a>
+          <div id="genomic" class="collapse list-group list-group-flush">
+            <a href="genomics_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Genomic</a>
+          </div>
 
-		    <!-- Collapse links, flex-justify-->
-			<div class="collapse navbar-collapse justify-content-between rounded" id="navbar-list">
-				
-				<!-- Pages links -->
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> home</a>
-					</li>
+        <!-- Population -->
+        <a class="list-group-item list-group-item-action bg-light" data-toggle="collapse" data-target="#population">Populations and Group</a>
+        <div id="population" class="collapse list-group list-group-flush">
+          <a href="institute.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Institutes</a>
+          <a href="fragment.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Fragments</a>
+          <a href="group.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Groups</a>
+          <a href="institute_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Captivity Institute</a>
+          <a href="fragment_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Fragment</a>
+          <a href="group_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Group</a>
+        </div>
+      </div>
+    <?php endif; ?>
+    <!-- /#sidebar-wrapper -->
 
-					<li class="nav-item dropdown  <?php if($_SESSION['pagina']=='wild' || $_SESSION['pagina']=='captivity'){echo "active";} ?>">
-						<a class="nav-link dropdown-toggle" href="#" id="lifeHistory" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fab fa-pagelines"></i> Life History
-						</a>
-						<div class="dropdown-menu" aria-labelledby="lifeHistory">
-							
-							<a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="mainWild.php"><i class="fab fa-pagelines"></i> Wild</a>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow ">
+            <?php if(in_array("dashboard",$_SESSION['permission'])): ?>
+              <button class="btn btn-secondary mr-5" id="menu-toggle">Dashboard</button>
+            <?php endif; ?>
+            <!-- Brand -->
+            <a class="navbar-brand font-weight-bold"><i class="fas fa-database text-warning shadow-lg"></i> BLT Database</a>
 
-							<a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="mainCaptivity.php"><i class="fas fa-book-open"></i> Captivity</a>
-						</div>
-					</li>
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
-					<li class="nav-item dropdown <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>">
-						<a class="nav-link dropdown-toggle" href="#" id="Headergenetics" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-dna"></i> Genetics</a>
-						</a>
-						<div class="dropdown-menu" aria-labelledby="Headergenetics">
-							<a class="dropdown-item <?php if($_SESSION['pagina']=='genotypes'){echo "active";}?>" href="genotypes.php"><i class="fas fa-fingerprint"></i> Genotypes and Alleles</a>
+            <!-- Collapse links, flex-justify-->
+          <div class="collapse navbar-collapse justify-content-between rounded" id="navbar-list">
+            
+            <!-- Pages links -->
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link <?php if($_SESSION['pagina']=='home'){echo "active";} ?>" href="index.php"><i class="fas fa-home"></i> Home</a>
+              </li>
 
-						<!--
-							<a class="dropdown-item" href="#"><i class="fas fa-barcode"></i> Haploypes</a>
+              <li class="nav-item dropdown  <?php if($_SESSION['pagina']=='wild' || $_SESSION['pagina']=='captivity'){echo "active";} ?>">
+                <a class="nav-link dropdown-toggle" href="#" id="lifeHistory" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fab fa-pagelines"></i> Life History
+                </a>
+                <div class="dropdown-menu" aria-labelledby="lifeHistory">
+                  
+                  <a class="dropdown-item <?php if($_SESSION['pagina']=='wild'){echo "active";} ?>" href="menu.php?page=wild"><i class="fab fa-pagelines"></i> Wild</a>
 
-							<div class="dropright">
-								<a class="dropdown-item dropdown-toggle dropright" href="#" id="test" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<i class="fas fa-circle"></i> Exemplo</a>
-								</a>
-								<div class="dropdown-menu" aria-labelledby="test">
-									<a class="dropdown-item" href="#">Exemplo 1</a>
-									<a class="dropdown-item" href="#">Exemplo 2</a>
-								</div>
-							</div>
-						-->
+                  <a class="dropdown-item <?php if($_SESSION['pagina']=='captivity'){echo "active";} ?>" href="menu.php?page=captivity"><i class="fas fa-book-open"></i> Captivity</a>
+                </div>
+              </li>
 
-					</li>
-				</ul>
+              <li class="nav-item">
+                <a class="nav-link <?php if($_SESSION['pagina']=='genetics'){echo "active";} ?>" href="menu.php?page=genetics"  data-toggle="popover" data-trigger="hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true" data-content="Genotypes and Haplotypes informations">
+                  <i class="fas fa-dna"></i> Genetics</a>
+              </li>
 
-				<!-- User Name -->
-				<?php if($_SESSION['login']=="sim"): ?>
-					<a class="btn btn-danger my-2 my-sm-0" href="logout.php">Logout</a>
-				<?php else: ?>
-					<a class="btn btn-success my-2 my-sm-0" href="login.php">Register / Login</a>
-				<?php endif; ?>
+              <li class="nav-item">
+                <a class="nav-link <?php if($_SESSION['pagina']=='genomics'){echo "active";} ?>" href="genomics.php"  data-toggle="popover" data-trigger="hover"  tabindex="0" data-container="body" data-placement="auto" data-html="true" data-content="Whole genome, their annotated genes, SNPs and others">
+                  <i class="fas fa-microscope"></i> Genomics</a>
+              </li>
+            </ul>
 
-				<!-- Search 
-				<form class="form-inline mt-2 mt-md-0" >
-					<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-				</form>
-				-->
-			</div>
+            <!-- Login/Logout -->
+            <?php if(isset($_SESSION['login']) && $_SESSION['login']=="sim"): ?>
+              <a class="btn btn-danger my-2 my-sm-0" href="logout.php">Logout</a>
+            <?php else: ?>
+              <a class="btn btn-success my-2 my-sm-0" href="login.php">Register / Login</a>
+            <?php endif; ?>
+          </div>
 
-		</nav>
-  </header>
+        </nav>
 
-
-
-  <body>

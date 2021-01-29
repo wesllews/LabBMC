@@ -1,51 +1,17 @@
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
 <!-- Go to top -->
 <button class="btn btn-dark" onclick="topFunction()" id="btnTop" title="Go to top"><i class="fas fa-long-arrow-alt-up"></i></button>
 
 <!-- Footer -->
 <footer class="font-small bg-light">
-
-  <!--Linha Decorativa-->
-  <div class="container-fluid bg-dark p-3 text-center text-dark"><!--Developed by Weslley dos Santos Silva--></div>
-
-
-  <!-- Footer Links -->
-  <div class="container text-center text-md-left mt-5">
-    <!-- Row-content -->
-    <div class="row mt-3">
-
-      <!-- Partners -->
-      <div class="col-lg-12 mx-auto p-0">
-<!--
-        
-        <div class="d-flex flex-row justify-content-around">
-          <div class="p-2 align-self-center"><img src="img/ufscar.png" title="UFScar" alt="UFScar" style="width: 90px;"></div>
-
-          <div class="p-2"><img src="img/rioprim.png" title="Primatology Center of Rio de Janeiro Guapimirim, RJ, Brazil)" alt="Primatology Center of Rio de Janeiro Guapimirim, RJ, Brazil)" style="width: 70px;"></div>
-
-          <div class="p-2"><img src="img/zoosp.png"  title="São Paulo Zoo (São Paulo, SP, Brazil)" alt="São Paulo Zoo (São Paulo, SP, Brazil)" style="width: 70px;"></div>
-        </div>
-        <
-        <div class="d-flex flex-row justify-content-around mt-3">
-          <div class="p-2"><img src="img/durrell.png" title="Durrell Wildlife Conservation Trust (Jersey, Channel Islands, Europe)" alt="Durrell Wildlife Conservation Trust (Jersey, Channel Islands, Europe)" style="width: 70px;"></div>
-
-          <div class="p-2 align-self-center"><img src="img/unesp.png" title="University of São Paulo State (Rio Claro, SP, Brazil)" alt="University of São Paulo State (Rio Claro, SP, Brazil)" style="width: 110px;"></div>
-
-          <div class="p-2 align-self-center"><img src="img/ipe2.png" title="Institute for Ecological Research (Nazaré Paulista, SP, Brazil)" alt="Institute for Ecological Research (Nazaré Paulista, SP, Brazil)" style="width: 100px;"></div>
-        </div>
-                
-      </div>
-  -->
-      <!-- Partners -->
-    </div>
-    <!-- Row-content -->
-  </div>
-  <!-- Footer Links -->
-
-  <!-- Copyright -->
-  <div class="text-center py-3">© 2020 by Weslley dos Santos Silva</div>
-
+    <div class="container-fluid bg-dark p-3 text-center text-dark"><!--Linha Decorativa--></div>
+    <div class="text-center py-5 mt-4">© 2020 by Weslley dos Santos Silva</div>
 </footer>
-
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -58,6 +24,15 @@
   <script type="text/javascript" src="js/bootstrap.js"></script>
 
   <script type="text/javascript" src="js/labbmc.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#wrapper").toggleClass("toggled");
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
   
 </body>
 </html>

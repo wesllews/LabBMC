@@ -1,19 +1,17 @@
-DROP DATABASE IF EXISTS labbmc;
-CREATE DATABASE IF NOT EXISTS labbmc;
-
-
 -- ************************************** `login`
 CREATE TABLE `login`
 (
+ `id`            integer NOT NULL AUTO_INCREMENT ,
  `name`          varchar(50) NOT NULL ,
  `institution`   varchar(70) NOT NULL ,
  `justification` text NOT NULL ,
- `email`         varchar(50) NOT NULL ,
+ `email`         varchar(50) NOT NULL UNIQUE,
  `password`      varchar(100) NULL,
- `status`        varchar(20) NOT NULL,
- `status_date` date NULL ,
+ `permission`        varchar(20) NOT NULL,
+ `request_date` date NULL ,
+ `analyzed_date` date NULL ,
 
-PRIMARY KEY (`email`)
+PRIMARY KEY (`id`)
 );
 
 -- ************************************** `category`
@@ -96,7 +94,7 @@ CREATE TABLE `historic`
 PRIMARY KEY (`id`),
 CONSTRAINT FOREIGN KEY (`id_event`) REFERENCES `events` (`id`),
 CONSTRAINT FOREIGN KEY (`id_institute`) REFERENCES `institute` (`id`),
-CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`)
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE
 ) AUTO_INCREMENT=1;
 
 -- ************************************** `Fragment`
@@ -104,8 +102,7 @@ CREATE TABLE `fragment`
 (
  `id`        	integer NOT NULL AUTO_INCREMENT ,
  `fragment`     varchar(45) NOT NULL ,
- `abbreviation` varchar(20) NULL ,
- `country`      varchar(45) NULL ,
+ `country`      varchar(45) NOT NULL ,
  `state`        varchar(45) NULL ,
  `city`         varchar(45) NULL ,
 
@@ -122,7 +119,7 @@ CREATE TABLE `group`
  `latitude`    varchar(15) NULL ,
 
 PRIMARY KEY (`id`),
-CONSTRAINT FOREIGN KEY (`id_fragment`) REFERENCES `fragment` (`id`)
+CONSTRAINT FOREIGN KEY (`id_fragment`) REFERENCES `fragment` (`id`) ON DELETE CASCADE,
 ) AUTO_INCREMENT=1;
 
 -- ************************************** `ind_group`
@@ -135,7 +132,7 @@ CREATE TABLE `ind_group`
 
 
  PRIMARY KEY (`id_individual`),
- CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`),
+ CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE,
  CONSTRAINT FOREIGN KEY (`id_group`) REFERENCES `group` (`id`)
  );
 
@@ -148,7 +145,7 @@ CREATE TABLE `status`
  `alive`          boolean NULL ,
 
 PRIMARY KEY (`id_individual`),
-CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`),
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE,
 CONSTRAINT FOREIGN KEY (`id_institute`) REFERENCES `institute` (`id`),
 CONSTRAINT FOREIGN KEY (`id_fragment`) REFERENCES `fragment` (`id`)
 );
@@ -160,9 +157,10 @@ CREATE TABLE `kinship`
  `sire`          integer NOT NULL ,
  `dam`           integer NOT NULL ,
 
+PRIMARY KEY (`id_individual`),
 CONSTRAINT FOREIGN KEY (`sire`) REFERENCES `individual` (`id`),
 CONSTRAINT FOREIGN KEY (`dam`) REFERENCES `individual` (`id`),
-CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`)
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE
 );
 
 -- ************************************** `locus`
@@ -183,12 +181,23 @@ PRIMARY KEY (`id`)
 -- ************************************** `genotype`
 CREATE TABLE `genotype`
 (
+ `id`        	 integer NOT NULL AUTO_INCREMENT ,
  `id_individual` integer NOT NULL ,
  `id_locus`      integer(30) NOT NULL ,
  `allele`        integer NOT NULL ,
- `restrict`      char NULL ,
-
-CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`),
+ `restricted`    boolean NULL ,
+PRIMARY KEY (`id`),
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE,
 CONSTRAINT FOREIGN KEY (`id_locus`) REFERENCES `locus` (`id`)
-);
+) AUTO_INCREMENT=1;
 
+-- ************************************** `genomic`
+CREATE TABLE `genomic`
+(
+ `id`        	 integer NOT NULL AUTO_INCREMENT ,
+ `id_individual` integer NOT NULL ,
+ `platform`      varchar(15) NOT NULL ,
+ `link`        	 text NOT NULL ,
+PRIMARY KEY (`id`),
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE
+) AUTO_INCREMENT=1;

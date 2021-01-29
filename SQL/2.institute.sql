@@ -19,7 +19,7 @@ INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Prospect Park Wildlife Center', 'Prospect NY', 'USA', 'New York', 'New York', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Ribeirao Bonito Farm', 'FRBonito', 'BRA', 'São Paulo ', NULL, NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Rio de Janeiro Primatology Center', 'CPRJ', 'BRA', 'Rio de Janeiro', 'Rio de Janeiro', 2);
-INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Sao Paulo Zoological Park Foundadion', 'FPZSP', 'BRA', 'São Paulo', 'São Paulo', 3);
+INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Sao Paulo Zoological Park Foundation', 'FPZSP', 'BRA', 'São Paulo', 'São Paulo', 3);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Quinzinho de Barros Zoological Park', 'PZQB', 'BRA', 'Sao Paulo', 'Sorocaba', NULL);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Sao Carlos Ecological Park', 'PESC', 'BRA', 'Sao Paulo', 'São Carlos', 4);
 INSERT INTO `institute` (`id`, `name`, `abbreviation`, `country`, `state`, `city`, `priority`) VALUES (NULL, 'Unknown Location', 'Unk 1', 'BRA', NULL, NULL, NULL);

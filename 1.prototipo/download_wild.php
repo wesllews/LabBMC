@@ -15,7 +15,8 @@ $sheet = $spreadsheet->getActiveSheet();
 $alphabet = range('A', 'Z');
 
 // Imprime cabeçalho
-$header = ['identification','category','sex','sire','dam', 'events','institute','local_id','date','observation','name','alive'];
+$header = ['identification','name','sex','fragment','group','longitude','latitude','longitude_ind','latitude_ind'];
+
 foreach ($header as $key => $value) {
 	$sheet->setCellValue($alphabet[$key].'1', ucfirst($value));
 }
@@ -28,18 +29,13 @@ $rowNum = 2;
 
 
 foreach ($download_ids as $value) {
-	$colunas = ", institute.name as institute, individual.name as name, CASE
-	    WHEN alive = 1 THEN 'True'
-	    WHEN alive = 0 THEN 'False'
-	    ELSE 'Unknown'
-		END AS alive";
-	$sql = "select *".$colunas." from individual
-	INNER JOIN category ON category.id=individual.id_category
-	INNER JOIN historic ON individual.id=historic.id_individual
-	INNER JOIN institute ON institute.id=historic.id_institute
-	INNER JOIN kinship ON kinship.id_individual=individual.id
-	INNER JOIN status ON status.id_individual=individual.id
-	LEFT JOIN events ON events.id=historic.id_event WHERE individual.id='$value';";
+	$sql = "SELECT *,individual.id as id
+	FROM `individual` 
+	INNER JOIN status ON individual.id=status.id_individual 
+	INNER JOIN fragment ON status.id_fragment=fragment.id
+	LEFT JOIN ind_group ON individual.id=ind_group.id_individual
+	LEFT JOIN `group` ON `group`.id=ind_group.id_group
+	WHERE individual.id='$value';";
 	$result = $mysqli->query($sql);
 
 	if($result->num_rows > 0){

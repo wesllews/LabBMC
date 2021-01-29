@@ -15,7 +15,8 @@ $sheet = $spreadsheet->getActiveSheet();
 $alphabet = range('A', 'Z');
 
 // Imprime cabeçalho
-$header = ['identification','category','sex','sire','dam', 'events','institute','local_id','date','observation','name','alive'];
+$header = ['identification','category','sex','population','platform','link'];
+
 foreach ($header as $key => $value) {
 	$sheet->setCellValue($alphabet[$key].'1', ucfirst($value));
 }
@@ -26,20 +27,20 @@ $download_ids = unserialize($_POST['download_ids']);
 // Inicia o print das informações a partir da linha 2 da tabela
 $rowNum = 2;
 
-
 foreach ($download_ids as $value) {
-	$colunas = ", institute.name as institute, individual.name as name, CASE
-	    WHEN alive = 1 THEN 'True'
-	    WHEN alive = 0 THEN 'False'
-	    ELSE 'Unknown'
-		END AS alive";
-	$sql = "select *".$colunas." from individual
-	INNER JOIN category ON category.id=individual.id_category
-	INNER JOIN historic ON individual.id=historic.id_individual
-	INNER JOIN institute ON institute.id=historic.id_institute
-	INNER JOIN kinship ON kinship.id_individual=individual.id
-	INNER JOIN status ON status.id_individual=individual.id
-	LEFT JOIN events ON events.id=historic.id_event WHERE individual.id='$value';";
+	$sql = "SELECT * FROM (
+	SELECT genomic.id_individual as id_individual, identification, category, sex, platform, link,
+		CASE
+		WHEN id_category = 1 THEN institute.abbreviation
+		WHEN id_category = 2 THEN fragment.fragment
+		END AS population 
+	FROM genomic
+	INNER JOIN individual ON individual.id=genomic.id_individual
+	INNER JOIN status ON status.id_individual=genomic.id_individual
+	INNER JOIN category ON individual.id_category=category.id
+	LEFT JOIN institute ON status.id_institute=institute.id
+	LEFT JOIN fragment ON status.id_fragment=fragment.id) genomic2
+	WHERE id_individual='$value';";
 	$result = $mysqli->query($sql);
 
 	if($result->num_rows > 0){
@@ -51,7 +52,9 @@ foreach ($download_ids as $value) {
 			$rowNum++;
 		}
 	} else {
+		$error = $mysqli->error;
 		$sheet->setCellValue("A".$rowNum, "Something went wrong!");
+		$sheet->setCellValue("B".$rowNum, "MySQL error: ".$error);
 			}
 }
 

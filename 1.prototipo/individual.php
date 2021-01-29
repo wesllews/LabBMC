@@ -5,44 +5,15 @@ include 'header.php';
 
 // Select individual
 $identification = $_GET['identification'];
-$sql= "SELECT *, 
-individual.id as id, 
-individual.name as name, 
-institute.name as institute,
-institute.abbreviation as Abbreviation,
-institute.country as Country,
-institute.state as State,
-institute.city as City,
-latitude_ind as `latitude individual`,
-longitude_ind as `longitude individual`,
-CASE
-    WHEN alive = 1 THEN 'True'
-    WHEN alive = 0 THEN 'False'
-    ELSE 'Unknown'
-	END AS alive
-FROM `individual`
-INNER JOIN category ON individual.id_category=category.id
-INNER JOIN status ON individual.id=status.id_individual
-LEFT JOIN institute ON status.id_institute=institute.id
-LEFT JOIN fragment ON status.id_fragment=fragment.id
-LEFT JOIN ind_group ON individual.id=ind_group.id_individual
-LEFT JOIN `group` ON `group`.id=ind_group.id_group
-WHERE identification='$identification'";
+$sql = "SELECT * FROM individual WHERE identification='$identification'";
 $query = $mysqli->query($sql);
 $row_individual = $query->fetch_array();
 $id_individual = $row_individual['id'];
+
+if(($query->num_rows)==0){
+	include 'notfound.php';
+}
 ?>
-<!-- ERROR 404 -->
-<?php if(($query->num_rows)==0): ?>
-	<div class="row bg-light m-5 p-5" role="alert">
-		<h1>
-			<p class=" display-1 letra2 text-warning"> OOPS!</p>
-			<p class="letra1">Page Not Found</p>
-		</h1>
-	</div>
-	<!-- Exit-->
-	<?php include 'footer.php';	exit(); ?>
-<?php endif; ?>
 
 <div class="container-fluid px-5 pt-5">
 	<h1>Identification: <?php echo $row_individual['identification']; ?></h1>
@@ -58,13 +29,23 @@ $id_individual = $row_individual['id'];
 	<?php foreach ($column as $value): ?>
 		<?php switch ($value): 
 
-			case 'alive': ?>
+			case 'alive':
+				$sql="SELECT *,
+				CASE
+					WHEN alive = 1 THEN 'True'
+					WHEN alive = 0 THEN 'False'
+					ELSE 'Unknown'
+				END AS alive
+				FROM `status` WHERE id_individual='$id_individual'";
+				$query = $mysqli->query($sql);
+				$row_status = $query->fetch_array();?>
+
 				<div class="row text-capitalize">
 					<div class="col-3 mb-1"> <?php echo $value; ?></div>
 					<div class="col-9">
-						<?php if($row_individual['alive']=="True"):?>
+						<?php if($row_status['alive']=="True"):?>
 	    					<div class="text-success">True</div>
-	    				<?php elseif($row_individual['alive']=="False"): ?>
+	    				<?php elseif($row_status['alive']=="False"): ?>
 	    					<div class="text-danger">False</div>
 	    				<?php else: ?>
 	    					<div >Unknown</div>
@@ -73,22 +54,40 @@ $id_individual = $row_individual['id'];
 				</div>
 			<?php break;?>
 
+			<?php case 'category':
+				$sql="SELECT * FROM `category` WHERE id='$row_individual[id_category]'";
+				$query = $mysqli->query($sql);
+				$row_category = $query->fetch_array();?>
+
+				<div class="row text-capitalize">
+					<div class="col-3 mb-1"> <?php echo $value; ?></div>
+					<div class="col-9"><?php echo $row_category[$value]!="" ?$row_category[$value]:"<div class='text-muted'>Not informed</div>"; ?></div>
+				</div>
+			<?php break;?>
+
+
 			<?php case 'population': ?>
 				<div class="row text-capitalize text-secondary mt-3">
 				 	<div class="col"> <?php echo $value; ?></div>
 				</div>
-				<?php if($row_individual['id_category']==1): ?>
-					<?php foreach (['Abbreviation','institute','Country','State','City'] as $value): ?>
+				<?php if($row_individual['id_category']==1): 
+					$sql="SELECT * FROM institute WHERE id='$row_status[id_institute]';";
+					$query = $mysqli->query($sql);
+					$row_institute = $query->fetch_array();?>
+					<?php foreach (['abbreviation','name','country','state','city'] as $value): ?>
 						<div class="row text-capitalize">
 							<div class="col-3 mb-1"><?php echo $value; ?></div>
-							<div class="col-9"><?php echo $row_individual[$value]!="" ?$row_individual[$value]:"<div class='text-muted'>Not informed</div>"; ?></div>
+							<div class="col-9"><?php echo $row_institute[$value]!="" ?$row_institute[$value]:"<div class='text-muted'>Not informed</div>"; ?></div>
 						</div>	
 					<?php endforeach; ?>
-				<?php else: ?>
-					<?php foreach (['abbreviation','fragment','country','state','city'] as $value): ?>
+				<?php else:
+					$sql="SELECT * FROM fragment WHERE id='$row_status[id_fragment]';";
+					$query = $mysqli->query($sql);
+					$row_fragment = $query->fetch_array();
+					foreach (['fragment','country','state','city'] as $value): ?>
 						<div class="row text-capitalize">
 							<div class="col-3 mb-1"><?php echo $value; ?></div>
-							<div class="col-9"><?php echo $row_individual[$value]!="" ?$row_individual[$value]:"<div class='text-muted'>Not informed</div>"; ?></div>
+							<div class="col-9"><?php echo $row_fragment[$value]!="" ?$row_fragment[$value]:"<div class='text-muted'>Not informed</div>"; ?></div>
 						</div>	
 					<?php endforeach; ?>
 				<?php endif; ?>
@@ -99,10 +98,18 @@ $id_individual = $row_individual['id'];
 					<div class="row text-capitalize text-secondary mt-3">
 					 	<div class="col"> <?php echo $value; ?></div>
 					</div>
-					<?php foreach (['group', 'latitude', 'longitude', 'latitude individual', 'longitude individual'] as $value): ?>
+
+					<?php 
+					$sql="SELECT *,latitude_ind as `latitude individual`, longitude_ind as `longitude individual`
+					FROM ind_group INNER JOIN `group` ON ind_group.id_group=group.id 
+					WHERE id_individual='$id_individual';";
+					$query = $mysqli->query($sql);
+					$row_group = $query->fetch_array();
+
+					foreach (['group', 'latitude', 'longitude', 'latitude individual', 'longitude individual'] as $value): ?>
 						<div class="row text-capitalize">
 							<div class="col-3 mb-1"><?php echo $value; ?></div>
-							<div class="col-9"><?php echo $row_individual[$value]!="" ?$row_individual[$value]:"<div class='text-muted'>Not informed</div>"; ?></div>
+							<div class="col-9"><?php echo $row_group[$value]!="" ?$row_group[$value]:"<div class='text-muted'>Not informed</div>"; ?></div>
 						</div>	
 					<?php endforeach; ?>
 				<?php endif; ?>
@@ -168,27 +175,30 @@ $id_individual = $row_individual['id'];
 
 
 <!-- Genetics -->
-<?php $sql_genetics= "SELECT distinct(id_locus) as id_locus FROM genotype WHERE id_individual='$id_individual';";
-$query_genetics = $mysqli->query($sql_genetics);
-$num_rows =$query_genetics->num_rows;?>
-<?php if($num_rows>0): ?>
+<?php 
+$sql_locus= "SELECT DISTINCT(id_locus), locus
+FROM genotype LEFT JOIN locus ON locus.id=genotype.id_locus 
+WHERE id_individual='$id_individual' ORDER BY locus;";
+$query_locus = $mysqli->query($sql_locus);
+if($query_locus->num_rows>0): ?>
 	<div class="container mb-5">
-
 		<h5 class="text-secondary mb-2 mt-4"> Genotypes and Alleles</h5>
-
 		<div class="mt-3 grid-genetics">
-			<?php while($row_locus = $query_genetics->fetch_array()):
-				$sql_allele= "SELECT * FROM genotype INNER JOIN locus ON locus.id=genotype.id_locus WHERE id_individual='$id_individual' AND id_locus='$row_locus[id_locus]';";
+			<?php while($row_locus = $query_locus->fetch_array()):
+				$sql_allele= "SELECT * FROM genotype WHERE id_individual='$id_individual' AND id_locus='$row_locus[id_locus]';";
 				$query_allele = $mysqli->query($sql_allele);
-				$num_rows =$query_allele->num_rows;
-
-				if($num_rows==2):
-					$row_allele = $query_allele->fetch_array();
-					$flag=0?>
-
+				
+				if($query_allele->num_rows>=2):?>
 					<div class="m-3 border-bottom">
-						<span class="float-left font-weight-bold"><?php echo $row_allele['locus']; ?></span>
-						<span class="float-right text-secondary"><?php while ($flag<2) { echo $row_allele['allele']." "; $flag+=1;} ?></span>			
+						<span class="float-left font-weight-bold">
+							<?php echo $row_locus['locus']; ?>
+						</span>
+						<span class="float-right text-secondary">
+							<?php 
+							while($row_allele = $query_allele->fetch_array()){
+								echo $row_allele['allele']." ";
+							}?>
+						</span>			
 					</div>
 				<?php endif; ?>
 			<?php endwhile; ?>

@@ -27,6 +27,10 @@ $headersAdicionais =['name','sex','fragment','group','longitude','latitude','inf
 		  }
 		endif;
 
+if(in_array("delete",$_SESSION['permission'])){
+	array_push($header, "manager");
+}
+
 /* Filtros */
   // Pagination
   $pag = isset($_GET['pag']) ? $_GET['pag']:1;
@@ -76,9 +80,6 @@ $headersAdicionais =['name','sex','fragment','group','longitude','latitude','inf
 			"filterpopulation" => $filterpopulation,
 		);
 
-/* Evita excesso de modal*/
-$fragment = [];
-
 $sql = "SELECT *,individual.id as id
 FROM `individual` 
 INNER JOIN status ON individual.id=status.id_individual 
@@ -89,16 +90,29 @@ WHERE id_category=2";
 $sql_pagination = $sql.$sexFilter_sql.$filterpopulation_sql;
 $sql_filter = $sql_pagination.$order.$limit_sql;
 $result_filter = $mysqli->query($sql_filter);
+
+/* Evita excesso de modal*/
+$fragment = [];
+
+/* Ids dos individuos para download*/
+$download_ids = [];
 ?>
 
+<!-- Header page -->
 <div class="text-warning m-3" style="white-space: nowrap;"><h3 class="ml-5">Wild</h3><hr></div>
 
 <!-- Filtro -->
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-sm btn-warning text-white filter px-3" data-toggle="modal" data-target="#filtro">
-	Filter
-	<i class="fas fa-filter"></i>
-  </button>
+  <div class="filter">
+  	<?php if(in_array("download",$_SESSION['permission'])):?>
+  		<div class="mb-2"><button type="submit" form="formDownload" class="btn btn-sm btn-success btn-block">Download</button></div>
+  	<?php endif; ?>
+  	<div class="mb-2">
+  		<button type="button" class="btn btn-sm btn-warning text-white px-3" data-toggle="modal" data-target="#filtro">
+  			Filter <i class="fas fa-filter"></i>
+  		</button>
+  	</div>
+  </div>
 
   <!-- Modal -->
   <div class="modal fade" id="filtro" tabindex="-1" role="dialog" aria-labelledby="filtro" aria-hidden="true">
@@ -197,48 +211,12 @@ $result_filter = $mysqli->query($sql_filter);
   </form>
 
 <!-- Pagination -->
-  <div class="container mt-4">
-	<?php
-	$result = $mysqli->query($sql_pagination);
-	$total_rows =$result->num_rows;
-	$total_pages = $limit!="All" ? ceil($total_rows / $limit) : 1;
-	$NumLinks= 5;
-
-	$start = (($pag-$NumLinks) > 0) ? ($pag - $NumLinks) : 1;
-	$end = (($pag+$NumLinks) < $total_pages) ? ($pag + $NumLinks) : $total_pages;
-	?>
-
-	
-	<ul class="pagination pagination-sm justify-content-center">
-		<!--First page-->
-		<li class="page-item <?php if($pag <= 1){ echo 'disabled'; } ?>">
-			<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '1';" form="formFiltros" >First</button>
-		</li>
-		<!--Previous-->
-		  <li class="page-item <?php if($pag <= 1){ echo 'disabled'; } ?>">
-			<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo ($pag-1);?>';" form="formFiltros" >Prev</button> 
-		  </li>
-		  <!-- Numbers -->
-	  <?php for ( $i = $start ; $i <= $end; $i++ ): ?>
-		<li class="page-item <?php if ($pag == $i){echo "active";} ?>">
-		  <button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo $i;?>';" form="formFiltros" > <?php echo $i;?> </button>
-		</li>     
-		<?php endfor; ?>
-		  <!--Next-->
-		  <li class="page-item <?php if($pag >= $total_pages){ echo 'disabled'; } ?>">
-			<button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo ($pag+1);?>';" form="formFiltros" >Next</button>
-		  </li>
-		  <!--Last-->
-		<li class="page-item <?php if($pag >= $total_pages){ echo 'disabled'; } ?>">
-		  <button class="page-link" type="submit"  onclick="document.getElementsByName('pag')[0].value = '<?php echo $total_pages;?>';" form="formFiltros" >Last</button>
-		</li>
-	  </ul>
-  </div>
+<?php include 'pagination.php'; ?>
 
 <!--Table-->
 <div class="container-fluid">
   <!--Table Responsive-->
-  <div class="table-responsive">
+  <div class="table-responsive" style="min-height: 270px;">
 	<!--Table-->
 	<table class="table table-sm">
 
@@ -250,10 +228,12 @@ $result_filter = $mysqli->query($sql_filter);
 				  <div class="d-flex justify-content-center align-items-end text-warning">
 					<span class="text-warning"><?php echo ucfirst(str_replace('_',' ',$value)); ?></span>
 					<!--Icon-->
-					<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
-					onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
-					<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
-					</button>
+					<?php if(!in_array($value,["informations","manager"])): ?>
+						<button class="btn btn-sm btn-link text-warning" type="submit" form="formFiltros" 
+						onclick="document.getElementsByName('pag')[0].value = '1'; document.getElementsByName('sort_order')[0].value = '<?php echo $asc_or_desc;?>'; document.getElementsByName('column')[0].value ='<?php echo $value;?>';">
+							<i class="fas fa-sort<?php echo $column == $value ? '-'.$up_or_down : ''; ?>"></i>
+						</button>
+					<?php endif; ?>
 				  </div>
 				</th>
 			  <?php endforeach ?>
@@ -263,18 +243,17 @@ $result_filter = $mysqli->query($sql_filter);
 	  <!--Body Table -->
 	  <tbody>
 			<?php while($row = $result_filter->fetch_array()): ?>
-			  <tr class="text-center">
+				<tr class="text-center" scope="row">
 				<?php foreach ($header as $value): ?>
-				  <?php switch($value):
+					<td scope="col">
+					<?php switch($value):
 
-					case 'identification': ?>
-					  <td scope="row">
-						<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
-					  </td>
-					<?php break;?>
+						case 'identification': ?>
+							<?php array_push($download_ids,$row["id"]); ?>
+							<a class="btn btn-sm btn-outline-success btn-block border-0" href="individual.php?identification=<?php echo $row[$value];?>"><?php echo $row[$value];?></a>
+						<?php break;?>
 
-					<?php case 'fragment': ?>
-						<td scope="row">
+						<?php case 'fragment': ?>
 							<!-- Trigger Modal -->
 							<button type="button" class="btn btn-sm btn-outline-primary btn-block border-0" data-toggle="modal" data-target="#fragment<?php echo str_replace(' ','_',$row['fragment']); ?>" style="white-space: nowrap;">
 							  <?php echo $row['fragment']; ?>
@@ -308,10 +287,6 @@ $result_filter = $mysqli->query($sql_filter);
 															<td><?php echo $row_fragment['fragment']; ?></td>
 														</tr>
 														<tr>
-															<th>Abbreviation</th>
-															<td><?php echo $row_fragment['abbreviation']; ?></td>
-														</tr>
-														<tr>
 															<th>country</th>
 															<td><?php echo $row_fragment['country']; ?></td>
 														</tr>
@@ -323,6 +298,20 @@ $result_filter = $mysqli->query($sql_filter);
 															<th>city</th>
 															<td><?php echo $row_fragment['city']; ?></td>
 														</tr>
+														
+														<?php if(in_array("edit",$_SESSION['permission'])):?>
+															<tr>
+																<th></th>
+																<td>
+																	<form action="fragment_insert.php" method="GET" id="editPopulation<?php echo $row_fragment['id'];?>" target="_blank">
+																		<input type="hidden" name="id" value="<?php echo $row_fragment['id'];?>">
+																		<input type="hidden" name="action" value="edit">
+
+																	</form>
+																	<button type="submit" form="editPopulation<?php echo $row_fragment['id'];?>" class="btn btn-primary float-right"><i class="fas fa-edit"></i></button>
+																</td>
+															</tr>
+														<?php endif ?>
 													</tbody>
 												</table>
 											</div>
@@ -337,38 +326,51 @@ $result_filter = $mysqli->query($sql_filter);
 										</div>
 									</div>
 								</div>
-		    				<?php endif; ?>
-		    			</td>
-					<?php break;?>
+							<?php endif; ?>
+						<?php break;?>
 
-					<?php case 'informations': 
-    					$sql_informations = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
-    					$result_informations = $mysqli->query($sql_informations);
+						<?php case 'informations': 
+							$sql_informations = "SELECT * FROM genotype WHERE id_individual = '$row[id]'";
+							$result_informations = $mysqli->query($sql_informations);
+							if ($result_informations->num_rows > 0): ?>
+								<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
+								<button type="button" class="btn btn-sm btn-primary">Genomics</button>
+							<?php else: ?>
+								<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
+								<button type="button" class="btn btn-sm btn-secondary disabled">Genomics</button>
+							<?php endif; ?>
+						<?php break;?>
 
-	    					if ($result_informations->num_rows > 0): ?>
-	    						<td scope="row">
-		    						<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
-		    						<button type="button" class="btn btn-sm btn-primary">Genomics</button>
-	    						</td>
-	    					<?php else: ?>
-	    						<td scope="row">
-		    						<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
-		    						<button type="button" class="btn btn-sm btn-secondary disabled">Genomics</button>
-	    						</td>
-	    					<?php endif; ?>
-		    		<?php break;?>
+						<?php case 'manager': ?>
+		    				<form action="delete.php" method="GET" id="delete<?php echo $row['identification'];?>" target="_blank">
+		    					<input type="hidden" name="id" value='<?php echo $row['id'];?>'>
+			    				<input type="hidden" name="delete" value='individual'>
+		    				</form>
+		    				<form action="wild_insert.php" method="GET" id="edit<?php echo $row['identification'];?>" target="_blank">
+		    					<input type="hidden" name="identification" value="<?php echo $row['identification'];?>">
+		    					<input type="hidden" name="action" value="edit">
+		    				</form>
+	    					<button type="submit" form="delete<?php echo $row['identification'];?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+	    					<button type="submit" form="edit<?php echo $row['identification'];?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>			    				
+						<?php break;?>
 
-					<?php default: ?>
-					  <td scope="row"><div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div></td>
-					  
-				  <?php endswitch; ?>
+						<?php default: ?>
+						<div class="btn" style="cursor:auto;"><?php echo $row[$value]!=""? $row[$value]:"-";?></div>					  
+					<?php endswitch; ?>
+					</td>
 				<?php endforeach; ?>
-			  </tr>
+				</tr>
 			<?php endwhile; ?>
 	  </tbody>
 	</table>
   </div>
 </div>
+
+<!-- Download -->
+	<form id="formDownload" action="download_wild.php" method="post">
+		<input type="hidden" name="pagina" value="wild">	
+		<input type="hidden" name="download_ids" value="<?php echo htmlentities(serialize($download_ids)); ?>">		
+	</form>
 
 
 
