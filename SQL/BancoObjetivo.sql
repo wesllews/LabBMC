@@ -191,6 +191,22 @@ CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELET
 CONSTRAINT FOREIGN KEY (`id_locus`) REFERENCES `locus` (`id`)
 ) AUTO_INCREMENT=1;
 
+-- ************************************** `genotype`
+CREATE TABLE `genotype2`
+(
+ `id`        	 integer NOT NULL AUTO_INCREMENT ,
+ `id_individual` integer NOT NULL ,
+ `id_locus`      integer(30) NOT NULL ,
+ `allele_a`      integer NOT NULL ,
+ `allele_b`      integer NOT NULL , 
+ `restricted`    boolean NULL ,
+PRIMARY KEY (`id`),
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE,
+CONSTRAINT FOREIGN KEY (`id_locus`) REFERENCES `locus` (`id`)
+) AUTO_INCREMENT=1;
+
+--
+
 -- ************************************** `genomic`
 CREATE TABLE `genomic`
 (

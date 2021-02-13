@@ -50,8 +50,9 @@ include 'header.php';
 
 			<!-- Form submit -->
 				<div class="row mt-5">
+		    		<input type="hidden" name="action" value="insert">
 					<div class="col">
-						<button type ="submit" name="submit" class="btn btn-success btn-block" style="white-space: nowrap;" >Submit</button>
+						<button type ="submit" class="btn btn-success btn-block" style="white-space: nowrap;" >Submit</button>
 					</div>
 					<div class="col">
 						<button onclick="<?php echo $action=="edit"?"window.close(); return false;":"window.history.back();"?>" class="btn btn-danger btn-block" autofocus>Cancel</button>

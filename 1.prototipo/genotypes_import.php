@@ -4,7 +4,7 @@ $_SESSION['pagina']='admin';
 include 'header.php';
 require_once 'vendor/autoload.php';
  
-if (isset($_POST['submit'])) {
+if (isset($_POST['action'])) {
 
   $inputFileName = $_FILES['file']['tmp_name'];
 
@@ -33,23 +33,39 @@ if (isset($_POST['submit'])) {
         // Variáveis utilizadas no insert
         $identification=$dataArray[$numRow][0]; //Primeira coluna de cada linha
         $locus=strtolower($dataArray[0][$numCol]); //Primeira linha sempre, cabeçalho
-        $allele=$value; // Valor da célula na linha($numRow) e coluna($numCom) da vez       
+        $allele=$value; // Valor da célula na linha($numRow) e coluna($numCom) da vez
 
-        $sql = "INSERT INTO `genotype` (`id`, `id_individual`, `id_locus`, `allele`, `restricted`) 
-        VALUES (NULL, (SELECT id FROM individual WHERE identification='$identification'), (SELECT id FROM locus WHERE locus='$locus'), '$allele', 0);";
+        $sql="SELECT *, genotype.id as id FROM genotype 
+        INNER JOIN individual ON genotype.id_individual = individual.id 
+        INNER JOIN locus ON genotype.id_locus = locus.id 
+        WHERE identification='$identification' AND locus ='$locus'";
         $result = $mysqli->query($sql);
-        if($result==FALSE){
-          $problem=TRUE;
-          $error =$mysqli->error;?>
-          <div class=" container alert alert-danger" role="alert">
-            <p><b>Row <?php echo $numRow;?> wansn't inserted!</b></p>
-            Something went wrong on locus: <b><?php echo $locus;?></b> and value:<b><?php echo $allele;?>. </b>
-            <small>[<b>MySQL Error: </b><?php echo $error; ?>]</small>
-          </div>
+        $num_rows = $result->num_rows;
+
+        if($num_rows<2){
+          $sql = "INSERT INTO `genotype` (`id`, `id_individual`, `id_locus`, `allele`, `restricted`) 
+          VALUES (NULL, (SELECT id FROM individual WHERE identification='$identification'), (SELECT id FROM locus WHERE locus='$locus'), '$allele', 0);";
+          $result = $mysqli->query($sql);
+          if($result==FALSE){
+            $problem=TRUE;
+            $error =$mysqli->error;?>
+            <div class=" container alert alert-danger" role="alert">
+              <p><b>Entire row number <?php echo $numRow;?> wansn't inserted!</b></p>
+              Something went wrong on locus: <b><?php echo $locus;?></b> and value:<b><?php echo $allele;?>. </b>
+              <small>[<b>MySQL Error: </b><?php echo $error; ?>]</small>
+            </div>
+            <?php
+          }
+        } else{
+            ?>
+            <div class=" container alert alert-warning" role="alert">
+              <p>Individual <b><?php echo $identification;?></b> on row <?php echo $numRow;?> already has two allele information on on locus: <b><?php echo $locus;?></b> Use Update page for change this values.</p>
+            </div>
           <?php
-        }// if-Insert
+        }// Else- Num Rows
+
       }// if-Conteudo indesejado
-    }// Colunas e valores
+    }// Foreach - Linha -> Coluna -> Valor
 
     if ($problem==FALSE && $numRow!=0) {
       $mysqli->commit();?>
