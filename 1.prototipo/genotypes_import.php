@@ -23,6 +23,7 @@ if (isset($_POST['action'])) {
     // Evita inserir a linha caso tenham algum erro
     $mysqli->autocommit(FALSE);
     $problem=FALSE;
+    $flag=FALSE;
 
     foreach ($row as $numCol => $value) {
       
@@ -50,16 +51,23 @@ if (isset($_POST['action'])) {
             $problem=TRUE;
             $error =$mysqli->error;?>
             <div class=" container alert alert-danger" role="alert">
-              <p><b>Entire row number <?php echo $numRow;?> wansn't inserted!</b></p>
-              Something went wrong on locus: <b><?php echo $locus;?></b> and value:<b><?php echo $allele;?>. </b>
+              <b>Entire row number <?php echo $numRow;?> wansn't inserted!</b>
+              <br>
+              Something went wrong on locus: <b><?php echo $locus;?></b> and value: <b><?php echo $allele;?>.</b>
               <small>[<b>MySQL Error: </b><?php echo $error; ?>]</small>
             </div>
             <?php
           }
-        } else{
+        } else{    
+            // Verifica se é o primeiro aviso de que o locus já foi inserido, se não for ele pula o "print" do HTML
+            if ($flag!=$locus) {
+              $flag=$locus;
+            } else{
+              continue; 
+            }
             ?>
             <div class=" container alert alert-warning" role="alert">
-              <p>Individual <b><?php echo $identification;?></b> on row <?php echo $numRow;?> already has two allele information on on locus: <b><?php echo $locus;?></b> Use Update page for change this values.</p>
+              Row <?php echo $numRow;?>: Individual <b><?php echo $identification;?></b> already has two alleles informations on locus <b><?php echo $locus;?></b>. Use Update page to change this values.
             </div>
           <?php
         }// Else- Num Rows
