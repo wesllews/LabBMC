@@ -467,7 +467,7 @@ $download_ids = [];
 						<?php default:
 						 	$sql_locus = "SELECT * FROM genotype WHERE restricted ='0' AND id_individual='$row[id]' AND id_locus=(SELECT id FROM locus WHERE locus='$value'); ";
 						 	$result_locus = $mysqli->query($sql_locus);
-							if ($result_locus->num_rows >=2):?>
+							if ($result_locus->num_rows>0):?>
 								<td scope="row" style="white-space: nowrap;"> 
 									<?php while($row_locus = $result_locus->fetch_array()){
 										echo $row_locus['allele']," ";	

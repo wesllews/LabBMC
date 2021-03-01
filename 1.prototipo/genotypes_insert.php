@@ -2,9 +2,10 @@
 session_start();
 $_SESSION['pagina']='admin';
 include 'header.php';
+$action = $_GET['action'];
 ?>
 <div class="container text-center mt-5">
-	<h4 class="text-warning font-weight-bold">Insert Genotypes</h4>
+	<h4 class="text-warning font-weight-bold text-capitalize "><?php echo $action; ?> Genotypes</h4>
 </div>
 
 <div class="container">
@@ -42,15 +43,15 @@ include 'header.php';
 					<b>Especifications:</b>
 					<ul>
 						<li>First column need to be the column of identification of individual</li>
-						<li>If some information in the row couldn't be inserted <b>all the row is not going to be inserted</b></li>
+						<li>Columns that the header does not have a registered locus name will be ignored</li>
 						<li>Is aceppet file on this formats: <b>.xls, .xlsx, .csv, .xml, .ods</b> </li>
-						<li>The empty cell is not goin to be inserted</li>
+						<li>The empty cell is not goin to be <?php echo $action; ?>ed</li>
 					</ul>
 				</div>
 
 			<!-- Form submit -->
 				<div class="row mt-5">
-		    		<input type="hidden" name="action" value="insert">
+		    		<input type="hidden" name="action" value="<?php echo $action; ?>">
 					<div class="col">
 						<button type ="submit" class="btn btn-success btn-block" style="white-space: nowrap;" >Submit</button>
 					</div>
