@@ -54,7 +54,7 @@ $sort_order = isset($_GET['sort_order']) && strtolower($_GET['sort_order']) == '
 	$category = $category!=""? " AND id_category ='$_GET[filterCategory]'" : "";
 	$sexFilter = $sexFilter!=""? " AND sex='$_GET[sexFilter]'" : "";
 
-$sql= "SELECT * FROM (
+	$sql= "SELECT * FROM (
 	SELECT DISTINCT(genomic.id_individual) as id,identification, id_category,category,sex,
 		CASE
 		WHEN id_category = 1 THEN institute.abbreviation
@@ -62,7 +62,7 @@ $sql= "SELECT * FROM (
 		END AS population 
 	FROM genomic
 	INNER JOIN individual ON individual.id=genomic.id_individual
-	INNER JOIN status ON status.id_individual=genomic.id_individual
+	LEFT JOIN status ON status.id_individual=genomic.id_individual
 	INNER JOIN category ON individual.id_category=category.id
 	LEFT JOIN institute ON status.id_institute=institute.id
 	LEFT JOIN fragment ON status.id_fragment=fragment.id) genomic2 WHERE 1=1";

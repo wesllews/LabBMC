@@ -235,11 +235,11 @@ if ($("#genomic").length) {
 			var html = '<div class="row">\
 							<div class="form-group col">\
 								<label> Platform:</label>\
-								<input type="text" name="platform[]" list="datalistPlatform" class="form-control form-control-sm" placeholder="e.g. NCBI, PUBMED, etc" required>\
+								<input type="text" name="insert_platform[]" list="datalistPlatform" class="form-control form-control-sm" placeholder="e.g. NCBI, PUBMED, etc" required>\
 							</div>\
 							<div class="form-group col">\
 								<label> Link:</label>\
-								<input type="text" name="link[]" class="form-control form-control-sm" placeholder="Acess on..." required>\
+								<input type="text" name="insert_link[]" class="form-control form-control-sm" placeholder="Acess on..." required>\
 							</div>';
 				html+=	'	<div class="form-group col-lg-1 mt-auto px-1">\
 								<span class="btn btn-sm btn-block btn-danger float-center remove_genomic" style="white-space: nowrap;">Remove</span>\
