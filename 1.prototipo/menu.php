@@ -152,13 +152,10 @@ switch ($page):
 				</div>
 				
 				<div class="col-lg-6 px-4 pb-5">
-					<form action="" method="get" id="full">
-						<input type="hidden" name="fulldata" value="s">
-					</form>
-					<button class="col btn btn-dark p-5 hover-shadow" style="transition:0.5s;" form="full">
+					<a href="mitochondrial.php" class="col btn btn-dark p-5 hover-shadow" style="transition:0.5s;" form="full">
 						<h2><i class="fas fa-stream"></i></h2>
 						<h2>Mitochondrial</h2>
-					</button>
+					</a>
 				</div>
 
 				

@@ -62,8 +62,8 @@ include 'header.php';
 
 			<!--Button-->
 			<div class="d-flex flex-column text-center h-25">
-				<a href="mainCaptivity.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Captivity</a>
-				<a href="mainWild.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Wild</a>
+				<a href="menu.php?page=captivity" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Captivity</a>
+				<a href="menu.php?page=wild" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">Wild</a>
 		    </div>
 		</div>
 
@@ -82,7 +82,7 @@ include 'header.php';
 
 		    <!--Button-->
 			<div class="d-flex flex-column text-center h-25">
-				<a href="#" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2 disabled">See More</a>
+				<a href="genomics.php" class="btn btn-warning mx-4 rounded-0 shadow-sm my-2">See More</a>
 			</div>
 		</div>
 
