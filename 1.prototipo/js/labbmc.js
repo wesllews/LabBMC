@@ -260,3 +260,15 @@ function deleteItem(page,id) {
 	html= '<input type="hidden" name="remove[]" value="'+id+'">';
 	$("."+page).append(html);
 }
+
+/*REQUEST FOR THE TOOLTIPS WORK*/
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+/* COPY TEXT */
+function copy(id){
+	var copyTextarea = document.getElementById(id);
+	copyTextarea.select(); //select the text area
+	document.execCommand("copy"); //copy to clipboard
+}

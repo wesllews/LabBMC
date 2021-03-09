@@ -88,3 +88,15 @@
     border-color: #ffc107;
     background-color: #ffc107;
   }
+
+/* SCROLLBAR */
+  .fasta {
+    overflow-y: scroll; /* Add the ability to scroll */
+  }
+  .fasta::-webkit-scrollbar {
+      display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+  }
+  .fasta {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
