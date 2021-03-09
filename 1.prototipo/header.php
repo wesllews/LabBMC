@@ -67,7 +67,8 @@ if(!in_array("dashboard",$_SESSION['permission']) && $_SESSION['pagina']=='admin
           <div id="genetics" class="collapse list-group list-group-flush">
             <a href="locus.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-list"></i> Locus</a>
             <a href="locus_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Locus</a>
-            <a href="genotypes_insert.php" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Genotypes</a>
+            <a href="genotypes_insert.php?action=insert" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus"></i> Genotypes</a>
+            <a href="genotypes_insert.php?action=edit" class="list-group-item list-group-item-action bg-light"><i class="fas fa-edit"></i> Genotypes</a>
           </div>
         </div>
 

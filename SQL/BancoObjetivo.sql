@@ -183,13 +183,14 @@ CREATE TABLE `genotype`
 (
  `id`        	 integer NOT NULL AUTO_INCREMENT ,
  `id_individual` integer NOT NULL ,
- `id_locus`      integer(30) NOT NULL ,
+ `id_locus`      integer NOT NULL ,
  `allele`        integer NOT NULL ,
  `restricted`    boolean NULL ,
 PRIMARY KEY (`id`),
 CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE,
 CONSTRAINT FOREIGN KEY (`id_locus`) REFERENCES `locus` (`id`)
 ) AUTO_INCREMENT=1;
+
 
 -- ************************************** `genomic`
 CREATE TABLE `genomic`
@@ -200,4 +201,26 @@ CREATE TABLE `genomic`
  `link`        	 text NOT NULL ,
 PRIMARY KEY (`id`),
 CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE
+) AUTO_INCREMENT=1;
+
+
+-- ************************************** `locus`
+CREATE TABLE `mitochondrial_locus`
+(
+ `id`        integer NOT NULL AUTO_INCREMENT ,
+ `mitochondrial_locus`     varchar(30) NOT NULL,
+PRIMARY KEY (`id`)
+) AUTO_INCREMENT=1;
+
+-- ************************************** `haplotypes`
+CREATE TABLE `haplotype`
+(
+ `id`        	 integer NOT NULL AUTO_INCREMENT ,
+ `id_individual` integer NOT NULL ,
+ `id_mitochondrial_locus`      integer NOT NULL ,
+ `haplotype`        text NOT NULL ,
+ `restricted`    boolean NULL ,
+PRIMARY KEY (`id`),
+CONSTRAINT FOREIGN KEY (`id_individual`) REFERENCES `individual` (`id`) ON DELETE CASCADE,
+CONSTRAINT FOREIGN KEY (`id_mitochondrial_locus`) REFERENCES `mitochondrial_locus` (`id`)
 ) AUTO_INCREMENT=1;

@@ -168,6 +168,23 @@ if ($action == "edit" || $action == "reload") {
 		$problem="\\nMySQL Error:".$error;
 	}
 
+	// Botão add genomic
+	$platform = $_GET['insert_platform'];
+	$link = $_GET['insert_link'];
+	$flag=FALSE;
+	foreach ($platform as $key => $value) {
+		$sql = "INSERT INTO `genomic` (`id`, `id_individual`, `platform`, `link`) VALUES (NULL, (SELECT id FROM individual WHERE identification='$identification'), '$platform[$key]', '$link[$key]');";
+		$result = $mysqli->query($sql);
+		if ($result==FALSE) {
+			$flag="ERROR";
+		}
+		
+	}
+	if ($flag=="ERROR"){
+		$error= $mysqli->error;
+		$problem="\\nMySQL Error:".$error;
+	}
+
 	//Commit ou Rollback
 	if ($problem==FALSE) {
 		$mysqli->commit();
@@ -194,6 +211,23 @@ elseif (isset($_GET['action']) && $_GET['action']=="edited"):
 		}
 	}
 	if ($result==FALSE){
+		$error= $mysqli->error;
+		$problem="\\nMySQL Error:".$error;
+	}
+
+	// Insert more genomic information
+	$platform = $_GET['insert_platform'];
+	$link = $_GET['insert_link'];
+	$flag=FALSE;
+	foreach ($platform as $key => $value) {
+		$sql = "INSERT INTO `genomic` (`id`, `id_individual`, `platform`, `link`) VALUES (NULL, '$id', '$platform[$key]', '$link[$key]');";
+		$result = $mysqli->query($sql);
+		if ($result==FALSE) {
+			$flag="ERROR";
+		}
+		
+	}
+	if ($flag=="ERROR"){
 		$error= $mysqli->error;
 		$problem="\\nMySQL Error:".$error;
 	}

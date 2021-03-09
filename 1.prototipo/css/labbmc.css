@@ -7,7 +7,7 @@
 
 /*	HOME	*/
   .bg-home{
-  	background-image: url('../img/bg_4.jpg');
+  	background-image: url('../img/bg_1.jpg');
   	background-position: center;
   	background-repeat: no-repeat;
   	background-size: cover;
@@ -87,4 +87,16 @@
   .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
     border-color: #ffc107;
     background-color: #ffc107;
+  }
+
+/* SCROLLBAR */
+  .fasta {
+    overflow-y: scroll; /* Add the ability to scroll */
+  }
+  .fasta::-webkit-scrollbar {
+      display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+  }
+  .fasta {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
