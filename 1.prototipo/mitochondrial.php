@@ -8,7 +8,7 @@ $header = ['identification'];
 $headersAdicionais =['category','sex','population','alive'];
 
 if(in_array("delete",$_SESSION['permission'])){
-		array_push($headersAdicionais, "manager");
+		#array_push($headersAdicionais, "manager");
 	}
 
 	// Adiciona os Locus cadastrados aos headers adicionais

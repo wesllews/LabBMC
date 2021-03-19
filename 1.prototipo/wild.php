@@ -334,10 +334,8 @@ $download_ids = [];
 							$result_informations = $mysqli->query($sql_informations);
 							if ($result_informations->num_rows > 0): ?>
 								<a href='genetics.php?identification=<?php echo $row['identification'];?>' class="btn btn-sm btn-success">Genetics</a>
-								<button type="button" class="btn btn-sm btn-primary">Genomics</button>
 							<?php else: ?>
 								<button type="button" class="btn btn-sm btn-secondary disabled">Genetics</button>
-								<button type="button" class="btn btn-sm btn-secondary disabled">Genomics</button>
 							<?php endif; ?>
 						<?php break;?>
 
